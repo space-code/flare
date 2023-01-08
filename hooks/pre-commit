@@ -1,0 +1,11 @@
+#!/bin/bash
+git diff --diff-filter=d --staged --name-only | grep -e '\.swift$' | while read line; do
+  if [[ $line == *"/Generated"* ]]; then
+    echo "IGNORING GENERATED FILE: " "$line";
+  else
+    mint run swiftformat swiftformat "${line}";
+    git add "$line";
+  fi
+done
+
+swiftlint
