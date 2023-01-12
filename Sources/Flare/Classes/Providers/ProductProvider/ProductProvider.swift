@@ -11,7 +11,7 @@ import StoreKit
 final class ProductProvider: NSObject, IProductProvider {
     // MARK: Lifecycle
 
-    init(dispatchQueueFactory: IDispatchQueueFactory) {
+    init(dispatchQueueFactory: IDispatchQueueFactory = DispatchQueueFactory()) {
         self.dispatchQueueFactory = dispatchQueueFactory
     }
 
