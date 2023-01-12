@@ -1,4 +1,4 @@
-// swift-tools-version: 5.7
+// swift-tools-version: 5.5
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -14,15 +14,20 @@ let package = Package(
     products: [
         .library(
             name: "Flare",
-            targets: ["Flare"]),
+            targets: ["Flare"]
+        ),
     ],
-    dependencies: [],
+    dependencies: [
+        .package(url: "https://github.com/space-code/concurrency.git", .upToNextMajor(from: "0.0.1")),
+    ],
     targets: [
         .target(
             name: "Flare",
-            dependencies: []),
+            dependencies: [.product(name: "Concurrency", package: "concurrency")]
+        ),
         .testTarget(
             name: "FlareTests",
-            dependencies: ["Flare"]),
+            dependencies: ["Flare", .product(name: "TestConcurrency", package: "concurrency")]
+        ),
     ]
 )

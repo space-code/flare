@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Concurrency",
+        "repositoryURL": "https://github.com/space-code/concurrency",
+        "state": {
+          "branch": null,
+          "revision": "f9611694f77f64e43d9467a16b2f5212cd04099b",
+          "version": "0.0.1"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
