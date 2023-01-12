@@ -19,7 +19,6 @@
 --enable initCoderUnavailable
 --enable leadingDelimiters
 --enable numberFormatting
---enable organizeDeclarations
 --enable preferKeyPath
 --enable redundantBreak
 --enable redundantExtensionACL
@@ -57,10 +56,9 @@
 --enable void
 --enable markTypes
 --enable isEmpty
---maxwidth 140
 
 # format options
 
 --wraparguments before-first
 --wrapcollections before-first
---lifecycle viewDidLoad,viewWillAppear,viewDidAppear,viewDidDisappear,viewWillDisappear
+--maxwidth 140
