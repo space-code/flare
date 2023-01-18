@@ -138,9 +138,11 @@ extension PaymentProvider: SKPaymentTransactionObserver {
         }
     }
 
+    #if os(iOS) || os(tvOS) || os(macOS)
     func paymentQueue(_ queue: SKPaymentQueue, shouldAddStorePayment payment: SKPayment, for product: SKProduct) -> Bool {
         shouldAddStorePaymentHandler?(queue, payment, product) ?? false
     }
+    #endif
 
     func finish(transaction: PaymentTransaction) {
         paymentQueue.finishTransaction(transaction.skTransaction)

@@ -171,6 +171,7 @@ class PaymentProviderTests: XCTestCase {
         XCTAssertTrue(handledPaymentQueue === paymentQueueMock)
     }
 
+    #if os(iOS) || os(tvOS) || os(macOS)
     func testThatPaymentProviderAddAppStoreHandler() {
         // given
         let payment = SKPayment()
@@ -197,6 +198,7 @@ class PaymentProviderTests: XCTestCase {
         XCTAssertEqual(payment, invokedPayment)
         XCTAssertTrue(result)
     }
+    #endif
 
     func testThatPaymentQueueFinishTransaction() {
         // given

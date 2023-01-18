@@ -1,0 +1,41 @@
+name: "flare"
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    branches: [ main ]
+
+concurrency:
+  group: ci
+  cancel-in-progress: true
+
+jobs:
+  Latest:
+    name: Test Latest (iOS, macOS, tvOS, watchOS)
+    runs-on: macOS-12
+    env:
+      DEVELOPER_DIR: "/Applications/Xcode_14.1.app/Contents/Developer"
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - destination: "OS=16.1,name=iPhone 14 Pro"
+            name: "iOS"
+            scheme: "Flare"
+          - destination: "OS=16.1,name=Apple TV"
+            name: "tvOS"
+            scheme: "Flare"
+          - destination: "OS=9.1,name=Apple Watch Series 8 (45mm)"
+            name: "watchOS"
+            scheme: "Flare"
+          - destination: "platform=macOS"
+            name: "macOS"
+            scheme: "Flare"
+    steps:
+      - uses: actions/checkout@v3
+      - name: ${{ matrix.name }}
+        run: xcodebuild test -scheme "${{ matrix.scheme }}" -destination "${{ matrix.destination }}" clean
