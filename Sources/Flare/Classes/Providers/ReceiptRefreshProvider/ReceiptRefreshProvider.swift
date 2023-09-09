@@ -13,21 +13,33 @@ final class ReceiptRefreshProvider: NSObject {
     // MARK: Properties
 
     private let dispatchQueueFactory: IDispatchQueueFactory
+    private let fileManager: IFileManager
+    private let appStoreReceiptProvider: IAppStoreReceiptProvider
+    private let receiptRefreshRequestFactory: IReceiptRefreshRequestFactory
+
     private var handlers: [String: ReceiptRefreshHandler] = [:]
 
     private lazy var dispatchQueue: IDispatchQueue = dispatchQueueFactory.privateQueue(label: String(describing: self))
 
     // MARK: Initialization
 
-    init(dispatchQueueFactory: IDispatchQueueFactory = DispatchQueueFactory()) {
+    init(
+        dispatchQueueFactory: IDispatchQueueFactory = DispatchQueueFactory(),
+        fileManager: IFileManager = FileManager.default,
+        appStoreReceiptProvider: IAppStoreReceiptProvider = Bundle.main,
+        receiptRefreshRequestFactory: IReceiptRefreshRequestFactory = ReceiptRefreshRequestFactory()
+    ) {
         self.dispatchQueueFactory = dispatchQueueFactory
+        self.fileManager = fileManager
+        self.appStoreReceiptProvider = appStoreReceiptProvider
+        self.receiptRefreshRequestFactory = receiptRefreshRequestFactory
     }
 
     // MARK: Internal
 
     var receipt: String? {
-        if let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
-           FileManager.default.fileExists(atPath: appStoreReceiptURL.path)
+        if let appStoreReceiptURL = appStoreReceiptProvider.appStoreReceiptURL,
+           fileManager.fileExists(atPath: appStoreReceiptURL.path)
         {
             let receiptData = try? Data(contentsOf: appStoreReceiptURL, options: .alwaysMapped)
             let receiptString = receiptData?.base64EncodedString(options: [])
@@ -38,14 +50,11 @@ final class ReceiptRefreshProvider: NSObject {
 
     // MARK: Private
 
-    private func makeRequest(id: String) -> SKReceiptRefreshRequest {
-        let request = SKReceiptRefreshRequest()
-        request.id = id
-        request.delegate = self
-        return request
+    private func makeRequest(id: String) -> IReceiptRefreshRequest {
+        receiptRefreshRequestFactory.make(id: id, delegate: self)
     }
 
-    private func fetch(request: SKRequest, handler: @escaping ReceiptRefreshHandler) {
+    private func fetch(request: IReceiptRefreshRequest, handler: @escaping ReceiptRefreshHandler) {
         dispatchQueue.async {
             self.handlers[request.id] = handler
             self.dispatchQueueFactory.main().async {
