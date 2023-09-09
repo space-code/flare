@@ -20,7 +20,8 @@ public protocol IPaymentProvider: AnyObject {
     /// This may require that the user authenticate.
     func removeTransactionObserver()
 
-    /// Will add completed transactions for the current user back to the queue to be re-completed. User will be asked to authenticate.
+    /// Will add completed transactions for the current user back to the queue to be re-completed.
+    /// User will be asked to authenticate.
     ///
     /// - Parameter handler: A restore handler.
     func restoreCompletedTransactions(handler: @escaping RestoreHandler)

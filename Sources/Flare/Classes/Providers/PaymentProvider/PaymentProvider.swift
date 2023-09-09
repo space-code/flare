@@ -104,7 +104,9 @@ extension PaymentProvider: SKPaymentTransactionObserver {
                     return
                 }
 
-                if let handlers = self.paymentHandlers.removeValue(forKey: transaction.payment.productIdentifier), !handlers.isEmpty {
+                if let handlers = self.paymentHandlers.removeValue(
+                    forKey: transaction.payment.productIdentifier
+                ), !handlers.isEmpty {
                     self.dispatchQueueFactory.main().async {
                         handlers.forEach { $0(queue, .success(transaction)) }
                     }
@@ -139,9 +141,9 @@ extension PaymentProvider: SKPaymentTransactionObserver {
     }
 
     #if os(iOS) || os(tvOS) || os(macOS)
-    func paymentQueue(_ queue: SKPaymentQueue, shouldAddStorePayment payment: SKPayment, for product: SKProduct) -> Bool {
-        shouldAddStorePaymentHandler?(queue, payment, product) ?? false
-    }
+        func paymentQueue(_ queue: SKPaymentQueue, shouldAddStorePayment payment: SKPayment, for product: SKProduct) -> Bool {
+            shouldAddStorePaymentHandler?(queue, payment, product) ?? false
+        }
     #endif
 
     func finish(transaction: PaymentTransaction) {

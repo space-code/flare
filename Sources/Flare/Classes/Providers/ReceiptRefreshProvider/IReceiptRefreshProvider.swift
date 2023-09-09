@@ -15,9 +15,9 @@ public protocol IReceiptRefreshProvider {
     ///   - requestId: A request identifier.
     ///   - handler: A receipt refresh handler.
     func refresh(requestId: String, handler: @escaping ReceiptRefreshHandler)
-    
-    /// <#Description#>
-    /// 
-    /// - Parameter requestId: <#requestId description#>
+
+    /// A request to refresh the receipt, which represents the user’s transactions with your app.
+    ///
+    /// - Parameter requestId: A request identifier.
     func refresh(requestId: String) async throws
 }
