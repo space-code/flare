@@ -62,6 +62,19 @@ extension ReceiptRefreshProvider: IReceiptRefreshProvider {
         let request = makeRequest(id: requestId)
         fetch(request: request, handler: handler)
     }
+
+    func refresh(requestId: String) async throws {
+        try await withCheckedThrowingContinuation { continuation in
+            refresh(requestId: requestId) { result in
+                switch result {
+                case .success:
+                    continuation.resume(with: .success(()))
+                case let .failure(error):
+                    continuation.resume(with: .failure(error))
+                }
+            }
+        }
+    }
 }
 
 // MARK: SKRequestDelegate

@@ -45,12 +45,17 @@ final class IAPProviderMock: IIAPProvider {
     var invokedRefreshReceiptCount = 0
     var invokedRefreshReceiptParameters: (Closure<Result<String, IAPError>>, Void)?
     var invokedRefreshReceiptParametersList = [(Closure<Result<String, IAPError>>, Void)]()
+    var stubbedRefreshReceiptResult: Result<String, IAPError>?
 
     func refreshReceipt(completion: @escaping Closure<Result<String, IAPError>>) {
         invokedRefreshReceipt = true
         invokedRefreshReceiptCount += 1
         invokedRefreshReceiptParameters = (completion, ())
         invokedRefreshReceiptParametersList.append((completion, ()))
+
+        if let result = stubbedRefreshReceiptResult {
+            completion(result)
+        }
     }
 
     var invokedFinishTransaction = false
@@ -83,5 +88,53 @@ final class IAPProviderMock: IIAPProvider {
     func removeTransactionObserver() {
         invokedRemoveTransactionObserver = true
         invokedRemoveTransactionObserverCount += 1
+    }
+
+    var invokedFetchAsync = false
+    var invokedFetchAsyncCount = 0
+    var invokedFetchAsyncParameters: (productIDs: Set<String>, Void)?
+    var invokedFetchAsyncParametersList = [(productIDs: Set<String>, Void)]()
+    var fetchAsyncResult: [SKProduct] = []
+
+    func fetch(productsIDs: Set<String>) async throws -> [SKProduct] {
+        invokedFetchAsync = true
+        invokedFetchAsyncCount += 1
+        invokedFetchAsyncParameters = (productsIDs, ())
+        invokedFetchAsyncParametersList.append((productsIDs, ()))
+        return fetchAsyncResult
+    }
+
+    var invokedAsyncPurchase = false
+    var invokedAsyncPurchaseCount = 0
+    var invokedAsyncPurchaseParameters: (productID: String, Void)?
+    var invokedAsyncPurchaseParametersList = [(productID: String, Void)?]()
+    var stubbedAsyncPurchase: PaymentTransaction!
+
+    func purchase(productId: String) async throws -> PaymentTransaction {
+        invokedAsyncPurchase = true
+        invokedAsyncPurchaseCount += 1
+        invokedAsyncPurchaseParameters = (productId, ())
+        invokedAsyncPurchaseParametersList.append((productId, ()))
+        return stubbedAsyncPurchase
+    }
+
+    var invokedAsyncRefreshReceipt = false
+    var invokedAsyncRefreshReceiptCounter = 0
+    var stubbedRefreshReceiptAsyncResult: Result<String, IAPError>!
+
+    func refreshReceipt() async throws -> String {
+        invokedAsyncRefreshReceipt = true
+        invokedAsyncRefreshReceiptCounter += 1
+
+        let result = stubbedRefreshReceiptAsyncResult
+
+        switch result {
+        case let .success(receipt):
+            return receipt
+        case let .failure(error):
+            throw error
+        default:
+            fatalError("An unknown type")
+        }
     }
 }

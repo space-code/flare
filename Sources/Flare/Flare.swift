@@ -30,6 +30,10 @@ extension Flare: IFlare {
         iapProvider.fetch(productsIds: ids, completion: completion)
     }
 
+    public func fetch(ids: Set<String>) async throws -> [SKProduct] {
+        try await iapProvider.fetch(productsIDs: ids)
+    }
+
     public func buy(id: String, completion: @escaping Closure<Result<PaymentTransaction, IAPError>>) {
         guard iapProvider.canMakePayments else {
             completion(.failure(.paymentNotAllowed))
@@ -46,6 +50,11 @@ extension Flare: IFlare {
         }
     }
 
+    public func buy(id: String) async throws -> PaymentTransaction {
+        guard iapProvider.canMakePayments else { throw IAPError.paymentNotAllowed }
+        return try await iapProvider.purchase(productId: id)
+    }
+
     public func receipt(completion: @escaping Closure<Result<String, IAPError>>) {
         iapProvider.refreshReceipt { result in
             switch result {
@@ -55,6 +64,10 @@ extension Flare: IFlare {
                 completion(.failure(error))
             }
         }
+    }
+
+    public func receipt() async throws -> String {
+        try await iapProvider.refreshReceipt()
     }
 
     public func finish(transaction: PaymentTransaction) {

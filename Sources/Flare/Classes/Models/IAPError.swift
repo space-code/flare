@@ -49,3 +49,30 @@ extension IAPError {
         }
     }
 }
+
+extension IAPError: Equatable {
+    public static func == (lhs: IAPError, rhs: IAPError) -> Bool {
+        switch (lhs, rhs) {
+        case (.emptyProducts, .emptyProducts):
+            return true
+        case let (.invalid(lhs), .invalid(rhs)):
+            return lhs == rhs
+        case (.paymentNotAllowed, .paymentNotAllowed):
+            return true
+        case (.paymentCancelled, .paymentCancelled):
+            return true
+        case (.storeProductNotAvailable, .storeProductNotAvailable):
+            return true
+        case (.storeTrouble, .storeTrouble):
+            return true
+        case let (.with(lhs), .with(rhs)):
+            return (lhs as NSError) == (rhs as NSError)
+        case (.receiptNotFound, .receiptNotFound):
+            return true
+        case (.unknown, .unknown):
+            return true
+        default:
+            return false
+        }
+    }
+}
