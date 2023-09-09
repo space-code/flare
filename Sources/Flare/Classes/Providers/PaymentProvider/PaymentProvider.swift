@@ -98,11 +98,8 @@ extension PaymentProvider: SKPaymentTransactionObserver {
             @unknown default:
                 continue
             }
-
             privateQueue.async { [weak self] in
-                guard let self = self else {
-                    return
-                }
+                guard let self = self else { return }
 
                 if let handlers = self.paymentHandlers.removeValue(
                     forKey: transaction.payment.productIdentifier
