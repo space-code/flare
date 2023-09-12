@@ -172,32 +172,32 @@ class PaymentProviderTests: XCTestCase {
     }
 
     #if os(iOS) || os(tvOS) || os(macOS)
-    func testThatPaymentProviderAddAppStoreHandler() {
-        // given
-        let payment = SKPayment()
-        let product = SKProduct()
+        func testThatPaymentProviderAddAppStoreHandler() {
+            // given
+            let payment = SKPayment()
+            let product = SKProduct()
 
-        var invokedQueue: PaymentQueue?
-        var invokedPayment: SKPayment?
-        var invokedProduct: SKProduct?
+            var invokedQueue: PaymentQueue?
+            var invokedPayment: SKPayment?
+            var invokedProduct: SKProduct?
 
-        let shouldAddStorePaymentHandler: ShouldAddStorePaymentHandler = { queue, payment, product in
-            invokedQueue = queue
-            invokedPayment = payment
-            invokedProduct = product
-            return true
+            let shouldAddStorePaymentHandler: ShouldAddStorePaymentHandler = { queue, payment, product in
+                invokedQueue = queue
+                invokedPayment = payment
+                invokedProduct = product
+                return true
+            }
+
+            // when
+            paymentProvider.set(shouldAddStorePaymentHandler: shouldAddStorePaymentHandler)
+            let result = paymentProvider.paymentQueue(paymentQueueMock, shouldAddStorePayment: payment, for: product)
+
+            // then
+            XCTAssertTrue(paymentQueueMock === invokedQueue)
+            XCTAssertEqual(product, invokedProduct)
+            XCTAssertEqual(payment, invokedPayment)
+            XCTAssertTrue(result)
         }
-
-        // when
-        paymentProvider.set(shouldAddStorePaymentHandler: shouldAddStorePaymentHandler)
-        let result = paymentProvider.paymentQueue(paymentQueueMock, shouldAddStorePayment: payment, for: product)
-
-        // then
-        XCTAssertTrue(paymentQueueMock === invokedQueue)
-        XCTAssertEqual(product, invokedProduct)
-        XCTAssertEqual(payment, invokedPayment)
-        XCTAssertTrue(result)
-    }
     #endif
 
     func testThatPaymentQueueFinishTransaction() {
@@ -209,5 +209,62 @@ class PaymentProviderTests: XCTestCase {
 
         // then
         XCTAssertEqual(paymentQueueMock.invokedFinishTransactionParametersList.first?.0, transaction)
+    }
+
+    func test_thatPaymentQueueRestoresCompletedTransactions() {
+        // when
+        paymentProvider.restoreCompletedTransactions(handler: { _, _ in })
+
+        // then
+        XCTAssertTrue(paymentQueueMock.invokedRestoreCompletedTransactions)
+    }
+
+    func test_thatPaymentQueueRestoresCompletedTransactions_whenTransactionFinished() {
+        // when
+        var queueResult: SKPaymentQueue?
+        var errorResult: Error?
+        let restoreHandler: RestoreHandler = { queue, error in
+            queueResult = queue
+            errorResult = error
+        }
+
+        paymentProvider.restoreCompletedTransactions(handler: restoreHandler)
+        paymentProvider.paymentQueueRestoreCompletedTransactionsFinished(paymentQueueMock)
+
+        // then
+        XCTAssertEqual(queueResult, paymentQueueMock)
+        XCTAssertNil(errorResult)
+    }
+
+    func test_thatPaymentQueueDoesNotRestoreCompletedTransactions_whenRequestFailDueToTransactionError() {
+        // given
+        let errorMock = IAPError.paymentNotAllowed
+
+        // when
+        var queueResult: SKPaymentQueue?
+        var errorResult: Error?
+        let restoreHandler: RestoreHandler = { queue, error in
+            queueResult = queue
+            errorResult = error
+        }
+
+        paymentProvider.restoreCompletedTransactions(handler: restoreHandler)
+        paymentProvider.paymentQueue(paymentQueueMock, restoreCompletedTransactionsFailedWithError: errorMock)
+
+        // then
+        XCTAssertEqual(queueResult, paymentQueueMock)
+        XCTAssertEqual(errorResult as? NSError, IAPError(error: errorMock) as NSError)
+    }
+
+    func test_thatPaymentQueueHandlesTransactions_whenPendingTransactionsExist() {
+        // given
+        let transactionMocks = [SKPaymentTransaction(), SKPaymentTransaction(), SKPaymentTransaction()]
+        paymentQueueMock.stubbedTransactions = transactionMocks
+
+        // when
+        let transactions = paymentProvider.transactions
+
+        // then
+        XCTAssertEqual(transactions, transactionMocks.map(PaymentTransaction.init))
     }
 }

@@ -94,13 +94,9 @@ final class IAPProvider: IIAPProvider {
 
     func refreshReceipt(completion: @escaping Closure<Result<String, IAPError>>) {
         receiptRefreshProvider.refresh(requestId: UUID().uuidString) { [weak self] result in
-            guard let self = self else {
-                return
-            }
-
             switch result {
             case .success:
-                if let receipt = self.receiptRefreshProvider.receipt {
+                if let receipt = self?.receiptRefreshProvider.receipt {
                     completion(.success(receipt))
                 } else {
                     completion(.failure(.receiptNotFound))

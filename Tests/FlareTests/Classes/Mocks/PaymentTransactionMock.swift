@@ -33,4 +33,14 @@ final class PaymentTransactionMock: SKPaymentTransaction {
         invokedPaymentCount += 1
         return stubbedPayment
     }
+
+    var stubbedOriginal: SKPaymentTransaction?
+    override var original: SKPaymentTransaction? {
+        stubbedOriginal
+    }
+
+    var stubbedError: Error?
+    override var error: Error? {
+        stubbedError
+    }
 }
