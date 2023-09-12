@@ -7,15 +7,26 @@ import StoreKit
 
 // MARK: - IAPError
 
+/// `IAPError` is the error type returned by Flare.
+/// It encompasses a few different types of errors, each with their own associated reasons.
 public enum IAPError: Swift.Error {
+    /// The empty array of products were fetched.
     case emptyProducts
+    /// The attempt to fetch products with invalid identifiers.
     case invalid(productIds: [String])
+    /// The attempt to purchase a product when payments are not allowed.
     case paymentNotAllowed
+    /// The payment was cancelled.
     case paymentCancelled
+    /// The attempt to fetch a product that doesn't available.
     case storeProductNotAvailable
+    /// The `SKPayment` returned unknown error.
     case storeTrouble
+    /// The operation failed with an underlying error.
     case with(error: Swift.Error)
+    /// The App Store receipt wasn't found.
     case receiptNotFound
+    /// The unknown error occurred.
     case unknown
 }
 
@@ -49,6 +60,8 @@ extension IAPError {
         }
     }
 }
+
+// MARK: Equatable
 
 extension IAPError: Equatable {
     public static func == (lhs: IAPError, rhs: IAPError) -> Bool {

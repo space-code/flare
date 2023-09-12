@@ -7,14 +7,6 @@ import Foundation
 import class StoreKit.SKReceiptRefreshRequest
 import protocol StoreKit.SKRequestDelegate
 
-// MARK: - IReceiptRefreshRequestFactory
-
-protocol IReceiptRefreshRequestFactory {
-    func make(id: String, delegate: SKRequestDelegate?) -> IReceiptRefreshRequest
-}
-
-// MARK: - ReceiptRefreshRequestFactory
-
 final class ReceiptRefreshRequestFactory: IReceiptRefreshRequestFactory {
     func make(id: String, delegate: SKRequestDelegate?) -> IReceiptRefreshRequest {
         let request = SKReceiptRefreshRequest()
