@@ -75,12 +75,7 @@ extension ReceiptRefreshProvider: IReceiptRefreshProvider {
     func refresh(requestId: String) async throws {
         try await withCheckedThrowingContinuation { continuation in
             refresh(requestId: requestId) { result in
-                switch result {
-                case .success:
-                    continuation.resume(with: .success(()))
-                case let .failure(error):
-                    continuation.resume(with: .failure(error))
-                }
+                continuation.resume(with: result)
             }
         }
     }

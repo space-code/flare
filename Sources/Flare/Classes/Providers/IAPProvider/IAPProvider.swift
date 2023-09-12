@@ -44,12 +44,7 @@ final class IAPProvider: IIAPProvider {
     func fetch(productsIDs: Set<String>) async throws -> [SKProduct] {
         try await withCheckedThrowingContinuation { continuation in
             self.fetch(productsIds: productsIDs) { result in
-                switch result {
-                case let .success(products):
-                    continuation.resume(returning: products)
-                case let .failure(error):
-                    continuation.resume(throwing: error)
-                }
+                continuation.resume(with: result)
             }
         }
     }
@@ -82,12 +77,7 @@ final class IAPProvider: IIAPProvider {
     func purchase(productId: String) async throws -> PaymentTransaction {
         try await withCheckedThrowingContinuation { continuation in
             purchase(productId: productId) { result in
-                switch result {
-                case let .success(transaction):
-                    continuation.resume(returning: transaction)
-                case let .failure(error):
-                    continuation.resume(throwing: error)
-                }
+                continuation.resume(with: result)
             }
         }
     }
@@ -110,12 +100,7 @@ final class IAPProvider: IIAPProvider {
     func refreshReceipt() async throws -> String {
         try await withCheckedThrowingContinuation { continuation in
             refreshReceipt { result in
-                switch result {
-                case let .success(receipt):
-                    continuation.resume(returning: receipt)
-                case let .failure(error):
-                    continuation.resume(throwing: error)
-                }
+                continuation.resume(with: result)
             }
         }
     }
