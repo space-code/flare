@@ -7,6 +7,8 @@
 import StoreKit
 import XCTest
 
+// MARK: - FlareTests
+
 class FlareTests: XCTestCase {
     // MARK: - Properties
 
@@ -118,7 +120,7 @@ class FlareTests: XCTestCase {
         // when
         var iapError: IAPError?
         do {
-            let _ = try await flare.buy(id: .productID)
+            _ = try await flare.buy(id: .productID)
         } catch {
             iapError = error as? IAPError
         }
@@ -206,7 +208,7 @@ class FlareTests: XCTestCase {
         // when
         var iapError: IAPError?
         do {
-            let _ = try await flare.receipt()
+            _ = try await flare.receipt()
         } catch {
             iapError = error as? IAPError
         }
