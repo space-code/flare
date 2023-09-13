@@ -9,7 +9,7 @@ let package = Package(
         .macOS(.v10_15),
         .iOS(.v13),
         .watchOS(.v7),
-        .tvOS(.v11),
+        .tvOS(.v13),
     ],
     products: [
         .library(name: "Flare", targets: ["Flare"]),
