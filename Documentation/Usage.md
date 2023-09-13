@@ -15,7 +15,7 @@
 
 ## Introduction
 
-Flare provides an elegant interface for In-App Purchases. It supports non-consumable and consumable purchases and subscriptions.
+Flare provides an elegant interface for In-App Purchases, supporting non-consumable and consumable purchases as well as subscriptions.
 
 ## Flare Diagram
 
