@@ -62,4 +62,4 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           xcode: true
-          xcode_archive_path: "./${{ matrix.env.sdk }}.xcresult"
+          xcode_archive_path: "./${{ matrix.sdk }}.xcresult"
