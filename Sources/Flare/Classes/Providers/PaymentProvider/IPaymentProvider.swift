@@ -43,9 +43,9 @@ public protocol IPaymentProvider: AnyObject {
     /// Adds a handler to the payment queue with a specific ID.
     ///
     /// - Parameters:
-    ///   - withProductIdentifier: The product identifier.
+    ///   - productID: The product identifier.
     ///   - handler: The closure to be executed once the purchase is complete.
-    func addPaymentHandler(withProductIdentifier: String, handler: @escaping PaymentHandler)
+    func addPaymentHandler(productID: String, handler: @escaping PaymentHandler)
 
     /// Adds an App Store payment handler to the system.
     func set(shouldAddStorePaymentHandler: @escaping ShouldAddStorePaymentHandler)

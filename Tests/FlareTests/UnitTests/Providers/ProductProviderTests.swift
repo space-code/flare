@@ -9,14 +9,6 @@ import StoreKit
 import TestConcurrency
 import XCTest
 
-private extension String {
-    static let requestId = "request_identifier"
-}
-
-private extension Set where Element == String {
-    static let productIds: Set<Element> = .init(arrayLiteral: "1", "2", "3")
-}
-
 // MARK: - ProductProviderTests
 
 class ProductProviderTests: XCTestCase {
@@ -44,17 +36,17 @@ class ProductProviderTests: XCTestCase {
 
     // MARK: - Tests
 
-    func testThatProductProviderFetchProductsWithInvalidProductsIdentfiers() {
+    func test_thatProductProviderReturnsInvalidProductIDs_whenRequestProductsWithInvalidIDs() {
         // given
         var fetchResult: Result<[SKProduct], IAPError>?
         let completionHandler: IProductProvider.ProductsHandler = { result in fetchResult = result }
-        let request = PurchaseManagerTestHelper.makeRequest(with: .requestId)
+        let request = PurchaseManagerTestHelper.makeRequest(with: .requestID)
         let response = ProductResponseMock()
 
-        response.stubbedInvokedInvalidProductsIdentifiers = ["111"]
+        response.stubbedInvokedInvalidProductsIdentifiers = [.productID]
 
         // when
-        productProvider.fetch(productIds: .productIds, requestId: .requestId, completion: completionHandler)
+        productProvider.fetch(productIDs: .productIDs, requestID: .requestID, completion: completionHandler)
         productProvider.productsRequest(request, didReceive: response)
 
         // then
@@ -65,15 +57,15 @@ class ProductProviderTests: XCTestCase {
         }
     }
 
-    func testThatProductProviderFetchProductsWithValidProductsIdentfiers() {
+    func test_thatProductProviderReturnsProducts_whenRequestProductsWithValidProductIDs() {
         // given
         var fetchResult: Result<[SKProduct], IAPError>?
         let completionHandler: IProductProvider.ProductsHandler = { result in fetchResult = result }
-        let request = PurchaseManagerTestHelper.makeRequest(with: .requestId)
+        let request = PurchaseManagerTestHelper.makeRequest(with: .requestID)
         let response = ProductResponseMock()
 
         // when
-        productProvider.fetch(productIds: .productIds, requestId: .requestId, completion: completionHandler)
+        productProvider.fetch(productIDs: .productIDs, requestID: .requestID, completion: completionHandler)
         productProvider.productsRequest(request, didReceive: response)
 
         // then
@@ -84,15 +76,15 @@ class ProductProviderTests: XCTestCase {
         }
     }
 
-    func testThatProductProviderHandleRequestError() {
+    func test_thatProductProviderHandlesError_whenRequestDidFailWithError() {
         // given
         var fetchResult: Result<[SKProduct], IAPError>?
         let completionHandler: IProductProvider.ProductsHandler = { result in fetchResult = result }
-        let request = PurchaseManagerTestHelper.makeRequest(with: .requestId)
+        let request = PurchaseManagerTestHelper.makeRequest(with: .requestID)
         let error = IAPError.emptyProducts
 
         // when
-        productProvider.fetch(productIds: .productIds, requestId: .requestId, completion: completionHandler)
+        productProvider.fetch(productIDs: .productIDs, requestID: .requestID, completion: completionHandler)
         productProvider.request(request, didFailWithError: error)
 
         // then
@@ -102,4 +94,15 @@ class ProductProviderTests: XCTestCase {
             XCTFail()
         }
     }
+}
+
+// MARK: - Constants
+
+private extension String {
+    static let productID = "product_ID"
+    static let requestID = "request_identifier"
+}
+
+private extension Set where Element == String {
+    static let productIDs: Set<Element> = .init(arrayLiteral: "1", "2", "3")
 }

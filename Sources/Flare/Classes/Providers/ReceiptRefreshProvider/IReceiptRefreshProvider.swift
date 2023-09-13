@@ -13,14 +13,14 @@ public protocol IReceiptRefreshProvider {
     /// Refreshes the receipt, representing the user's transactions with your app.
     ///
     /// - Parameters:
-    ///   - requestId: The request identifier.
+    ///   - requestID: The request identifier.
     ///   - handler: The closure to be executed when the refresh operation ends.
-    func refresh(requestId: String, handler: @escaping ReceiptRefreshHandler)
+    func refresh(requestID: String, handler: @escaping ReceiptRefreshHandler)
 
     /// Refreshes the receipt, representing the user's transactions with your app.
     ///
-    /// - Parameter requestId: The request identifier.
+    /// - Parameter requestID: The request identifier.
     ///
     /// - Throws: `IAPError(error:)` if the request did fail with error.
-    func refresh(requestId: String) async throws
+    func refresh(requestID: String) async throws
 }

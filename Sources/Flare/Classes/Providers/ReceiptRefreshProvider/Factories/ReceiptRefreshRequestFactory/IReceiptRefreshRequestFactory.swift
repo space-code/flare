@@ -11,9 +11,9 @@ protocol IReceiptRefreshRequestFactory {
     /// Makes a new instance of `IReceiptRefreshRequest`.
     ///
     /// - Parameters:
-    ///   - id: The request's identifier.
+    ///   - requestID: The request's identifier.
     ///   - delegate: The request's delegate.
     ///
     /// - Returns: A request.
-    func make(id: String, delegate: SKRequestDelegate?) -> IReceiptRefreshRequest
+    func make(requestID: String, delegate: SKRequestDelegate?) -> IReceiptRefreshRequest
 }

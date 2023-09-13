@@ -49,7 +49,7 @@ class ReceiptRefreshProviderTests: XCTestCase {
 
     // MARK: - Tests
 
-    func test_thatReceiptRefreshProviderHandlesRequestError() {
+    func test_thatReceiptRefreshProviderHandlesRequestError_whenErrorOccurred() {
         // given
         receiptRefreshRequestFactoryMock.stubbedMakeResult = ReceiptRefreshRequestMock()
 
@@ -59,7 +59,7 @@ class ReceiptRefreshProviderTests: XCTestCase {
         let error = IAPError.paymentCancelled
 
         // when
-        receiptRefreshProvider.refresh(requestId: .requestID, handler: handler)
+        receiptRefreshProvider.refresh(requestID: .requestID, handler: handler)
         receiptRefreshProvider.request(request, didFailWithError: error)
 
         // then
@@ -68,7 +68,7 @@ class ReceiptRefreshProviderTests: XCTestCase {
         }
     }
 
-    func test_thatReceiptRefreshProviderFinishesRequest() {
+    func test_thatReceiptRefreshProviderFinishesRequest_whenRequestCompletedSuccessfully() {
         // given
         receiptRefreshRequestFactoryMock.stubbedMakeResult = ReceiptRefreshRequestMock()
 
@@ -77,7 +77,7 @@ class ReceiptRefreshProviderTests: XCTestCase {
         let handler: ReceiptRefreshHandler = { result = $0 }
 
         // when
-        receiptRefreshProvider.refresh(requestId: .requestID, handler: handler)
+        receiptRefreshProvider.refresh(requestID: .requestID, handler: handler)
         receiptRefreshProvider.requestDidFinish(request)
 
         // then
@@ -126,7 +126,7 @@ class ReceiptRefreshProviderTests: XCTestCase {
         var iapError: IAPError?
 
         do {
-            try await receiptRefreshProvider.refresh(requestId: .requestID)
+            try await receiptRefreshProvider.refresh(requestID: .requestID)
         } catch {
             iapError = error as? IAPError
         }
@@ -135,7 +135,7 @@ class ReceiptRefreshProviderTests: XCTestCase {
         XCTAssertEqual(iapError, IAPError(error: IAPError.paymentNotAllowed))
     }
 
-    func test_thatReceiptRefreshProviderRefreshesReceipt_whenRequestDid() async {
+    func test_thatReceiptRefreshProviderRefreshesReceipt_whenRequestCompletedSuccessfully() async {
         // given
         let request = ReceiptRefreshRequestMock()
         request.stubbedId = .requestID
@@ -150,7 +150,7 @@ class ReceiptRefreshProviderTests: XCTestCase {
         var iapError: IAPError?
 
         do {
-            try await receiptRefreshProvider.refresh(requestId: .requestID)
+            try await receiptRefreshProvider.refresh(requestID: .requestID)
         } catch {
             iapError = error as? IAPError
         }

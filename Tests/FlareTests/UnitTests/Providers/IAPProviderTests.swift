@@ -55,17 +55,17 @@ class IAPProviderTests: XCTestCase {
 
     func test_thatIAPProviderFetchesProducts() throws {
         // when
-        iapProvider.fetch(productsIds: .productIDs, completion: { _ in })
+        iapProvider.fetch(productIDs: .productIDs, completion: { _ in })
 
         // then
         let parameters = try XCTUnwrap(productProviderMock.invokedFetchParameters)
-        XCTAssertEqual(parameters.productIds, .productIDs)
-        XCTAssertTrue(!parameters.requestId.isEmpty)
+        XCTAssertEqual(parameters.productIDs, .productIDs)
+        XCTAssertTrue(!parameters.requestID.isEmpty)
     }
 
     func test_thatIAPProviderPurchasesProduct() throws {
         // when
-        iapProvider.purchase(productId: .productID, completion: { _ in })
+        iapProvider.purchase(productID: .productID, completion: { _ in })
 
         // then
         XCTAssertTrue(productProviderMock.invokedFetch)
@@ -113,7 +113,7 @@ class IAPProviderTests: XCTestCase {
         productProviderMock.stubbedFetchResult = .success(productsMock)
 
         // when
-        let products = try await iapProvider.fetch(productsIDs: .productIDs)
+        let products = try await iapProvider.fetch(productIDs: .productIDs)
 
         // then
         XCTAssertEqual(productsMock, products)
@@ -126,7 +126,7 @@ class IAPProviderTests: XCTestCase {
         // when
         var errorResult: Error?
         do {
-            _ = try await iapProvider.fetch(productsIDs: .productIDs)
+            _ = try await iapProvider.fetch(productIDs: .productIDs)
         } catch {
             errorResult = error
         }
@@ -141,7 +141,7 @@ class IAPProviderTests: XCTestCase {
 
         // when
         var error: Error?
-        iapProvider.purchase(productId: .productID) { result in
+        iapProvider.purchase(productID: .productID) { result in
             if case let .failure(result) = result {
                 error = result
             }
@@ -159,7 +159,7 @@ class IAPProviderTests: XCTestCase {
 
         // when
         var transactionResult: PaymentTransaction?
-        iapProvider.purchase(productId: .productID) { result in
+        iapProvider.purchase(productID: .productID) { result in
             if case let .success(transaction) = result {
                 transactionResult = transaction
             }
@@ -176,7 +176,7 @@ class IAPProviderTests: XCTestCase {
 
         // when
         var errorResult: Error?
-        iapProvider.purchase(productId: .productID) { result in
+        iapProvider.purchase(productID: .productID) { result in
             if case let .failure(error) = result {
                 errorResult = error
             }
@@ -192,7 +192,7 @@ class IAPProviderTests: XCTestCase {
 
         // when
         var errorResult: Error?
-        iapProvider.purchase(productId: .productID) { result in
+        iapProvider.purchase(productID: .productID) { result in
             if case let .failure(error) = result {
                 errorResult = error
             }
@@ -209,7 +209,7 @@ class IAPProviderTests: XCTestCase {
         // when
         var errorResult: Error?
         do {
-            _ = try await iapProvider.purchase(productId: .productID)
+            _ = try await iapProvider.purchase(productID: .productID)
         } catch {
             errorResult = error
         }
@@ -225,7 +225,7 @@ class IAPProviderTests: XCTestCase {
         paymentProviderMock.stubbedAddResult = (paymentQueueMock, .success(transactionMock))
 
         // when
-        let transactionResult = try await iapProvider.purchase(productId: .productID)
+        let transactionResult = try await iapProvider.purchase(productID: .productID)
 
         // then
         XCTAssertEqual(transactionMock, transactionResult.skTransaction)

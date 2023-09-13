@@ -8,9 +8,9 @@ import class StoreKit.SKReceiptRefreshRequest
 import protocol StoreKit.SKRequestDelegate
 
 final class ReceiptRefreshRequestFactory: IReceiptRefreshRequestFactory {
-    func make(id: String, delegate: SKRequestDelegate?) -> IReceiptRefreshRequest {
+    func make(requestID: String, delegate: SKRequestDelegate?) -> IReceiptRefreshRequest {
         let request = SKReceiptRefreshRequest()
-        request.id = id
+        request.id = requestID
         request.delegate = delegate
         return request
     }

@@ -19,26 +19,26 @@ final class IAPProviderMock: IIAPProvider {
 
     var invokedFetch = false
     var invokedFetchCount = 0
-    var invokedFetchParameters: (productsIds: Set<String>, completion: Closure<Result<[SKProduct], IAPError>>)?
-    var invokedFetchParametersList = [(productsIds: Set<String>, completion: Closure<Result<[SKProduct], IAPError>>)]()
+    var invokedFetchParameters: (productIDs: Set<String>, completion: Closure<Result<[SKProduct], IAPError>>)?
+    var invokedFetchParametersList = [(productIDs: Set<String>, completion: Closure<Result<[SKProduct], IAPError>>)]()
 
-    func fetch(productsIds: Set<String>, completion: @escaping Closure<Result<[SKProduct], IAPError>>) {
+    func fetch(productIDs: Set<String>, completion: @escaping Closure<Result<[SKProduct], IAPError>>) {
         invokedFetch = true
         invokedFetchCount += 1
-        invokedFetchParameters = (productsIds, completion)
-        invokedFetchParametersList.append((productsIds, completion))
+        invokedFetchParameters = (productIDs, completion)
+        invokedFetchParametersList.append((productIDs, completion))
     }
 
     var invokedPurchase = false
     var invokedPurchaseCount = 0
-    var invokedPurchaseParameters: (productId: String, completion: Closure<Result<PaymentTransaction, IAPError>>)?
-    var invokedPurchaseParametersList = [(productId: String, completion: Closure<Result<PaymentTransaction, IAPError>>)]()
+    var invokedPurchaseParameters: (productID: String, completion: Closure<Result<PaymentTransaction, IAPError>>)?
+    var invokedPurchaseParametersList = [(productID: String, completion: Closure<Result<PaymentTransaction, IAPError>>)]()
 
-    func purchase(productId: String, completion: @escaping Closure<Result<PaymentTransaction, IAPError>>) {
+    func purchase(productID: String, completion: @escaping Closure<Result<PaymentTransaction, IAPError>>) {
         invokedPurchase = true
         invokedPurchaseCount += 1
-        invokedPurchaseParameters = (productId, completion)
-        invokedPurchaseParametersList.append((productId, completion))
+        invokedPurchaseParameters = (productID, completion)
+        invokedPurchaseParametersList.append((productID, completion))
     }
 
     var invokedRefreshReceipt = false
@@ -96,11 +96,11 @@ final class IAPProviderMock: IIAPProvider {
     var invokedFetchAsyncParametersList = [(productIDs: Set<String>, Void)]()
     var fetchAsyncResult: [SKProduct] = []
 
-    func fetch(productsIDs: Set<String>) async throws -> [SKProduct] {
+    func fetch(productIDs: Set<String>) async throws -> [SKProduct] {
         invokedFetchAsync = true
         invokedFetchAsyncCount += 1
-        invokedFetchAsyncParameters = (productsIDs, ())
-        invokedFetchAsyncParametersList.append((productsIDs, ()))
+        invokedFetchAsyncParameters = (productIDs, ())
+        invokedFetchAsyncParametersList.append((productIDs, ()))
         return fetchAsyncResult
     }
 
@@ -110,11 +110,11 @@ final class IAPProviderMock: IIAPProvider {
     var invokedAsyncPurchaseParametersList = [(productID: String, Void)?]()
     var stubbedAsyncPurchase: PaymentTransaction!
 
-    func purchase(productId: String) async throws -> PaymentTransaction {
+    func purchase(productID: String) async throws -> PaymentTransaction {
         invokedAsyncPurchase = true
         invokedAsyncPurchaseCount += 1
-        invokedAsyncPurchaseParameters = (productId, ())
-        invokedAsyncPurchaseParametersList.append((productId, ()))
+        invokedAsyncPurchaseParameters = (productID, ())
+        invokedAsyncPurchaseParametersList.append((productID, ()))
         return stubbedAsyncPurchase
     }
 

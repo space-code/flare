@@ -28,15 +28,15 @@ final class IReceiptRefreshRequestFactoryTests: XCTestCase {
 
     func test_thatFactoryMakesReceipt() {
         // when
-        let receipt = factory.make(id: .productID, delegate: nil)
+        let receipt = factory.make(requestID: .requestID, delegate: nil)
 
         // then
-        XCTAssertEqual(receipt.id, .productID)
+        XCTAssertEqual(receipt.id, .requestID)
     }
 }
 
 // MARK: - Constants
 
 private extension String {
-    static let productID = "product_id"
+    static let requestID = "request_id"
 }

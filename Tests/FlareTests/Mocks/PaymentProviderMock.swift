@@ -74,14 +74,14 @@ final class PaymentProviderMock: IPaymentProvider {
 
     var invokedAddPaymentHandler = false
     var invokedAddPaymentHandlerCount = 0
-    var invokedAddPaymentHandlerParameters: (productIdentifier: String, handler: PaymentHandler)?
+    var invokedAddPaymentHandlerParameters: (productID: String, handler: PaymentHandler)?
     var invokedAddPaymentHandlerParametersList = [(productIdentifier: String, handler: PaymentHandler)]()
 
-    func addPaymentHandler(withProductIdentifier: String, handler: @escaping PaymentHandler) {
+    func addPaymentHandler(productID: String, handler: @escaping PaymentHandler) {
         invokedAddPaymentHandler = true
         invokedAddPaymentHandlerCount += 1
-        invokedAddPaymentHandlerParameters = (withProductIdentifier, handler)
-        invokedAddPaymentHandlerParametersList.append((withProductIdentifier, handler))
+        invokedAddPaymentHandlerParameters = (productID, handler)
+        invokedAddPaymentHandlerParametersList.append((productID, handler))
     }
 
     var invokedSetAddStorePaymentHandler = false

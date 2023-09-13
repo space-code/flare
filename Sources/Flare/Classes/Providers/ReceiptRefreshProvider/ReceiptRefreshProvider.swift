@@ -51,7 +51,7 @@ final class ReceiptRefreshProvider: NSObject {
     // MARK: Private
 
     private func makeRequest(id: String) -> IReceiptRefreshRequest {
-        receiptRefreshRequestFactory.make(id: id, delegate: self)
+        receiptRefreshRequestFactory.make(requestID: id, delegate: self)
     }
 
     private func fetch(request: IReceiptRefreshRequest, handler: @escaping ReceiptRefreshHandler) {
@@ -67,14 +67,14 @@ final class ReceiptRefreshProvider: NSObject {
 // MARK: IReceiptRefreshProvider
 
 extension ReceiptRefreshProvider: IReceiptRefreshProvider {
-    func refresh(requestId: String, handler: @escaping ReceiptRefreshHandler) {
-        let request = makeRequest(id: requestId)
+    func refresh(requestID: String, handler: @escaping ReceiptRefreshHandler) {
+        let request = makeRequest(id: requestID)
         fetch(request: request, handler: handler)
     }
 
-    func refresh(requestId: String) async throws {
+    func refresh(requestID: String) async throws {
         try await withCheckedThrowingContinuation { continuation in
-            refresh(requestId: requestId) { result in
+            refresh(requestID: requestID) { result in
                 continuation.resume(with: result)
             }
         }

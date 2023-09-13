@@ -19,8 +19,8 @@ public protocol IProductProvider {
     /// Retrieves localized information from the App Store about a specified list of products.
     ///
     /// - Parameters:
-    ///   - productIds: The list of product identifiers for which you wish to retrieve descriptions.
-    ///   - requestId: The request identifier.
+    ///   - productIDs: The list of product identifiers for which you wish to retrieve descriptions.
+    ///   - requestID: The request identifier.
     ///   - completion: The completion containing the response of retrieving products.
-    func fetch(productIds: Set<String>, requestId: String, completion: @escaping ProductsHandler)
+    func fetch(productIDs: Set<String>, requestID: String, completion: @escaping ProductsHandler)
 }

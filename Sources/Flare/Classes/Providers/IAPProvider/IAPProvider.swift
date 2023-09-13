@@ -33,24 +33,24 @@ final class IAPProvider: IIAPProvider {
         paymentQueue.canMakePayments
     }
 
-    func fetch(productsIds: Set<String>, completion: @escaping Closure<Result<[SKProduct], IAPError>>) {
+    func fetch(productIDs: Set<String>, completion: @escaping Closure<Result<[SKProduct], IAPError>>) {
         productProvider.fetch(
-            productIds: productsIds,
-            requestId: UUID().uuidString,
+            productIDs: productIDs,
+            requestID: UUID().uuidString,
             completion: completion
         )
     }
 
-    func fetch(productsIDs: Set<String>) async throws -> [SKProduct] {
+    func fetch(productIDs: Set<String>) async throws -> [SKProduct] {
         try await withCheckedThrowingContinuation { continuation in
-            self.fetch(productsIds: productsIDs) { result in
+            self.fetch(productIDs: productIDs) { result in
                 continuation.resume(with: result)
             }
         }
     }
 
-    func purchase(productId: String, completion: @escaping Closure<Result<PaymentTransaction, IAPError>>) {
-        productProvider.fetch(productIds: [productId], requestId: UUID().uuidString) { result in
+    func purchase(productID: String, completion: @escaping Closure<Result<PaymentTransaction, IAPError>>) {
+        productProvider.fetch(productIDs: [productID], requestID: UUID().uuidString) { result in
             switch result {
             case let .success(products):
                 guard let product = products.first else {
@@ -74,16 +74,16 @@ final class IAPProvider: IIAPProvider {
         }
     }
 
-    func purchase(productId: String) async throws -> PaymentTransaction {
+    func purchase(productID: String) async throws -> PaymentTransaction {
         try await withCheckedThrowingContinuation { continuation in
-            purchase(productId: productId) { result in
+            purchase(productID: productID) { result in
                 continuation.resume(with: result)
             }
         }
     }
 
     func refreshReceipt(completion: @escaping Closure<Result<String, IAPError>>) {
-        receiptRefreshProvider.refresh(requestId: UUID().uuidString) { [weak self] result in
+        receiptRefreshProvider.refresh(requestID: UUID().uuidString) { [weak self] result in
             switch result {
             case .success:
                 if let receipt = self?.receiptRefreshProvider.receipt {

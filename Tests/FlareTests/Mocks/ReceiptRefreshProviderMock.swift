@@ -18,15 +18,15 @@ final class ReceiptRefreshProviderMock: IReceiptRefreshProvider {
 
     var invokedRefresh = false
     var invokedRefreshCount = 0
-    var invokedRefreshParameters: (requestId: String, handler: ReceiptRefreshHandler)?
-    var invokedRefreshParametersList = [(requestId: String, handler: ReceiptRefreshHandler)]()
+    var invokedRefreshParameters: (requestID: String, handler: ReceiptRefreshHandler)?
+    var invokedRefreshParametersList = [(requestID: String, handler: ReceiptRefreshHandler)]()
     var stubbedRefreshResult: Result<Void, IAPError>?
 
-    func refresh(requestId: String, handler: @escaping ReceiptRefreshHandler) {
+    func refresh(requestID: String, handler: @escaping ReceiptRefreshHandler) {
         invokedRefresh = true
         invokedRefreshCount += 1
-        invokedRefreshParameters = (requestId, handler)
-        invokedRefreshParametersList.append((requestId, handler))
+        invokedRefreshParameters = (requestID, handler)
+        invokedRefreshParametersList.append((requestID, handler))
 
         if let result = stubbedRefreshResult {
             handler(result)
@@ -38,10 +38,10 @@ final class ReceiptRefreshProviderMock: IReceiptRefreshProvider {
     var invokedAsyncRefreshParameters: (requestID: String, Void)?
     var invokedAsyncRefreshParametersList = [(requestID: String, Void)]()
 
-    func refresh(requestId: String) async throws {
+    func refresh(requestID: String) async throws {
         invokedAsyncRefresh = true
         invokedAsyncRefreshCount += 1
-        invokedAsyncRefreshParameters = (requestId, ())
-        invokedAsyncRefreshParametersList.append((requestId, ()))
+        invokedAsyncRefreshParameters = (requestID, ())
+        invokedAsyncRefreshParametersList.append((requestID, ()))
     }
 }

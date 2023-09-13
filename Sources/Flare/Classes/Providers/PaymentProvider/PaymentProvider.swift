@@ -47,17 +47,17 @@ extension PaymentProvider: IPaymentProvider {
     }
 
     func add(payment: SKPayment, handler: @escaping PaymentHandler) {
-        addPaymentHandler(withProductIdentifier: payment.productIdentifier, handler: handler)
+        addPaymentHandler(productID: payment.productIdentifier, handler: handler)
         dispatchQueueFactory.main().async {
             self.paymentQueue.add(payment)
         }
     }
 
-    func addPaymentHandler(withProductIdentifier productIdentifier: String, handler: @escaping PaymentHandler) {
+    func addPaymentHandler(productID: String, handler: @escaping PaymentHandler) {
         privateQueue.async {
-            var handlers: [PaymentHandler] = self.paymentHandlers[productIdentifier] ?? []
+            var handlers: [PaymentHandler] = self.paymentHandlers[productID] ?? []
             handlers.append(handler)
-            self.paymentHandlers[productIdentifier] = handlers
+            self.paymentHandlers[productID] = handlers
         }
     }
 

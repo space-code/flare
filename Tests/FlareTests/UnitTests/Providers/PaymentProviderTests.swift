@@ -49,7 +49,7 @@ class PaymentProviderTests: XCTestCase {
 
     // MARK: - Tests
 
-    func testThatPaymentProviderCanMakePayments() {
+    func test_thatPaymentProviderCanMakePayments() {
         // given
         paymentQueueMock.stubbedCanMakePayments = true
 
@@ -57,7 +57,7 @@ class PaymentProviderTests: XCTestCase {
         XCTAssertTrue(paymentProvider.canMakePayments)
     }
 
-    func testThatPaymentProviderAddTransactionObserver() throws {
+    func test_thatPaymentProviderAddsTransactionObserver() throws {
         // when
         paymentProvider.addTransactionObserver()
 
@@ -66,7 +66,7 @@ class PaymentProviderTests: XCTestCase {
         XCTAssertTrue(observer.0 === paymentProvider)
     }
 
-    func testThatPaymentProviderRemoveTransactionObserver() throws {
+    func test_thatPaymentProviderRemovesTransactionObserver() throws {
         // given
         paymentProvider.addTransactionObserver()
 
@@ -80,7 +80,7 @@ class PaymentProviderTests: XCTestCase {
         XCTAssertTrue(observer.0 === paymentProvider)
     }
 
-    func testThatPaymentProviderRestoreCompletedTransactions() {
+    func test_thatPaymentProviderRestoresCompletedTransactions() {
         // given
         let restoreHandler: RestoreHandler = { _, _ in }
 
@@ -92,7 +92,7 @@ class PaymentProviderTests: XCTestCase {
         XCTAssertEqual(paymentQueueMock.invokedRestoreCompletedTransactionsCount, 1)
     }
 
-    func testThatPaymentProviderAddPaymentToQueueWithTransactions() {
+    func test_thatPaymentProviderAddsPaymentToQueueWithTransactions() {
         // given
         var handledPaymentQueue: PaymentQueue?
         let product = SKProduct()
@@ -111,7 +111,7 @@ class PaymentProviderTests: XCTestCase {
         XCTAssertTrue(handledPaymentQueue === paymentQueue)
     }
 
-    func testThatPaymentProviderAddPaymentToQueueWithoutTransactions() {
+    func test_thatPaymentProviderAddsPaymentToQueueWithoutTransactions() {
         // given
         var handledPaymentQueue: PaymentQueue?
         let product = SKProduct()
@@ -129,7 +129,7 @@ class PaymentProviderTests: XCTestCase {
         XCTAssertNil(handledPaymentQueue)
     }
 
-    func testThatPaymentProviderAddPaymentHandler() {
+    func test_thatPaymentProviderAddsPaymentHandler() {
         // given
         var handledPaymentQueue: PaymentQueue?
         let paymentQueue = SKPaymentQueue()
@@ -138,14 +138,14 @@ class PaymentProviderTests: XCTestCase {
             .map { PurchaseManagerTestHelper.makePaymentTransaction(identifier: .productId, state: $0) }
 
         // when
-        paymentProvider.addPaymentHandler(withProductIdentifier: .productId, handler: paymentHandler)
+        paymentProvider.addPaymentHandler(productID: .productId, handler: paymentHandler)
         paymentProvider.paymentQueue(paymentQueue, updatedTransactions: paymentTransactions)
 
         // then
         XCTAssertTrue(handledPaymentQueue === paymentQueue)
     }
 
-    func testThatPaymentProviderCallFinishTransaction() {
+    func test_thatPaymentProviderCallsFinishTransaction() {
         // given
         let transactions = transactionsStates.map { PurchaseManagerTestHelper.makePaymentTransaction(state: $0) }
 
@@ -157,7 +157,7 @@ class PaymentProviderTests: XCTestCase {
         XCTAssertEqual(paymentQueueMock.invokedFinishTransactionCount, 2)
     }
 
-    func testThatPaymentProviderCallFallbackHandlerWhenPaymentHandlersDontExist() {
+    func test_thatPaymentProviderCallsFallbackHandler_whenPaymentHandlersDoNotExist() {
         // given
         var handledPaymentQueue: PaymentQueue?
         let transaction = PurchaseManagerTestHelper.makePaymentTransaction(state: .purchased)
@@ -172,7 +172,7 @@ class PaymentProviderTests: XCTestCase {
     }
 
     #if os(iOS) || os(tvOS) || os(macOS)
-        func testThatPaymentProviderAddAppStoreHandler() {
+        func test_thatPaymentProviderAddsAppStoreHandler() {
             // given
             let payment = SKPayment()
             let product = SKProduct()
@@ -200,7 +200,7 @@ class PaymentProviderTests: XCTestCase {
         }
     #endif
 
-    func testThatPaymentQueueFinishTransaction() {
+    func test_thatPaymentQueueFinishesTransaction() {
         // given
         let transaction = PurchaseManagerTestHelper.makePaymentTransaction(state: .purchased)
 
