@@ -63,7 +63,7 @@ class FlareTests: XCTestCase {
         XCTAssertEqual(iapProviderMock.invokedPurchaseParameters?.productID, .productID)
     }
 
-    func test_thatFlareDoesNotAPurchaseProduct_whenUserCannotMakePayments() {
+    func test_thatFlareDoesNotPurchaseAProduct_whenUserCannotMakePayments() {
         // given
         iapProviderMock.stubbedCanMakePayments = false
 
@@ -112,7 +112,7 @@ class FlareTests: XCTestCase {
         XCTAssertEqual(error, errorMock)
     }
 
-    func test_thatFlareDoesNotAPurchaseProduct_whenUserCannotMakePayments() async {
+    func test_thatFlareDoesNotPurchaseAProduct_whenUserCannotMakePayments() async {
         // given
         iapProviderMock.stubbedCanMakePayments = false
         iapProviderMock.stubbedAsyncPurchase = PaymentTransaction(PaymentTransactionMock())
@@ -160,7 +160,7 @@ class FlareTests: XCTestCase {
                 receipt = result
             }
         })
-        iapProviderMock.invokedRefreshReceiptParameters?.0(.success(.receipt))
+        iapProviderMock.invokedRefreshReceiptParameters?.completion(.success(.receipt))
 
         // then
         XCTAssertTrue(iapProviderMock.invokedRefreshReceipt)
@@ -175,7 +175,7 @@ class FlareTests: XCTestCase {
                 error = result
             }
         })
-        iapProviderMock.invokedRefreshReceiptParameters?.0(.failure(.paymentNotAllowed))
+        iapProviderMock.invokedRefreshReceiptParameters?.completion(.failure(.paymentNotAllowed))
 
         // then
         XCTAssertTrue(iapProviderMock.invokedRefreshReceipt)

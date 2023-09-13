@@ -43,8 +43,8 @@ final class IAPProviderMock: IIAPProvider {
 
     var invokedRefreshReceipt = false
     var invokedRefreshReceiptCount = 0
-    var invokedRefreshReceiptParameters: (Closure<Result<String, IAPError>>, Void)?
-    var invokedRefreshReceiptParametersList = [(Closure<Result<String, IAPError>>, Void)]()
+    var invokedRefreshReceiptParameters: (completion: Closure<Result<String, IAPError>>, Void)?
+    var invokedRefreshReceiptParametersList = [(completion: Closure<Result<String, IAPError>>, Void)]()
     var stubbedRefreshReceiptResult: Result<String, IAPError>?
 
     func refreshReceipt(completion: @escaping Closure<Result<String, IAPError>>) {

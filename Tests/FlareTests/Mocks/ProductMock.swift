@@ -15,4 +15,16 @@ final class ProductMock: SKProduct {
         invokedProductIdentifierCount += 1
         return stubbedProductIdentifier
     }
+
+    var stubbedPriceLocale: Locale!
+
+    override var priceLocale: Locale {
+        stubbedPriceLocale
+    }
+
+    var stubbedPrice: NSDecimalNumber!
+
+    override var price: NSDecimalNumber {
+        stubbedPrice
+    }
 }
