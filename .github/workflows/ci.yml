@@ -6,6 +6,8 @@ on:
       - main
       - dev
   pull_request:
+    paths:
+      - '.swiftlint.yml'
     branches: [ main ]
 
 concurrency:
@@ -13,6 +15,16 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  SwiftLint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: GitHub Action for SwiftLint
+        uses: norio-nomura/action-swiftlint@3.2.1
+        with:
+          args: --strict
+        env:
+          DIFF_BASE: ${{ github.base_ref }}
   Latest:
     name: Test Latest (iOS, macOS, tvOS, watchOS)
     runs-on: macOS-12
