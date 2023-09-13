@@ -9,13 +9,10 @@ let package = Package(
         .macOS(.v10_15),
         .iOS(.v13),
         .watchOS(.v7),
-        .tvOS(.v11),
+        .tvOS(.v13),
     ],
     products: [
-        .library(
-            name: "Flare",
-            targets: ["Flare"]
-        ),
+        .library(name: "Flare", targets: ["Flare"]),
     ],
     dependencies: [
         .package(url: "https://github.com/space-code/concurrency.git", .upToNextMajor(from: "0.0.1")),
@@ -23,11 +20,16 @@ let package = Package(
     targets: [
         .target(
             name: "Flare",
-            dependencies: [.product(name: "Concurrency", package: "concurrency")]
+            dependencies: [
+                .product(name: "Concurrency", package: "concurrency"),
+            ]
         ),
         .testTarget(
             name: "FlareTests",
-            dependencies: ["Flare", .product(name: "TestConcurrency", package: "concurrency")]
+            dependencies: [
+                "Flare",
+                .product(name: "TestConcurrency", package: "concurrency"),
+            ]
         ),
     ]
 )

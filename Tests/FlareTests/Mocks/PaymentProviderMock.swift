@@ -59,24 +59,29 @@ final class PaymentProviderMock: IPaymentProvider {
     var invokedAddCount = 0
     var invokedAddParameters: (payment: SKPayment, handler: PaymentHandler)?
     var invokedAddParametersList = [(payment: SKPayment, handler: PaymentHandler)]()
+    var stubbedAddResult: (queue: PaymentQueue, result: Result<SKPaymentTransaction, IAPError>)?
 
     func add(payment: SKPayment, handler: @escaping PaymentHandler) {
         invokedAdd = true
         invokedAddCount += 1
         invokedAddParameters = (payment, handler)
         invokedAddParametersList.append((payment, handler))
+
+        if let result = stubbedAddResult {
+            handler(result.0, result.1)
+        }
     }
 
     var invokedAddPaymentHandler = false
     var invokedAddPaymentHandlerCount = 0
-    var invokedAddPaymentHandlerParameters: (productIdentifier: String, handler: PaymentHandler)?
+    var invokedAddPaymentHandlerParameters: (productID: String, handler: PaymentHandler)?
     var invokedAddPaymentHandlerParametersList = [(productIdentifier: String, handler: PaymentHandler)]()
 
-    func addPaymentHandler(withProductIdentifier: String, handler: @escaping PaymentHandler) {
+    func addPaymentHandler(productID: String, handler: @escaping PaymentHandler) {
         invokedAddPaymentHandler = true
         invokedAddPaymentHandlerCount += 1
-        invokedAddPaymentHandlerParameters = (withProductIdentifier, handler)
-        invokedAddPaymentHandlerParametersList.append((withProductIdentifier, handler))
+        invokedAddPaymentHandlerParameters = (productID, handler)
+        invokedAddPaymentHandlerParametersList.append((productID, handler))
     }
 
     var invokedSetAddStorePaymentHandler = false
@@ -95,12 +100,17 @@ final class PaymentProviderMock: IPaymentProvider {
     var invokedFallbackHandlerCount = 0
     var invokedFallbackHandlerParameters: (PaymentHandler, Void)?
     var invokedFallbackHandlerParametersList = [(PaymentHandler, Void)]()
+    var stubbedFallbackHandlerResult: (queue: PaymentQueue, result: Result<SKPaymentTransaction, IAPError>)?
 
     func set(fallbackHandler: @escaping PaymentHandler) {
         invokedFallbackHandler = true
         invokedFallbackHandlerCount += 1
         invokedFallbackHandlerParameters = (fallbackHandler, ())
         invokedFallbackHandlerParametersList.append((fallbackHandler, ()))
+
+        if let result = stubbedFallbackHandlerResult {
+            fallbackHandler(result.queue, result.result)
+        }
     }
 
     var invokedFinishTransaction = false

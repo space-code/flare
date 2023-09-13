@@ -17,8 +17,8 @@ final class ProductProvider: NSObject, IProductProvider {
 
     // MARK: Internal
 
-    func fetch(productIds ids: Set<String>, requestId: String, completion: @escaping ProductsHandler) {
-        let request = makeRequest(ids: ids, requestId: requestId)
+    func fetch(productIDs ids: Set<String>, requestID: String, completion: @escaping ProductsHandler) {
+        let request = makeRequest(ids: ids, requestID: requestID)
         fetch(request: request, completion: completion)
     }
 
@@ -29,9 +29,9 @@ final class ProductProvider: NSObject, IProductProvider {
 
     private lazy var dispatchQueue: IDispatchQueue = dispatchQueueFactory.privateQueue(label: String(describing: self))
 
-    private func makeRequest(ids: Set<String>, requestId: String) -> SKProductsRequest {
+    private func makeRequest(ids: Set<String>, requestID: String) -> SKProductsRequest {
         let request = SKProductsRequest(productIdentifiers: ids)
-        request.id = requestId
+        request.id = requestID
         request.delegate = self
         return request
     }
