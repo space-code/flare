@@ -12,10 +12,7 @@ let package = Package(
         .tvOS(.v11),
     ],
     products: [
-        .library(
-            name: "Flare",
-            targets: ["Flare"]
-        ),
+        .library(name: "Flare", targets: ["Flare"]),
     ],
     dependencies: [
         .package(url: "https://github.com/space-code/concurrency.git", .upToNextMajor(from: "0.0.1")),
@@ -23,11 +20,16 @@ let package = Package(
     targets: [
         .target(
             name: "Flare",
-            dependencies: [.product(name: "Concurrency", package: "concurrency")]
+            dependencies: [
+                .product(name: "Concurrency", package: "concurrency"),
+            ]
         ),
         .testTarget(
             name: "FlareTests",
-            dependencies: ["Flare", .product(name: "TestConcurrency", package: "concurrency")]
+            dependencies: [
+                "Flare",
+                .product(name: "TestConcurrency", package: "concurrency"),
+            ]
         ),
     ]
 )
