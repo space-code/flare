@@ -3,7 +3,7 @@
 ### Overview
 
 * [Introduction](#introduction)
-* [Flare Diagram](#diagram)
+* [Flare Diagram](#flare-diagram)
 * [In-App Purchases](#in-app-purchases)
     - [Getting Products](#getting-products)
     - [Purchasing Product](#purchasing-product)
@@ -21,12 +21,12 @@ Flare provides an elegant interface for In-App Purchases, supporting non-consuma
 
 ![Flare: Components](https://raw.githubusercontent.com/space-code/flare/dev/Documentation/Resources/flare.png)
 
-`Flare` is a central component that serves as the client API for managing various aspects of in-app purchases and payments in your application. It is designed to simplify the integration of payment processing and in-app purchase functionality into your software.
-`IAPProvider` is a fundamental component of `Flare` that handles all in-app purchase operations. It offers an API to initiate, verify, and manage in-app purchases within your application. 
-`IPaymentProvider` is a central component in `Flare` that orchestrates various payment-related operations within your application. It acts as the bridge between the payment gateway and your app's logic. 
-`IProductProvider` is a component of `Flare` that helps managing the products or services available for purchase within your app.
-`IReceiptRefreshProvider` is responsible for refreshing and managing receipt associated with in-app purchases. 
-`IAppStoreReceiptProvider` manages and provides access to the app's receipt, which contains a record of all in-app purchases made by the user.
+- `Flare` is a central component that serves as the client API for managing various aspects of in-app purchases and payments in your application. It is designed to simplify the integration of payment processing and in-app purchase functionality into your software.
+- `IAPProvider` is a fundamental component of `Flare` that handles all in-app purchase operations. It offers an API to initiate, verify, and manage in-app purchases within your application. 
+- `IPaymentProvider` is a central component in `Flare` that orchestrates various payment-related operations within your application. It acts as the bridge between the payment gateway and your app's logic. 
+- `IProductProvider` is a component of `Flare` that helps managing the products or services available for purchase within your app.
+- `IReceiptRefreshProvider` is responsible for refreshing and managing receipt associated with in-app purchases. 
+- `IAppStoreReceiptProvider` manages and provides access to the app's receipt, which contains a record of all in-app purchases made by the user.
 
 ## In-App Purchases
 
