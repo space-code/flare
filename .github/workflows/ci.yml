@@ -8,7 +8,9 @@ on:
   pull_request:
     paths:
       - '.swiftlint.yml'
-    branches: [ main ]
+    branches:
+      - main
+      - dev
 
 concurrency:
   group: ci
