@@ -9,6 +9,7 @@
 <a href="https://github.com/space-code/flare"><img alt="CI" src="https://github.com/space-code/flare/actions/workflows/ci.yml/badge.svg?branch=main"></a>
 <a href="https://codecov.io/gh/space-code/flare"><img alt="CodeCov" src="https://codecov.io/gh/space-code/flare/graph/badge.svg?token=WUWUSKQZWY"></a>
 <a href="https://github.com/apple/swift-package-manager" alt="Flare on Swift Package Manager" title="Flare on Swift Package Manager"><img src="https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg" /></a>
+<a href="https://github.com/space-code/flare"><img alt="CI" src="https://github.com/space-code/flare/actions/workflows/ci.yml/badge.svg?branch=main"></a>
 </p>
 
 ## Description
