@@ -8,9 +8,10 @@ on:
   pull_request:
     paths:
       - '.swiftlint.yml'
-    branches:
-      - main
-      - dev
+      - ".github/workflows/**"
+      - "Package.swift"
+      - "Source/**"
+      - "Tests/**"
 
 concurrency:
   group: ci
