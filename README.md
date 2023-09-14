@@ -46,7 +46,7 @@ Once you have your Swift package set up, adding `flare` as a dependency is as ea
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/space-code/flare.git", .upToNextMajor(from: "1.0.0"))
+    .package(url: "https://github.com/space-code/flare.git", .upToNextMajor(from: "2.0.0"))
 ]
 ```
 
