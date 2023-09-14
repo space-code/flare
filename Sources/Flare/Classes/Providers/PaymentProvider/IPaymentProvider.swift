@@ -5,51 +5,59 @@
 
 import StoreKit
 
-/// Payment provider.
+/// Type that provides payment functionality.
 public protocol IPaymentProvider: AnyObject {
     /// False if this device is not able or allowed to make payments
     var canMakePayments: Bool { get }
 
-    /// Payment transactions.
+    /// The active payment transactinos.
     var transactions: [PaymentTransaction] { get }
 
+    /// Adds transaction observer to a payment queue.
     /// The transactions array will only be synchronized with the server while the queue has observers.
-    /// This may require that the user authenticate.
+    ///
+    /// - Note: This may require that the user authenticate.
     func addTransactionObserver()
+
+    /// Removes transaction observer from a payment queue.
     /// The transactions array will only be synchronized with the server while the queue has observers.
-    /// This may require that the user authenticate.
+    ///
+    /// - Note: This may require that the user authenticate.
     func removeTransactionObserver()
 
-    /// Will add completed transactions for the current user back to the queue to be re-completed. User will be asked to authenticate.
+    /// Restores completed transactions for the current user back to the queue for re-completion.
+    ///
+    /// - Note: A user will be asked to authenticate.
     ///
     /// - Parameter handler: A restore handler.
     func restoreCompletedTransactions(handler: @escaping RestoreHandler)
 
-    /// Add a payment to the server queue.
+    /// Adds a payment to the payment queue.
     ///
     /// - Parameters:
-    ///   - payment: A payment object identifies a product and the quantity of those items the user would like to purchase.
-    ///   - handler: A payment handler.
+    ///   - payment: The payment object identifies a product and specifies the quantity of
+    ///              those items the user would like to purchase.
+    ///   - handler: The closure to be executed once the purchase is complete.
     func add(payment: SKPayment, handler: @escaping PaymentHandler)
 
-    /// Add handler to the payment with specific id.
+    /// Adds a handler to the payment queue with a specific ID.
     ///
     /// - Parameters:
-    ///   - withProductIdentifier: Product identifier.
-    ///   - handler: A payment handler.
-    func addPaymentHandler(withProductIdentifier: String, handler: @escaping PaymentHandler)
+    ///   - productID: The product identifier.
+    ///   - handler: The closure to be executed once the purchase is complete.
+    func addPaymentHandler(productID: String, handler: @escaping PaymentHandler)
 
-    /// Add App Store payment handler.
+    /// Adds an App Store payment handler to the system.
     func set(shouldAddStorePaymentHandler: @escaping ShouldAddStorePaymentHandler)
 
-    /// Common handler for transactions that don't have a dedicated payment handler.
+    /// Sets a common handler for transactions that do not have a dedicated payment handler.
     ///
-    /// - Parameter fallbackHandler: A payment handler.
+    /// - Parameter fallbackHandler: The closure to be executed for all payments that don't have a dedicated payment handler.
     func set(fallbackHandler: @escaping PaymentHandler)
 
-    /// Remove a finished (i.e. failed or completed) transaction from the queue.
+    /// Removes a finished (i.e. failed or completed) transaction from the queue.
     /// Attempting to finish a purchasing transaction will throw an exception.
     ///
-    /// - Parameter transaction: An object in the payment queue.
+    /// - Parameter transaction: The payment transaction.
     func finish(transaction: PaymentTransaction)
 }

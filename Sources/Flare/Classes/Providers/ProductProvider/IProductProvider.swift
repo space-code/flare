@@ -16,11 +16,11 @@ public typealias ReceiptRefreshHandler = (Result<Void, IAPError>) -> Void
 public protocol IProductProvider {
     typealias ProductsHandler = Closure<Result<[SKProduct], IAPError>>
 
-    /// Retrieve localized information from the App Store about a specified list of products.
+    /// Retrieves localized information from the App Store about a specified list of products.
     ///
     /// - Parameters:
-    ///   - productIds: The list of product identifiers for the products you wish to retrieve descriptions of.
-    ///   - requestId: A request id.
-    ///   - completion: A products handler.
-    func fetch(productIds: Set<String>, requestId: String, completion: @escaping ProductsHandler)
+    ///   - productIDs: The list of product identifiers for which you wish to retrieve descriptions.
+    ///   - requestID: The request identifier.
+    ///   - completion: The completion containing the response of retrieving products.
+    func fetch(productIDs: Set<String>, requestID: String, completion: @escaping ProductsHandler)
 }

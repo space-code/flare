@@ -47,17 +47,17 @@ extension PaymentProvider: IPaymentProvider {
     }
 
     func add(payment: SKPayment, handler: @escaping PaymentHandler) {
-        addPaymentHandler(withProductIdentifier: payment.productIdentifier, handler: handler)
+        addPaymentHandler(productID: payment.productIdentifier, handler: handler)
         dispatchQueueFactory.main().async {
             self.paymentQueue.add(payment)
         }
     }
 
-    func addPaymentHandler(withProductIdentifier productIdentifier: String, handler: @escaping PaymentHandler) {
+    func addPaymentHandler(productID: String, handler: @escaping PaymentHandler) {
         privateQueue.async {
-            var handlers: [PaymentHandler] = self.paymentHandlers[productIdentifier] ?? []
+            var handlers: [PaymentHandler] = self.paymentHandlers[productID] ?? []
             handlers.append(handler)
-            self.paymentHandlers[productIdentifier] = handlers
+            self.paymentHandlers[productID] = handlers
         }
     }
 
@@ -98,13 +98,12 @@ extension PaymentProvider: SKPaymentTransactionObserver {
             @unknown default:
                 continue
             }
-
             privateQueue.async { [weak self] in
-                guard let self = self else {
-                    return
-                }
+                guard let self = self else { return }
 
-                if let handlers = self.paymentHandlers.removeValue(forKey: transaction.payment.productIdentifier), !handlers.isEmpty {
+                if let handlers = self.paymentHandlers.removeValue(
+                    forKey: transaction.payment.productIdentifier
+                ), !handlers.isEmpty {
                     self.dispatchQueueFactory.main().async {
                         handlers.forEach { $0(queue, .success(transaction)) }
                     }
@@ -139,9 +138,9 @@ extension PaymentProvider: SKPaymentTransactionObserver {
     }
 
     #if os(iOS) || os(tvOS) || os(macOS)
-    func paymentQueue(_ queue: SKPaymentQueue, shouldAddStorePayment payment: SKPayment, for product: SKProduct) -> Bool {
-        shouldAddStorePaymentHandler?(queue, payment, product) ?? false
-    }
+        func paymentQueue(_ queue: SKPaymentQueue, shouldAddStorePayment payment: SKPayment, for product: SKProduct) -> Bool {
+            shouldAddStorePaymentHandler?(queue, payment, product) ?? false
+        }
     #endif
 
     func finish(transaction: PaymentTransaction) {
