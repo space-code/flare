@@ -34,7 +34,7 @@ Flare is a framework written in Swift that makes it easy for you to work with in
 Check out [flare documentation](https://github.com/space-code/flare/blob/main/Documentation/Usage.md).
 
 ## Requirements
-- iOS 13.0+ / macOS 10.15+ / tvOS 13.0+ / watchOS 7.0+
+- iOS 13.0+ / macOS 10.15+ / tvOS 13.0+ / watchOS 7.0+ / visionOS 1.0+
 - Xcode 14.0
 - Swift 5.5
 

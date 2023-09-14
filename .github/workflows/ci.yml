@@ -63,3 +63,20 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           xcode: true
           xcode_archive_path: "./${{ matrix.sdk }}.xcresult"
+  Beta:
+    name: "Test Betas"
+    runs-on: macos-13
+    env:
+      DEVELOPER_DIR: "/Applications/Xcode_15.0.app/Contents/Developer"
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - destination: "OS=1.0,name=Apple Vision Pro"
+            name: "visionOS"
+            scheme: "Flare"
+    steps:
+      - uses: actions/checkout@v3
+      - name: ${{ matrix.name }}
+        run: xcodebuild test -scheme "${{ matrix.scheme }}" -destination "${{ matrix.destination }}" clean
