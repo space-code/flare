@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 5.5
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 // swiftlint:disable all
 
@@ -11,7 +11,6 @@ let package = Package(
         .iOS(.v13),
         .watchOS(.v7),
         .tvOS(.v13),
-        .visionOS(.v1),
     ],
     products: [
         .library(name: "Flare", targets: ["Flare"]),
