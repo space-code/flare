@@ -79,4 +79,17 @@ public protocol IIAPProvider {
     ///
     /// - Note: This may require that the user authenticate.
     func removeTransactionObserver()
+
+    #if os(iOS) || VISION_OS
+        /// Present the refund request sheet for the specified transaction in a window scene.
+        ///
+        /// - Parameter productID: The identifier of the transaction the user is requesting a refund for.
+        ///
+        /// - Returns: The result of the refund request.
+        @available(iOS 15.0, *)
+        @available(macOS, unavailable)
+        @available(watchOS, unavailable)
+        @available(tvOS, unavailable)
+        func beginRefundRequest(productID: String) async throws -> RefundRequestStatus
+    #endif
 }

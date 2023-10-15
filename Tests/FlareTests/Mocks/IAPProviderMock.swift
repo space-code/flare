@@ -137,4 +137,17 @@ final class IAPProviderMock: IIAPProvider {
             fatalError("An unknown type")
         }
     }
+
+    var invokedBeginRefundRequest = false
+    var invokedBeginRefundRequestCount = 0
+    var invokedBeginRefundRequestParameters: (productID: String, Void)?
+    var invokedBeginRefundRequestParametersList = [(productID: String, Void)]()
+    var stubbedBeginRefundRequest: RefundRequestStatus!
+    func beginRefundRequest(productID: String) async throws -> RefundRequestStatus {
+        invokedBeginRefundRequest = true
+        invokedBeginRefundRequestCount += 1
+        invokedBeginRefundRequestParameters = (productID, ())
+        invokedBeginRefundRequestParametersList.append((productID, ()))
+        return stubbedBeginRefundRequest
+    }
 }

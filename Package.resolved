@@ -9,6 +9,15 @@
           "revision": "f9611694f77f64e43d9467a16b2f5212cd04099b",
           "version": "0.0.1"
         }
+      },
+      {
+        "package": "ObjectsFactory",
+        "repositoryURL": "https://github.com/space-code/objects-factory.git",
+        "state": {
+          "branch": null,
+          "revision": "be016801934d18d91e33845e5e5b9a12617698b0",
+          "version": "1.0.0"
+        }
       }
     ]
   },
