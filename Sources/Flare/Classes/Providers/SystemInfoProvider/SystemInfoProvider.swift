@@ -43,11 +43,11 @@ extension SystemInfoProvider: ISystemInfoProvider {
                     }
                 #endif
 
-                if let windowScene = scenes.first as? UIWindowScene {
-                    return windowScene
-                } else {
+                guard let windowScene = scenes.first as? UIWindowScene else {
                     throw IAPError.unknown
                 }
+
+                return windowScene
             }
         }
     #endif
