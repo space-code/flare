@@ -1,4 +1,4 @@
-// swift-tools-version: 5.5
+// swift-tools-version: 5.7
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 // swiftlint:disable all
 
@@ -17,6 +17,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/space-code/concurrency.git", .upToNextMajor(from: "0.0.1")),
+        .package(url: "https://github.com/space-code/objects-factory.git", .upToNextMajor(from: "1.0.0")),
     ],
     targets: [
         .target(
@@ -29,6 +30,7 @@ let package = Package(
             name: "FlareTests",
             dependencies: [
                 "Flare",
+                .product(name: "ObjectsFactory", package: "objects-factory"),
                 .product(name: "TestConcurrency", package: "concurrency"),
             ]
         ),

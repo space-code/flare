@@ -4,6 +4,8 @@
 
 import PackageDescription
 
+let visionOSSetting: SwiftSetting = .define("VISION_OS", .when(platforms: [.visionOS]))
+
 let package = Package(
     name: "Flare",
     platforms: [
@@ -25,7 +27,8 @@ let package = Package(
             name: "Flare",
             dependencies: [
                 .product(name: "Concurrency", package: "concurrency"),
-            ]
+            ],
+            swiftSettings: [visionOSSetting]
         ),
         .testTarget(
             name: "FlareTests",
