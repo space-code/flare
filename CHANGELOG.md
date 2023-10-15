@@ -7,7 +7,8 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]()
 
 #### Added
-- visionOS support
+- Added `visionOS` to list of supported platforms
+  - Added in Pull Request [#5](https://github.com/space-code/flare/pull/5).
 
 ## [2.0.0](https://github.com/space-code/flare/releases/tag/2.0.0)
 Released on 2023-09-13.
