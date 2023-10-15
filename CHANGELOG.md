@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+
+## Added
+- Implement the refund purchase
+  - Added in Pull Request [#6](https://github.com/space-code/flare/pull/6).
+
 #### 2.x Releases
 - `2.0.x` Releases - [2.0.0](#200)
 
