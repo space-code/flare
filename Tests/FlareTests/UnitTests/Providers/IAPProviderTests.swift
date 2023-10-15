@@ -16,6 +16,8 @@ class IAPProviderTests: XCTestCase {
     private var productProviderMock: ProductProviderMock!
     private var paymentProviderMock: PaymentProviderMock!
     private var receiptRefreshProviderMock: ReceiptRefreshProviderMock!
+    private var refundProviderMock: RefundProviderMock!
+
     private var iapProvider: IIAPProvider!
 
     // MARK: - XCTestCase
@@ -26,11 +28,13 @@ class IAPProviderTests: XCTestCase {
         productProviderMock = ProductProviderMock()
         paymentProviderMock = PaymentProviderMock()
         receiptRefreshProviderMock = ReceiptRefreshProviderMock()
+        refundProviderMock = RefundProviderMock()
         iapProvider = IAPProvider(
             paymentQueue: paymentQueueMock,
             productProvider: productProviderMock,
             paymentProvider: paymentProviderMock,
-            receiptRefreshProvider: receiptRefreshProviderMock
+            receiptRefreshProvider: receiptRefreshProviderMock,
+            refundProvider: refundProviderMock
         )
     }
 
@@ -39,6 +43,7 @@ class IAPProviderTests: XCTestCase {
         productProviderMock = nil
         paymentProviderMock = nil
         receiptRefreshProviderMock = nil
+        refundProviderMock = nil
         iapProvider = nil
         super.tearDown()
     }
@@ -343,6 +348,34 @@ class IAPProviderTests: XCTestCase {
         // then
         XCTAssertEqual(errorResult as? NSError, IAPError.unknown as NSError)
     }
+
+    #if os(iOS) || VISION_OS
+        @available(iOS 15.0, *)
+        func test_thatIAPProviderRefundsPurchase() async throws {
+            // given
+            refundProviderMock.stubbedBeginRefundRequest = .success
+
+            // when
+            let state = try await iapProvider.beginRefundRequest(productID: .productID)
+
+            // then
+            if case .success = state {}
+            else { XCTFail("state must be `success`") }
+        }
+
+        @available(iOS 15.0, *)
+        func test_thatFlareThrowsAnError_whenBeginRefundRequestFailed() async throws {
+            // given
+            refundProviderMock.stubbedBeginRefundRequest = .failed(error: IAPError.unknown)
+
+            // when
+            let state = try await iapProvider.beginRefundRequest(productID: .productID)
+
+            // then
+            if case let .failed(error) = state { XCTAssertEqual(error as NSError, IAPError.unknown as NSError) }
+            else { XCTFail("state must be `failed`") }
+        }
+    #endif
 }
 
 // MARK: - Constants

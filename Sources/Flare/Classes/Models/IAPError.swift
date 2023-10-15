@@ -26,6 +26,10 @@ public enum IAPError: Swift.Error {
     case with(error: Swift.Error)
     /// The App Store receipt wasn't found.
     case receiptNotFound
+    /// The transaction wasn't found.
+    case transactionNotFound(productID: String)
+    /// The refund error.
+    case refund(error: RefundError)
     /// The unknown error occurred.
     case unknown
 }
@@ -63,6 +67,7 @@ extension IAPError {
 
 // MARK: Equatable
 
+// swiftlint:disable cyclomatic_complexity
 extension IAPError: Equatable {
     public static func == (lhs: IAPError, rhs: IAPError) -> Bool {
         switch (lhs, rhs) {
@@ -82,6 +87,8 @@ extension IAPError: Equatable {
             return (lhs as NSError) == (rhs as NSError)
         case (.receiptNotFound, .receiptNotFound):
             return true
+        case let (.refund(lhs), .refund(rhs)):
+            return lhs == rhs
         case (.unknown, .unknown):
             return true
         default:
@@ -89,3 +96,5 @@ extension IAPError: Equatable {
         }
     }
 }
+
+// swiftlint:enable cyclomatic_complexity

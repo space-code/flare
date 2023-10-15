@@ -27,6 +27,7 @@ Flare provides an elegant interface for In-App Purchases, supporting non-consuma
 - `IProductProvider` is a component of `Flare` that helps managing the products or services available for purchase within your app.
 - `IReceiptRefreshProvider` is responsible for refreshing and managing receipt associated with in-app purchases. 
 - `IAppStoreReceiptProvider` manages and provides access to the app's receipt, which contains a record of all in-app purchases made by the user.
+- `IRefundProvider`  is responsible for refunding purchases. This API is available starting from iOS 15.
 
 ## In-App Purchases
 
@@ -137,6 +138,18 @@ Flare.default.addTransactionObserver { result in
 Flare.default.removeTransactionObserver()
 ```
 
+### Refunding Purchase
+
+Starting with iOS 15, `Flare` now includes support for refunding purchases as part of `StoreKit 2`. Under the hood, 'Flare' obtains the active window scene and displays the sheets on it. You can read more about the refunding process in the official Apple documentation [here](https://developer.apple.com/documentation/storekit/transaction/3803220-beginrefundrequest/).
+
+```swift
+do {
+    let status = try await Flare.default.beginRefundRequest(productID: "product_id")
+} catch {
+    debugPrint("An error occurred while refunding purchase: \(error.localizedDescription)")
+}
+```
+
 ## Handling Errors
 
 ### IAPError
@@ -163,6 +176,8 @@ public enum IAPError: Swift.Error {
     case with(error: Swift.Error)
     /// The App Store receipt wasn't found.
     case receiptNotFound
+    /// The refund error.
+    case refund(error: RefundError)
     /// The unknown error occurred.
     case unknown
 }

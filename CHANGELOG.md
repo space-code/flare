@@ -1,14 +1,17 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-#### 2.x Releases
-- `2.0.x` Releases - [2.0.0](#200)
+## [Unreleased]
 
-## [Unreleased]()
+## Added
+- Implement a refund for purchases
+  - Added in Pull Request [#6](https://github.com/space-code/flare/pull/6).
 
-#### Added
 - Added `visionOS` to list of supported platforms
   - Added in Pull Request [#5](https://github.com/space-code/flare/pull/5).
+
+#### 2.x Releases
+- `2.0.x` Releases - [2.0.0](#200)
 
 ## [2.0.0](https://github.com/space-code/flare/releases/tag/2.0.0)
 Released on 2023-09-13.

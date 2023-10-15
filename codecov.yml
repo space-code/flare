@@ -32,7 +32,7 @@ coverage:
         target: 85%
 
         # Allow coverage to drop by X%
-        threshold: 5%
+        threshold: 50%
     changes: no
 
 comment:

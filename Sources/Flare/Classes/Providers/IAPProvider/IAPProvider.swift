@@ -12,6 +12,7 @@ final class IAPProvider: IIAPProvider {
     private let productProvider: IProductProvider
     private let paymentProvider: IPaymentProvider
     private let receiptRefreshProvider: IReceiptRefreshProvider
+    private let refundProvider: IRefundProvider
 
     // MARK: Initialization
 
@@ -19,12 +20,16 @@ final class IAPProvider: IIAPProvider {
         paymentQueue: PaymentQueue = SKPaymentQueue.default(),
         productProvider: IProductProvider = ProductProvider(),
         paymentProvider: IPaymentProvider = PaymentProvider(),
-        receiptRefreshProvider: IReceiptRefreshProvider = ReceiptRefreshProvider()
+        receiptRefreshProvider: IReceiptRefreshProvider = ReceiptRefreshProvider(),
+        refundProvider: IRefundProvider = RefundProvider(
+            systemInfoProvider: SystemInfoProvider()
+        )
     ) {
         self.paymentQueue = paymentQueue
         self.productProvider = productProvider
         self.paymentProvider = paymentProvider
         self.receiptRefreshProvider = receiptRefreshProvider
+        self.refundProvider = refundProvider
     }
 
     // MARK: Internal
@@ -124,4 +129,14 @@ final class IAPProvider: IIAPProvider {
     func removeTransactionObserver() {
         paymentProvider.removeTransactionObserver()
     }
+
+    #if os(iOS) || VISION_OS
+        @available(iOS 15.0, *)
+        @available(macOS, unavailable)
+        @available(watchOS, unavailable)
+        @available(tvOS, unavailable)
+        func beginRefundRequest(productID: String) async throws -> RefundRequestStatus {
+            try await refundProvider.beginRefundRequest(productID: productID)
+        }
+    #endif
 }

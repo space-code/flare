@@ -5,6 +5,10 @@
 
 import StoreKit
 
+#if os(iOS) || VISION_OS
+    import UIKit
+#endif
+
 // MARK: - Flare
 
 public final class Flare {
@@ -81,4 +85,14 @@ extension Flare: IFlare {
     public func removeTransactionObserver() {
         iapProvider.removeTransactionObserver()
     }
+
+    #if os(iOS) || VISION_OS
+        @available(iOS 15.0, *)
+        @available(macOS, unavailable)
+        @available(watchOS, unavailable)
+        @available(tvOS, unavailable)
+        public func beginRefundRequest(productID: String) async throws -> RefundRequestStatus {
+            try await iapProvider.beginRefundRequest(productID: productID)
+        }
+    #endif
 }
