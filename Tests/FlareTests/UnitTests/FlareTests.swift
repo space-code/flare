@@ -235,6 +235,34 @@ class FlareTests: XCTestCase {
         // then
         XCTAssertTrue(iapProviderMock.invokedAddTransactionObserver)
     }
+
+    #if os(iOS) || VISION_OS
+        @available(iOS 15.0, *)
+        func test_thatFlareRefundsPurchase() async throws {
+            // given
+            iapProviderMock.stubbedBeginRefundRequest = .success
+
+            // when
+            let state = try await flare.beginRefundRequest(productID: .productID)
+
+            // then
+            if case .success = state {}
+            else { XCTFail("state must be `success`") }
+        }
+
+        @available(iOS 15.0, *)
+        func test_thatFlareThrowsAnError_whenBeginRefundRequestFailed() async throws {
+            // given
+            iapProviderMock.stubbedBeginRefundRequest = .failed(error: IAPError.unknown)
+
+            // when
+            let state = try await flare.beginRefundRequest(productID: .productID)
+
+            // then
+            if case let .failed(error) = state { XCTAssertEqual(error as NSError, IAPError.unknown as NSError) }
+            else { XCTFail("state must be `failed`") }
+        }
+    #endif
 }
 
 // MARK: - Constants
