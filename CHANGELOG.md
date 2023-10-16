@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ## Added
+- Integrate `danger`
+  - Added in Pull Request [#7](https://github.com/space-code/flare/pull/7).
+
 - Implement a refund for purchases
   - Added in Pull Request [#6](https://github.com/space-code/flare/pull/6).
 
