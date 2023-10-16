@@ -1,10 +1,8 @@
 name: Danger
 
 on:
-  pull_request_target:
-    branches:
-     - main
-     - dev
+  pull_request:
+    types: [synchronize, opened, reopened, labeled, unlabeled, edited]
 
 env:
   LC_CTYPE: en_US.UTF-8
@@ -14,12 +12,12 @@ jobs:
   run-danger:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: ruby setup
+        uses: ruby/setup-ruby@v1
         with:
-          fetch-depth: 0
-      - name: danger/swift
-        uses: docker://ghcr.io/danger/danger-swift:3.17.1
-        with:
-          args: --failOnErrors --no-publish-check
+          ruby-version: 3.2.2
+          bundler-cache: true
+      - name: danger
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DANGER_GITHUB_API_TOKEN: ${{ secrets.DANGER_GITHUB_API_TOKEN }}
+        run: bundle exec danger --verbose
