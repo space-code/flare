@@ -2,6 +2,7 @@ excluded:
   - Tests
   - Package.swift
   - Package@swift-5.7.swift
+  - Dangerfile.swift
   - .build
 
 # Rules
