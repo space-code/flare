@@ -38,6 +38,14 @@ Check out [flare documentation](https://github.com/space-code/flare/blob/main/Do
 - Swift 5.7
 
 ## Installation
+### CocoaPods
+
+[CocoaPods](https://cocoapods.org) is a dependency manager for Cocoa projects. For usage and installation instructions, visit their website. To integrate Flare into your Xcode project using CocoaPods, specify it in your `Podfile`:
+
+```ruby
+pod 'Flare'
+```
+
 ### Swift Package Manager
 
 The [Swift Package Manager](https://swift.org/package-manager/) is a tool for automating the distribution of Swift code and is integrated into the `swift` compiler. It is in early development, but `flare` does support its use on supported platforms.
