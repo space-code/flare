@@ -4,8 +4,11 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ## Added
+- Integrate `CocoaPods` dependency manager.
+  - Added in Pull Request [#9](https://github.com/space-code/flare/pull/9).
+
 - Add badges for `Swift Version Compatibility` and `Platform Compatibility`
-  - Added in Pull Request [#7](https://github.com/space-code/flare/pull/8).
+  - Added in Pull Request [#8](https://github.com/space-code/flare/pull/8).
 
 - Integrate `danger`
   - Added in Pull Request [#7](https://github.com/space-code/flare/pull/7).
