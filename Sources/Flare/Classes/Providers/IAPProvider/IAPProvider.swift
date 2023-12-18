@@ -5,17 +5,31 @@
 
 import StoreKit
 
+/// A class that provides in-app purchase functionality.
 final class IAPProvider: IIAPProvider {
     // MARK: Properties
 
+    /// The queue of payment transactions to be processed by the App Store.
     private let paymentQueue: PaymentQueue
+    /// The provider is responsible for fetching StoreKit products.
     private let productProvider: IProductProvider
+    /// The provider is responsible for making in-app payments.
     private let paymentProvider: IPaymentProvider
+    /// The provider is responsible for refreshing receipts.
     private let receiptRefreshProvider: IReceiptRefreshProvider
+    /// The provider is responsible for refunding purchases
     private let refundProvider: IRefundProvider
 
     // MARK: Initialization
 
+    /// Creates a new `IAPProvider` instance.
+    ///
+    /// - Parameters:
+    ///   - paymentQueue: The queue of payment transactions to be processed by the App Store.
+    ///   - productProvider: The provider is responsible for fetching StoreKit products.
+    ///   - paymentProvider: The provider is responsible for making in-app payments.
+    ///   - receiptRefreshProvider: The provider is responsible for refreshing receipts.
+    ///   - refundProvider: The provider is responsible for refunding purchases.
     init(
         paymentQueue: PaymentQueue = SKPaymentQueue.default(),
         productProvider: IProductProvider = ProductProvider(),
