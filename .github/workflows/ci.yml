@@ -13,10 +13,6 @@ on:
       - "Source/**"
       - "Tests/**"
 
-concurrency:
-  group: ci
-  cancel-in-progress: true
-
 jobs:
   SwiftLint:
     runs-on: ubuntu-latest
@@ -57,7 +53,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: ${{ matrix.name }}
-        run: xcodebuild test -scheme "${{ matrix.scheme }}" -destination "${{ matrix.destination }}" clean -enableCodeCoverage YES -resultBundlePath "./${{ matrix.sdk }}.xcresult" | xcpretty -r junit
+        run: xcodebuild test -scheme "${{ matrix.scheme }}" -destination "${{ matrix.destination }}" clean -enableCodeCoverage YES -resultBundlePath "./${{ matrix.sdk }}.xcresult" || exit 1
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3.1.0
         with:
@@ -80,4 +76,4 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: ${{ matrix.name }}
-        run: xcodebuild test -scheme "${{ matrix.scheme }}" -destination "${{ matrix.destination }}" clean
+        run: xcodebuild test -scheme "${{ matrix.scheme }}" -destination "${{ matrix.destination }}" clean || exit 1
