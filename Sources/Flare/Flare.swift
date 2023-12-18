@@ -11,30 +11,36 @@ import StoreKit
 
 // MARK: - Flare
 
+/// The class creates and manages in-app purchases.
 public final class Flare {
     // MARK: Initialization
 
+    /// Creates a new `Flare` instance.
+    ///
+    /// - Parameter iapProvider: The in-app purchase provider.
     init(iapProvider: IIAPProvider = IAPProvider()) {
         self.iapProvider = iapProvider
     }
 
     // MARK: Public
 
+    /// Returns a default `Flare` object.
     public static let `default`: IFlare = Flare()
 
     // MARK: Private
 
+    /// The in-app purchase provider.
     private let iapProvider: IIAPProvider
 }
 
 // MARK: IFlare
 
 extension Flare: IFlare {
-    public func fetch(productIDs: Set<String>, completion: @escaping Closure<Result<[SKProduct], IAPError>>) {
+    public func fetch(productIDs: Set<String>, completion: @escaping Closure<Result<[StoreProduct], IAPError>>) {
         iapProvider.fetch(productIDs: productIDs, completion: completion)
     }
 
-    public func fetch(productIDs: Set<String>) async throws -> [SKProduct] {
+    public func fetch(productIDs: Set<String>) async throws -> [StoreProduct] {
         try await iapProvider.fetch(productIDs: productIDs)
     }
 

@@ -38,7 +38,7 @@ class ProductProviderTests: XCTestCase {
 
     func test_thatProductProviderReturnsInvalidProductIDs_whenRequestProductsWithInvalidIDs() {
         // given
-        var fetchResult: Result<[SKProduct], IAPError>?
+        var fetchResult: Result<[SK1StoreProduct], IAPError>?
         let completionHandler: IProductProvider.ProductsHandler = { result in fetchResult = result }
         let request = PurchaseManagerTestHelper.makeRequest(with: .requestID)
         let response = ProductResponseMock()
@@ -59,7 +59,7 @@ class ProductProviderTests: XCTestCase {
 
     func test_thatProductProviderReturnsProducts_whenRequestProductsWithValidProductIDs() {
         // given
-        var fetchResult: Result<[SKProduct], IAPError>?
+        var fetchResult: Result<[SK1StoreProduct], IAPError>?
         let completionHandler: IProductProvider.ProductsHandler = { result in fetchResult = result }
         let request = PurchaseManagerTestHelper.makeRequest(with: .requestID)
         let response = ProductResponseMock()
@@ -70,7 +70,7 @@ class ProductProviderTests: XCTestCase {
 
         // then
         if case let .success(products) = fetchResult {
-            XCTAssertEqual(products, response.products)
+            XCTAssertEqual(products.map(\.product), response.products)
         } else {
             XCTFail()
         }
@@ -78,7 +78,7 @@ class ProductProviderTests: XCTestCase {
 
     func test_thatProductProviderHandlesError_whenRequestDidFailWithError() {
         // given
-        var fetchResult: Result<[SKProduct], IAPError>?
+        var fetchResult: Result<[SK1StoreProduct], IAPError>?
         let completionHandler: IProductProvider.ProductsHandler = { result in fetchResult = result }
         let request = PurchaseManagerTestHelper.makeRequest(with: .requestID)
         let error = IAPError.emptyProducts

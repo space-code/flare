@@ -19,10 +19,10 @@ final class IAPProviderMock: IIAPProvider {
 
     var invokedFetch = false
     var invokedFetchCount = 0
-    var invokedFetchParameters: (productIDs: Set<String>, completion: Closure<Result<[SKProduct], IAPError>>)?
-    var invokedFetchParametersList = [(productIDs: Set<String>, completion: Closure<Result<[SKProduct], IAPError>>)]()
+    var invokedFetchParameters: (productIDs: Set<String>, completion: Closure<Result<[StoreProduct], IAPError>>)?
+    var invokedFetchParametersList = [(productIDs: Set<String>, completion: Closure<Result<[StoreProduct], IAPError>>)]()
 
-    func fetch(productIDs: Set<String>, completion: @escaping Closure<Result<[SKProduct], IAPError>>) {
+    func fetch(productIDs: Set<String>, completion: @escaping Closure<Result<[StoreProduct], IAPError>>) {
         invokedFetch = true
         invokedFetchCount += 1
         invokedFetchParameters = (productIDs, completion)
@@ -94,9 +94,9 @@ final class IAPProviderMock: IIAPProvider {
     var invokedFetchAsyncCount = 0
     var invokedFetchAsyncParameters: (productIDs: Set<String>, Void)?
     var invokedFetchAsyncParametersList = [(productIDs: Set<String>, Void)]()
-    var fetchAsyncResult: [SKProduct] = []
+    var fetchAsyncResult: [StoreProduct] = []
 
-    func fetch(productIDs: Set<String>) async throws -> [SKProduct] {
+    func fetch(productIDs: Set<String>) async throws -> [StoreProduct] {
         invokedFetchAsync = true
         invokedFetchAsyncCount += 1
         invokedFetchAsyncParameters = (productIDs, ())

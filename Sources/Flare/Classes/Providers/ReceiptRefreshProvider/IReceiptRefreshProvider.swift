@@ -6,7 +6,7 @@
 import StoreKit
 
 /// A type that can refresh the bundle's App Store receipt.
-public protocol IReceiptRefreshProvider {
+protocol IReceiptRefreshProvider {
     /// The bundle’s App Store receipt.
     var receipt: String? { get }
 

@@ -41,7 +41,11 @@ class FlareTests: XCTestCase {
 
     func test_thatFlareFetchesProductsWithGivenProductIDs() async throws {
         // given
-        let productMocks = [ProductMock(), ProductMock(), ProductMock()]
+        let productMocks = [
+            StoreProduct(skProduct: ProductMock()),
+            StoreProduct(skProduct: ProductMock()),
+            StoreProduct(skProduct: ProductMock()),
+        ]
         iapProviderMock.fetchAsyncResult = productMocks
 
         // when

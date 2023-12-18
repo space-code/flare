@@ -8,20 +8,33 @@ import StoreKit
 
 // MARK: - PaymentProvider
 
+/// A class provides functionality to make payments.
 final class PaymentProvider: NSObject {
     // MARK: Properties
 
+    /// The queue of payment transactions to be processed by the App Store.
     private let paymentQueue: PaymentQueue
+    /// Dictionary to store payment handlers associated with transaction identifiers.
     private var paymentHandlers: [String: [PaymentHandler]] = [:]
+    /// Array to store restore handlers for completed transactions.
     private var restoreHandlers: [RestoreHandler] = []
+    /// Optional fallback handler for handling payments if no specific handler is found.
     private var fallbackHandler: PaymentHandler?
+    /// Optional handler to determine whether to add a payment to the App Store.
     private var shouldAddStorePaymentHandler: ShouldAddStorePaymentHandler?
+    /// The dispatch queue factory for handling concurrent tasks.
     private var dispatchQueueFactory: IDispatchQueueFactory
 
+    /// Lazy-initialized private dispatch queue for handling tasks related to payment processing.
     private lazy var privateQueue: IDispatchQueue = dispatchQueueFactory.privateQueue(label: String(describing: self))
 
     // MARK: Initialization
 
+    /// Creates a new `PaymentProvider` instance.
+    ///
+    /// - Parameters:
+    ///   - paymentQueue: The queue of payment transactions to be processed by the App Store.
+    ///   - dispatchQueueFactory: The dispatch queue factory.
     init(
         paymentQueue: PaymentQueue = SKPaymentQueue.default(),
         dispatchQueueFactory: IDispatchQueueFactory = DispatchQueueFactory()

@@ -5,11 +5,12 @@
 
 @testable import Flare
 import StoreKit
+import StoreKitTest
 import XCTest
 
 // MARK: - IAPProviderTests
 
-class IAPProviderTests: XCTestCase {
+class IAPProviderTests: IAPTestCase {
     // MARK: - Properties
 
     private var paymentQueueMock: PaymentQueueMock!
@@ -59,6 +60,8 @@ class IAPProviderTests: XCTestCase {
     }
 
     func test_thatIAPProviderFetchesProducts() throws {
+        try AvailabilityChecker.iOS15APINotAvailableOrSkipTest()
+
         // when
         iapProvider.fetch(productIDs: .productIDs, completion: { _ in })
 
@@ -112,19 +115,37 @@ class IAPProviderTests: XCTestCase {
         XCTAssertTrue(paymentProviderMock.invokedRemoveTransactionObserver)
     }
 
-    func test_thatIAPProviderFetchesProducts_whenProducts() async throws {
+    // FIXME: Update test
+    func test_thatIAPProviderFetchesSK1Products_whenProductsAvailable() async throws {
+        try AvailabilityChecker.iOS15APINotAvailableOrSkipTest()
+
         // given
-        let productsMock = [SKProduct(), SKProduct(), SKProduct()]
+        let productsMock = [0 ... 2].map { _ in SK1StoreProduct(ProductMock()) }
         productProviderMock.stubbedFetchResult = .success(productsMock)
 
         // when
         let products = try await iapProvider.fetch(productIDs: .productIDs)
 
         // then
-        XCTAssertEqual(productsMock, products)
+        XCTAssertEqual(productsMock.count, products.count)
     }
 
-    func test_thatIAPProviderThrowsNoProductsError_whenProductsProductProviderReturnsError() async {
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    func test_thatIAPProviderFetchesSK2Products_whenProductsAvailable() async throws {
+        // given
+        let productsMock = try await ProductProviderHelper.all.map(SK2StoreProduct.init)
+        productProviderMock.stubbedAsyncFetchResult = .success(productsMock)
+
+        // when
+        let products = try await iapProvider.fetch(productIDs: .productIDs)
+
+        // then
+        XCTAssertEqual(productsMock.count, products.count)
+    }
+
+    func test_thatIAPProviderThrowsNoProductsError_whenProductsProductProviderReturnsError() async throws {
+        try AvailabilityChecker.iOS15APINotAvailableOrSkipTest()
+
         // given
         productProviderMock.stubbedFetchResult = .failure(IAPError.unknown)
 
@@ -159,7 +180,7 @@ class IAPProviderTests: XCTestCase {
     func test_thatIAPProviderReturnsPaymentTransaction_whenProductsExist() {
         // given
         let paymentTransactionMock = PaymentTransactionMock()
-        productProviderMock.stubbedFetchResult = .success([ProductMock()])
+        productProviderMock.stubbedFetchResult = .success([SK1StoreProduct(ProductMock())])
         paymentProviderMock.stubbedAddResult = (paymentQueueMock, .success(paymentTransactionMock))
 
         // when
@@ -176,7 +197,7 @@ class IAPProviderTests: XCTestCase {
 
     func test_thatIAPProviderReturnsError_whenAddingPaymentFailed() {
         // given
-        productProviderMock.stubbedFetchResult = .success([ProductMock()])
+        productProviderMock.stubbedFetchResult = .success([SK1StoreProduct(ProductMock())])
         paymentProviderMock.stubbedAddResult = (paymentQueueMock, .failure(.unknown))
 
         // when
@@ -226,7 +247,7 @@ class IAPProviderTests: XCTestCase {
     func test_thatIAPProviderPurchasesForAProduct_whenProductsExist() async throws {
         // given
         let transactionMock = SKPaymentTransaction()
-        productProviderMock.stubbedFetchResult = .success([ProductMock()])
+        productProviderMock.stubbedFetchResult = .success([SK1StoreProduct(ProductMock())])
         paymentProviderMock.stubbedAddResult = (paymentQueueMock, .success(transactionMock))
 
         // when

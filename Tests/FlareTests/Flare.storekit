@@ -1,0 +1,106 @@
+{
+  "identifier" : "8783124E",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "630EB7DE",
+      "localizations" : [
+        {
+          "description" : "Temp Subscription",
+          "displayName" : "Temp Subscription",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.flare.test_purchase_1",
+      "referenceName" : "TestPurchase1",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "17CD4A2E",
+      "localizations" : [
+        {
+          "description" : "Temp Subscription",
+          "displayName" : "Temp Subscription",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.flare.test_purchase_2",
+      "referenceName" : "TestPurchase2",
+      "type" : "Consumable"
+    }
+  ],
+  "settings" : {
+
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "791CA910",
+      "localizations" : [
+
+      ],
+      "name" : "flare_subscription",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "0.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "E6933AB5",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "",
+              "displayName" : "",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.flare.test_subscription_1",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "TestSubscription1",
+          "subscriptionGroupID" : "791CA910",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "1.29",
+          "familyShareable" : true,
+          "groupNumber" : 1,
+          "internalID" : "1F6680BD",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "",
+              "displayName" : "",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.flare.test_subscription_2",
+          "recurringSubscriptionPeriod" : "P3M",
+          "referenceName" : "TestSubscription2",
+          "subscriptionGroupID" : "791CA910",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 2,
+    "minor" : 0
+  }
+}

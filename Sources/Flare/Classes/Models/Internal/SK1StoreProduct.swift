@@ -12,7 +12,8 @@ final class SK1StoreProduct {
     // MARK: Properties
 
     /// The store kit product.
-    private let product: SKProduct
+    let product: SKProduct
+
     /// The price formatter.
     private lazy var numberFormatter: NumberFormatter = .numberFormatter(with: self.product.priceLocale)
 
