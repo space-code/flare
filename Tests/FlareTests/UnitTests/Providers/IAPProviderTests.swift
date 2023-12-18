@@ -5,12 +5,11 @@
 
 @testable import Flare
 import StoreKit
-import StoreKitTest
 import XCTest
 
 // MARK: - IAPProviderTests
 
-class IAPProviderTests: IAPTestCase {
+class IAPProviderTests: XCTestCase {
     // MARK: - Properties
 
     private var paymentQueueMock: PaymentQueueMock!
@@ -130,18 +129,24 @@ class IAPProviderTests: IAPTestCase {
         XCTAssertEqual(productsMock.count, products.count)
     }
 
-    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
-    func test_thatIAPProviderFetchesSK2Products_whenProductsAvailable() async throws {
-        // given
-        let productsMock = try await ProductProviderHelper.all.map(SK2StoreProduct.init)
-        productProviderMock.stubbedAsyncFetchResult = .success(productsMock)
+    #if os(iOS)
+        @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+        func test_thatIAPProviderFetchesSK2Products_whenProductsAreAvailable() async throws {
+            guard #available(iOS 17.0, *) else {
+                throw XCTSkip("This test is currently working only on iOS 17")
+            }
 
-        // when
-        let products = try await iapProvider.fetch(productIDs: .productIDs)
+            let productsMock = try await ProductProviderHelper.all.map(SK2StoreProduct.init)
+            productProviderMock.stubbedAsyncFetchResult = .success(productsMock)
 
-        // then
-        XCTAssertEqual(productsMock.count, products.count)
-    }
+            // when
+            let products = try await iapProvider.fetch(productIDs: .productIDs)
+
+            // then
+            XCTAssertFalse(products.isEmpty)
+            XCTAssertEqual(productsMock.count, products.count)
+        }
+    #endif
 
     func test_thatIAPProviderThrowsNoProductsError_whenProductsProductProviderReturnsError() async throws {
         try AvailabilityChecker.iOS15APINotAvailableOrSkipTest()
