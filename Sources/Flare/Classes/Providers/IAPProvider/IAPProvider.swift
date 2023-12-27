@@ -80,32 +80,38 @@ final class IAPProvider: IIAPProvider {
         }
     }
 
-    func purchase(productID: String, completion: @escaping Closure<Result<StoreTransaction, IAPError>>) {
-        productProvider.fetch(productIDs: [productID], requestID: UUID().uuidString) { result in
+    func purchase(product: StoreProduct, completion: @escaping Closure<Result<StoreTransaction, IAPError>>) {
+        purchaseProvider.purchase(product: product) { result in
             switch result {
-            case let .success(products):
-                guard let product = products.first else {
-                    completion(.failure(.storeProductNotAvailable))
-                    return
-                }
-
-                self.purchaseProvider.purchase(product: StoreProduct(skProduct: product.product)) { result in
-                    switch result {
-                    case let .success(transaction):
-                        completion(.success(transaction))
-                    case let .failure(error):
-                        completion(.failure(error))
-                    }
-                }
+            case let .success(transaction):
+                completion(.success(transaction))
             case let .failure(error):
                 completion(.failure(error))
             }
         }
     }
 
-    func purchase(productID: String) async throws -> StoreTransaction {
+    func purchase(product: StoreProduct) async throws -> StoreTransaction {
         try await withCheckedThrowingContinuation { continuation in
-            purchase(productID: productID) { result in
+            purchase(product: product) { result in
+                continuation.resume(with: result)
+            }
+        }
+    }
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    func purchase(
+        product: StoreProduct,
+        options: Set<StoreKit.Product.PurchaseOption>,
+        completion: @escaping SendableClosure<Result<StoreTransaction, IAPError>>
+    ) {
+        purchaseProvider.purchase(product: product, options: options, completion: completion)
+    }
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    func purchase(product: StoreProduct, options: Set<StoreKit.Product.PurchaseOption>) async throws -> StoreTransaction {
+        try await withCheckedThrowingContinuation { continuation in
+            purchase(product: product, options: options) { result in
                 continuation.resume(with: result)
             }
         }

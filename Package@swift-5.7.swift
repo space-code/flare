@@ -33,9 +33,6 @@ let package = Package(
                 .product(name: "ObjectsFactory", package: "objects-factory"),
                 .product(name: "TestConcurrency", package: "concurrency"),
             ]
-//            resources: [
-//                .process("Flare.storekit"),
-//            ]
         ),
     ]
 )

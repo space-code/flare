@@ -72,10 +72,10 @@ class IAPProviderTests: XCTestCase {
 
     func test_thatIAPProviderPurchasesProduct() throws {
         // when
-        iapProvider.purchase(productID: .productID, completion: { _ in })
+        iapProvider.purchase(product: .fake(skProduct: .fake(id: .productID)), completion: { _ in })
 
         // then
-        XCTAssertTrue(productProviderMock.invokedFetch)
+        XCTAssertTrue(purchaseProvider.invokedPurchase)
     }
 
     func test_thatIAPProviderRefreshesReceipt() {
@@ -165,22 +165,6 @@ class IAPProviderTests: XCTestCase {
         XCTAssertEqual(errorResult as? NSError, IAPError.unknown as NSError)
     }
 
-    func test_thatIAPProviderThrowsStoreProductNotAvailableError_whenProductProviderDoesNotHaveProducts() {
-        // given
-        productProviderMock.stubbedFetchResult = .success([])
-
-        // when
-        var error: Error?
-        iapProvider.purchase(productID: .productID) { result in
-            if case let .failure(result) = result {
-                error = result
-            }
-        }
-
-        // then
-        XCTAssertEqual(error as? NSError, IAPError.storeProductNotAvailable as NSError)
-    }
-
     func test_thatIAPProviderReturnsError_whenAddingPaymentFailed() {
         // given
         productProviderMock.stubbedFetchResult = .success([SK1StoreProduct(ProductMock())])
@@ -188,7 +172,7 @@ class IAPProviderTests: XCTestCase {
 
         // when
         var errorResult: Error?
-        iapProvider.purchase(productID: .productID) { result in
+        iapProvider.purchase(product: .fake(skProduct: .fake(id: .productID))) { result in
             if case let .failure(error) = result {
                 errorResult = error
             }
@@ -200,34 +184,18 @@ class IAPProviderTests: XCTestCase {
 
     func test_thatIAPProviderReturnsError_whenFetchRequestFailed() {
         // given
-        productProviderMock.stubbedFetchResult = .failure(.storeProductNotAvailable)
+        purchaseProvider.stubbedPurchaseCompletionResult = (.failure(IAPError.unknown), ())
 
         // when
         var errorResult: Error?
-        iapProvider.purchase(productID: .productID) { result in
+        iapProvider.purchase(product: .fake(skProduct: .fake(id: .productID))) { result in
             if case let .failure(error) = result {
                 errorResult = error
             }
         }
 
         // then
-        XCTAssertEqual(errorResult as? NSError, IAPError.storeProductNotAvailable as NSError)
-    }
-
-    func test_thatIAPProviderThrowsStoreProductNotAvailableError_whenProductsDoNotExist() async throws {
-        // given
-        productProviderMock.stubbedFetchResult = .success([])
-
-        // when
-        var errorResult: Error?
-        do {
-            _ = try await iapProvider.purchase(productID: .productID)
-        } catch {
-            errorResult = error
-        }
-
-        // then
-        XCTAssertEqual(errorResult as? NSError, IAPError.storeProductNotAvailable as NSError)
+        XCTAssertEqual(errorResult as? NSError, IAPError.unknown as NSError)
     }
 
     func test_thatIAPProviderRefreshesReceipt_when() {

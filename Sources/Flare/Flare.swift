@@ -44,13 +44,13 @@ extension Flare: IFlare {
         try await iapProvider.fetch(productIDs: productIDs)
     }
 
-    public func purchase(productID: String, completion: @escaping Closure<Result<StoreTransaction, IAPError>>) {
+    public func purchase(product: StoreProduct, completion: @escaping Closure<Result<StoreTransaction, IAPError>>) {
         guard iapProvider.canMakePayments else {
             completion(.failure(.paymentNotAllowed))
             return
         }
 
-        iapProvider.purchase(productID: productID) { result in
+        iapProvider.purchase(product: product) { result in
             switch result {
             case let .success(transaction):
                 completion(.success(transaction))
@@ -60,9 +60,30 @@ extension Flare: IFlare {
         }
     }
 
-    public func purchase(productID: String) async throws -> StoreTransaction {
+    public func purchase(product: StoreProduct) async throws -> StoreTransaction {
         guard iapProvider.canMakePayments else { throw IAPError.paymentNotAllowed }
-        return try await iapProvider.purchase(productID: productID)
+        return try await iapProvider.purchase(product: product)
+    }
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    public func purchase(
+        product: StoreProduct,
+        options: Set<StoreKit.Product.PurchaseOption>,
+        completion: @escaping SendableClosure<Result<StoreTransaction, IAPError>>
+    ) {
+        guard iapProvider.canMakePayments else {
+            completion(.failure(.paymentNotAllowed))
+            return
+        }
+        iapProvider.purchase(product: product, options: options, completion: completion)
+    }
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    public func purchase(
+        product: StoreProduct,
+        options: Set<StoreKit.Product.PurchaseOption>
+    ) async throws -> StoreTransaction {
+        try await iapProvider.purchase(product: product, options: options)
     }
 
     public func receipt(completion: @escaping Closure<Result<String, IAPError>>) {

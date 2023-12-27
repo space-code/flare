@@ -4,6 +4,7 @@
 //
 
 @testable import Flare
+import StoreKit
 
 final class PurchaseProviderMock: IPurchaseProvider {
     var invokedFinish = false
@@ -51,6 +52,29 @@ final class PurchaseProviderMock: IPurchaseProvider {
         invokedPurchaseParameters = (product, ())
         invokedPurchaseParametersList.append((product, ()))
         if let result = stubbedPurchaseCompletionResult {
+            completion(result.0)
+        }
+    }
+
+    var invokedPurchaseWithOptions = false
+    var invokedPurchaseWithOptionsCount = 0
+    var invokedPurchaseWithOptionsParameters: (product: StoreProduct, Any)?
+    var invokedPurchaseWithOptionsParametersList = [(product: StoreProduct, Any)]()
+    var stubbedinvokedPurchaseWithOptionsCompletionResult: (Result<StoreTransaction, IAPError>, Void)?
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    @MainActor
+    func purchase(
+        product: StoreProduct,
+        options: Set<Product.PurchaseOption>,
+        completion: @escaping PurchaseCompletionHandler
+    ) {
+        invokedPurchaseWithOptions = true
+        invokedPurchaseWithOptionsCount += 1
+        invokedPurchaseWithOptionsParameters = (product, options)
+        invokedPurchaseWithOptionsParametersList.append((product, options))
+
+        if let result = stubbedinvokedPurchaseWithOptionsCompletionResult {
             completion(result.0)
         }
     }

@@ -60,11 +60,11 @@ class FlareTests: XCTestCase {
         iapProviderMock.stubbedCanMakePayments = true
 
         // when
-        flare.purchase(productID: .productID, completion: { _ in })
+        flare.purchase(product: .fake(skProduct: .fake(id: .productID)), completion: { _ in })
 
         // then
         XCTAssertTrue(iapProviderMock.invokedPurchase)
-        XCTAssertEqual(iapProviderMock.invokedPurchaseParameters?.productID, .productID)
+        XCTAssertEqual(iapProviderMock.invokedPurchaseParameters?.product.productIdentifier, .productID)
     }
 
     func test_thatFlareDoesNotPurchaseAProduct_whenUserCannotMakePayments() {
@@ -72,7 +72,7 @@ class FlareTests: XCTestCase {
         iapProviderMock.stubbedCanMakePayments = false
 
         // when
-        flare.purchase(productID: .productID, completion: { _ in })
+        flare.purchase(product: .fake(skProduct: .fake(id: .productID)), completion: { _ in })
 
         // then
         XCTAssertFalse(iapProviderMock.invokedPurchase)
@@ -85,7 +85,7 @@ class FlareTests: XCTestCase {
 
         // when
         var transaction: IStoreTransaction?
-        flare.purchase(productID: .productID, completion: { result in
+        flare.purchase(product: .fake(skProduct: .fake(id: .productID)), completion: { result in
             if case let .success(result) = result {
                 transaction = result
             }
@@ -104,7 +104,7 @@ class FlareTests: XCTestCase {
 
         // when
         var error: IAPError?
-        flare.purchase(productID: .productID, completion: { result in
+        flare.purchase(product: .fake(skProduct: .fake(id: .productID)), completion: { result in
             if case let .failure(result) = result {
                 error = result
             }
@@ -124,7 +124,7 @@ class FlareTests: XCTestCase {
         // when
         var iapError: IAPError?
         do {
-            _ = try await flare.purchase(productID: .productID)
+            _ = try await flare.purchase(product: .fake(skProduct: .fake(id: .productID)))
         } catch {
             iapError = error as? IAPError
         }
@@ -145,7 +145,7 @@ class FlareTests: XCTestCase {
         var transaction: IStoreTransaction?
         var iapError: IAPError?
         do {
-            transaction = try await flare.purchase(productID: .productID)
+            transaction = try await flare.purchase(product: .fake(skProduct: .fake(id: .productID)))
         } catch {
             iapError = error as? IAPError
         }

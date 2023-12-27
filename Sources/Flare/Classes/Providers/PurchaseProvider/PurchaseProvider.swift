@@ -13,16 +13,16 @@ final class PurchaseProvider {
 
     /// The provider is responsible for making in-app payments.
     private let paymentProvider: IPaymentProvider
-    /// <#Description#>
+    /// The transaction listener.
     private let transactionListener: ITransactionListener?
 
     // MARK: Initialization
 
-    /// <#Description#>
+    /// Creates a new `PurchaseProvider` isntance.
     ///
     /// - Parameters:
-    ///   - paymentProvider: <#paymentProvider description#>
-    ///   - transactionListener: <#transactionListener description#>
+    ///   - paymentProvider: The provider is responsible for purchasing products.
+    ///   - transactionListener: The transaction listener.
     init(
         paymentProvider: IPaymentProvider = PaymentProvider(),
         transactionListener: ITransactionListener? = nil
@@ -60,6 +60,7 @@ final class PurchaseProvider {
     @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
     private func purchase(
         sk2StoreProduct: SK2StoreProduct,
+        options: Set<StoreKit.Product.PurchaseOption>? = nil,
         completion: @escaping @MainActor (Result<StoreTransaction, IAPError>) -> Void
     ) {
         AsyncHandler.call(completion: { result in
@@ -76,7 +77,7 @@ final class PurchaseProvider {
                 }
             }
         }, asyncMethod: {
-            try await sk2StoreProduct.product.purchase(options: [.simulatesAskToBuyInSandbox(false)])
+            try await sk2StoreProduct.product.purchase(options: options ?? [])
         })
     }
 }
@@ -91,6 +92,21 @@ extension PurchaseProvider: IPurchaseProvider {
             self.purchase(sk2StoreProduct: sk2Product, completion: completion)
         } else if let sk1Product = product.underlyingProduct as? SK1StoreProduct {
             purchase(sk1StoreProduct: sk1Product, completion: completion)
+        }
+    }
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    func purchase(
+        product: StoreProduct,
+        options: Set<Product.PurchaseOption>,
+        completion: @escaping PurchaseCompletionHandler
+    ) {
+        if let sk2Product = product.underlyingProduct as? SK2StoreProduct {
+            purchase(sk2StoreProduct: sk2Product, options: options, completion: completion)
+        } else {
+            Task {
+                await completion(.failure(.unknown))
+            }
         }
     }
 

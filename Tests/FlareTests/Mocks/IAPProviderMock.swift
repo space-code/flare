@@ -31,14 +31,14 @@ final class IAPProviderMock: IIAPProvider {
 
     var invokedPurchase = false
     var invokedPurchaseCount = 0
-    var invokedPurchaseParameters: (productID: String, completion: Closure<Result<StoreTransaction, IAPError>>)?
-    var invokedPurchaseParametersList = [(productID: String, completion: Closure<Result<StoreTransaction, IAPError>>)]()
+    var invokedPurchaseParameters: (product: StoreProduct, completion: Closure<Result<StoreTransaction, IAPError>>)?
+    var invokedPurchaseParametersList = [(product: StoreProduct, completion: Closure<Result<StoreTransaction, IAPError>>)]()
 
-    func purchase(productID: String, completion: @escaping Closure<Result<StoreTransaction, IAPError>>) {
+    func purchase(product: StoreProduct, completion: @escaping Closure<Result<StoreTransaction, IAPError>>) {
         invokedPurchase = true
         invokedPurchaseCount += 1
-        invokedPurchaseParameters = (productID, completion)
-        invokedPurchaseParametersList.append((productID, completion))
+        invokedPurchaseParameters = (product, completion)
+        invokedPurchaseParametersList.append((product, completion))
     }
 
     var invokedRefreshReceipt = false
@@ -106,15 +106,15 @@ final class IAPProviderMock: IIAPProvider {
 
     var invokedAsyncPurchase = false
     var invokedAsyncPurchaseCount = 0
-    var invokedAsyncPurchaseParameters: (productID: String, Void)?
-    var invokedAsyncPurchaseParametersList = [(productID: String, Void)?]()
+    var invokedAsyncPurchaseParameters: (product: StoreProduct, Void)?
+    var invokedAsyncPurchaseParametersList = [(product: StoreProduct, Void)?]()
     var stubbedAsyncPurchase: StoreTransaction!
 
-    func purchase(productID: String) async throws -> StoreTransaction {
+    func purchase(product: StoreProduct) async throws -> StoreTransaction {
         invokedAsyncPurchase = true
         invokedAsyncPurchaseCount += 1
-        invokedAsyncPurchaseParameters = (productID, ())
-        invokedAsyncPurchaseParametersList.append((productID, ()))
+        invokedAsyncPurchaseParameters = (product, ())
+        invokedAsyncPurchaseParametersList.append((product, ()))
         return stubbedAsyncPurchase
     }
 
@@ -149,5 +149,40 @@ final class IAPProviderMock: IIAPProvider {
         invokedBeginRefundRequestParameters = (productID, ())
         invokedBeginRefundRequestParametersList.append((productID, ()))
         return stubbedBeginRefundRequest
+    }
+
+    var invokedPurchaseWithOptions = false
+    var invokedPurchaseWithOptionsCount = 0
+    var invokedPurchaseWithOptionsParameters: (product: StoreProduct, options: Any)?
+    var invokedPurchaseWithOptionsParametersList = [(product: StoreProduct, options: Any)]()
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    func purchase(
+        product: StoreProduct,
+        options: Set<Product.PurchaseOption>,
+        completion _: @escaping SendableClosure<Result<StoreTransaction, IAPError>>
+    ) {
+        invokedPurchaseWithOptions = true
+        invokedPurchaseWithOptionsCount += 1
+        invokedPurchaseWithOptionsParameters = (product, options)
+        invokedPurchaseWithOptionsParametersList.append((product, options))
+    }
+
+    var invokedAsyncPurchaseWithOptions = false
+    var invokedAsyncPurchaseWithOptionsCount = 0
+    var invokedAsyncPurchaseWithOptionsParameters: (product: StoreProduct, options: Any)?
+    var invokedAsyncPurchaseWithOptionsParametersList = [(product: StoreProduct, options: Any)]()
+    var stubbedAsyncPurchaseWithOptions: StoreTransaction!
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    func purchase(
+        product: StoreProduct,
+        options: Set<Product.PurchaseOption>
+    ) async throws -> StoreTransaction {
+        invokedAsyncPurchaseWithOptions = true
+        invokedAsyncPurchaseWithOptionsCount += 1
+        invokedAsyncPurchaseWithOptionsParameters = (product, options)
+        invokedAsyncPurchaseWithOptionsParametersList.append((product, options))
+        return stubbedAsyncPurchaseWithOptions
     }
 }

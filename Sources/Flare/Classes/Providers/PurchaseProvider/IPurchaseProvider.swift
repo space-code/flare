@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import StoreKit
 
 public typealias PurchaseCompletionHandler = @MainActor @Sendable (Result<StoreTransaction, IAPError>) -> Void
 
@@ -29,4 +30,11 @@ protocol IPurchaseProvider {
     func removeTransactionObserver()
 
     func purchase(product: StoreProduct, completion: @escaping PurchaseCompletionHandler)
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    func purchase(
+        product: StoreProduct,
+        options: Set<StoreKit.Product.PurchaseOption>,
+        completion: @escaping PurchaseCompletionHandler
+    )
 }
