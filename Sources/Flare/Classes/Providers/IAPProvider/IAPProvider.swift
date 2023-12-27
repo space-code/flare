@@ -13,8 +13,8 @@ final class IAPProvider: IIAPProvider {
     private let paymentQueue: PaymentQueue
     /// The provider is responsible for fetching StoreKit products.
     private let productProvider: IProductProvider
-    /// The provider is responsible for making in-app payments.
-    private let paymentProvider: IPaymentProvider
+    /// The provider is responsible for purchasing products.
+    private let purchaseProvider: IPurchaseProvider
     /// The provider is responsible for refreshing receipts.
     private let receiptRefreshProvider: IReceiptRefreshProvider
     /// The provider is responsible for refunding purchases
@@ -27,13 +27,13 @@ final class IAPProvider: IIAPProvider {
     /// - Parameters:
     ///   - paymentQueue: The queue of payment transactions to be processed by the App Store.
     ///   - productProvider: The provider is responsible for fetching StoreKit products.
-    ///   - paymentProvider: The provider is responsible for making in-app payments.
+    ///   - purchaseProvider:
     ///   - receiptRefreshProvider: The provider is responsible for refreshing receipts.
     ///   - refundProvider: The provider is responsible for refunding purchases.
     init(
         paymentQueue: PaymentQueue = SKPaymentQueue.default(),
         productProvider: IProductProvider = ProductProvider(),
-        paymentProvider: IPaymentProvider = PaymentProvider(),
+        purchaseProvider: IPurchaseProvider = PurchaseProvider(),
         receiptRefreshProvider: IReceiptRefreshProvider = ReceiptRefreshProvider(),
         refundProvider: IRefundProvider = RefundProvider(
             systemInfoProvider: SystemInfoProvider()
@@ -41,7 +41,7 @@ final class IAPProvider: IIAPProvider {
     ) {
         self.paymentQueue = paymentQueue
         self.productProvider = productProvider
-        self.paymentProvider = paymentProvider
+        self.purchaseProvider = purchaseProvider
         self.receiptRefreshProvider = receiptRefreshProvider
         self.refundProvider = refundProvider
     }
@@ -80,7 +80,7 @@ final class IAPProvider: IIAPProvider {
         }
     }
 
-    func purchase(productID: String, completion: @escaping Closure<Result<PaymentTransaction, IAPError>>) {
+    func purchase(productID: String, completion: @escaping Closure<Result<StoreTransaction, IAPError>>) {
         productProvider.fetch(productIDs: [productID], requestID: UUID().uuidString) { result in
             switch result {
             case let .success(products):
@@ -89,12 +89,10 @@ final class IAPProvider: IIAPProvider {
                     return
                 }
 
-                let payment = SKPayment(product: product.product)
-
-                self.paymentProvider.add(payment: payment) { _, result in
+                self.purchaseProvider.purchase(product: StoreProduct(skProduct: product.product)) { result in
                     switch result {
                     case let .success(transaction):
-                        completion(.success(PaymentTransaction(transaction)))
+                        completion(.success(transaction))
                     case let .failure(error):
                         completion(.failure(error))
                     }
@@ -105,7 +103,7 @@ final class IAPProvider: IIAPProvider {
         }
     }
 
-    func purchase(productID: String) async throws -> PaymentTransaction {
+    func purchase(productID: String) async throws -> StoreTransaction {
         try await withCheckedThrowingContinuation { continuation in
             purchase(productID: productID) { result in
                 continuation.resume(with: result)
@@ -137,23 +135,15 @@ final class IAPProvider: IIAPProvider {
     }
 
     func finish(transaction: PaymentTransaction) {
-        paymentProvider.finish(transaction: transaction)
+        purchaseProvider.finish(transaction: transaction)
     }
 
     func addTransactionObserver(fallbackHandler: Closure<Result<PaymentTransaction, IAPError>>?) {
-        paymentProvider.set { _, result in
-            switch result {
-            case let .success(transaction):
-                fallbackHandler?(.success(PaymentTransaction(transaction)))
-            case let .failure(error):
-                fallbackHandler?(.failure(error))
-            }
-        }
-        paymentProvider.addTransactionObserver()
+        purchaseProvider.addTransactionObserver(fallbackHandler: fallbackHandler)
     }
 
     func removeTransactionObserver() {
-        paymentProvider.removeTransactionObserver()
+        purchaseProvider.removeTransactionObserver()
     }
 
     #if os(iOS) || VISION_OS

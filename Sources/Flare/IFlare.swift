@@ -33,7 +33,7 @@ public protocol IFlare {
     /// - Parameters:
     ///   - productID: The product identifier.
     ///   - completion: The closure to be executed once the purchase is complete.
-    func purchase(productID: String, completion: @escaping Closure<Result<PaymentTransaction, IAPError>>)
+    func purchase(productID: String, completion: @escaping Closure<Result<StoreTransaction, IAPError>>)
 
     /// Purchases a product with a given ID.
     ///
@@ -46,7 +46,10 @@ public protocol IFlare {
     /// - Throws: `IAPError.paymentNotAllowed` if user can't make payment.
     ///
     /// - Returns: A payment transaction.
-    func purchase(productID: String) async throws -> PaymentTransaction
+    func purchase(productID: String) async throws -> StoreTransaction
+
+//    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+//    func purchase(productID: String, options: Set<StoreKit.Product.PurchaseOption>) async throws -> StoreTransaction
 
     /// Refreshes the receipt, representing the user's transactions with your app.
     ///

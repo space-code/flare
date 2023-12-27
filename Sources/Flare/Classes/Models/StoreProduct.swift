@@ -15,6 +15,9 @@ public final class StoreProduct: NSObject {
     /// Protocol representing a Store Kit product.
     private let product: ISKProduct
 
+    /// <#Description#>
+    var underlyingProduct: ISKProduct { product }
+
     // MARK: Initialization
 
     /// Creates a new `StoreProduct` instance.

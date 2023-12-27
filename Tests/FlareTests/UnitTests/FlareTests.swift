@@ -80,11 +80,11 @@ class FlareTests: XCTestCase {
 
     func test_thatFlarePurchasesAProduct_whenRequestCompletedSuccessfully() {
         // given
-        let paymentTransaction = PaymentTransaction(PaymentTransactionMock())
+        let paymentTransaction = StoreTransaction(storeTransaction: StoreTransactionStub())
         iapProviderMock.stubbedCanMakePayments = true
 
         // when
-        var transaction: PaymentTransaction?
+        var transaction: IStoreTransaction?
         flare.purchase(productID: .productID, completion: { result in
             if case let .success(result) = result {
                 transaction = result
@@ -94,7 +94,7 @@ class FlareTests: XCTestCase {
 
         // then
         XCTAssertTrue(iapProviderMock.invokedPurchase)
-        XCTAssertEqual(transaction, paymentTransaction)
+        XCTAssertEqual(transaction?.productIdentifier, paymentTransaction.productIdentifier)
     }
 
     func test_thatFlareDoesNotPurchaseAProduct_whenUnknownErrorOccurred() {
@@ -119,7 +119,7 @@ class FlareTests: XCTestCase {
     func test_thatFlareDoesNotPurchaseAProduct_whenUserCannotMakePayments() async {
         // given
         iapProviderMock.stubbedCanMakePayments = false
-        iapProviderMock.stubbedAsyncPurchase = PaymentTransaction(PaymentTransactionMock())
+        iapProviderMock.stubbedAsyncPurchase = StoreTransaction(storeTransaction: StoreTransactionStub())
 
         // when
         var iapError: IAPError?
@@ -136,13 +136,13 @@ class FlareTests: XCTestCase {
 
     func test_thatFlareDoesNotPurchaseAProduct_whenUnknownErrorOccurred() async {
         // given
-        let transactionMock = PaymentTransaction(PaymentTransactionMock())
+        let transactionMock = StoreTransaction(storeTransaction: StoreTransactionStub())
 
         iapProviderMock.stubbedCanMakePayments = true
         iapProviderMock.stubbedAsyncPurchase = transactionMock
 
         // when
-        var transaction: PaymentTransaction?
+        var transaction: IStoreTransaction?
         var iapError: IAPError?
         do {
             transaction = try await flare.purchase(productID: .productID)
@@ -153,7 +153,7 @@ class FlareTests: XCTestCase {
         // then
         XCTAssertTrue(iapProviderMock.invokedAsyncPurchase)
         XCTAssertNil(iapError)
-        XCTAssertEqual(transaction, transactionMock)
+        XCTAssertEqual(transaction?.productIdentifier, transactionMock.productIdentifier)
     }
 
     func test_thatFlareFetchesReceipt_whenRequestCompletedSuccessfully() {

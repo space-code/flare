@@ -31,10 +31,10 @@ final class IAPProviderMock: IIAPProvider {
 
     var invokedPurchase = false
     var invokedPurchaseCount = 0
-    var invokedPurchaseParameters: (productID: String, completion: Closure<Result<PaymentTransaction, IAPError>>)?
-    var invokedPurchaseParametersList = [(productID: String, completion: Closure<Result<PaymentTransaction, IAPError>>)]()
+    var invokedPurchaseParameters: (productID: String, completion: Closure<Result<StoreTransaction, IAPError>>)?
+    var invokedPurchaseParametersList = [(productID: String, completion: Closure<Result<StoreTransaction, IAPError>>)]()
 
-    func purchase(productID: String, completion: @escaping Closure<Result<PaymentTransaction, IAPError>>) {
+    func purchase(productID: String, completion: @escaping Closure<Result<StoreTransaction, IAPError>>) {
         invokedPurchase = true
         invokedPurchaseCount += 1
         invokedPurchaseParameters = (productID, completion)
@@ -108,9 +108,9 @@ final class IAPProviderMock: IIAPProvider {
     var invokedAsyncPurchaseCount = 0
     var invokedAsyncPurchaseParameters: (productID: String, Void)?
     var invokedAsyncPurchaseParametersList = [(productID: String, Void)?]()
-    var stubbedAsyncPurchase: PaymentTransaction!
+    var stubbedAsyncPurchase: StoreTransaction!
 
-    func purchase(productID: String) async throws -> PaymentTransaction {
+    func purchase(productID: String) async throws -> StoreTransaction {
         invokedAsyncPurchase = true
         invokedAsyncPurchaseCount += 1
         invokedAsyncPurchaseParameters = (productID, ())

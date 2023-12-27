@@ -13,7 +13,7 @@ public final class StoreTransaction {
     // MARK: Properties
 
     /// The StoreKit transaction.
-    private let storeTransaction: IStoreTransaction
+    let storeTransaction: IStoreTransaction
 
     // MARK: Initialization
 

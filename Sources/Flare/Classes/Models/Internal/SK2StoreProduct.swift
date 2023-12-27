@@ -13,7 +13,7 @@ final class SK2StoreProduct {
     // MARK: Properties
 
     /// The store kit product.
-    private let product: StoreKit.Product
+    let product: StoreKit.Product
     /// The currency format.
     private var currencyFormat: Decimal.FormatStyle.Currency {
         product.priceFormatStyle

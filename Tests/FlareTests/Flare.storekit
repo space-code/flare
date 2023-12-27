@@ -61,7 +61,7 @@
           "localizations" : [
             {
               "description" : "",
-              "displayName" : "",
+              "displayName" : "TestSubscription1",
               "locale" : "en_US"
             }
           ],
@@ -86,7 +86,7 @@
           "localizations" : [
             {
               "description" : "",
-              "displayName" : "",
+              "displayName" : "TestSubscription2",
               "locale" : "en_US"
             }
           ],

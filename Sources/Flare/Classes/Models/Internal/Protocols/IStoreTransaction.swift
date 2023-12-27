@@ -22,11 +22,11 @@ protocol IStoreTransaction {
 
     /// The raw JWS repesentation of the transaction.
     ///
-    /// - Note: this is only available for StoreKit 2 transactions.
+    /// - Note: This is only available for StoreKit 2 transactions.
     var jwsRepresentation: String? { get }
 
     /// The server environment where the receipt was generated.
     ///
-    /// - Note: this is only available for StoreKit 2 transactions.
+    /// - Note: This is only available for StoreKit 2 transactions.
     var environment: StoreEnvironment? { get }
 }

@@ -30,6 +30,14 @@ public enum IAPError: Swift.Error {
     case transactionNotFound(productID: String)
     /// The refund error.
     case refund(error: RefundError)
+    /// The verification error.
+    ///
+    /// - Note: This is only available for StoreKit 2 transactions.
+    case verification(error: VerificationError)
+    ///
+    ///
+    /// - Note: This is only available for StoreKit 2 transactions.
+    case paymentDefferred
     /// The unknown error occurred.
     case unknown
 }
