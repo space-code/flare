@@ -1,0 +1,59 @@
+name: Flare
+packages:
+  # External
+
+  Concurrency:
+    url: https://github.com/space-code/concurrency.git
+    from: 0.0.1
+  ObjectsFactory:
+    url: https://github.com/space-code/objects-factory.git
+    from: 1.0.0
+
+  # Flare:
+  #   path: .
+
+targets:
+  UnitTestHostApp:
+    type: application
+    supportedDestinations: [iOS, tvOS, macOS, watchOS]
+    sources: Tests/FlareTests/UnitTestHostApp
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.spacecode.flare
+    scheme:
+      testTargets:
+        - FlareTests
+    # dependencies:
+    #   - package: Flare
+  Flare:
+    type: framework
+    supportedDestinations: [iOS, tvOS, macOS, watchOS]
+    dependencies:
+      - package: Concurrency
+        product: Concurrency
+    settings:
+      GENERATE_INFOPLIST_FILE: YES
+    sources:
+      - path: Sources
+    scheme:
+      testTargets:
+        - FlareTests
+      gatherCoverageData: true
+      coverageTargets:
+        - Flare
+  FlareTests:
+    type: bundle.unit-test
+    supportedDestinations: [iOS, tvOS, macOS, watchOS]
+    # targets: ["1"]
+    dependencies:
+      - package: Concurrency
+        product: TestConcurrency
+      - package: ObjectsFactory
+      - target: Flare
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_HOST: $(BUILT_PRODUCTS_DIR)/UnitTestHostApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/UnitTestHostApp
+        PRODUCT_BUNDLE_IDENTIFIER: com.spacecode.flare
+    sources:
+      - Tests/FlareTests/UnitTests

@@ -155,17 +155,22 @@ final class IAPProviderMock: IIAPProvider {
     var invokedPurchaseWithOptionsCount = 0
     var invokedPurchaseWithOptionsParameters: (product: StoreProduct, options: Any)?
     var invokedPurchaseWithOptionsParametersList = [(product: StoreProduct, options: Any)]()
+    var stubbedPurchaseWithOptionsResult: Result<StoreTransaction, IAPError>?
 
     @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
     func purchase(
         product: StoreProduct,
         options: Set<Product.PurchaseOption>,
-        completion _: @escaping SendableClosure<Result<StoreTransaction, IAPError>>
+        completion: @escaping SendableClosure<Result<StoreTransaction, IAPError>>
     ) {
         invokedPurchaseWithOptions = true
         invokedPurchaseWithOptionsCount += 1
         invokedPurchaseWithOptionsParameters = (product, options)
         invokedPurchaseWithOptionsParametersList.append((product, options))
+
+        if let result = stubbedPurchaseWithOptionsResult {
+            completion(result)
+        }
     }
 
     var invokedAsyncPurchaseWithOptions = false

@@ -267,6 +267,55 @@ class FlareTests: XCTestCase {
             else { XCTFail("state must be `failed`") }
         }
     #endif
+
+    func test_thatFlarePurchasesWithOptions_whenPurchaseCompleteSuccessfully() async throws {
+        // given
+        let product = try await ProductProviderHelper.all.randomElement()
+        let storeTransactionStub = StoreTransactionStub()
+        storeTransactionStub.stubbedProductIdentifier = product?.id
+
+        iapProviderMock.stubbedCanMakePayments = true
+        iapProviderMock.stubbedAsyncPurchaseWithOptions = StoreTransaction(
+            storeTransaction: storeTransactionStub
+        )
+
+        // when
+        let transaction = try await flare.purchase(
+            product: StoreProduct(product: product!),
+            options: [.simulatesAskToBuyInSandbox(false)]
+        )
+
+        // then
+        XCTAssertEqual(transaction.productIdentifier, product?.id)
+    }
+
+    func test_thatFlarePurchasesWithOptionsAndCompletionHandler_whenPurchaseCompleteSuccessfully() async throws {
+        // given
+        let expectation = XCTestExpectation(description: "Purchase a product")
+
+        let product = try await ProductProviderHelper.all.randomElement()
+        let storeTransactionStub = StoreTransactionStub()
+        storeTransactionStub.stubbedProductIdentifier = product?.id
+
+        iapProviderMock.stubbedCanMakePayments = true
+        iapProviderMock.stubbedPurchaseWithOptionsResult = .success(StoreTransaction(storeTransaction: storeTransactionStub))
+
+        // when
+        flare.purchase(
+            product: StoreProduct(product: product!),
+            options: [.simulatesAskToBuyInSandbox(false)]
+        ) { result in
+            if case let .success(transaction) = result {
+                XCTAssertEqual(transaction.productIdentifier, product?.id)
+                expectation.fulfill()
+            } else {
+                XCTFail("Purchase should complete successfully")
+            }
+        }
+
+        // then
+        wait(for: [expectation], timeout: 2.0)
+    }
 }
 
 // MARK: - Constants

@@ -128,24 +128,18 @@ class IAPProviderTests: XCTestCase {
         XCTAssertEqual(productsMock.count, products.count)
     }
 
-    #if os(iOS)
-        @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
-        func test_thatIAPProviderFetchesSK2Products_whenProductsAreAvailable() async throws {
-            guard #available(iOS 17.0, *) else {
-                throw XCTSkip("This test is currently working only on iOS 17")
-            }
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    func test_thatIAPProviderFetchesSK2Products_whenProductsAreAvailable() async throws {
+        let productsMock = try await ProductProviderHelper.all.map(SK2StoreProduct.init)
+        productProviderMock.stubbedAsyncFetchResult = .success(productsMock)
 
-            let productsMock = try await ProductProviderHelper.all.map(SK2StoreProduct.init)
-            productProviderMock.stubbedAsyncFetchResult = .success(productsMock)
+        // when
+        let products = try await iapProvider.fetch(productIDs: .productIDs)
 
-            // when
-            let products = try await iapProvider.fetch(productIDs: .productIDs)
-
-            // then
-            XCTAssertFalse(products.isEmpty)
-            XCTAssertEqual(productsMock.count, products.count)
-        }
-    #endif
+        // then
+        XCTAssertFalse(products.isEmpty)
+        XCTAssertEqual(productsMock.count, products.count)
+    }
 
     func test_thatIAPProviderThrowsNoProductsError_whenProductsProductProviderReturnsError() async throws {
         try AvailabilityChecker.iOS15APINotAvailableOrSkipTest()

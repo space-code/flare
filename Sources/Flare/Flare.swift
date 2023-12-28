@@ -83,7 +83,8 @@ extension Flare: IFlare {
         product: StoreProduct,
         options: Set<StoreKit.Product.PurchaseOption>
     ) async throws -> StoreTransaction {
-        try await iapProvider.purchase(product: product, options: options)
+        guard iapProvider.canMakePayments else { throw IAPError.paymentNotAllowed }
+        return try await iapProvider.purchase(product: product, options: options)
     }
 
     public func receipt(completion: @escaping Closure<Result<String, IAPError>>) {

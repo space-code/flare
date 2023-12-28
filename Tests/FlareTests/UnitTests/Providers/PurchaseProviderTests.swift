@@ -52,38 +52,43 @@ final class PurchaseProviderTests: XCTestCase {
         }
     }
 
-//    #if os(iOS)
-//    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
-//    func test_thatPurchaseProviderReturnsPaymentTransaction_whenSK2ProductExist() async throws {
-//        guard #available(iOS 17.0, *) else {
-//            throw XCTSkip("This test is currently working only on iOS 17")
-//        }
-//
-//        // given
-    ////        let url = Bundle.module.url(forResource: "Flare", withExtension: "storekit")!
-//        let session = try SKTestSession(configurationFileNamed: "Flare")
-//        session.disableDialogs = true
-//        session.clearTransactions()
-//
-    ////        try await session.buyProduct(productIdentifier: ProductProviderHelper.all[0].id)
-//
-//        let expectation = XCTestExpectation(description: "Purchase a product")
-//        let productMock = StoreProduct(product: try await ProductProviderHelper.all[0])
-//
-//        // when
-//        sut.purchase(product: productMock) { result in
-//            switch result {
-//            case let .success(transaction):
-//                XCTAssertEqual(transaction.productIdentifier, productMock.productIdentifier)
-//                expectation.fulfill()
-//            case let .failure(error):
-//                print(error)
-//            }
-//        }
-//
-//        wait(for: [expectation], timeout: 2.0)
-//    }
-//    #endif
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    func test_thatPurchaseProviderReturnsPaymentTransaction_whenSK2ProductExist() async throws {
+        let expectation = XCTestExpectation(description: "Purchase a product")
+        let productMock = try StoreProduct(product: await ProductProviderHelper.purchases[0])
+
+        // when
+        sut.purchase(product: productMock) { result in
+            switch result {
+            case let .success(transaction):
+                XCTAssertEqual(transaction.productIdentifier, productMock.productIdentifier)
+                expectation.fulfill()
+            case let .failure(error):
+                XCTFail(error.localizedDescription)
+            }
+        }
+
+        wait(for: [expectation], timeout: 2.0)
+    }
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    func test_thatPurchaseProviderReturnsPaymentTransaction_whenPurchasesAProductWithOptions() async throws {
+        let expectation = XCTestExpectation(description: "Purchase a product")
+        let productMock = try StoreProduct(product: await ProductProviderHelper.purchases[0])
+
+        // when
+        sut.purchase(product: productMock, options: [.simulatesAskToBuyInSandbox(false)]) { result in
+            switch result {
+            case let .success(transaction):
+                XCTAssertEqual(transaction.productIdentifier, productMock.productIdentifier)
+                expectation.fulfill()
+            case let .failure(error):
+                XCTFail(error.localizedDescription)
+            }
+        }
+
+        wait(for: [expectation], timeout: 2.0)
+    }
 
     func test_thatPurchaseProviderFinishesTransaction() {
         // given
@@ -96,7 +101,7 @@ final class PurchaseProviderTests: XCTestCase {
         XCTAssertTrue(paymentProviderMock.invokedFinishTransaction)
     }
 
-    func test_thatPurchaseProviderAddsTransactionObserver_when() {
+    func test_thatPurchaseProviderAddsTransactionObserver_whenPaymentDidSuccess() {
         // given
         let paymentTransactionMock = SKPaymentTransaction()
         paymentProviderMock.stubbedFallbackHandlerResult = (paymentQueueMock, .success(paymentTransactionMock))
