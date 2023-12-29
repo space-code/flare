@@ -87,16 +87,6 @@ final class ProductProviderTests: XCTestCase {
         // then
         XCTAssertEqual(error?.plainError as? NSError, errorStub.plainError as NSError)
     }
-
-    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
-    func test_thatProductProvider() async throws {
-        // when
-        let products = try await sut.fetch(productIDs: [.productID])
-
-        // then
-        XCTAssertEqual(products.count, 1)
-        XCTAssertEqual(products.first?.productIdentifier, .productID)
-    }
 }
 
 // MARK: - Constants

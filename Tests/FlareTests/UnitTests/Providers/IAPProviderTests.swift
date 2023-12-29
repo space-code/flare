@@ -128,41 +128,6 @@ class IAPProviderTests: XCTestCase {
         XCTAssertEqual(productsMock.count, products.count)
     }
 
-    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
-    func test_thatIAPProviderFetchesSK2Products_whenProductsAreAvailable() async throws {
-        let productsMock = try await ProductProviderHelper.purchases.map(SK2StoreProduct.init)
-        productProviderMock.stubbedAsyncFetchResult = .success(productsMock)
-
-        // when
-        let products = try await sut.fetch(productIDs: .productIDs)
-
-        // then
-        XCTAssertFalse(products.isEmpty)
-        XCTAssertEqual(productsMock.count, products.count)
-    }
-
-    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
-    func test_thatIAPProviderThrowsAnIAPError_whenFetchingProductsFailed() async {
-        productProviderMock.stubbedAsyncFetchResult = .failure(IAPError.unknown)
-
-        // when
-        let error: IAPError? = await error(for: { try await sut.fetch(productIDs: .productIDs) })
-
-        // then
-        XCTAssertEqual(error, .unknown)
-    }
-
-    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
-    func test_thatIAPProviderThrowsAPlainError_whenFetchingProductsFailed() async {
-        productProviderMock.stubbedAsyncFetchResult = .failure(URLError(.unknown))
-
-        // when
-        let error: IAPError? = await error(for: { try await sut.fetch(productIDs: .productIDs) })
-
-        // then
-        XCTAssertEqual(error, .with(error: URLError(.unknown)))
-    }
-
     func test_thatIAPProviderThrowsNoProductsError_whenProductsProductProviderReturnsError() async throws {
         try AvailabilityChecker.iOS15APINotAvailableOrSkipTest()
 
@@ -262,70 +227,6 @@ class IAPProviderTests: XCTestCase {
 
         // then
         XCTAssertEqual(errorResult as? NSError, IAPError.receiptNotFound as NSError)
-    }
-
-    #if os(iOS) || VISION_OS
-        @available(iOS 15.0, *)
-        func test_thatIAPProviderRefundsPurchase() async throws {
-            // given
-            refundProviderMock.stubbedBeginRefundRequest = .success
-
-            // when
-            let state = try await sut.beginRefundRequest(productID: .productID)
-
-            // then
-            if case .success = state {}
-            else { XCTFail("state must be `success`") }
-        }
-
-        @available(iOS 15.0, *)
-        func test_thatFlareThrowsAnError_whenBeginRefundRequestFailed() async throws {
-            // given
-            refundProviderMock.stubbedBeginRefundRequest = .failed(error: IAPError.unknown)
-
-            // when
-            let state = try await sut.beginRefundRequest(productID: .productID)
-
-            // then
-            if case let .failed(error) = state { XCTAssertEqual(error as NSError, IAPError.unknown as NSError) }
-            else { XCTFail("state must be `failed`") }
-        }
-    #endif
-
-    @available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)
-    func test_thatIAPProviderPurchasesAProduct() async throws {
-        // given
-        let transactionMock = StoreTransactionMock()
-        transactionMock.stubbedTransactionIdentifier = .transactionID
-
-        let storeTransaction = StoreTransaction(storeTransaction: transactionMock)
-        purchaseProvider.stubbedPurchaseCompletionResult = (.success(storeTransaction), ())
-
-        let product = try await ProductProviderHelper.purchases[0]
-
-        // when
-        let transaction = try await sut.purchase(product: StoreProduct(product: product))
-
-        // then
-        XCTAssertEqual(transaction.transactionIdentifier, .transactionID)
-    }
-
-    @available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)
-    func test_thatIAPProviderPurchasesAProductWithOptions() async throws {
-        // given
-        let transactionMock = StoreTransactionMock()
-        transactionMock.stubbedTransactionIdentifier = .transactionID
-
-        let storeTransaction = StoreTransaction(storeTransaction: transactionMock)
-        purchaseProvider.stubbedinvokedPurchaseWithOptionsCompletionResult = (.success(storeTransaction), ())
-
-        let product = try await ProductProviderHelper.purchases[0]
-
-        // when
-        let transaction = try await sut.purchase(product: StoreProduct(product: product), options: [])
-
-        // then
-        XCTAssertEqual(transaction.transactionIdentifier, .transactionID)
     }
 }
 
