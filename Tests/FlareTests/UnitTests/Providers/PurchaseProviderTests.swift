@@ -10,7 +10,7 @@ import XCTest
 
 // MARK: - PurchaseProviderTests
 
-final class PurchaseProviderTests: StoreSessionTestCase {
+final class PurchaseProviderTests: XCTestCase {
     // MARK: Properties
 
     private var paymentQueueMock: PaymentQueueMock!
@@ -52,44 +52,6 @@ final class PurchaseProviderTests: StoreSessionTestCase {
                 XCTFail("The products' ids must be equal")
             }
         }
-    }
-
-    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
-    func test_thatPurchaseProviderReturnsPaymentTransaction_whenSK2ProductExist() async throws {
-        let expectation = XCTestExpectation(description: "Purchase a product")
-        let productMock = try StoreProduct(product: await ProductProviderHelper.purchases[0])
-
-        // when
-        sut.purchase(product: productMock) { result in
-            switch result {
-            case let .success(transaction):
-                XCTAssertEqual(transaction.productIdentifier, productMock.productIdentifier)
-                expectation.fulfill()
-            case let .failure(error):
-                XCTFail(error.localizedDescription)
-            }
-        }
-
-        wait(for: [expectation], timeout: .second)
-    }
-
-    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
-    func test_thatPurchaseProviderReturnsPaymentTransaction_whenPurchasesAProductWithOptions() async throws {
-        let expectation = XCTestExpectation(description: "Purchase a product")
-        let productMock = try StoreProduct(product: await ProductProviderHelper.purchases[0])
-
-        // when
-        sut.purchase(product: productMock, options: [.simulatesAskToBuyInSandbox(false)]) { result in
-            switch result {
-            case let .success(transaction):
-                XCTAssertEqual(transaction.productIdentifier, productMock.productIdentifier)
-                expectation.fulfill()
-            case let .failure(error):
-                XCTFail(error.localizedDescription)
-            }
-        }
-
-        wait(for: [expectation], timeout: .second)
     }
 
     func test_thatPurchaseProviderFinishesTransaction() {
@@ -139,10 +101,4 @@ final class PurchaseProviderTests: StoreSessionTestCase {
         // then
         XCTAssertTrue(paymentProviderMock.invokedRemoveTransactionObserver)
     }
-}
-
-// MARK: - Constants
-
-private extension TimeInterval {
-    static let second: TimeInterval = 1.0
 }

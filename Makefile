@@ -19,4 +19,7 @@ fmt:
 generate:
 	xcodegen generate
 
-.PHONY: all bootstrap hook mint lint fmt generate
+setup_build_tools:
+	sh scripts/setup_build_tools.sh
+
+.PHONY: all bootstrap hook mint lint fmt generate setup_build_tools

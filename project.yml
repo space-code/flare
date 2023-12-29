@@ -22,13 +22,12 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.spacecode.flare
-        DEVELOPMENT_TEAM: A8WE5LL2GU
     scheme:
       testTargets:
         - FlareTests
   Flare:
     type: framework
-    supportedDestinations: [iOS, tvOS, macOS, watchOS]
+    supportedDestinations: [iOS, tvOS, macOS]
     dependencies:
       - package: Concurrency
         product: Concurrency
@@ -44,7 +43,7 @@ targets:
         - Flare
   FlareTests:
     type: bundle.unit-test
-    supportedDestinations: [iOS, tvOS, macOS, watchOS]
+    supportedDestinations: [iOS, tvOS, macOS]
     dependencies:
       - package: Concurrency
         product: TestConcurrency

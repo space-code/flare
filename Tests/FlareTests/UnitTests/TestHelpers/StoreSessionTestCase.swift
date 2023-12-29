@@ -6,6 +6,7 @@
 import StoreKitTest
 import XCTest
 
+@available(iOS 14.0, tvOS 14.0, macOS 11.0, watchOS 7.0, *)
 class StoreSessionTestCase: XCTestCase {
     // MARK: Properties
 
@@ -16,16 +17,10 @@ class StoreSessionTestCase: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        if #available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *) {
-            do {
-                session = try SKTestSession(configurationFileNamed: "Flare")
-                session?.resetToDefaultState()
-                session?.askToBuyEnabled = false
-                session?.disableDialogs = true
-            } catch {
-                debugPrint("[StoreSessionTestCase] An error occurred while initializing a session: \(error.localizedDescription)")
-            }
-        }
+        session = try? SKTestSession(configurationFileNamed: "Flare")
+        session?.resetToDefaultState()
+        session?.askToBuyEnabled = false
+        session?.disableDialogs = true
     }
 
     override func tearDown() {
