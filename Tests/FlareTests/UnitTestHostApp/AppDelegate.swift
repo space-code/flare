@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-#if os(watchOS) || os(tvOS)
+#if os(watchOS) || os(tvOS) || os(macOS)
 
     @main
     struct TestApp: App {
@@ -17,7 +17,6 @@ import SwiftUI
     }
 
 #else
-
     // Scene isn't available until iOS 14.0, so this is for backwards compatibility.
 
     @main

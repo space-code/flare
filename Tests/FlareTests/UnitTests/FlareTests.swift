@@ -242,6 +242,7 @@ class FlareTests: StoreSessionTestCase {
         }
     #endif
 
+    @available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)
     func test_thatFlarePurchasesAProductWithOptions_whenPurchaseCompleted() async throws {
         let transaction = StoreTransactionStub()
         try await test_purchaseWithOptionsAndCompletion(
@@ -251,6 +252,7 @@ class FlareTests: StoreSessionTestCase {
         )
     }
 
+    @available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)
     func test_thatFlarePurchaseThrowsAnError_whenPaymentNotAllowed() async throws {
         try await test_purchaseWithOptionsAndCompletion(
             canMakePayments: false,
@@ -258,6 +260,7 @@ class FlareTests: StoreSessionTestCase {
         )
     }
 
+    @available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)
     func test_thatFlarePurchasesAsyncAProductWithOptionsAndCompletionHandler_whenPurchaseCompleted() async throws {
         let transaction = StoreTransactionStub()
         try await test_purchaseWithOptions(
@@ -266,6 +269,7 @@ class FlareTests: StoreSessionTestCase {
         )
     }
 
+    @available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)
     func test_thatFlarePurchaseAsyncThrowsAnError_whenPaymentNotAllowed() async throws {
         try await test_purchaseWithOptions(
             canMakePayments: false,
@@ -275,6 +279,7 @@ class FlareTests: StoreSessionTestCase {
 
     // MARK: Private
 
+    @available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)
     private func test_purchaseWithOptionsAndCompletion(
         transaction: StoreTransactionStub? = nil,
         canMakePayments: Bool,
@@ -302,6 +307,7 @@ class FlareTests: StoreSessionTestCase {
         XCTAssertEqual(result, expectedResult)
     }
 
+    @available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)
     private func test_purchaseWithOptions(
         transaction: StoreTransactionStub? = nil,
         canMakePayments: Bool,

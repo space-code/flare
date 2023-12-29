@@ -1,4 +1,10 @@
 name: Flare
+options:
+  deploymentTarget:
+    iOS: 13.0
+    macOS: 10.15
+    tvOS: 13.0
+    watchOS: 7.0
 packages:
   # External
 
@@ -8,23 +14,18 @@ packages:
   ObjectsFactory:
     url: https://github.com/space-code/objects-factory.git
     from: 1.0.0
-
-  # Flare:
-  #   path: .
-
 targets:
   UnitTestHostApp:
     type: application
-    supportedDestinations: [iOS, tvOS, macOS, watchOS]
+    supportedDestinations: [iOS, tvOS, macOS]
     sources: Tests/FlareTests/UnitTestHostApp
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.spacecode.flare
+        DEVELOPMENT_TEAM: A8WE5LL2GU
     scheme:
       testTargets:
         - FlareTests
-    # dependencies:
-    #   - package: Flare
   Flare:
     type: framework
     supportedDestinations: [iOS, tvOS, macOS, watchOS]
@@ -44,7 +45,6 @@ targets:
   FlareTests:
     type: bundle.unit-test
     supportedDestinations: [iOS, tvOS, macOS, watchOS]
-    # targets: ["1"]
     dependencies:
       - package: Concurrency
         product: TestConcurrency

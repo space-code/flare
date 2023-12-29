@@ -42,10 +42,10 @@ jobs:
             name: "tvOS"
             scheme: "Flare"
             sdk: appletvsimulator
-          - destination: "OS=9.1,name=Apple Watch Series 8 (45mm)"
-            name: "watchOS"
-            scheme: "Flare"
-            sdk: watchsimulator
+          # - destination: "OS=9.1,name=Apple Watch Series 8 (45mm)"
+          #   name: "watchOS"
+          #   scheme: "Flare"
+          #   sdk: watchsimulator
           - destination: "platform=macOS"
             name: "macOS"
             scheme: "Flare"

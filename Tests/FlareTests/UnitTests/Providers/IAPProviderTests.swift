@@ -292,6 +292,7 @@ class IAPProviderTests: XCTestCase {
         }
     #endif
 
+    @available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)
     func test_thatIAPProviderPurchasesAProduct() async throws {
         // given
         let transactionMock = StoreTransactionMock()
@@ -309,6 +310,7 @@ class IAPProviderTests: XCTestCase {
         XCTAssertEqual(transaction.transactionIdentifier, .transactionID)
     }
 
+    @available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)
     func test_thatIAPProviderPurchasesAProductWithOptions() async throws {
         // given
         let transactionMock = StoreTransactionMock()
