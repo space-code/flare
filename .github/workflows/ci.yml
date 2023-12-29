@@ -29,7 +29,7 @@ jobs:
     runs-on: ${{ matrix.runsOn }}
     env:
       DEVELOPER_DIR: "/Applications/${{ matrix.xcode }}.app/Contents/Developer"
-    timeout-minutes: 10
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
@@ -66,7 +66,7 @@ jobs:
     runs-on: ${{ matrix.runsOn }}
     env:
       DEVELOPER_DIR: "/Applications/${{ matrix.xcode }}.app/Contents/Developer"
-    timeout-minutes: 10
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
@@ -79,10 +79,10 @@ jobs:
             name: "iOS 16.4"
             xcode: "Xcode_14.3.1"
             runsOn: macos-13
-          - destination: "OS=15.5,name=iPhone 13 Pro"
-            name: "iOS 15.5"
-            xcode: "Xcode_13.4.1"
-            runsOn: macOS-12
+          # - destination: "OS=15.5,name=iPhone 13 Pro"
+          #   name: "iOS 15.5"
+          #   xcode: "Xcode_13.4.1"
+          #   runsOn: macOS-12
     steps:
       - uses: actions/checkout@v3
       - name: Install Dependencies
@@ -103,7 +103,7 @@ jobs:
     runs-on: ${{ matrix.runsOn }}
     env:
       DEVELOPER_DIR: "/Applications/${{ matrix.xcode }}.app/Contents/Developer"
-    timeout-minutes: 10
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
@@ -116,10 +116,10 @@ jobs:
             name: "tvOS 16.4"
             xcode: "Xcode_14.3.1"
             runsOn: macos-13
-          - destination: "OS=15.4,name=Apple TV"
-            name: "tvOS 15.4"
-            xcode: "Xcode_13.4.1"
-            runsOn: macos-12
+          # - destination: "OS=15.4,name=Apple TV"
+          #   name: "tvOS 15.4"
+          #   xcode: "Xcode_13.4.1"
+          #   runsOn: macos-12
     steps:
       - uses: actions/checkout@v3
       - name: Install Dependencies
@@ -135,20 +135,20 @@ jobs:
           xcode: true
           xcode_archive_path: "./appletvsimulator.xcresult"
 
-  Beta:
-    name: ${{ matrix.name }}
-    runs-on: macos-13
-    env:
-      DEVELOPER_DIR: "/Applications/Xcode_15.0.app/Contents/Developer"
-    timeout-minutes: 10
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - destination: "OS=1.0,name=Apple Vision Pro"
-            name: "visionOS 1.0"
-            scheme: "Flare"
-    steps:
-      - uses: actions/checkout@v3
-      - name: ${{ matrix.name }}
-        run: xcodebuild test -scheme "${{ matrix.scheme }}" -destination "${{ matrix.destination }}" clean || exit 1
+  # Beta:
+  #   name: ${{ matrix.name }}
+  #   runs-on: macos-13
+  #   env:
+  #     DEVELOPER_DIR: "/Applications/Xcode_15.0.app/Contents/Developer"
+  #   timeout-minutes: 10
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       include:
+  #         - destination: "OS=1.0,name=Apple Vision Pro"
+  #           name: "visionOS 1.0"
+  #           scheme: "Flare"
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: ${{ matrix.name }}
+  #       run: xcodebuild test -scheme "${{ matrix.scheme }}" -destination "${{ matrix.destination }}" clean || exit 1

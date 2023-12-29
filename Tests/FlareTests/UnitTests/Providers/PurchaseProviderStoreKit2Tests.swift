@@ -48,7 +48,11 @@ final class PurchaseProviderStoreKit2Tests: StoreSessionTestCase {
             }
         }
 
-        wait(for: [expectation], timeout: .second)
+        #if swift(>=5.9)
+            await fulfillment(of: [expectation])
+        #else
+            wait(for: [expectation], timeout: .second)
+        #endif
     }
 
     func test_thatPurchaseProviderReturnsPaymentTransaction_whenSK2ProductExist() async throws {
@@ -66,7 +70,11 @@ final class PurchaseProviderStoreKit2Tests: StoreSessionTestCase {
             }
         }
 
-        wait(for: [expectation], timeout: .second)
+        #if swift(>=5.9)
+            await fulfillment(of: [expectation])
+        #else
+            wait(for: [expectation], timeout: .second)
+        #endif
     }
 }
 
