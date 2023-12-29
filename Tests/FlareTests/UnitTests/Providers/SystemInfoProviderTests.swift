@@ -10,8 +10,9 @@
     final class SystemInfoProviderTests: XCTestCase {
         // MARK: Properties
 
-        private var sut: SystemInfoProvider!
         private var scenesHolderMock: ScenesHolderMock!
+
+        private var sut: SystemInfoProvider!
 
         // MARK: Initialization
 
@@ -43,17 +44,12 @@
         }
 
         @MainActor
-        func test_thatScenesHolderThrowsAnErrorWhenThereIsNoActiveWindowScene() {
+        func test_thatScenesHolderThrowsAnErrorWhenThereIsNoActiveWindowScene() async throws {
             // when
-            var receivedError: Error?
-            do {
-                _ = try sut.currentScene
-            } catch {
-                receivedError = error
-            }
+            let error: Error? = await self.error(for: { try sut.currentScene })
 
             // then
-            XCTAssertEqual(receivedError as? NSError, IAPError.unknown as NSError)
+            XCTAssertEqual(error as? NSError, IAPError.unknown as NSError)
         }
     }
 #endif

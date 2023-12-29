@@ -93,7 +93,7 @@ final class IAPProvider: IIAPProvider {
 
     func purchase(product: StoreProduct) async throws -> StoreTransaction {
         try await withCheckedThrowingContinuation { continuation in
-            purchase(product: product) { result in
+            self.purchase(product: product) { result in
                 continuation.resume(with: result)
             }
         }

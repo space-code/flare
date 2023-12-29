@@ -8,7 +8,9 @@ import StoreKit
 import StoreKitTest
 import XCTest
 
-final class PurchaseProviderTests: XCTestCase {
+// MARK: - PurchaseProviderTests
+
+final class PurchaseProviderTests: StoreSessionTestCase {
     // MARK: Properties
 
     private var paymentQueueMock: PaymentQueueMock!
@@ -68,7 +70,7 @@ final class PurchaseProviderTests: XCTestCase {
             }
         }
 
-        wait(for: [expectation], timeout: 2.0)
+        wait(for: [expectation], timeout: .second)
     }
 
     @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
@@ -87,7 +89,7 @@ final class PurchaseProviderTests: XCTestCase {
             }
         }
 
-        wait(for: [expectation], timeout: 2.0)
+        wait(for: [expectation], timeout: .second)
     }
 
     func test_thatPurchaseProviderFinishesTransaction() {
@@ -137,4 +139,10 @@ final class PurchaseProviderTests: XCTestCase {
         // then
         XCTAssertTrue(paymentProviderMock.invokedRemoveTransactionObserver)
     }
+}
+
+// MARK: - Constants
+
+private extension TimeInterval {
+    static let second: TimeInterval = 1.0
 }

@@ -28,7 +28,7 @@ final class ProductProviderMock: IProductProvider {
     var invokedAsyncFetchCount = 0
     var invokedAsyncFetchParameters: (productIDs: Set<String>, Void)?
     var invokedAsyncFetchParamtersList = [(productIDs: Set<String>, Void)]()
-    var stubbedAsyncFetchResult: Result<[ISKProduct], IAPError>?
+    var stubbedAsyncFetchResult: Result<[ISKProduct], Error>?
 
     @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
     func fetch(productIDs: Set<String>) async throws -> [SK2StoreProduct] {

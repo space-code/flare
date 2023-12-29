@@ -81,3 +81,11 @@ extension StoreTransaction: IStoreTransaction {
         storeTransaction.environment
     }
 }
+
+// MARK: Equatable
+
+extension StoreTransaction: Equatable {
+    public static func == (lhs: StoreTransaction, rhs: StoreTransaction) -> Bool {
+        lhs.transactionIdentifier == rhs.transactionIdentifier
+    }
+}

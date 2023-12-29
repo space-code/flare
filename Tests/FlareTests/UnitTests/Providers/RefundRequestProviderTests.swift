@@ -4,6 +4,8 @@
 //
 
 @testable import Flare
+import StoreKit
+import StoreKitTest
 import XCTest
 
 #if os(iOS) || VISION_OS
@@ -55,7 +57,7 @@ import XCTest
     }
 
     private extension String {
-        static let productID: String = "product_id"
+        static let productID: String = "com.flare.test_purchase_1"
     }
 
 #endif

@@ -15,10 +15,11 @@ class ReceiptRefreshProviderTests: XCTestCase {
 
     private var testDispatchQueue: TestDispatchQueue!
     private var dispatchQueueFactory: TestDispatchQueueFactory!
-    private var receiptRefreshProvider: ReceiptRefreshProvider!
     private var appStoreReceiptProviderMock: AppStoreReceiptProviderMock!
     private var fileManagerMock: FileManagerMock!
     private var receiptRefreshRequestFactoryMock: ReceiptRefreshRequestFactoryMock!
+
+    private var sut: ReceiptRefreshProvider!
 
     // MARK: - XCTestCase
 
@@ -29,7 +30,7 @@ class ReceiptRefreshProviderTests: XCTestCase {
         dispatchQueueFactory = TestDispatchQueueFactory(testQueue: testDispatchQueue)
         fileManagerMock = FileManagerMock()
         receiptRefreshRequestFactoryMock = ReceiptRefreshRequestFactoryMock()
-        receiptRefreshProvider = ReceiptRefreshProvider(
+        sut = ReceiptRefreshProvider(
             dispatchQueueFactory: dispatchQueueFactory,
             fileManager: fileManagerMock,
             appStoreReceiptProvider: appStoreReceiptProviderMock,
@@ -40,7 +41,7 @@ class ReceiptRefreshProviderTests: XCTestCase {
     override func tearDown() {
         testDispatchQueue = nil
         dispatchQueueFactory = nil
-        receiptRefreshProvider = nil
+        sut = nil
         appStoreReceiptProviderMock = nil
         fileManagerMock = nil
         receiptRefreshRequestFactoryMock = nil
@@ -59,8 +60,8 @@ class ReceiptRefreshProviderTests: XCTestCase {
         let error = IAPError.paymentCancelled
 
         // when
-        receiptRefreshProvider.refresh(requestID: .requestID, handler: handler)
-        receiptRefreshProvider.request(request, didFailWithError: error)
+        sut.refresh(requestID: .requestID, handler: handler)
+        sut.request(request, didFailWithError: error)
 
         // then
         if case let .failure(resultError) = result {
@@ -77,13 +78,11 @@ class ReceiptRefreshProviderTests: XCTestCase {
         let handler: ReceiptRefreshHandler = { result = $0 }
 
         // when
-        receiptRefreshProvider.refresh(requestID: .requestID, handler: handler)
-        receiptRefreshProvider.requestDidFinish(request)
+        sut.refresh(requestID: .requestID, handler: handler)
+        sut.requestDidFinish(request)
 
         // then
-        if case .failure = result {
-            XCTFail()
-        }
+        if case .failure = result { XCTFail("The result must be `success`") }
     }
 
     func test_thatReceiptRefreshProviderLoadsAppStoreReceipt_whenReceiptExists() {
@@ -92,7 +91,7 @@ class ReceiptRefreshProviderTests: XCTestCase {
         fileManagerMock.stubbedFileExistsResult = true
 
         // when
-        let receipt = receiptRefreshProvider.receipt
+        let receipt = sut.receipt
 
         // then
         XCTAssertNotNil(receipt)
@@ -104,7 +103,7 @@ class ReceiptRefreshProviderTests: XCTestCase {
         fileManagerMock.stubbedFileExistsResult = false
 
         // when
-        let receipt = receiptRefreshProvider.receipt
+        let receipt = sut.receipt
 
         // then
         XCTAssertNil(receipt)
@@ -116,20 +115,14 @@ class ReceiptRefreshProviderTests: XCTestCase {
         receiptRefreshRequestFactoryMock.stubbedMakeResult = request
 
         request.stubbedStartAction = {
-            self.receiptRefreshProvider.request(
+            self.sut.request(
                 self.makeSKRequest(id: request.id),
                 didFailWithError: IAPError.paymentNotAllowed
             )
         }
 
         // when
-        var iapError: IAPError?
-
-        do {
-            try await receiptRefreshProvider.refresh(requestID: .requestID)
-        } catch {
-            iapError = error as? IAPError
-        }
+        let iapError: IAPError? = await error(for: { try await sut.refresh(requestID: .requestID) })
 
         // then
         XCTAssertEqual(iapError, IAPError(error: IAPError.paymentNotAllowed))
@@ -143,17 +136,11 @@ class ReceiptRefreshProviderTests: XCTestCase {
         receiptRefreshRequestFactoryMock.stubbedMakeResult = request
 
         request.stubbedStartAction = {
-            self.receiptRefreshProvider.requestDidFinish(self.makeSKRequest(id: .requestID))
+            self.sut.requestDidFinish(self.makeSKRequest(id: .requestID))
         }
 
         // when
-        var iapError: IAPError?
-
-        do {
-            try await receiptRefreshProvider.refresh(requestID: .requestID)
-        } catch {
-            iapError = error as? IAPError
-        }
+        let iapError: IAPError? = await error(for: { try await sut.refresh(requestID: .requestID) })
 
         // then
         XCTAssertNil(iapError)

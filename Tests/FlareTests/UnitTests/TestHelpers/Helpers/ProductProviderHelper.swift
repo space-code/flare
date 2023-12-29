@@ -11,24 +11,24 @@ import StoreKit
 enum ProductProviderHelper {
     static var purchases: [StoreKit.Product] {
         get async throws {
-            try await StoreKit.Product.products(for: [.testPurchase1ID, .testPurchase2ID])
+            try await StoreKit.Product.products(for: [.testNonConsumableID])
         }
     }
 
-    static var subscriptions: [StoreKit.Product] {
-        get async throws {
-            try await StoreKit.Product.products(for: [.testSubscription1ID, .testSubscription2ID])
-        }
-    }
-
-    static var all: [StoreKit.Product] {
-        get async throws {
-            let purchases = try await self.purchases
-            let subscriptions = try await self.subscriptions
-
-            return purchases + subscriptions
-        }
-    }
+//    static var subscriptions: [StoreKit.Product] {
+//        get async throws {
+//            try await StoreKit.Product.products(for: [.testSubscription1ID, .testSubscription2ID])
+//        }
+//    }
+//
+//    static var all: [StoreKit.Product] {
+//        get async throws {
+//            let purchases = try await self.purchases
+//            let subscriptions = try await self.subscriptions
+//
+//            return purchases + subscriptions
+//        }
+//    }
 }
 
 // MARK: - Constants
@@ -37,6 +37,8 @@ private extension String {
     static let testPurchase1ID = "com.flare.test_purchase_1"
     static let testPurchase2ID = "com.flare.test_purchase_2"
 
-    static let testSubscription1ID = "com.flare.test_subscription_1"
-    static let testSubscription2ID = "com.flare.test_subscription_2"
+    static let testNonConsumableID = "com.flare.test_non_consumable_purchase_1"
+
+//    static let testSubscription1ID = "com.flare.test_subscription_1"
+//    static let testSubscription2ID = "com.flare.test_subscription_2"
 }

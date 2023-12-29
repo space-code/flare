@@ -11,12 +11,13 @@ import XCTest
 
 // MARK: - ProductProviderTests
 
-class ProductProviderTests: XCTestCase {
+final class ProductProviderTests: XCTestCase {
     // MARK: - Properties
 
     private var testDispatchQueue: TestDispatchQueue!
     private var dispatchQueueFactory: IDispatchQueueFactory!
-    private var productProvider: ProductProvider!
+
+    private var sut: ProductProvider!
 
     // MARK: - XCTestCase
 
@@ -24,19 +25,19 @@ class ProductProviderTests: XCTestCase {
         super.setUp()
         testDispatchQueue = TestDispatchQueue()
         dispatchQueueFactory = TestDispatchQueueFactory(testQueue: testDispatchQueue)
-        productProvider = ProductProvider(dispatchQueueFactory: dispatchQueueFactory)
+        sut = ProductProvider(dispatchQueueFactory: dispatchQueueFactory)
     }
 
     override func tearDown() {
         testDispatchQueue = nil
         dispatchQueueFactory = nil
-        productProvider = nil
+        sut = nil
         super.tearDown()
     }
 
     // MARK: - Tests
 
-    func test_thatProductProviderReturnsInvalidProductIDs_whenRequestProductsWithInvalidIDs() {
+    func test_thatProductProviderReturnsInvalidProductIDs_whenRequestProductsAreFetchedWithInvalidIDs() {
         // given
         var fetchResult: Result<[SK1StoreProduct], IAPError>?
         let completionHandler: IProductProvider.ProductsHandler = { result in fetchResult = result }
@@ -46,8 +47,8 @@ class ProductProviderTests: XCTestCase {
         response.stubbedInvokedInvalidProductsIdentifiers = [.productID]
 
         // when
-        productProvider.fetch(productIDs: .productIDs, requestID: .requestID, completion: completionHandler)
-        productProvider.productsRequest(request, didReceive: response)
+        sut.fetch(productIDs: .productIDs, requestID: .requestID, completion: completionHandler)
+        sut.productsRequest(request, didReceive: response)
 
         // then
         if case let .failure(error) = fetchResult, case let .invalid(products) = error {
@@ -57,49 +58,51 @@ class ProductProviderTests: XCTestCase {
         }
     }
 
-    func test_thatProductProviderReturnsProducts_whenRequestProductsWithValidProductIDs() {
+    func test_thatProductProviderReturnsProducts_whenRequestProductsAreFetchedWithValidProductIDs() {
         // given
-        var fetchResult: Result<[SK1StoreProduct], IAPError>?
-        let completionHandler: IProductProvider.ProductsHandler = { result in fetchResult = result }
+        var products: [SK1StoreProduct]? = []
+        let completionHandler: IProductProvider.ProductsHandler = { products = $0.success }
         let request = PurchaseManagerTestHelper.makeRequest(with: .requestID)
         let response = ProductResponseMock()
 
         // when
-        productProvider.fetch(productIDs: .productIDs, requestID: .requestID, completion: completionHandler)
-        productProvider.productsRequest(request, didReceive: response)
+        sut.fetch(productIDs: .productIDs, requestID: .requestID, completion: completionHandler)
+        sut.productsRequest(request, didReceive: response)
 
         // then
-        if case let .success(products) = fetchResult {
-            XCTAssertEqual(products.map(\.product), response.products)
-        } else {
-            XCTFail()
-        }
+        XCTAssertEqual(products?.map(\.product), response.products)
     }
 
     func test_thatProductProviderHandlesError_whenRequestDidFailWithError() {
         // given
-        var fetchResult: Result<[SK1StoreProduct], IAPError>?
-        let completionHandler: IProductProvider.ProductsHandler = { result in fetchResult = result }
+        var error: IAPError?
+        let completionHandler: IProductProvider.ProductsHandler = { error = $0.error }
         let request = PurchaseManagerTestHelper.makeRequest(with: .requestID)
-        let error = IAPError.emptyProducts
+        let errorStub = IAPError.emptyProducts
 
         // when
-        productProvider.fetch(productIDs: .productIDs, requestID: .requestID, completion: completionHandler)
-        productProvider.request(request, didFailWithError: error)
+        sut.fetch(productIDs: .productIDs, requestID: .requestID, completion: completionHandler)
+        sut.request(request, didFailWithError: errorStub)
 
         // then
-        if case let .failure(resultError) = fetchResult {
-            XCTAssertEqual(resultError.plainError as NSError, error.plainError as NSError)
-        } else {
-            XCTFail()
-        }
+        XCTAssertEqual(error?.plainError as? NSError, errorStub.plainError as NSError)
+    }
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    func test_thatProductProvider() async throws {
+        // when
+        let products = try await sut.fetch(productIDs: [.productID])
+
+        // then
+        XCTAssertEqual(products.count, 1)
+        XCTAssertEqual(products.first?.productIdentifier, .productID)
     }
 }
 
 // MARK: - Constants
 
 private extension String {
-    static let productID = "product_ID"
+    static let productID = "com.flare.test_purchase_1"
     static let requestID = "request_identifier"
 }
 
