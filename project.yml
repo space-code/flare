@@ -11,9 +11,6 @@ packages:
   Concurrency:
     url: https://github.com/space-code/concurrency.git
     from: 0.0.1
-  ObjectsFactory:
-    url: https://github.com/space-code/objects-factory.git
-    from: 1.0.0
 targets:
   UnitTestHostApp:
     type: application
@@ -47,7 +44,6 @@ targets:
     dependencies:
       - package: Concurrency
         product: TestConcurrency
-      - package: ObjectsFactory
       - target: Flare
     settings:
       base:
