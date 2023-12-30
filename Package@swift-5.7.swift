@@ -30,7 +30,7 @@ let package = Package(
             dependencies: [
                 "Flare",
                 .product(name: "TestConcurrency", package: "concurrency"),
-            ],
+            ]
         ),
     ]
 )

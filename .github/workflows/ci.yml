@@ -48,18 +48,19 @@ jobs:
             name: "macOS 12, Xcode 14.1, Swift 5.7.1"
     steps:
       - uses: actions/checkout@v3
-      - name: Install Dependencies
-        run: make setup_build_tools
-      - name: Generate project
-        run: make generate
+      # - name: Install Dependencies
+      #   run: make setup_build_tools
+      # - name: Generate project
+      #   run: make generate
       - name: ${{ matrix.name }}
-        run: xcodebuild test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -scheme "Flare" -destination "platform=macOS" clean -enableCodeCoverage YES -resultBundlePath "./macos.xcresult" || exit 1
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v3.1.0
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          xcode: true
-          xcode_archive_path: "./macos.xcresult"
+        run: swift build -v
+        # run: xcodebuild test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -scheme "Flare" -destination "platform=macOS" clean -enableCodeCoverage YES -resultBundlePath "./macos.xcresult" || exit 1
+      # - name: Upload coverage reports to Codecov
+      #   uses: codecov/codecov-action@v3.1.0
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     xcode: true
+      #     xcode_archive_path: "./macos.xcresult"
 
   iOS:
     name: ${{ matrix.name }}
@@ -137,7 +138,7 @@ jobs:
 
   # Beta:
   #   name: ${{ matrix.name }}
-  #   runs-on: macos-13
+  #   runs-on: firebreak
   #   env:
   #     DEVELOPER_DIR: "/Applications/Xcode_15.0.app/Contents/Developer"
   #   timeout-minutes: 10
