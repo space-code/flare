@@ -22,7 +22,7 @@ targets:
         TARGETED_DEVICE_FAMILY: "1,2,3,4"
         SUPPORTED_PLATFORMS: "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator"
     scheme:
-      storeKitConfiguration: "Tests/FlareTests/IntegrationTests/Flare.storekit"
+      storeKitConfiguration: "Tests/IntegrationTests/Flare.storekit"
       testTargets:
         - IntegrationTests
   Flare:

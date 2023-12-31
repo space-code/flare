@@ -117,7 +117,7 @@ final class FlareTests: StoreSessionTestCase {
         let product = try await ProductProviderHelper.purchases.randomElement()
 
         // when
-        var handler: Closure<Result<StoreTransaction, IAPError>> = { result in
+        let handler: Closure<Result<StoreTransaction, IAPError>> = { result in
             switch expectedResult {
             case .success:
                 XCTAssertEqual(result.success?.productIdentifier, product?.id)
