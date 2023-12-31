@@ -139,7 +139,11 @@ final class FlareTests: StoreSessionTestCase {
         }
 
         // then
-        wait(for: [expectation], timeout: .second)
+        #if swift(>=5.9)
+            await fulfillment(of: [expectation])
+        #else
+            wait(for: [expectation], timeout: .second)
+        #endif
     }
 }
 

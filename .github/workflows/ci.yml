@@ -49,13 +49,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: ${{ matrix.name }}
-        run: xcodebuild test -scheme "Flare" -destination "platform=macOS" clean -enableCodeCoverage YES -resultBundlePath "./macos.xcresult" || exit 1
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v3.1.0
+        run: xcodebuild test -scheme "Flare" -destination "platform=macOS" clean -enableCodeCoverage YES -resultBundlePath "test_output/${{ matrix.name }}.xcresult" || exit 1
+      - uses: actions/upload-artifact@v4
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          xcode: true
-          xcode_archive_path: "./macos.xcresult"
+          name: ${{ matrix.name }}
+          path: test_output
 
   iOS:
     name: ${{ matrix.name }}
@@ -82,13 +80,11 @@ jobs:
       - name: Generate project
         run: make generate
       - name: ${{ matrix.name }}
-        run: xcodebuild test -scheme "Flare" -destination "${{ matrix.destination }}" -testPlan AllTests clean -enableCodeCoverage YES -resultBundlePath "./iphonesimulator.xcresult" || exit 1
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v3.1.0
+        run: xcodebuild test -scheme "Flare" -destination "${{ matrix.destination }}" -testPlan AllTests clean -enableCodeCoverage YES -resultBundlePath "test_output/${{ matrix.name }}.xcresult" || exit 1
+      - uses: actions/upload-artifact@v4
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          xcode: true
-          xcode_archive_path: "./iphonesimulator.xcresult"
+          name: ${{ matrix.name }}
+          path: test_output
 
   tvOS:
     name: ${{ matrix.name }}
@@ -115,13 +111,11 @@ jobs:
       - name: Generate project
         run: make generate
       - name: ${{ matrix.name }}
-        run: xcodebuild test -scheme "Flare" -destination "${{ matrix.destination }}" -testPlan AllTests clean -enableCodeCoverage YES -resultBundlePath "./appletvsimulator.xcresult" || exit 1
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v3.1.0
+        run: xcodebuild test -scheme "Flare" -destination "${{ matrix.destination }}" -testPlan AllTests clean -enableCodeCoverage YES -resultBundlePath "test_output/${{ matrix.name }}.xcresult" || exit 1
+      - uses: actions/upload-artifact@v4
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          xcode: true
-          xcode_archive_path: "./appletvsimulator.xcresult"
+          name: ${{ matrix.name }}
+          path: test_output
 
   watchOS:
     name: ${{ matrix.name }}
@@ -152,13 +146,11 @@ jobs:
       - name: Generate project
         run: make generate
       - name: ${{ matrix.name }}
-        run: xcodebuild test -scheme "Flare" -destination "${{ matrix.destination }}" -testPlan UnitTests clean -enableCodeCoverage YES -resultBundlePath "./watchsimulator.xcresult" || exit 1
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v3.1.0
+        run: xcodebuild test -scheme "Flare" -destination "${{ matrix.destination }}" -testPlan UnitTests clean -enableCodeCoverage YES -resultBundlePath "test_output/${{ matrix.name }}.xcresult" || exit 1
+      - uses: actions/upload-artifact@v4
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          xcode: true
-          xcode_archive_path: "./watchsimulator.xcresult"
+          name: ${{ matrix.name }}
+          path: test_output
 
   spm:
     name: ${{ matrix.name }}
@@ -180,6 +172,27 @@ jobs:
       - uses: actions/checkout@v3
       - name: ${{ matrix.name }}
         run: swift build -c release --target Flare
+
+  upload-to-codecov:
+    needs: [iOS, macOS, watchOS, tvOS]
+    runs-on: macos-13
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: test_output
+      - run: xcrun xcresulttool merge test_output/**/*.xcresult --output-path test_output/final.xcresult
+      - name: Convert Test Report
+        run: |
+          brew tap a7ex/homebrew-formulae &&
+          brew install xcresultparser &&
+          xcresultparser -o cobertura test_output/final.xcresult > test_output/report.xml
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3.1.0
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          xcode: true
+          xcode_archive_path: test_output/report.xml
 
   # Beta:
   #   name: ${{ matrix.name }}
