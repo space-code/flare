@@ -15,6 +15,7 @@ protocol IRefundProvider {
         @available(macOS, unavailable)
         @available(watchOS, unavailable)
         @available(tvOS, unavailable)
+        @MainActor
         func beginRefundRequest(productID: String) async throws -> RefundRequestStatus
     #endif
 }

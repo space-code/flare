@@ -1,0 +1,44 @@
+{
+  "configurations" : [
+    {
+      "id" : "1CA61D79-6551-4DA7-8DEF-CC28563C2658",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:Flare.xcodeproj",
+          "identifier" : "AAEFF2D6694AA197C07481DA",
+          "name" : "Flare"
+        }
+      ]
+    },
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:Flare.xcodeproj",
+      "identifier" : "AAEFF2D6694AA197C07481DA",
+      "name" : "Flare"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Flare.xcodeproj",
+        "identifier" : "2053CB2B5F4780EC86D0DE04",
+        "name" : "FlareTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Flare.xcodeproj",
+        "identifier" : "5A649E8F4319C5B59E9588FD",
+        "name" : "IntegrationTests"
+      }
+    }
+  ],
+  "version" : 1
+}

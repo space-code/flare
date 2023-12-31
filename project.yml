@@ -15,13 +15,16 @@ targets:
   UnitTestHostApp:
     type: application
     supportedDestinations: [iOS, tvOS, macOS]
-    sources: Tests/FlareTests/UnitTestHostApp
+    sources: Tests/UnitTestHostApp
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.spacecode.flare
+        TARGETED_DEVICE_FAMILY: "1,2,3,4"
+        SUPPORTED_PLATFORMS: "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator"
     scheme:
+      storeKitConfiguration: "Tests/FlareTests/IntegrationTests/Flare.storekit"
       testTargets:
-        - FlareTests
+        - IntegrationTests
   Flare:
     type: framework
     supportedDestinations: [iOS, tvOS, macOS]
@@ -29,16 +32,37 @@ targets:
       - package: Concurrency
         product: Concurrency
     settings:
-      GENERATE_INFOPLIST_FILE: YES
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        TARGETED_DEVICE_FAMILY: "1,2,3,4"
+        SUPPORTED_PLATFORMS: "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator"
     sources:
       - path: Sources
     scheme:
-      testTargets:
-        - FlareTests
+      testPlans:
+        - path: Tests/TestPlans/AllTests.xctestplan
+          defaultPlan: true
+        - path: Tests/TestPlans/UnitTests.xctestplan
+        - path: Tests/TestPlans/IntegrationTests.xctestplan
       gatherCoverageData: true
       coverageTargets:
         - Flare
   FlareTests:
+    type: bundle.unit-test
+    supportedDestinations: [iOS, tvOS, macOS]
+    dependencies:
+      - package: Concurrency
+        product: TestConcurrency
+      - target: Flare
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.spacecode.flare-unit-tests
+        SUPPORTED_PLATFORMS: "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator"
+        TARGETED_DEVICE_FAMILY: "1,2,3,4"
+    sources:
+      - Tests/FlareTests/UnitTests
+  IntegrationTests:
     type: bundle.unit-test
     supportedDestinations: [iOS, tvOS, macOS]
     dependencies:
@@ -51,6 +75,6 @@ targets:
         BUNDLE_LOADER: $(TEST_HOST)
         GENERATE_INFOPLIST_FILE: YES
         TEST_HOST: $(BUILT_PRODUCTS_DIR)/UnitTestHostApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/UnitTestHostApp
-        PRODUCT_BUNDLE_IDENTIFIER: com.spacecode.flare
+        PRODUCT_BUNDLE_IDENTIFIER: com.spacecode.flare.storekit-unit-tests
     sources:
-      - Tests/FlareTests/UnitTests
+      - Tests/IntegrationTests
