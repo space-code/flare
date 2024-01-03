@@ -12,7 +12,7 @@ struct SK1StoreTransaction {
     // MARK: Properties
 
     /// The StoreKit transaction.
-    private let transaction: PaymentTransaction
+    let transaction: PaymentTransaction
 
     // MARK: Initialization
 

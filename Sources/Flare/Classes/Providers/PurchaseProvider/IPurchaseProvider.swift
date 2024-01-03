@@ -14,8 +14,10 @@ protocol IPurchaseProvider {
     /// Removes a finished (i.e. failed or completed) transaction from the queue.
     /// Attempting to finish a purchasing transaction will throw an exception.
     ///
-    /// - Parameter transaction: An object in the payment queue.
-    func finish(transaction: PaymentTransaction)
+    /// - Parameters:
+    ///   - transaction: An object in the payment queue.
+    ///   - completion: If a completion closure is provided, call it after finishing the transaction.
+    func finish(transaction: StoreTransaction, completion: (@Sendable () -> Void)?)
 
     /// Adds transaction observer to the payment queue.
     /// The transactions array will only be synchronized with the server while the queue has observers.
@@ -29,8 +31,19 @@ protocol IPurchaseProvider {
     /// - Note: This may require that the user authenticate.
     func removeTransactionObserver()
 
+    /// Purchases a product.
+    ///
+    /// - Parameters:
+    ///   - product: The product to be purchased.
+    ///   - completion: The closure to be executed once the purchase is complete.
     func purchase(product: StoreProduct, completion: @escaping PurchaseCompletionHandler)
 
+    /// Purchases a product.
+    ///
+    /// - Parameters:
+    ///   - product: The product to be purchased.
+    ///   - options: The optional settings for a product purchase.
+    ///   - completion: The closure to be executed once the purchase is complete.
     @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
     func purchase(
         product: StoreProduct,

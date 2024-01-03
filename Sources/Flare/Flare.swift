@@ -102,8 +102,8 @@ extension Flare: IFlare {
         try await iapProvider.refreshReceipt()
     }
 
-    public func finish(transaction: PaymentTransaction) {
-        iapProvider.finish(transaction: transaction)
+    public func finish(transaction: StoreTransaction, completion: (@Sendable () -> Void)?) {
+        iapProvider.finish(transaction: transaction, completion: completion)
     }
 
     public func addTransactionObserver(fallbackHandler: Closure<Result<PaymentTransaction, IAPError>>?) {

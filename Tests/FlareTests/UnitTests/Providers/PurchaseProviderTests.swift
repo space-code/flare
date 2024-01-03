@@ -59,7 +59,7 @@ final class PurchaseProviderTests: XCTestCase {
         let transaction = PurchaseManagerTestHelper.makePaymentTransaction(state: .purchased)
 
         // when
-        sut.finish(transaction: PaymentTransaction(transaction))
+        sut.finish(transaction: StoreTransaction(paymentTransaction: PaymentTransaction(transaction)), completion: nil)
 
         // then
         XCTAssertTrue(paymentProviderMock.invokedFinishTransaction)

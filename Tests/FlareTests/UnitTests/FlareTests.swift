@@ -200,7 +200,7 @@ class FlareTests: XCTestCase {
         let transaction = PaymentTransaction(PaymentTransactionMock())
 
         // when
-        sut.finish(transaction: transaction)
+        sut.finish(transaction: StoreTransaction(paymentTransaction: transaction), completion: nil)
 
         // then
         XCTAssertTrue(iapProviderMock.invokedFinishTransaction)

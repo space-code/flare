@@ -14,7 +14,7 @@ struct SK2StoreTransaction {
     // MARK: Properties
 
     /// The StoreKit transaction.
-    private let transaction: StoreKit.Transaction
+    let transaction: StoreKit.Transaction
     /// The raw JWS repesentation of the transaction.
     private let _jwsRepresentation: String?
 

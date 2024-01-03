@@ -140,8 +140,8 @@ final class IAPProvider: IIAPProvider {
         }
     }
 
-    func finish(transaction: PaymentTransaction) {
-        purchaseProvider.finish(transaction: transaction)
+    func finish(transaction: StoreTransaction, completion: (@Sendable () -> Void)?) {
+        purchaseProvider.finish(transaction: transaction, completion: completion)
     }
 
     func addTransactionObserver(fallbackHandler: Closure<Result<PaymentTransaction, IAPError>>?) {

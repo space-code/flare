@@ -60,10 +60,10 @@ final class IAPProviderMock: IIAPProvider {
 
     var invokedFinishTransaction = false
     var invokedFinishTransactionCount = 0
-    var invokedFinishTransactionParameters: (PaymentTransaction, Void)?
-    var invokedFinishTransactionParanetersList = [(PaymentTransaction, Void)]()
+    var invokedFinishTransactionParameters: (StoreTransaction, Void)?
+    var invokedFinishTransactionParanetersList = [(StoreTransaction, Void)]()
 
-    func finish(transaction: PaymentTransaction) {
+    func finish(transaction: StoreTransaction, completion _: (@Sendable () -> Void)?) {
         invokedFinishTransaction = true
         invokedFinishTransactionCount += 1
         invokedFinishTransactionParameters = (transaction, ())

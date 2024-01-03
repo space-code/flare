@@ -9,10 +9,10 @@ import StoreKit
 final class PurchaseProviderMock: IPurchaseProvider {
     var invokedFinish = false
     var invokedFinishCount = 0
-    var invokedFinishParameters: (transaction: PaymentTransaction, Void)?
-    var invokedFinishParametersList = [(transaction: PaymentTransaction, Void)]()
+    var invokedFinishParameters: (transaction: StoreTransaction, Void)?
+    var invokedFinishParametersList = [(transaction: StoreTransaction, Void)]()
 
-    func finish(transaction: PaymentTransaction) {
+    func finish(transaction: StoreTransaction, completion _: (@Sendable () -> Void)?) {
         invokedFinish = true
         invokedFinishCount += 1
         invokedFinishParameters = (transaction, ())

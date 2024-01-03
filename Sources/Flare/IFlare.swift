@@ -100,8 +100,10 @@ public protocol IFlare {
     /// Removes a finished (i.e. failed or completed) transaction from the queue.
     /// Attempting to finish a purchasing transaction will throw an exception.
     ///
-    /// - Parameter transaction: An object in the payment queue.
-    func finish(transaction: PaymentTransaction)
+    /// - Parameters:
+    ///   - transaction: An object in the payment queue.
+    ///   - completion: If a completion closure is provided, call it after finishing the transaction.
+    func finish(transaction: StoreTransaction, completion: (@Sendable () -> Void)?)
 
     /// The transactions array will only be synchronized with the server while the queue has observers.
     ///

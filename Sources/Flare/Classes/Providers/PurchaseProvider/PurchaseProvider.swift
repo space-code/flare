@@ -110,8 +110,22 @@ extension PurchaseProvider: IPurchaseProvider {
         }
     }
 
-    func finish(transaction: PaymentTransaction) {
-        paymentProvider.finish(transaction: transaction)
+    func finish(transaction: StoreTransaction, completion: (@Sendable () -> Void)?) {
+        if #available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *),
+           let sk2Transaction = transaction.storeTransaction as? SK2StoreTransaction
+        {
+            AsyncHandler.call(
+                completion: { _ in
+                    completion?()
+                },
+                asyncMethod: {
+                    await sk2Transaction.transaction.finish()
+                }
+            )
+        } else if let sk1Transaction = transaction.storeTransaction as? SK1StoreTransaction {
+            paymentProvider.finish(transaction: sk1Transaction.transaction)
+            completion?()
+        }
     }
 
     func addTransactionObserver(fallbackHandler: Closure<Result<PaymentTransaction, IAPError>>?) {
