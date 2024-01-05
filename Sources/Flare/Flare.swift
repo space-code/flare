@@ -11,40 +11,46 @@ import StoreKit
 
 // MARK: - Flare
 
+/// The class creates and manages in-app purchases.
 public final class Flare {
     // MARK: Initialization
 
+    /// Creates a new `Flare` instance.
+    ///
+    /// - Parameter iapProvider: The in-app purchase provider.
     init(iapProvider: IIAPProvider = IAPProvider()) {
         self.iapProvider = iapProvider
     }
 
     // MARK: Public
 
+    /// Returns a default `Flare` object.
     public static let `default`: IFlare = Flare()
 
     // MARK: Private
 
+    /// The in-app purchase provider.
     private let iapProvider: IIAPProvider
 }
 
 // MARK: IFlare
 
 extension Flare: IFlare {
-    public func fetch(productIDs: Set<String>, completion: @escaping Closure<Result<[SKProduct], IAPError>>) {
+    public func fetch(productIDs: Set<String>, completion: @escaping Closure<Result<[StoreProduct], IAPError>>) {
         iapProvider.fetch(productIDs: productIDs, completion: completion)
     }
 
-    public func fetch(productIDs: Set<String>) async throws -> [SKProduct] {
+    public func fetch(productIDs: Set<String>) async throws -> [StoreProduct] {
         try await iapProvider.fetch(productIDs: productIDs)
     }
 
-    public func purchase(productID: String, completion: @escaping Closure<Result<PaymentTransaction, IAPError>>) {
+    public func purchase(product: StoreProduct, completion: @escaping Closure<Result<StoreTransaction, IAPError>>) {
         guard iapProvider.canMakePayments else {
             completion(.failure(.paymentNotAllowed))
             return
         }
 
-        iapProvider.purchase(productID: productID) { result in
+        iapProvider.purchase(product: product) { result in
             switch result {
             case let .success(transaction):
                 completion(.success(transaction))
@@ -54,9 +60,31 @@ extension Flare: IFlare {
         }
     }
 
-    public func purchase(productID: String) async throws -> PaymentTransaction {
+    public func purchase(product: StoreProduct) async throws -> StoreTransaction {
         guard iapProvider.canMakePayments else { throw IAPError.paymentNotAllowed }
-        return try await iapProvider.purchase(productID: productID)
+        return try await iapProvider.purchase(product: product)
+    }
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    public func purchase(
+        product: StoreProduct,
+        options: Set<StoreKit.Product.PurchaseOption>,
+        completion: @escaping SendableClosure<Result<StoreTransaction, IAPError>>
+    ) {
+        guard iapProvider.canMakePayments else {
+            completion(.failure(.paymentNotAllowed))
+            return
+        }
+        iapProvider.purchase(product: product, options: options, completion: completion)
+    }
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    public func purchase(
+        product: StoreProduct,
+        options: Set<StoreKit.Product.PurchaseOption>
+    ) async throws -> StoreTransaction {
+        guard iapProvider.canMakePayments else { throw IAPError.paymentNotAllowed }
+        return try await iapProvider.purchase(product: product, options: options)
     }
 
     public func receipt(completion: @escaping Closure<Result<String, IAPError>>) {
@@ -74,8 +102,8 @@ extension Flare: IFlare {
         try await iapProvider.refreshReceipt()
     }
 
-    public func finish(transaction: PaymentTransaction) {
-        iapProvider.finish(transaction: transaction)
+    public func finish(transaction: StoreTransaction, completion: (@Sendable () -> Void)?) {
+        iapProvider.finish(transaction: transaction, completion: completion)
     }
 
     public func addTransactionObserver(fallbackHandler: Closure<Result<PaymentTransaction, IAPError>>?) {

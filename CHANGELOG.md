@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ## Added
+- Integrate the `StoreKit2` purchase method
+  - Added in Pull Request [#10](https://github.com/space-code/flare/pull/10).
+
 - Add badges for `Swift Version Compatibility` and `Platform Compatibility`
   - Added in Pull Request [#7](https://github.com/space-code/flare/pull/8).
 

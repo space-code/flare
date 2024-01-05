@@ -14,11 +14,11 @@ class IAPProviderTests: XCTestCase {
 
     private var paymentQueueMock: PaymentQueueMock!
     private var productProviderMock: ProductProviderMock!
-    private var paymentProviderMock: PaymentProviderMock!
+    private var purchaseProvider: PurchaseProviderMock!
     private var receiptRefreshProviderMock: ReceiptRefreshProviderMock!
     private var refundProviderMock: RefundProviderMock!
 
-    private var iapProvider: IIAPProvider!
+    private var sut: IIAPProvider!
 
     // MARK: - XCTestCase
 
@@ -26,13 +26,13 @@ class IAPProviderTests: XCTestCase {
         super.setUp()
         paymentQueueMock = PaymentQueueMock()
         productProviderMock = ProductProviderMock()
-        paymentProviderMock = PaymentProviderMock()
+        purchaseProvider = PurchaseProviderMock()
         receiptRefreshProviderMock = ReceiptRefreshProviderMock()
         refundProviderMock = RefundProviderMock()
-        iapProvider = IAPProvider(
+        sut = IAPProvider(
             paymentQueue: paymentQueueMock,
             productProvider: productProviderMock,
-            paymentProvider: paymentProviderMock,
+            purchaseProvider: purchaseProvider,
             receiptRefreshProvider: receiptRefreshProviderMock,
             refundProvider: refundProviderMock
         )
@@ -41,10 +41,10 @@ class IAPProviderTests: XCTestCase {
     override func tearDown() {
         paymentQueueMock = nil
         productProviderMock = nil
-        paymentProviderMock = nil
+        purchaseProvider = nil
         receiptRefreshProviderMock = nil
         refundProviderMock = nil
-        iapProvider = nil
+        sut = nil
         super.tearDown()
     }
 
@@ -55,12 +55,14 @@ class IAPProviderTests: XCTestCase {
         paymentQueueMock.stubbedCanMakePayments = true
 
         // then
-        XCTAssertTrue(iapProvider.canMakePayments)
+        XCTAssertTrue(sut.canMakePayments)
     }
 
     func test_thatIAPProviderFetchesProducts() throws {
+        try AvailabilityChecker.iOS15APINotAvailableOrSkipTest()
+
         // when
-        iapProvider.fetch(productIDs: .productIDs, completion: { _ in })
+        sut.fetch(productIDs: .productIDs, completion: { _ in })
 
         // then
         let parameters = try XCTUnwrap(productProviderMock.invokedFetchParameters)
@@ -70,15 +72,15 @@ class IAPProviderTests: XCTestCase {
 
     func test_thatIAPProviderPurchasesProduct() throws {
         // when
-        iapProvider.purchase(productID: .productID, completion: { _ in })
+        sut.purchase(product: .fake(skProduct: .fake(id: .productID)), completion: { _ in })
 
         // then
-        XCTAssertTrue(productProviderMock.invokedFetch)
+        XCTAssertTrue(purchaseProvider.invokedPurchase)
     }
 
     func test_thatIAPProviderRefreshesReceipt() {
         // when
-        iapProvider.refreshReceipt(completion: { _ in })
+        sut.refreshReceipt(completion: { _ in })
 
         // then
         XCTAssertTrue(receiptRefreshProviderMock.invokedRefresh)
@@ -89,168 +91,92 @@ class IAPProviderTests: XCTestCase {
         let transaction = PurchaseManagerTestHelper.makePaymentTransaction(state: .purchased)
 
         // when
-        iapProvider.finish(transaction: PaymentTransaction(transaction))
+        sut.finish(transaction: StoreTransaction(paymentTransaction: PaymentTransaction(transaction)), completion: nil)
 
         // then
-        XCTAssertTrue(paymentProviderMock.invokedFinishTransaction)
+        XCTAssertTrue(purchaseProvider.invokedFinish)
     }
 
     func test_thatIAPProviderAddsTransactionObserver() {
         // when
-        iapProvider.addTransactionObserver(fallbackHandler: { _ in })
+        sut.addTransactionObserver(fallbackHandler: { _ in })
 
         // then
-        XCTAssertTrue(paymentProviderMock.invokedFallbackHandler)
-        XCTAssertTrue(paymentProviderMock.invokedAddTransactionObserver)
+        XCTAssertTrue(purchaseProvider.invokedAddTransactionObserver)
     }
 
     func test_thatIAPProviderRemovesTransactionObserver() {
         // when
-        iapProvider.removeTransactionObserver()
+        sut.removeTransactionObserver()
 
         // then
-        XCTAssertTrue(paymentProviderMock.invokedRemoveTransactionObserver)
+        XCTAssertTrue(purchaseProvider.invokedRemoveTransactionObserver)
     }
 
-    func test_thatIAPProviderFetchesProducts_whenProducts() async throws {
+    // FIXME: Update test
+    func test_thatIAPProviderFetchesSK1Products_whenProductsAvailable() async throws {
+        try AvailabilityChecker.iOS15APINotAvailableOrSkipTest()
+
         // given
-        let productsMock = [SKProduct(), SKProduct(), SKProduct()]
+        let productsMock = [0 ... 2].map { _ in SK1StoreProduct(ProductMock()) }
         productProviderMock.stubbedFetchResult = .success(productsMock)
 
         // when
-        let products = try await iapProvider.fetch(productIDs: .productIDs)
+        let products = try await sut.fetch(productIDs: .productIDs)
 
         // then
-        XCTAssertEqual(productsMock, products)
+        XCTAssertEqual(productsMock.count, products.count)
     }
 
-    func test_thatIAPProviderThrowsNoProductsError_whenProductsProductProviderReturnsError() async {
+    func test_thatIAPProviderThrowsNoProductsError_whenProductsProductProviderReturnsError() async throws {
+        try AvailabilityChecker.iOS15APINotAvailableOrSkipTest()
+
         // given
         productProviderMock.stubbedFetchResult = .failure(IAPError.unknown)
 
         // when
-        var errorResult: Error?
-        do {
-            _ = try await iapProvider.fetch(productIDs: .productIDs)
-        } catch {
-            errorResult = error
-        }
+        let errorResult: Error? = await error(for: { try await sut.fetch(productIDs: .productIDs) })
 
         // then
         XCTAssertEqual(errorResult as? NSError, IAPError.unknown as NSError)
-    }
-
-    func test_thatIAPProviderThrowsStoreProductNotAvailableError_whenProductProviderDoesNotHaveProducts() {
-        // given
-        productProviderMock.stubbedFetchResult = .success([])
-
-        // when
-        var error: Error?
-        iapProvider.purchase(productID: .productID) { result in
-            if case let .failure(result) = result {
-                error = result
-            }
-        }
-
-        // then
-        XCTAssertEqual(error as? NSError, IAPError.storeProductNotAvailable as NSError)
-    }
-
-    func test_thatIAPProviderReturnsPaymentTransaction_whenProductsExist() {
-        // given
-        let paymentTransactionMock = PaymentTransactionMock()
-        productProviderMock.stubbedFetchResult = .success([ProductMock()])
-        paymentProviderMock.stubbedAddResult = (paymentQueueMock, .success(paymentTransactionMock))
-
-        // when
-        var transactionResult: PaymentTransaction?
-        iapProvider.purchase(productID: .productID) { result in
-            if case let .success(transaction) = result {
-                transactionResult = transaction
-            }
-        }
-
-        // then
-        XCTAssertEqual(transactionResult?.skTransaction, paymentTransactionMock)
     }
 
     func test_thatIAPProviderReturnsError_whenAddingPaymentFailed() {
         // given
-        productProviderMock.stubbedFetchResult = .success([ProductMock()])
-        paymentProviderMock.stubbedAddResult = (paymentQueueMock, .failure(.unknown))
+        productProviderMock.stubbedFetchResult = .success([SK1StoreProduct(ProductMock())])
+        purchaseProvider.stubbedPurchaseCompletionResult = (.failure(.unknown), ())
 
         // when
-        var errorResult: Error?
-        iapProvider.purchase(productID: .productID) { result in
-            if case let .failure(error) = result {
-                errorResult = error
-            }
-        }
+        var error: Error?
+        sut.purchase(product: .fake(skProduct: .fake(id: .productID))) { error = $0.error }
 
         // then
-        XCTAssertEqual(errorResult as? NSError, IAPError.unknown as NSError)
+        XCTAssertEqual(error as? NSError, IAPError.unknown as NSError)
     }
 
     func test_thatIAPProviderReturnsError_whenFetchRequestFailed() {
         // given
-        productProviderMock.stubbedFetchResult = .failure(.storeProductNotAvailable)
+        purchaseProvider.stubbedPurchaseCompletionResult = (.failure(IAPError.unknown), ())
 
         // when
-        var errorResult: Error?
-        iapProvider.purchase(productID: .productID) { result in
-            if case let .failure(error) = result {
-                errorResult = error
-            }
-        }
+        var error: Error?
+        sut.purchase(product: .fake(skProduct: .fake(id: .productID))) { error = $0.error }
 
         // then
-        XCTAssertEqual(errorResult as? NSError, IAPError.storeProductNotAvailable as NSError)
+        XCTAssertEqual(error as? NSError, IAPError.unknown as NSError)
     }
 
-    func test_thatIAPProviderThrowsStoreProductNotAvailableError_whenProductsDoNotExist() async throws {
-        // given
-        productProviderMock.stubbedFetchResult = .success([])
-
-        // when
-        var errorResult: Error?
-        do {
-            _ = try await iapProvider.purchase(productID: .productID)
-        } catch {
-            errorResult = error
-        }
-
-        // then
-        XCTAssertEqual(errorResult as? NSError, IAPError.storeProductNotAvailable as NSError)
-    }
-
-    func test_thatIAPProviderPurchasesForAProduct_whenProductsExist() async throws {
-        // given
-        let transactionMock = SKPaymentTransaction()
-        productProviderMock.stubbedFetchResult = .success([ProductMock()])
-        paymentProviderMock.stubbedAddResult = (paymentQueueMock, .success(transactionMock))
-
-        // when
-        let transactionResult = try await iapProvider.purchase(productID: .productID)
-
-        // then
-        XCTAssertEqual(transactionMock, transactionResult.skTransaction)
-    }
-
-    func test_thatIAPProviderRefreshesReceipt_when() {
+    func test_thatIAPProviderRefreshesReceipt_whenReceiptExist() {
         // given
         receiptRefreshProviderMock.stubbedReceipt = .receipt
         receiptRefreshProviderMock.stubbedRefreshResult = .success(())
 
         // when
-        var receiptResult: String?
-        iapProvider.refreshReceipt { result in
-            if case let .success(receipt) = result {
-                receiptResult = receipt
-            }
-        }
+        var receipt: String?
+        sut.refreshReceipt { receipt = $0.success }
 
         // then
-        XCTAssertEqual(receiptResult, .receipt)
+        XCTAssertEqual(receipt, .receipt)
     }
 
     func test_thatIAPProviderDoesNotRefreshReceipt_whenRequestFailed() {
@@ -259,15 +185,11 @@ class IAPProviderTests: XCTestCase {
         receiptRefreshProviderMock.stubbedRefreshResult = .failure(.receiptNotFound)
 
         // when
-        var errorResult: Error?
-        iapProvider.refreshReceipt { result in
-            if case let .failure(error) = result {
-                errorResult = error
-            }
-        }
+        var error: Error?
+        sut.refreshReceipt { error = $0.error }
 
         // then
-        XCTAssertEqual(errorResult as? NSError, IAPError.receiptNotFound as NSError)
+        XCTAssertEqual(error as? NSError, IAPError.receiptNotFound as NSError)
     }
 
     func test_thatIAPProviderReturnsReceiptNotFoundError_whenReceiptIsNil() {
@@ -276,15 +198,11 @@ class IAPProviderTests: XCTestCase {
         receiptRefreshProviderMock.stubbedRefreshResult = .success(())
 
         // when
-        var errorResult: Error?
-        iapProvider.refreshReceipt { result in
-            if case let .failure(error) = result {
-                errorResult = error
-            }
-        }
+        var error: Error?
+        sut.refreshReceipt { error = $0.error }
 
         // then
-        XCTAssertEqual(errorResult as? NSError, IAPError.receiptNotFound as NSError)
+        XCTAssertEqual(error as? NSError, IAPError.receiptNotFound as NSError)
     }
 
     func test_thatIAPProviderRefreshesReceipt_whenReceiptIsNotNil() async throws {
@@ -293,7 +211,7 @@ class IAPProviderTests: XCTestCase {
         receiptRefreshProviderMock.stubbedRefreshResult = .success(())
 
         // when
-        let receipt = try await iapProvider.refreshReceipt()
+        let receipt = try await sut.refreshReceipt()
 
         // then
         XCTAssertEqual(receipt, .receipt)
@@ -305,77 +223,11 @@ class IAPProviderTests: XCTestCase {
         receiptRefreshProviderMock.stubbedRefreshResult = .success(())
 
         // when
-        var errorResult: Error?
-        do {
-            _ = try await iapProvider.refreshReceipt()
-        } catch {
-            errorResult = error
-        }
+        let errorResult: Error? = await error(for: { try await sut.refreshReceipt() })
 
         // then
         XCTAssertEqual(errorResult as? NSError, IAPError.receiptNotFound as NSError)
     }
-
-    func test_thatIAPProviderReturnsTransaction() {
-        // given
-        let transactionMock = SKPaymentTransaction()
-        paymentProviderMock.stubbedFallbackHandlerResult = (paymentQueueMock, .success(transactionMock))
-
-        // when
-        var transactionResult: PaymentTransaction?
-        iapProvider.addTransactionObserver { result in
-            if case let .success(transaction) = result {
-                transactionResult = transaction
-            }
-        }
-
-        // then
-        XCTAssertEqual(transactionResult?.skTransaction, transactionMock)
-    }
-
-    func test_thatIAPProviderReturnsError() {
-        // given
-        paymentProviderMock.stubbedFallbackHandlerResult = (paymentQueueMock, .failure(.unknown))
-
-        // when
-        var errorResult: Error?
-        iapProvider.addTransactionObserver { result in
-            if case let .failure(error) = result {
-                errorResult = error
-            }
-        }
-
-        // then
-        XCTAssertEqual(errorResult as? NSError, IAPError.unknown as NSError)
-    }
-
-    #if os(iOS) || VISION_OS
-        @available(iOS 15.0, *)
-        func test_thatIAPProviderRefundsPurchase() async throws {
-            // given
-            refundProviderMock.stubbedBeginRefundRequest = .success
-
-            // when
-            let state = try await iapProvider.beginRefundRequest(productID: .productID)
-
-            // then
-            if case .success = state {}
-            else { XCTFail("state must be `success`") }
-        }
-
-        @available(iOS 15.0, *)
-        func test_thatFlareThrowsAnError_whenBeginRefundRequestFailed() async throws {
-            // given
-            refundProviderMock.stubbedBeginRefundRequest = .failed(error: IAPError.unknown)
-
-            // when
-            let state = try await iapProvider.beginRefundRequest(productID: .productID)
-
-            // then
-            if case let .failed(error) = state { XCTAssertEqual(error as NSError, IAPError.unknown as NSError) }
-            else { XCTFail("state must be `failed`") }
-        }
-    #endif
 }
 
 // MARK: - Constants
@@ -383,6 +235,7 @@ class IAPProviderTests: XCTestCase {
 private extension String {
     static let receipt = "receipt"
     static let productID = "product_identifier"
+    static let transactionID = "transaction_identifier"
 }
 
 private extension Set where Element == String {

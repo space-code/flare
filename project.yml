@@ -1,0 +1,80 @@
+name: Flare
+options:
+  deploymentTarget:
+    iOS: 13.0
+    macOS: 10.15
+    tvOS: 13.0
+    watchOS: 7.0
+packages:
+  # External
+
+  Concurrency:
+    url: https://github.com/space-code/concurrency.git
+    from: 0.0.1
+targets:
+  UnitTestHostApp:
+    type: application
+    supportedDestinations: [iOS, tvOS, macOS]
+    sources: Tests/UnitTestHostApp
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.spacecode.flare
+        TARGETED_DEVICE_FAMILY: "1,2,3,4"
+        SUPPORTED_PLATFORMS: "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator"
+    scheme:
+      storeKitConfiguration: "Tests/IntegrationTests/Flare.storekit"
+      testTargets:
+        - IntegrationTests
+  Flare:
+    type: framework
+    supportedDestinations: [iOS, tvOS, macOS]
+    dependencies:
+      - package: Concurrency
+        product: Concurrency
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        TARGETED_DEVICE_FAMILY: "1,2,3,4"
+        SUPPORTED_PLATFORMS: "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator"
+    sources:
+      - path: Sources
+    scheme:
+      testPlans:
+        - path: Tests/TestPlans/AllTests.xctestplan
+          defaultPlan: true
+        - path: Tests/TestPlans/UnitTests.xctestplan
+        - path: Tests/TestPlans/IntegrationTests.xctestplan
+      gatherCoverageData: true
+      coverageTargets:
+        - Flare
+  FlareTests:
+    type: bundle.unit-test
+    supportedDestinations: [iOS, tvOS, macOS]
+    dependencies:
+      - package: Concurrency
+        product: TestConcurrency
+      - target: Flare
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.spacecode.flare-unit-tests
+        SUPPORTED_PLATFORMS: "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator"
+        TARGETED_DEVICE_FAMILY: "1,2,3,4"
+    sources:
+      - Tests/FlareTests/UnitTests
+  IntegrationTests:
+    type: bundle.unit-test
+    supportedDestinations: [iOS, tvOS, macOS]
+    dependencies:
+      - package: Concurrency
+        product: TestConcurrency
+      - target: Flare
+      - target: UnitTestHostApp
+    settings:
+      base:
+        BUNDLE_LOADER: $(TEST_HOST)
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_HOST: $(BUILT_PRODUCTS_DIR)/UnitTestHostApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/UnitTestHostApp
+        PRODUCT_BUNDLE_IDENTIFIER: com.spacecode.flare.storekit-unit-tests
+    sources:
+      - Tests/IntegrationTests

@@ -1,0 +1,63 @@
+{
+  "identifier" : "95D98A48",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "169432A7",
+      "localizations" : [
+        {
+          "description" : "com.flare.test_purchase_1",
+          "displayName" : "com.flare.test_purchase_1",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.flare.test_purchase_1",
+      "referenceName" : "com.flare.test_purchase_1",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "33E61322",
+      "localizations" : [
+        {
+          "description" : "com.flare.test_purchase_2",
+          "displayName" : "com.flare.test_purchase_2",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.flare.test_purchase_2",
+      "referenceName" : "com.flare.test_purchase_2",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "1CBF43E6",
+      "localizations" : [
+        {
+          "description" : "com.flare.test_non_consumable_purchase_1",
+          "displayName" : "com.flare.test_non_consumable_",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.flare.test_non_consumable_purchase_1",
+      "referenceName" : null,
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 2,
+    "minor" : 0
+  }
+}

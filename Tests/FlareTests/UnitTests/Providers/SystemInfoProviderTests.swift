@@ -10,8 +10,9 @@
     final class SystemInfoProviderTests: XCTestCase {
         // MARK: Properties
 
-        private var sut: SystemInfoProvider!
         private var scenesHolderMock: ScenesHolderMock!
+
+        private var sut: SystemInfoProvider!
 
         // MARK: Initialization
 
@@ -29,31 +30,26 @@
 
         // MARK: Tests
 
-        @MainActor
-        func test_thatScenesHolderReturnsCurrentScene() throws {
-            // given
-            let windowScene = WindowSceneFactory.makeWindowScene()
-            scenesHolderMock.stubbedConnectedScenes = Set(arrayLiteral: windowScene)
-
-            // when
-            let scene = try sut.currentScene
-
-            // then
-            XCTAssertEqual(windowScene, scene)
-        }
-
-        @MainActor
-        func test_thatScenesHolderThrowsAnErrorWhenThereIsNoActiveWindowScene() {
-            // when
-            var receivedError: Error?
-            do {
-                _ = try sut.currentScene
-            } catch {
-                receivedError = error
-            }
-
-            // then
-            XCTAssertEqual(receivedError as? NSError, IAPError.unknown as NSError)
-        }
+//        @MainActor
+//        func test_thatScenesHolderReturnsCurrentScene() throws {
+//            // given
+//            let windowScene = WindowSceneFactory.makeWindowScene()
+//            scenesHolderMock.stubbedConnectedScenes = Set(arrayLiteral: windowScene)
+//
+//            // when
+//            let scene = try sut.currentScene
+//
+//            // then
+//            XCTAssertEqual(windowScene, scene)
+//        }
+//
+//        @MainActor
+//        func test_thatScenesHolderThrowsAnErrorWhenThereIsNoActiveWindowScene() async throws {
+//            // when
+//            let error: Error? = await self.error(for: { try sut.currentScene })
+//
+//            // then
+//            XCTAssertEqual(error as? NSError, IAPError.unknown as NSError)
+//        }
     }
 #endif

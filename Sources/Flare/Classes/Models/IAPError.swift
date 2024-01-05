@@ -30,12 +30,44 @@ public enum IAPError: Swift.Error {
     case transactionNotFound(productID: String)
     /// The refund error.
     case refund(error: RefundError)
+    /// The verification error.
+    ///
+    /// - Note: This is only available for StoreKit 2 transactions.
+    case verification(error: VerificationError)
+    ///
+    ///
+    /// - Note: This is only available for StoreKit 2 transactions.
+    case paymentDefferred
     /// The unknown error occurred.
     case unknown
 }
 
 extension IAPError {
     init(error: Swift.Error?) {
+        if #available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *) {
+            if let storeKitError = error as? StoreKitError {
+                self.init(storeKitError: storeKitError)
+            } else {
+                self.init(error)
+            }
+        } else {
+            self.init(error)
+        }
+    }
+
+    @available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)
+    private init(storeKitError: StoreKit.StoreKitError) {
+        switch storeKitError {
+        case .unknown:
+            self = .unknown
+        case .userCancelled:
+            self = .paymentCancelled
+        default:
+            self = .with(error: storeKitError)
+        }
+    }
+
+    private init(_ error: Swift.Error?) {
         switch (error as? SKError)?.code {
         case .paymentNotAllowed:
             self = .paymentNotAllowed

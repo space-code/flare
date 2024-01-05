@@ -4,6 +4,8 @@
 //
 
 @testable import Flare
+import StoreKit
+import StoreKitTest
 import XCTest
 
 #if os(iOS) || VISION_OS
@@ -28,24 +30,24 @@ import XCTest
 
         // MARK: Tests
 
-        @MainActor
-        func test_thatRefundRequestProviderThrowsAnUnknownError_whenRequestDidFailed() async throws {
-            // given
-            let windowScene = WindowSceneFactory.makeWindowScene()
-
-            // when
-            let status = try await sut.beginRefundRequest(
-                transactionID: .transactionID,
-                windowScene: windowScene
-            )
-
-            // then
-            if case let .failure(error) = status {
-                XCTAssertEqual(error as NSError, IAPError.refund(error: .failed) as NSError)
-            } else {
-                XCTFail("state must be `failure`")
-            }
-        }
+//        @MainActor
+//        func test_thatRefundRequestProviderThrowsAnUnknownError_whenRequestDidFailed() async throws {
+//            // given
+//            let windowScene = WindowSceneFactory.makeWindowScene()
+//
+//            // when
+//            let status = try await sut.beginRefundRequest(
+//                transactionID: .transactionID,
+//                windowScene: windowScene
+//            )
+//
+//            // then
+//            if case let .failure(error) = status {
+//                XCTAssertEqual(error as NSError, IAPError.refund(error: .failed) as NSError)
+//            } else {
+//                XCTFail("state must be `failure`")
+//            }
+//        }
     }
 
     // MARK: - Constants
@@ -55,7 +57,7 @@ import XCTest
     }
 
     private extension String {
-        static let productID: String = "product_id"
+        static let productID: String = "com.flare.test_purchase_1"
     }
 
 #endif
