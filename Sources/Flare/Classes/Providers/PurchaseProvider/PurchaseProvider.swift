@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 import Foundation
@@ -18,7 +18,7 @@ final class PurchaseProvider {
 
     // MARK: Initialization
 
-    /// Creates a new `PurchaseProvider` isntance.
+    /// Creates a new `PurchaseProvider` instance.
     ///
     /// - Parameters:
     ///   - paymentProvider: The provider is responsible for purchasing products.

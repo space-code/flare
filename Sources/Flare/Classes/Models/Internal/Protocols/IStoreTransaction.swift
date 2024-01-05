@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 import Foundation
@@ -20,7 +20,7 @@ protocol IStoreTransaction {
     /// The quantity of the product involved in the transaction.
     var quantity: Int { get }
 
-    /// The raw JWS repesentation of the transaction.
+    /// The raw JWS representation of the transaction.
     ///
     /// - Note: This is only available for StoreKit 2 transactions.
     var jwsRepresentation: String? { get }

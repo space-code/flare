@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 import Foundation
@@ -15,7 +15,7 @@ struct SK2StoreTransaction {
 
     /// The StoreKit transaction.
     let transaction: StoreKit.Transaction
-    /// The raw JWS repesentation of the transaction.
+    /// The raw JWS representation of the transaction.
     private let _jwsRepresentation: String?
 
     // MARK: Initialization
@@ -24,7 +24,7 @@ struct SK2StoreTransaction {
     ///
     /// - Parameters:
     ///   - transaction: The StoreKit transaction.
-    ///   - jwsRepresentation: The raw JWS repesentation of the transaction.
+    ///   - jwsRepresentation: The raw JWS representation of the transaction.
     init(transaction: StoreKit.Transaction, jwsRepresentation: String) {
         self.transaction = transaction
         _jwsRepresentation = jwsRepresentation

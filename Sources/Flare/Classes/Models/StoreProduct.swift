@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 import Foundation
@@ -28,7 +28,7 @@ public final class StoreProduct: NSObject {
     }
 }
 
-// MARK: - Convinience Initializators
+// MARK: - Convenience Initializators
 
 public extension StoreProduct {
     /// Creates a new `StoreProduct` instance.
