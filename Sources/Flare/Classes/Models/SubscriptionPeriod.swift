@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 import Foundation
@@ -8,7 +8,7 @@ import StoreKit
 
 // MARK: - SubscriptionPeriod
 
-// A class representing a subscription period with a specific value and unit.
+/// A class representing a subscription period with a specific value and unit.
 public final class SubscriptionPeriod: NSObject {
     // MARK: Types
 
