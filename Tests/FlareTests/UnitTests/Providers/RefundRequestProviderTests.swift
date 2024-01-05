@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 @testable import Flare
@@ -12,7 +12,7 @@ import XCTest
 
     @available(iOS 15.0, *)
     final class RefundRequestProviderTests: XCTestCase {
-        // MARK: Proeprties
+        // MARK: Properties
 
         private var sut: RefundRequestProvider!
 

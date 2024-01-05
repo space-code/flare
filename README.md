@@ -3,9 +3,9 @@
 <h1 align="center" style="margin-top: 0px;">flare</h1>
 
 <p align="center">
-<a href="https://github.com/space-code/flare/blob/main/LICENSE"><img alt="Liscence" src="https://img.shields.io/cocoapods/l/service-core.svg?style=flat"></a> 
-<a href="https://swiftpackageindex.com/space-code/flare"><img alt="Swift Compability" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fspace-code%2Fflare%2Fbadge%3Ftype%3Dswift-versions"/></a> 
-<a href="https://swiftpackageindex.com/space-code/flare"><img alt="Platform Compability" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fspace-code%2Fflare%2Fbadge%3Ftype%3Dplatforms"/></a> 
+<a href="https://github.com/space-code/flare/blob/main/LICENSE"><img alt="Licence" src="https://img.shields.io/cocoapods/l/service-core.svg?style=flat"></a> 
+<a href="https://swiftpackageindex.com/space-code/flare"><img alt="Swift Compatibility" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fspace-code%2Fflare%2Fbadge%3Ftype%3Dswift-versions"/></a> 
+<a href="https://swiftpackageindex.com/space-code/flare"><img alt="Platform Compatibility" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fspace-code%2Fflare%2Fbadge%3Ftype%3Dplatforms"/></a> 
 <a href="https://github.com/space-code/flare"><img alt="CI" src="https://github.com/space-code/flare/actions/workflows/ci.yml/badge.svg?branch=main"></a>
 <a href="https://codecov.io/gh/space-code/flare"><img alt="CodeCov" src="https://codecov.io/gh/space-code/flare/graph/badge.svg?token=WUWUSKQZWY"></a>
 <a href="https://github.com/apple/swift-package-manager" alt="Flare on Swift Package Manager" title="Flare on Swift Package Manager"><img src="https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg" /></a>
@@ -15,7 +15,7 @@
 Flare is a framework written in Swift that makes it easy for you to work with in-app purchases and subscriptions.
 
 - [Features](#features)
-- [Documentaton](#documentation)
+- [Documentation](#documentation)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Communication](#communication)

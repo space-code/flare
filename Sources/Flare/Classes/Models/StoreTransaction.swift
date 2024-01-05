@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 import Foundation
@@ -25,7 +25,7 @@ public final class StoreTransaction {
     }
 }
 
-// MARK: - Convinience Initializators
+// MARK: - Convenience Initializators
 
 extension StoreTransaction {
     /// Creates a new `StoreTransaction` instance.
