@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ## Added
+- Build a documentation using `Docc`
+  - Added in Pull Request [#11](https://github.com/space-code/flare/pull/11).
+
 - Integrate the `StoreKit2` purchase method
   - Added in Pull Request [#10](https://github.com/space-code/flare/pull/10).
 
