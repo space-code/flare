@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ## Added
+- Add files to comply with community standards
+  - Added in Pull Request [#13](https://github.com/space-code/flare/pull/13).
+
 - Implement typo checking
   - Added in Pull Request [#12](https://github.com/space-code/flare/pull/12).
 
