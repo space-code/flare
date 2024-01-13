@@ -58,4 +58,4 @@ See [CODE_OF_CONDUCT.md](https://github.com/space-code/flare/blob/master/CODE_OF
 
 ---
 
-*Some of the ideas and wording for the statements above were based on work by the [Docker](https://github.com/docker/docker/blob/master/CONTRIBUTING.md) and [Linux](https://elinux.org/Developer_Certificate_Of_Origin) communities. We commend them for their efforts to facilitate collaboration in their projects.*
+*Some of the ideas and wording for the statements above were based on work by the [Docker](https://github.com/docker/docker/blob/master/CONTRIBUTING.md) and [Linux](https://elinux.org/Developer_Certificate_Of_Origin) communities.
