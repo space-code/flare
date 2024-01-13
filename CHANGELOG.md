@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ## Added
+- Add additional badges to `README.md`
+  - Added in Pull Request [#15](https://github.com/space-code/flare/pull/15).
+
 - Add files to comply with community standards
   - Added in Pull Request [#13](https://github.com/space-code/flare/pull/13).
 
