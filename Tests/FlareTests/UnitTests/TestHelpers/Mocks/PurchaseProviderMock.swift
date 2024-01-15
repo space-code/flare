@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 @testable import Flare
@@ -41,16 +41,16 @@ final class PurchaseProviderMock: IPurchaseProvider {
 
     var invokedPurchase = false
     var invokedPurchaseCount = 0
-    var invokedPurchaseParameters: (product: StoreProduct, Void)?
-    var invokedPurchaseParametersList = [(product: StoreProduct, Void)]()
+    var invokedPurchaseParameters: (product: StoreProduct, promotionalOffer: PromotionalOffer?)?
+    var invokedPurchaseParametersList = [(product: StoreProduct, promotionalOffer: PromotionalOffer?)]()
     var stubbedPurchaseCompletionResult: (Result<StoreTransaction, IAPError>, Void)?
 
     @MainActor
-    func purchase(product: StoreProduct, completion: @escaping PurchaseCompletionHandler) {
+    func purchase(product: StoreProduct, promotionalOffer: PromotionalOffer?, completion: @escaping PurchaseCompletionHandler) {
         invokedPurchase = true
         invokedPurchaseCount += 1
-        invokedPurchaseParameters = (product, ())
-        invokedPurchaseParametersList.append((product, ()))
+        invokedPurchaseParameters = (product, promotionalOffer)
+        invokedPurchaseParametersList.append((product, promotionalOffer))
         if let result = stubbedPurchaseCompletionResult {
             completion(result.0)
         }
@@ -58,8 +58,8 @@ final class PurchaseProviderMock: IPurchaseProvider {
 
     var invokedPurchaseWithOptions = false
     var invokedPurchaseWithOptionsCount = 0
-    var invokedPurchaseWithOptionsParameters: (product: StoreProduct, Any)?
-    var invokedPurchaseWithOptionsParametersList = [(product: StoreProduct, Any)]()
+    var invokedPurchaseWithOptionsParameters: (product: StoreProduct, Any, promotionalOffer: PromotionalOffer?)?
+    var invokedPurchaseWithOptionsParametersList = [(product: StoreProduct, Any, promotionalOffer: PromotionalOffer?)]()
     var stubbedinvokedPurchaseWithOptionsCompletionResult: (Result<StoreTransaction, IAPError>, Void)?
 
     @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
@@ -67,12 +67,13 @@ final class PurchaseProviderMock: IPurchaseProvider {
     func purchase(
         product: StoreProduct,
         options: Set<Product.PurchaseOption>,
+        promotionalOffer: PromotionalOffer?,
         completion: @escaping PurchaseCompletionHandler
     ) {
         invokedPurchaseWithOptions = true
         invokedPurchaseWithOptionsCount += 1
-        invokedPurchaseWithOptionsParameters = (product, options)
-        invokedPurchaseWithOptionsParametersList.append((product, options))
+        invokedPurchaseWithOptionsParameters = (product, options, promotionalOffer)
+        invokedPurchaseWithOptionsParametersList.append((product, options, promotionalOffer))
 
         if let result = stubbedinvokedPurchaseWithOptionsCompletionResult {
             completion(result.0)

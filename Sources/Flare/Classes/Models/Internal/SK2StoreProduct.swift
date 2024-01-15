@@ -81,4 +81,8 @@ extension SK2StoreProduct: ISKProduct {
             StoreProductDiscount(discount: $0, currencyCode: self.currencyCode)
         } ?? []
     }
+
+    var subscriptionGroupIdentifier: String? {
+        product.subscription?.subscriptionGroupID
+    }
 }

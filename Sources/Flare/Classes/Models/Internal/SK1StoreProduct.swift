@@ -56,13 +56,9 @@ extension SK1StoreProduct: ISKProduct {
     }
 
     var productCategory: ProductCategory? {
-        guard #available(iOS 11.2, macOS 10.13.2, tvOS 11.2, watchOS 6.2, *) else {
-            return .nonSubscription
-        }
-        return subscriptionPeriod == nil ? .nonSubscription : .subscription
+        subscriptionPeriod == nil ? .nonSubscription : .subscription
     }
 
-    @available(iOS 11.2, macOS 10.13.2, tvOS 11.2, watchOS 6.2, *)
     var subscriptionPeriod: SubscriptionPeriod? {
         guard let subscriptionPeriod = product.subscriptionPeriod, subscriptionPeriod.numberOfUnits > 0 else {
             return nil
@@ -76,5 +72,9 @@ extension SK1StoreProduct: ISKProduct {
 
     var discounts: [StoreProductDiscount] {
         product.discounts.compactMap { StoreProductDiscount(skProductDiscount: $0) }
+    }
+
+    var subscriptionGroupIdentifier: String? {
+        product.subscriptionGroupIdentifier
     }
 }

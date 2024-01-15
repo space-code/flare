@@ -33,7 +33,7 @@ struct SK1StoreProductDiscount: IStoreProductDiscount {
     /// The type of discount (e.g., introductory, promotional).
     let type: DiscountType
 
-    // MARK: Initializaiton
+    // MARK: Initialization
 
     /// Creates a `SK1StoreProductDiscount` instance.
     ///

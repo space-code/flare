@@ -52,31 +52,31 @@ public extension StoreProductDiscount {
 // MARK: IStoreProductDiscount
 
 extension StoreProductDiscount: IStoreProductDiscount {
-    var offerIdentifier: String? {
+    public var offerIdentifier: String? {
         discount.offerIdentifier
     }
 
-    var currencyCode: String? {
+    public var currencyCode: String? {
         discount.currencyCode
     }
 
-    var price: Decimal {
+    public var price: Decimal {
         discount.price
     }
 
-    var paymentMode: PaymentMode {
+    public var paymentMode: PaymentMode {
         discount.paymentMode
     }
 
-    var subscriptionPeriod: SubscriptionPeriod {
+    public var subscriptionPeriod: SubscriptionPeriod {
         discount.subscriptionPeriod
     }
 
-    var numberOfPeriods: Int {
+    public var numberOfPeriods: Int {
         discount.numberOfPeriods
     }
 
-    var type: DiscountType {
+    public var type: DiscountType {
         discount.type
     }
 }

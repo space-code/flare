@@ -44,13 +44,17 @@ extension Flare: IFlare {
         try await iapProvider.fetch(productIDs: productIDs)
     }
 
-    public func purchase(product: StoreProduct, completion: @escaping Closure<Result<StoreTransaction, IAPError>>) {
+    public func purchase(
+        product: StoreProduct,
+        promotionalOffer: PromotionalOffer?,
+        completion: @escaping Closure<Result<StoreTransaction, IAPError>>
+    ) {
         guard iapProvider.canMakePayments else {
             completion(.failure(.paymentNotAllowed))
             return
         }
 
-        iapProvider.purchase(product: product) { result in
+        iapProvider.purchase(product: product, promotionalOffer: promotionalOffer) { result in
             switch result {
             case let .success(transaction):
                 completion(.success(transaction))
@@ -60,31 +64,33 @@ extension Flare: IFlare {
         }
     }
 
-    public func purchase(product: StoreProduct) async throws -> StoreTransaction {
+    public func purchase(product: StoreProduct, promotionalOffer: PromotionalOffer?) async throws -> StoreTransaction {
         guard iapProvider.canMakePayments else { throw IAPError.paymentNotAllowed }
-        return try await iapProvider.purchase(product: product)
+        return try await iapProvider.purchase(product: product, promotionalOffer: promotionalOffer)
     }
 
     @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
     public func purchase(
         product: StoreProduct,
         options: Set<StoreKit.Product.PurchaseOption>,
+        promotionalOffer: PromotionalOffer?,
         completion: @escaping SendableClosure<Result<StoreTransaction, IAPError>>
     ) {
         guard iapProvider.canMakePayments else {
             completion(.failure(.paymentNotAllowed))
             return
         }
-        iapProvider.purchase(product: product, options: options, completion: completion)
+        iapProvider.purchase(product: product, options: options, promotionalOffer: promotionalOffer, completion: completion)
     }
 
     @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
     public func purchase(
         product: StoreProduct,
-        options: Set<StoreKit.Product.PurchaseOption>
+        options: Set<StoreKit.Product.PurchaseOption>,
+        promotionalOffer: PromotionalOffer?
     ) async throws -> StoreTransaction {
         guard iapProvider.canMakePayments else { throw IAPError.paymentNotAllowed }
-        return try await iapProvider.purchase(product: product, options: options)
+        return try await iapProvider.purchase(product: product, options: options, promotionalOffer: promotionalOffer)
     }
 
     public func receipt(completion: @escaping Closure<Result<String, IAPError>>) {

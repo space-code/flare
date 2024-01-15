@@ -34,7 +34,7 @@ struct SK2StoreProductDiscount: IStoreProductDiscount, Sendable {
     /// The type of discount (e.g., introductory, promotional).
     let type: DiscountType
 
-    // MARK: Initializaiton
+    // MARK: Initialization
 
     /// Creates a `SK2StoreProductDiscount` instance.
     ///

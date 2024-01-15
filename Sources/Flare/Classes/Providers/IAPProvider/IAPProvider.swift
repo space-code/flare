@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 import StoreKit
@@ -80,8 +80,12 @@ final class IAPProvider: IIAPProvider {
         }
     }
 
-    func purchase(product: StoreProduct, completion: @escaping Closure<Result<StoreTransaction, IAPError>>) {
-        purchaseProvider.purchase(product: product) { result in
+    func purchase(
+        product: StoreProduct,
+        promotionalOffer: PromotionalOffer?,
+        completion: @escaping Closure<Result<StoreTransaction, IAPError>>
+    ) {
+        purchaseProvider.purchase(product: product, promotionalOffer: promotionalOffer) { result in
             switch result {
             case let .success(transaction):
                 completion(.success(transaction))
@@ -91,9 +95,9 @@ final class IAPProvider: IIAPProvider {
         }
     }
 
-    func purchase(product: StoreProduct) async throws -> StoreTransaction {
+    func purchase(product: StoreProduct, promotionalOffer: PromotionalOffer?) async throws -> StoreTransaction {
         try await withCheckedThrowingContinuation { continuation in
-            self.purchase(product: product) { result in
+            self.purchase(product: product, promotionalOffer: promotionalOffer) { result in
                 continuation.resume(with: result)
             }
         }
@@ -103,15 +107,20 @@ final class IAPProvider: IIAPProvider {
     func purchase(
         product: StoreProduct,
         options: Set<StoreKit.Product.PurchaseOption>,
+        promotionalOffer: PromotionalOffer?,
         completion: @escaping SendableClosure<Result<StoreTransaction, IAPError>>
     ) {
-        purchaseProvider.purchase(product: product, options: options, completion: completion)
+        purchaseProvider.purchase(product: product, options: options, promotionalOffer: promotionalOffer, completion: completion)
     }
 
     @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
-    func purchase(product: StoreProduct, options: Set<StoreKit.Product.PurchaseOption>) async throws -> StoreTransaction {
+    func purchase(
+        product: StoreProduct,
+        options: Set<StoreKit.Product.PurchaseOption>,
+        promotionalOffer: PromotionalOffer?
+    ) async throws -> StoreTransaction {
         try await withCheckedThrowingContinuation { continuation in
-            purchase(product: product, options: options) { result in
+            purchase(product: product, options: options, promotionalOffer: promotionalOffer) { result in
                 continuation.resume(with: result)
             }
         }

@@ -1,9 +1,11 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 import StoreKit
+
+// MARK: - IIAPProvider
 
 /// Type that provides in-app purchase functionality.
 public protocol IIAPProvider {
@@ -34,8 +36,13 @@ public protocol IIAPProvider {
     ///
     /// - Parameters:
     ///   - product: The product to be purchased.
+    ///   - promotionalOffer: The promotional offer.
     ///   - completion: The closure to be executed once the purchase is complete.
-    func purchase(product: StoreProduct, completion: @escaping Closure<Result<StoreTransaction, IAPError>>)
+    func purchase(
+        product: StoreProduct,
+        promotionalOffer: PromotionalOffer?,
+        completion: @escaping Closure<Result<StoreTransaction, IAPError>>
+    )
 
     /// Purchases a product.
     ///
@@ -43,12 +50,14 @@ public protocol IIAPProvider {
     ///         If the user can't make a payment, the method returns an error
     ///         with the type `IAPError.paymentNotAllowed`.
     ///
-    /// - Parameter product: The product to be purchased.
+    /// - Parameters:
+    ///   - product: The product to be purchased.
+    ///   - promotionalOffer: The promotional offer.
     ///
     /// - Throws: `IAPError.paymentNotAllowed` if user can't make payment.
     ///
     /// - Returns: A payment transaction.
-    func purchase(product: StoreProduct) async throws -> StoreTransaction
+    func purchase(product: StoreProduct, promotionalOffer: PromotionalOffer?) async throws -> StoreTransaction
 
     /// Purchases a product with a given ID.
     ///
@@ -59,6 +68,7 @@ public protocol IIAPProvider {
     /// - Parameters:
     ///   - product: The product to be purchased.
     ///   - options: The optional settings for a product purchase.
+    ///   - promotionalOffer: The promotional offer.
     ///   - completion: The closure to be executed once the purchase is complete.
     ///
     /// - Throws: `IAPError.paymentNotAllowed` if user can't make payment.
@@ -68,6 +78,7 @@ public protocol IIAPProvider {
     func purchase(
         product: StoreProduct,
         options: Set<StoreKit.Product.PurchaseOption>,
+        promotionalOffer: PromotionalOffer?,
         completion: @escaping SendableClosure<Result<StoreTransaction, IAPError>>
     )
 
@@ -80,12 +91,17 @@ public protocol IIAPProvider {
     /// - Parameters:
     ///   - product: The product to be purchased.
     ///   - options: The optional settings for a product purchase.
+    ///   - promotionalOffer: The promotional offer.
     ///
     /// - Throws: `IAPError.paymentNotAllowed` if user can't make payment.
     ///
     /// - Returns: A payment transaction.
     @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
-    func purchase(product: StoreProduct, options: Set<StoreKit.Product.PurchaseOption>) async throws -> StoreTransaction
+    func purchase(
+        product: StoreProduct,
+        options: Set<StoreKit.Product.PurchaseOption>,
+        promotionalOffer: PromotionalOffer?
+    ) async throws -> StoreTransaction
 
     /// Refreshes the receipt, representing the user's transactions with your app.
     ///
@@ -131,4 +147,81 @@ public protocol IIAPProvider {
         @available(tvOS, unavailable)
         func beginRefundRequest(productID: String) async throws -> RefundRequestStatus
     #endif
+}
+
+extension IIAPProvider {
+    /// Performs a purchase of a product.
+    ///
+    /// - Note: The method automatically checks if the user can purchase a product.
+    ///         If the user can't make a payment, the method returns an error
+    ///         with the type `IAPError.paymentNotAllowed`.
+    ///
+    /// - Parameters:
+    ///   - product: The product to be purchased.
+    ///   - completion: The closure to be executed once the purchase is complete.
+    func purchase(
+        product: StoreProduct,
+        completion: @escaping Closure<Result<StoreTransaction, IAPError>>
+    ) {
+        purchase(product: product, promotionalOffer: nil, completion: completion)
+    }
+
+    /// Purchases a product.
+    ///
+    /// - Note: The method automatically checks if the user can purchase a product.
+    ///         If the user can't make a payment, the method returns an error
+    ///         with the type `IAPError.paymentNotAllowed`.
+    ///
+    /// - Parameter product: The product to be purchased.
+    ///
+    /// - Throws: `IAPError.paymentNotAllowed` if user can't make payment.
+    ///
+    /// - Returns: A payment transaction.
+    func purchase(product: StoreProduct) async throws -> StoreTransaction {
+        try await purchase(product: product, promotionalOffer: nil)
+    }
+
+    /// Purchases a product with a given ID.
+    ///
+    /// - Note: The method automatically checks if the user can purchase a product.
+    ///         If the user can't make a payment, the method returns an error
+    ///         with the type `IAPError.paymentNotAllowed`.
+    ///
+    /// - Parameters:
+    ///   - product: The product to be purchased.
+    ///   - options: The optional settings for a product purchase.
+    ///   - completion: The closure to be executed once the purchase is complete.
+    ///
+    /// - Throws: `IAPError.paymentNotAllowed` if user can't make payment.
+    ///
+    /// - Returns: A payment transaction.
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    func purchase(
+        product: StoreProduct,
+        options: Set<StoreKit.Product.PurchaseOption>,
+        completion: @escaping SendableClosure<Result<StoreTransaction, IAPError>>
+    ) {
+        purchase(product: product, options: options, promotionalOffer: nil, completion: completion)
+    }
+
+    /// Purchases a product with a given ID.
+    ///
+    /// - Note: The method automatically checks if the user can purchase a product.
+    ///         If the user can't make a payment, the method returns an error
+    ///         with the type `IAPError.paymentNotAllowed`.
+    ///
+    /// - Parameters:
+    ///   - product: The product to be purchased.
+    ///   - options: The optional settings for a product purchase.
+    ///
+    /// - Throws: `IAPError.paymentNotAllowed` if user can't make payment.
+    ///
+    /// - Returns: A payment transaction.
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    func purchase(
+        product: StoreProduct,
+        options: Set<StoreKit.Product.PurchaseOption>
+    ) async throws -> StoreTransaction {
+        try await purchase(product: product, options: options, promotionalOffer: nil)
+    }
 }

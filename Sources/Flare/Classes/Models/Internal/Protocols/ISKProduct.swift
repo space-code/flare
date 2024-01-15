@@ -39,4 +39,6 @@ protocol ISKProduct {
 
     /// <#Description#>
     var discounts: [StoreProductDiscount] { get }
+
+    var subscriptionGroupIdentifier: String? { get }
 }

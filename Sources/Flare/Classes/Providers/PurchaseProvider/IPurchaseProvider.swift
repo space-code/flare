@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 import Foundation
@@ -35,8 +35,42 @@ protocol IPurchaseProvider {
     ///
     /// - Parameters:
     ///   - product: The product to be purchased.
+    ///   - promotionalOffer: The promotional offer.
     ///   - completion: The closure to be executed once the purchase is complete.
-    func purchase(product: StoreProduct, completion: @escaping PurchaseCompletionHandler)
+    func purchase(
+        product: StoreProduct,
+        promotionalOffer: PromotionalOffer?,
+        completion: @escaping PurchaseCompletionHandler
+    )
+
+    /// Purchases a product.
+    ///
+    /// - Parameters:
+    ///   - product: The product to be purchased.
+    ///   - options: The optional settings for a product purchase.
+    ///   - promotionalOffer: The promotional offer.
+    ///   - completion: The closure to be executed once the purchase is complete.
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    func purchase(
+        product: StoreProduct,
+        options: Set<StoreKit.Product.PurchaseOption>,
+        promotionalOffer: PromotionalOffer?,
+        completion: @escaping PurchaseCompletionHandler
+    )
+}
+
+extension IPurchaseProvider {
+    /// Purchases a product.
+    ///
+    /// - Parameters:
+    ///   - product: The product to be purchased.
+    ///   - completion: The closure to be executed once the purchase is complete.
+    func purchase(
+        product: StoreProduct,
+        completion: @escaping PurchaseCompletionHandler
+    ) {
+        purchase(product: product, promotionalOffer: nil, completion: completion)
+    }
 
     /// Purchases a product.
     ///
@@ -49,5 +83,7 @@ protocol IPurchaseProvider {
         product: StoreProduct,
         options: Set<StoreKit.Product.PurchaseOption>,
         completion: @escaping PurchaseCompletionHandler
-    )
+    ) {
+        purchase(product: product, options: options, promotionalOffer: nil, completion: completion)
+    }
 }

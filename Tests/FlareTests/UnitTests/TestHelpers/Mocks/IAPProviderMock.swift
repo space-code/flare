@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 @testable import Flare
@@ -189,5 +189,53 @@ final class IAPProviderMock: IIAPProvider {
         invokedAsyncPurchaseWithOptionsParameters = (product, options)
         invokedAsyncPurchaseWithOptionsParametersList.append((product, options))
         return stubbedAsyncPurchaseWithOptions
+    }
+
+    func promotionalOffer(
+        productDiscount _: StoreProductDiscount,
+        product _: StoreProduct,
+        completion _: @escaping @Sendable (Result<PromotionalOffer, IAPError>) -> Void
+    ) {}
+
+    func purchase(
+        product _: StoreProduct,
+        promotionalOffer _: PromotionalOffer?,
+        completion _: @escaping Closure<Result<StoreTransaction, IAPError>>
+    ) {}
+
+    var invokedPurchaseWithPromotionalOffer = false
+    var invokedPurchaseWithPromotionalOfferCount = 0
+    var stubbedPurchaseWithPromotionalOffer: StoreTransaction!
+
+    func purchase(
+        product _: StoreProduct,
+        promotionalOffer _: PromotionalOffer?
+    ) async throws -> StoreTransaction {
+        invokedPurchaseWithPromotionalOffer = true
+        invokedPurchaseWithPromotionalOfferCount += 1
+        return stubbedPurchaseWithPromotionalOffer
+    }
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    func purchase(
+        product _: StoreProduct,
+        options _: Set<Product.PurchaseOption>,
+        promotionalOffer _: PromotionalOffer?,
+        completion _: @escaping SendableClosure<Result<StoreTransaction, IAPError>>
+    ) {}
+
+    var invokedPurchaseWithOptionsAndPromotionalOffer = false
+    var invokedPurchaseWithOptionsAndPromotionalOfferCount = 0
+    var stubbedPurchaseWithOptionsAndPromotionalOffer: StoreTransaction!
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    func purchase(
+        product _: StoreProduct,
+        options _: Set<Product.PurchaseOption>,
+        promotionalOffer _: PromotionalOffer?
+    ) async throws -> StoreTransaction {
+        invokedPurchaseWithOptionsAndPromotionalOffer = true
+        invokedPurchaseWithOptionsAndPromotionalOfferCount += 1
+        return stubbedPurchaseWithOptionsAndPromotionalOffer
     }
 }

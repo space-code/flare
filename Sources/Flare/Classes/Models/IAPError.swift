@@ -38,6 +38,10 @@ public enum IAPError: Swift.Error {
     ///
     /// - Note: This is only available for StoreKit 2 transactions.
     case paymentDefferred
+    /// The decoding signature is failed.
+    ///
+    /// - Note: This is only available for StoreKit 2 transactions.
+    case failedToDecodeSignature(signature: String)
     /// The unknown error occurred.
     case unknown
 }
