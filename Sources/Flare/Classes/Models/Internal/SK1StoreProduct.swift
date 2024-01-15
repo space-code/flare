@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 import Foundation
@@ -68,5 +68,13 @@ extension SK1StoreProduct: ISKProduct {
             return nil
         }
         return SubscriptionPeriod.from(subscriptionPeriod: subscriptionPeriod)
+    }
+
+    var introductoryDiscount: StoreProductDiscount? {
+        product.introductoryPrice.flatMap { StoreProductDiscount(skProductDiscount: $0) }
+    }
+
+    var discounts: [StoreProductDiscount] {
+        product.discounts.compactMap { StoreProductDiscount(skProductDiscount: $0) }
     }
 }

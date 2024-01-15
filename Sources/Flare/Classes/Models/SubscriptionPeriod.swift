@@ -9,10 +9,10 @@ import StoreKit
 // MARK: - SubscriptionPeriod
 
 /// A class representing a subscription period with a specific value and unit.
-public final class SubscriptionPeriod: NSObject {
+public final class SubscriptionPeriod: NSObject, Sendable {
     // MARK: Types
 
-    public enum Unit: Int {
+    public enum Unit: Int, Sendable {
         /// A subscription period unit of a day.
         case day = 0
         /// A subscription period unit of a week.
@@ -66,7 +66,11 @@ extension SubscriptionPeriod {
 // MARK: - Extensions
 
 private extension SubscriptionPeriod.Unit {
-    @available(iOS 11.2, macOS 10.13.2, tvOS 11.2, watchOS 6.2, *)
+    /// Creates a ``SubscriptionPeriod.Unit`` instance.
+    ///
+    /// - Parameter unit: Values representing the duration of an interval, from a day up to a year.
+    ///
+    /// - Returns: A subscription unit.
     static func from(unit: SKProduct.PeriodUnit) -> Self? {
         switch unit {
         case .day:
@@ -82,6 +86,11 @@ private extension SubscriptionPeriod.Unit {
         }
     }
 
+    /// Creates a ``SubscriptionPeriod.Unit`` instance.
+    ///
+    /// - Parameter unit: Units of time that describe subscription periods.
+    ///
+    /// - Returns: A subscription unit.
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8, *)
     static func from(unit: StoreKit.Product.SubscriptionPeriod.Unit) -> Self? {
         switch unit {

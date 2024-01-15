@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 import Foundation
@@ -14,6 +14,7 @@ final class SK2StoreProduct {
 
     /// The store kit product.
     let product: StoreKit.Product
+
     /// The currency format.
     private var currencyFormat: Decimal.FormatStyle.Currency {
         product.priceFormatStyle
@@ -67,5 +68,17 @@ extension SK2StoreProduct: ISKProduct {
             return nil
         }
         return SubscriptionPeriod.from(subscriptionPeriod: subscriptionPeriod)
+    }
+
+    var introductoryDiscount: StoreProductDiscount? {
+        product.subscription?.introductoryOffer.flatMap {
+            StoreProductDiscount(discount: $0, currencyCode: self.currencyCode)
+        }
+    }
+
+    var discounts: [StoreProductDiscount] {
+        product.subscription?.promotionalOffers.compactMap {
+            StoreProductDiscount(discount: $0, currencyCode: self.currencyCode)
+        } ?? []
     }
 }

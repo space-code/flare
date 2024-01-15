@@ -85,4 +85,12 @@ extension StoreProduct: ISKProduct {
     var subscriptionPeriod: SubscriptionPeriod? {
         product.subscriptionPeriod
     }
+
+    var introductoryDiscount: StoreProductDiscount? {
+        product.introductoryDiscount
+    }
+
+    var discounts: [StoreProductDiscount] {
+        product.discounts
+    }
 }

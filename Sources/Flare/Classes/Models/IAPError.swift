@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 import StoreKit
@@ -34,7 +34,7 @@ public enum IAPError: Swift.Error {
     ///
     /// - Note: This is only available for StoreKit 2 transactions.
     case verification(error: VerificationError)
-    ///
+    /// The purchase is pending, and requires action from the customer.
     ///
     /// - Note: This is only available for StoreKit 2 transactions.
     case paymentDefferred
