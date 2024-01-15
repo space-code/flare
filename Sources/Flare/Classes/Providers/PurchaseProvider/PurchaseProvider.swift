@@ -67,7 +67,7 @@ final class PurchaseProvider {
         promotionalOffer: PromotionalOffer?,
         completion: @escaping @MainActor (Result<StoreTransaction, IAPError>) -> Void
     ) {
-        AsyncHandler.call(completion: { result in
+        AsyncHandler.call(completion: { (result: Result<Product.PurchaseResult, Error>) in
             Task {
                 switch result {
                 case let .success(result):

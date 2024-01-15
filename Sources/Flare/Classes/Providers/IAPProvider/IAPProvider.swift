@@ -55,7 +55,7 @@ final class IAPProvider: IIAPProvider {
     func fetch(productIDs: Set<String>, completion: @escaping Closure<Result<[StoreProduct], IAPError>>) {
         if #available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *) {
             AsyncHandler.call(
-                completion: { [weak self] result in
+                completion: { [weak self] (result: Result<[SK2StoreProduct], Error>) in
                     self?.handleFetchResult(result: result, completion)
                 },
                 asyncMethod: {

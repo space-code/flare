@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 @testable import Flare
@@ -64,8 +64,8 @@ class FlareTests: XCTestCase {
         sut.purchase(product: .fake(skProduct: .fake(id: .productID)), completion: { _ in })
 
         // then
-        XCTAssertTrue(iapProviderMock.invokedPurchase)
-        XCTAssertEqual(iapProviderMock.invokedPurchaseParameters?.product.productIdentifier, .productID)
+        XCTAssertTrue(iapProviderMock.invokedPurchaseWithPromotionalOffer)
+        XCTAssertEqual(iapProviderMock.invokedPurchaseWithPromotionalOfferParameters?.product.productIdentifier, .productID)
     }
 
     func test_thatFlareThrowsAnError_whenUserCannotMakePayments() {
@@ -83,6 +83,7 @@ class FlareTests: XCTestCase {
         // given
         let paymentTransaction = StoreTransaction(storeTransaction: StoreTransactionStub())
         iapProviderMock.stubbedCanMakePayments = true
+        iapProviderMock.stubbedPurchaseWithPromotionalOffer = .success(paymentTransaction)
 
         // when
         var transaction: IStoreTransaction?
@@ -92,7 +93,7 @@ class FlareTests: XCTestCase {
         iapProviderMock.invokedPurchaseParameters?.completion(.success(paymentTransaction))
 
         // then
-        XCTAssertTrue(iapProviderMock.invokedPurchase)
+        XCTAssertTrue(iapProviderMock.invokedPurchaseWithPromotionalOffer)
         XCTAssertEqual(transaction?.productIdentifier, paymentTransaction.productIdentifier)
     }
 
@@ -100,6 +101,7 @@ class FlareTests: XCTestCase {
         // given
         let errorMock = IAPError.paymentNotAllowed
         iapProviderMock.stubbedCanMakePayments = true
+        iapProviderMock.stubbedPurchaseWithPromotionalOffer = .failure(errorMock)
 
         // when
         var error: IAPError?
@@ -109,7 +111,7 @@ class FlareTests: XCTestCase {
         iapProviderMock.invokedPurchaseParameters?.completion(.failure(errorMock))
 
         // then
-        XCTAssertTrue(iapProviderMock.invokedPurchase)
+        XCTAssertTrue(iapProviderMock.invokedPurchaseWithPromotionalOffer)
         XCTAssertEqual(error, errorMock)
     }
 
@@ -131,13 +133,13 @@ class FlareTests: XCTestCase {
         let transactionMock = StoreTransaction(storeTransaction: StoreTransactionStub())
 
         iapProviderMock.stubbedCanMakePayments = true
-        iapProviderMock.stubbedAsyncPurchase = transactionMock
+        iapProviderMock.stubbedPurchaseAsyncWithPromotionalOffer = transactionMock
 
         // when
         let transaction = await value(for: { try await sut.purchase(product: .fake(skProduct: .fake(id: .productID))) })
 
         // then
-        XCTAssertTrue(iapProviderMock.invokedAsyncPurchase)
+        XCTAssertTrue(iapProviderMock.invokedPurchaseAsyncWithPromotionalOffer)
         XCTAssertEqual(transaction?.productIdentifier, transactionMock.productIdentifier)
     }
 

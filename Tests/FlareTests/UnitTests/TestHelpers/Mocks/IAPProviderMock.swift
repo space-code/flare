@@ -191,29 +191,42 @@ final class IAPProviderMock: IIAPProvider {
         return stubbedAsyncPurchaseWithOptions
     }
 
-    func promotionalOffer(
-        productDiscount _: StoreProductDiscount,
-        product _: StoreProduct,
-        completion _: @escaping @Sendable (Result<PromotionalOffer, IAPError>) -> Void
-    ) {}
-
-    func purchase(
-        product _: StoreProduct,
-        promotionalOffer _: PromotionalOffer?,
-        completion _: @escaping Closure<Result<StoreTransaction, IAPError>>
-    ) {}
-
     var invokedPurchaseWithPromotionalOffer = false
     var invokedPurchaseWithPromotionalOfferCount = 0
-    var stubbedPurchaseWithPromotionalOffer: StoreTransaction!
+    var invokedPurchaseWithPromotionalOfferParameters: (product: StoreProduct, promotionalOffer: PromotionalOffer?)?
+    var invokedPurchaseWithPromotionalOfferParametersList = [(product: StoreProduct, VpromotionalOffer: PromotionalOffer?)]()
+    var stubbedPurchaseWithPromotionalOffer: Result<StoreTransaction, IAPError>?
 
     func purchase(
-        product _: StoreProduct,
-        promotionalOffer _: PromotionalOffer?
-    ) async throws -> StoreTransaction {
+        product: StoreProduct,
+        promotionalOffer: PromotionalOffer?,
+        completion: @escaping Closure<Result<StoreTransaction, IAPError>>
+    ) {
         invokedPurchaseWithPromotionalOffer = true
         invokedPurchaseWithPromotionalOfferCount += 1
-        return stubbedPurchaseWithPromotionalOffer
+        invokedPurchaseWithPromotionalOfferParameters = (product, promotionalOffer)
+        invokedPurchaseWithPromotionalOfferParametersList.append((product, promotionalOffer))
+
+        if let result = stubbedPurchaseWithPromotionalOffer {
+            completion(result)
+        }
+    }
+
+    var invokedPurchaseAsyncWithPromotionalOffer = false
+    var invokedPurchaseAsyncWithPromotionalOfferCount = 0
+    var invokedPurchaseAsyncWithPromotionalOfferParameters: (product: StoreProduct, promotionalOffer: PromotionalOffer?)?
+    var invokedPurchaseAsyncWithPromotionalOfferParametersList = [(product: StoreProduct, VpromotionalOffer: PromotionalOffer?)]()
+    var stubbedPurchaseAsyncWithPromotionalOffer: StoreTransaction!
+
+    func purchase(
+        product: StoreProduct,
+        promotionalOffer: PromotionalOffer?
+    ) async throws -> StoreTransaction {
+        invokedPurchaseAsyncWithPromotionalOffer = true
+        invokedPurchaseAsyncWithPromotionalOfferCount += 1
+        invokedPurchaseAsyncWithPromotionalOfferParameters = (product, promotionalOffer)
+        invokedPurchaseAsyncWithPromotionalOfferParametersList.append((product, promotionalOffer))
+        return stubbedPurchaseAsyncWithPromotionalOffer
     }
 
     @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
