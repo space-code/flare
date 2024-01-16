@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 import Concurrency
@@ -36,8 +36,8 @@ final class PaymentProvider: NSObject {
     ///   - paymentQueue: The queue of payment transactions to be processed by the App Store.
     ///   - dispatchQueueFactory: The dispatch queue factory.
     init(
-        paymentQueue: PaymentQueue = SKPaymentQueue.default(),
-        dispatchQueueFactory: IDispatchQueueFactory = DispatchQueueFactory()
+        paymentQueue: PaymentQueue,
+        dispatchQueueFactory: IDispatchQueueFactory
     ) {
         self.paymentQueue = paymentQueue
         self.dispatchQueueFactory = dispatchQueueFactory

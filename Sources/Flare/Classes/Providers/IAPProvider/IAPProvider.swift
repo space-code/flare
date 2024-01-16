@@ -35,15 +35,13 @@ final class IAPProvider: IIAPProvider {
     ///   - receiptRefreshProvider: The provider is responsible for refreshing receipts.
     ///   - refundProvider: The provider is responsible for refunding purchases.
     init(
-        paymentQueue: PaymentQueue = SKPaymentQueue.default(),
-        productProvider: IProductProvider = ProductProvider(),
-        purchaseProvider: IPurchaseProvider = PurchaseProvider(),
-        receiptRefreshProvider: IReceiptRefreshProvider = ReceiptRefreshProvider(),
-        refundProvider: IRefundProvider = RefundProvider(
-            systemInfoProvider: SystemInfoProvider()
-        ),
-        eligibilityProvider: IEligibilityProvider = EligibilityProvider(),
-        redeemCodeProvider: IRedeemCodeProvider = RedeemCodeProvider()
+        paymentQueue: PaymentQueue,
+        productProvider: IProductProvider,
+        purchaseProvider: IPurchaseProvider,
+        receiptRefreshProvider: IReceiptRefreshProvider,
+        refundProvider: IRefundProvider,
+        eligibilityProvider: IEligibilityProvider,
+        redeemCodeProvider: IRedeemCodeProvider
     ) {
         self.paymentQueue = paymentQueue
         self.productProvider = productProvider

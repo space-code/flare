@@ -13,24 +13,37 @@ import StoreKit
 
 /// The class creates and manages in-app purchases.
 public final class Flare {
+    // MARK: Properties
+
+    /// The in-app purchase provider.
+    private let iapProvider: IIAPProvider
+
+    /// The configuration provider.
+    private let configurationProvider: IConfigurationProvider
+
+    /// The singleton instance.
+    private static let flare: Flare = .init()
+
+    /// Returns a default `Flare` object.
+    public static var `default`: IFlare { flare }
+
     // MARK: Initialization
 
     /// Creates a new `Flare` instance.
     ///
-    /// - Parameter iapProvider: The in-app purchase provider.
-    init(iapProvider: IIAPProvider = IAPProvider()) {
-        self.iapProvider = iapProvider
+    /// - Parameters:
+    ///    - dependencies: The package's dependencies.
+    ///    - configurationProvider: The configuration provider.
+    init(dependencies: IFlareDependencies = FlareDependencies()) {
+        iapProvider = dependencies.iapProvider
+        configurationProvider = dependencies.configurationProvider
     }
 
     // MARK: Public
 
-    /// Returns a default `Flare` object.
-    public static let `default`: IFlare = Flare()
-
-    // MARK: Private
-
-    /// The in-app purchase provider.
-    private let iapProvider: IIAPProvider
+    public static func configure(with configuration: Configuration) {
+        flare.configurationProvider.configure(with: configuration)
+    }
 }
 
 // MARK: IFlare

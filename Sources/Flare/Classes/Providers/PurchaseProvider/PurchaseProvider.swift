@@ -15,6 +15,8 @@ final class PurchaseProvider {
     private let paymentProvider: IPaymentProvider
     /// The transaction listener.
     private let transactionListener: ITransactionListener?
+    /// The configuration provider.
+    private let configurationProvider: IConfigurationProvider
 
     // MARK: Initialization
 
@@ -23,11 +25,14 @@ final class PurchaseProvider {
     /// - Parameters:
     ///   - paymentProvider: The provider is responsible for purchasing products.
     ///   - transactionListener: The transaction listener.
+    ///   - configurationProvider: The configuration provider.
     init(
-        paymentProvider: IPaymentProvider = PaymentProvider(),
-        transactionListener: ITransactionListener? = nil
+        paymentProvider: IPaymentProvider,
+        transactionListener: ITransactionListener? = nil,
+        configurationProvider: IConfigurationProvider
     ) {
         self.paymentProvider = paymentProvider
+        self.configurationProvider = configurationProvider
 
         if let transactionListener = transactionListener {
             self.transactionListener = transactionListener
@@ -46,7 +51,7 @@ final class PurchaseProvider {
         completion: @escaping @MainActor (Result<StoreTransaction, IAPError>) -> Void
     ) {
         let payment = SKMutablePayment(product: sk1StoreProduct.product)
-        payment.applicationUsername = "" // TODO:
+        payment.applicationUsername = configurationProvider.applicationUsername
         payment.paymentDiscount = promotionalOffer?.signedData.skPromotionalOffer
         paymentProvider.add(payment: payment) { _, result in
             Task {

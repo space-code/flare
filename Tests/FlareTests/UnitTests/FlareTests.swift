@@ -12,7 +12,9 @@ import XCTest
 class FlareTests: XCTestCase {
     // MARK: - Properties
 
+    private var dependenciesMock: FlareDependenciesMock!
     private var iapProviderMock: IAPProviderMock!
+    private var configurationProviderMock: ConfigurationProviderMock!
 
     private var sut: Flare!
 
@@ -21,10 +23,16 @@ class FlareTests: XCTestCase {
     override func setUp() {
         super.setUp()
         iapProviderMock = IAPProviderMock()
-        sut = Flare(iapProvider: iapProviderMock)
+        dependenciesMock = FlareDependenciesMock()
+        configurationProviderMock = ConfigurationProviderMock()
+        dependenciesMock.stubbedIapProvider = iapProviderMock
+        dependenciesMock.stubbedConfigurationProvider = configurationProviderMock
+        sut = Flare(dependencies: dependenciesMock)
     }
 
     override func tearDown() {
+        configurationProviderMock = nil
+        dependenciesMock = nil
         iapProviderMock = nil
         sut = nil
         super.tearDown()
