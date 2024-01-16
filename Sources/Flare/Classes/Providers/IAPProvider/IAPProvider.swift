@@ -19,6 +19,8 @@ final class IAPProvider: IIAPProvider {
     private let receiptRefreshProvider: IReceiptRefreshProvider
     /// The provider is responsible for refunding purchases
     private let refundProvider: IRefundProvider
+    ///
+    private let eligibilityProvider: IEligibilityProvider
 
     // MARK: Initialization
 
@@ -27,7 +29,7 @@ final class IAPProvider: IIAPProvider {
     /// - Parameters:
     ///   - paymentQueue: The queue of payment transactions to be processed by the App Store.
     ///   - productProvider: The provider is responsible for fetching StoreKit products.
-    ///   - purchaseProvider:
+    ///   - purchaseProvider: The provider is respinsible for purchasing StoreKit product.
     ///   - receiptRefreshProvider: The provider is responsible for refreshing receipts.
     ///   - refundProvider: The provider is responsible for refunding purchases.
     init(
@@ -37,13 +39,15 @@ final class IAPProvider: IIAPProvider {
         receiptRefreshProvider: IReceiptRefreshProvider = ReceiptRefreshProvider(),
         refundProvider: IRefundProvider = RefundProvider(
             systemInfoProvider: SystemInfoProvider()
-        )
+        ),
+        eligibilityProvider: IEligibilityProvider = EligibilityProvider()
     ) {
         self.paymentQueue = paymentQueue
         self.productProvider = productProvider
         self.purchaseProvider = purchaseProvider
         self.receiptRefreshProvider = receiptRefreshProvider
         self.refundProvider = refundProvider
+        self.eligibilityProvider = eligibilityProvider
     }
 
     // MARK: Internal
@@ -159,6 +163,12 @@ final class IAPProvider: IIAPProvider {
 
     func removeTransactionObserver() {
         purchaseProvider.removeTransactionObserver()
+    }
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    func checkEligibility(productIDs: Set<String>) async throws -> [String: SubscriptionEligibility] {
+        let products = try await fetch(productIDs: productIDs)
+        return try await eligibilityProvider.checkEligibility(products: products)
     }
 
     #if os(iOS) || VISION_OS

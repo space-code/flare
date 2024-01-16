@@ -251,4 +251,19 @@ final class IAPProviderMock: IIAPProvider {
         invokedPurchaseWithOptionsAndPromotionalOfferCount += 1
         return stubbedPurchaseWithOptionsAndPromotionalOffer
     }
+
+    var invokedCheckEligibility = false
+    var invokedCheckEligibilityCount = 0
+    var invokedCheckEligibilityParameters: (productIDs: Set<String>, Void)?
+    var invokedCheckEligibilityParametersList = [(productIDs: Set<String>, Void)]()
+    var stubbedCheckEligibility: [String: SubscriptionEligibility] = [:]
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    func checkEligibility(productIDs: Set<String>) async throws -> [String: SubscriptionEligibility] {
+        invokedCheckEligibility = true
+        invokedCheckEligibilityCount += 1
+        invokedCheckEligibilityParameters = (productIDs, ())
+        invokedCheckEligibilityParametersList = [(productIDs, ())]
+        return stubbedCheckEligibility
+    }
 }

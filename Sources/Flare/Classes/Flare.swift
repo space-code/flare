@@ -120,6 +120,11 @@ extension Flare: IFlare {
         iapProvider.removeTransactionObserver()
     }
 
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    public func checkEligibility(productIDs: Set<String>) async throws -> [String: SubscriptionEligibility] {
+        try await iapProvider.checkEligibility(productIDs: productIDs)
+    }
+
     #if os(iOS) || VISION_OS
         @available(iOS 15.0, *)
         @available(macOS, unavailable)
