@@ -266,4 +266,22 @@ final class IAPProviderMock: IIAPProvider {
         invokedCheckEligibilityParametersList = [(productIDs, ())]
         return stubbedCheckEligibility
     }
+
+    var invokedPresentCodeRedemptionSheet = false
+    var invokedPresentCodeRedemptionSheetCount = 0
+
+    @available(iOS 14.0, *)
+    func presentCodeRedemptionSheet() {
+        invokedPresentCodeRedemptionSheet = true
+        invokedPresentCodeRedemptionSheetCount += 1
+    }
+
+    var invokedPresentOfferCodeRedeemSheet = false
+    var invokedPresentOfferCodeRedeemSheetCount = 0
+
+    @available(iOS 16.0, *)
+    func presentOfferCodeRedeemSheet() async throws {
+        invokedPresentOfferCodeRedeemSheet = true
+        invokedPresentOfferCodeRedeemSheetCount += 1
+    }
 }

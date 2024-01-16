@@ -21,6 +21,8 @@ final class IAPProvider: IIAPProvider {
     private let refundProvider: IRefundProvider
     ///
     private let eligibilityProvider: IEligibilityProvider
+    ///
+    private let redeemCodeProvider: IRedeemCodeProvider
 
     // MARK: Initialization
 
@@ -40,7 +42,8 @@ final class IAPProvider: IIAPProvider {
         refundProvider: IRefundProvider = RefundProvider(
             systemInfoProvider: SystemInfoProvider()
         ),
-        eligibilityProvider: IEligibilityProvider = EligibilityProvider()
+        eligibilityProvider: IEligibilityProvider = EligibilityProvider(),
+        redeemCodeProvider: IRedeemCodeProvider = RedeemCodeProvider()
     ) {
         self.paymentQueue = paymentQueue
         self.productProvider = productProvider
@@ -48,6 +51,7 @@ final class IAPProvider: IIAPProvider {
         self.receiptRefreshProvider = receiptRefreshProvider
         self.refundProvider = refundProvider
         self.eligibilityProvider = eligibilityProvider
+        self.redeemCodeProvider = redeemCodeProvider
     }
 
     // MARK: Internal
@@ -178,6 +182,22 @@ final class IAPProvider: IIAPProvider {
         @available(tvOS, unavailable)
         func beginRefundRequest(productID: String) async throws -> RefundRequestStatus {
             try await refundProvider.beginRefundRequest(productID: productID)
+        }
+
+        @available(iOS 14.0, *)
+        @available(macOS, unavailable)
+        @available(watchOS, unavailable)
+        @available(tvOS, unavailable)
+        func presentCodeRedemptionSheet() {
+            paymentQueue.presentCodeRedemptionSheet()
+        }
+
+        @available(iOS 16.0, *)
+        @available(macOS, unavailable)
+        @available(watchOS, unavailable)
+        @available(tvOS, unavailable)
+        func presentOfferCodeRedeemSheet() async throws {
+            try await redeemCodeProvider.presentOfferCodeRedeemSheet()
         }
     #endif
 

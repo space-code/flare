@@ -35,4 +35,10 @@ public protocol PaymentQueue: AnyObject {
     /// Remove a finished (i.e. failed or completed) transaction from the queue.
     /// Attempting to finish a purchasing transaction will throw an exception.
     func finishTransaction(_ transaction: SKPaymentTransaction)
+
+    #if os(iOS) || VISION_OS
+        // Call this method to have StoreKit present a sheet enabling the user to redeem codes provided by your app.
+        @available(iOS 14.0, *)
+        func presentCodeRedemptionSheet()
+    #endif
 }

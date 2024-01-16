@@ -154,6 +154,22 @@ public protocol IIAPProvider {
         @available(watchOS, unavailable)
         @available(tvOS, unavailable)
         func beginRefundRequest(productID: String) async throws -> RefundRequestStatus
+
+        /// Displays a sheet that enables users to redeem subscription offer codes that you configure in App Store Connect.
+        @available(iOS 14.0, *)
+        @available(macOS, unavailable)
+        @available(watchOS, unavailable)
+        @available(tvOS, unavailable)
+        func presentCodeRedemptionSheet()
+
+        /// Displays a sheet in the window scene that enables users to redeem
+        /// a subscription offer code that you configure in App Store
+        /// Connect.
+        @available(iOS 16.0, *)
+        @available(macOS, unavailable)
+        @available(watchOS, unavailable)
+        @available(tvOS, unavailable)
+        func presentOfferCodeRedeemSheet() async throws
     #endif
 }
 

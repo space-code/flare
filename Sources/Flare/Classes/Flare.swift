@@ -133,5 +133,21 @@ extension Flare: IFlare {
         public func beginRefundRequest(productID: String) async throws -> RefundRequestStatus {
             try await iapProvider.beginRefundRequest(productID: productID)
         }
+
+        @available(iOS 14.0, *)
+        @available(macOS, unavailable)
+        @available(watchOS, unavailable)
+        @available(tvOS, unavailable)
+        public func presentCodeRedemptionSheet() {
+            iapProvider.presentCodeRedemptionSheet()
+        }
+
+        @available(iOS 16.0, *)
+        @available(macOS, unavailable)
+        @available(watchOS, unavailable)
+        @available(tvOS, unavailable)
+        public func presentOfferCodeRedeemSheet() async throws {
+            try await iapProvider.presentOfferCodeRedeemSheet()
+        }
     #endif
 }
