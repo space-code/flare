@@ -24,8 +24,8 @@ public final class Flare {
     /// The singleton instance.
     private static let flare: Flare = .init()
 
-    /// Returns a default `Flare` object.
-    public static var `default`: IFlare { flare }
+    /// Returns a shared `Flare` object.
+    public static var shared: IFlare { flare }
 
     // MARK: Initialization
 
