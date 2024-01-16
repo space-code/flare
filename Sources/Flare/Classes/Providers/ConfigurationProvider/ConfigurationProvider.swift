@@ -27,12 +27,12 @@ extension ConfigurationProvider: IConfigurationProvider {
     }
 
     func configure(with configuration: Configuration) {
-        cacheProvider.write(key: .applicationUsername, value: configuration.applicationUserName)
+        cacheProvider.write(key: .applicationUsername, value: configuration.applicationUsername)
     }
 }
 
 // MARK: - Constants
 
 private extension String {
-    static let applicationUsername = "application_username"
+    static let applicationUsername = "flare.configuration.application_username"
 }

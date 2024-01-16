@@ -41,6 +41,10 @@ public final class Flare {
 
     // MARK: Public
 
+    /// Configures the Flare package with the provided configuration.
+    ///
+    /// - Parameters:
+    ///   - configuration: The configuration object containing settings for Flare.
     public static func configure(with configuration: Configuration) {
         flare.configurationProvider.configure(with: configuration)
     }

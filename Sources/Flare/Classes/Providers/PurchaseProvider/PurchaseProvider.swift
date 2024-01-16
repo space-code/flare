@@ -87,11 +87,21 @@ final class PurchaseProvider {
             }
         }, asyncMethod: {
             var options: Set<StoreKit.Product.PurchaseOption> = options ?? []
-            if let promotionalOffer {
-                try options.insert(promotionalOffer.signedData.promotionalOffer)
-            }
+            try self.configure(options: &options, promotionalOffer: promotionalOffer)
             return try await sk2StoreProduct.product.purchase(options: options)
         })
+    }
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    private func configure(options: inout Set<StoreKit.Product.PurchaseOption>, promotionalOffer: PromotionalOffer?) throws {
+        if let promotionalOffer {
+            try options.insert(promotionalOffer.signedData.promotionalOffer)
+        }
+
+        if let applicationUsername = configurationProvider.applicationUsername, let uuid = UUID(uuidString: applicationUsername) {
+            // If options contain an app account token, the next line of code doesn't affect it.
+            options.insert(.appAccountToken(uuid))
+        }
     }
 }
 

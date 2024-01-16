@@ -8,11 +8,20 @@ import Foundation
 public struct Configuration {
     // MARK: Properties
 
-    public let applicationUserName: String
+    // swiftlint:disable:next line_length
+    // https://developer.apple.com/documentation/storekit/in-app_purchase/original_api_for_in-app_purchase/subscriptions_and_offers/implementing_promotional_offers_in_your_app
+
+    /// A string that associates the transaction with a user account on your service.
+    ///
+    /// - Important: You must set `applicationUsername` to be the same as the one used to generate the signature.
+    public let applicationUsername: String
 
     // MARK: Initialization
 
-    public init(applicationUserName: String) {
-        self.applicationUserName = applicationUserName
+    /// Creates a `Configuration` instance.
+    ///
+    /// - Parameter applicationUsername: A string that associates the transaction with a user account on your service.
+    public init(applicationUsername: String) {
+        self.applicationUsername = applicationUsername
     }
 }
