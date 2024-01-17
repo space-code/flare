@@ -223,6 +223,19 @@ class FlareTests: XCTestCase {
         // then
         XCTAssertTrue(iapProviderMock.invokedAddTransactionObserver)
     }
+
+    @available(iOS 15.0, *)
+    func test_thatFlareChecksEligibility() async throws {
+        // given
+        iapProviderMock.stubbedCheckEligibility = [.productID: .eligible]
+
+        // when
+        let _ = try await sut.checkEligibility(productIDs: [.productID])
+
+        // then
+        XCTAssertEqual(iapProviderMock.invokedCheckEligibilityCount, 1)
+        XCTAssertEqual(iapProviderMock.invokedCheckEligibilityParameters?.productIDs, [.productID])
+    }
 }
 
 // MARK: - Constants

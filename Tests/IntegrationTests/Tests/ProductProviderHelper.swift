@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 import StoreKit
@@ -15,11 +15,24 @@ enum ProductProviderHelper {
         }
     }
 
-//    static var subscriptions: [StoreKit.Product] {
-//        get async throws {
-//            try await StoreKit.Product.products(for: [.testSubscription1ID, .testSubscription2ID])
-//        }
-//    }
+    static var subscriptions: [StoreKit.Product] {
+        get async throws {
+            try await subscriptionsWithOffers + subscriptionsWithoutOffers
+        }
+    }
+
+    static var subscriptionsWithOffers: [StoreKit.Product] {
+        get async throws {
+            try await StoreKit.Product.products(for: [.subscription1ID])
+        }
+    }
+
+    static var subscriptionsWithoutOffers: [StoreKit.Product] {
+        get async throws {
+            try await StoreKit.Product.products(for: [.subscription2ID])
+        }
+    }
+
 //
 //    static var all: [StoreKit.Product] {
 //        get async throws {
@@ -34,11 +47,11 @@ enum ProductProviderHelper {
 // MARK: - Constants
 
 private extension String {
-    static let testPurchase1ID = "com.flare.test_purchase_1"
-    static let testPurchase2ID = "com.flare.test_purchase_2"
-
     static let testNonConsumableID = "com.flare.test_non_consumable_purchase_1"
 
-//    static let testSubscription1ID = "com.flare.test_subscription_1"
-//    static let testSubscription2ID = "com.flare.test_subscription_2"
+    /// The subscription's id with introductionary offer
+    static let subscription1ID = "subscription_1"
+
+    /// The subscription's id without introductionary offer
+    static let subscription2ID = "subscription_2"
 }

@@ -7,36 +7,6 @@
     {
       "displayPrice" : "0.99",
       "familyShareable" : false,
-      "internalID" : "169432A7",
-      "localizations" : [
-        {
-          "description" : "com.flare.test_purchase_1",
-          "displayName" : "com.flare.test_purchase_1",
-          "locale" : "en_US"
-        }
-      ],
-      "productID" : "com.flare.test_purchase_1",
-      "referenceName" : "com.flare.test_purchase_1",
-      "type" : "Consumable"
-    },
-    {
-      "displayPrice" : "0.99",
-      "familyShareable" : false,
-      "internalID" : "33E61322",
-      "localizations" : [
-        {
-          "description" : "com.flare.test_purchase_2",
-          "displayName" : "com.flare.test_purchase_2",
-          "locale" : "en_US"
-        }
-      ],
-      "productID" : "com.flare.test_purchase_2",
-      "referenceName" : "com.flare.test_purchase_2",
-      "type" : "Consumable"
-    },
-    {
-      "displayPrice" : "0.99",
-      "familyShareable" : false,
       "internalID" : "1CBF43E6",
       "localizations" : [
         {
@@ -51,13 +21,124 @@
     }
   ],
   "settings" : {
-
+    "_failTransactionsEnabled" : false,
+    "_locale" : "en_US",
+    "_storefront" : "USA",
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Refund Request Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      }
+    ]
   },
   "subscriptionGroups" : [
+    {
+      "id" : "C3C61FEC",
+      "localizations" : [
 
+      ],
+      "name" : "subscription_group",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "0.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "138CEE33",
+          "introductoryOffer" : {
+            "internalID" : "970CA16D",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P1M"
+          },
+          "localizations" : [
+            {
+              "description" : "",
+              "displayName" : "",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "subscription_1",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Subscription with Introductory Offer",
+          "subscriptionGroupID" : "C3C61FEC",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "0.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "9CB5F7A9",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "",
+              "displayName" : "",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "subscription_2",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Subscription Without Offers",
+          "subscriptionGroupID" : "C3C61FEC",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
   ],
   "version" : {
-    "major" : 2,
+    "major" : 3,
     "minor" : 0
   }
 }
