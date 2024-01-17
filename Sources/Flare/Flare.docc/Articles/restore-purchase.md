@@ -17,7 +17,7 @@ Use this API to request a new app receipt from the App Store if the receipt is i
 > important: The receipt refresh request displays a system prompt that asks users to authenticate with their App Store credentials. For a better user experience, initiate the request after an explicit user action, like tapping or clicking a button.
 
 ```swift
-Flare.default.receipt { result in 
+Flare.shared.receipt { result in 
     switch result {
     case let .success(receipt):
         // Handle a receipt
@@ -32,5 +32,5 @@ Flare.default.receipt { result in
 There is an ``IFlare/receipt()`` method for obtaining a receipt using async/await.
 
 ```swift
-let receipt = try await Flare.default.receipt()
+let receipt = try await Flare.shared.receipt()
 ```

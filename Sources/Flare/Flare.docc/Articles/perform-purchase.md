@@ -10,7 +10,7 @@ The transactions array will only be synchronized with the server while the queue
 
 ```swift
 // Adds transaction observer to the payment queue and handles payment transactions.
-Flare.default.addTransactionObserver { result in
+Flare.shared.addTransactionObserver { result in
     switch result {
     case let .success(transaction):
         debugPrint("A transaction was received: \(transaction)")
@@ -22,7 +22,7 @@ Flare.default.addTransactionObserver { result in
 
 ```swift
 // Removes transaction observer from the payment queue.
-Flare.default.removeTransactionObserver()
+Flare.shared.removeTransactionObserver()
 ```
 
 ## Getting Products
@@ -32,7 +32,7 @@ The fetch method sends a request to the App Store, which retrieves the products 
 > important: Before attempting to add a payment always check if the user can actually make payments. The Flare does it under the hood, if a user cannot make payments, you will get an ``IAPError`` with the value ``IAPError/paymentNotAllowed``.
 
 ```swift
-Flare.default.fetch(productIDs: ["product_id"]) { result in
+Flare.shared.fetch(productIDs: ["product_id"]) { result in
     switch result {
     case let .success(products):
         debugPrint("Fetched products: \(products)")
@@ -46,7 +46,7 @@ Additionally, there are versions of both fetch that provide an `async` method, a
 
 ```swift
 do {
-    let products = try await Flare.default.fetch(productIDs: Set(arrayLiteral: ["product_id"]))
+    let products = try await Flare.shared.fetch(productIDs: Set(arrayLiteral: ["product_id"]))
 } catch {
     debugPrint("An error occurred while fetching products: \(error.localizedDescription)")
 }
@@ -64,7 +64,7 @@ Flare provides a few methods to perform a purchase:
 The method accepts a product parameter which represents a product:
 
 ```swift
-Flare.default.purchase(product: product) { result in 
+Flare.shared.purchase(product: product) { result in 
     switch result {
     case let .success(transaction):
         debugPrint("A transaction was received: \(transaction)")
@@ -77,7 +77,7 @@ Flare.default.purchase(product: product) { result in
 If your app has a deployment target higher than iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, you can pass a set of [`options`](https://developer.apple.com/documentation/storekit/product/purchaseoption) along with a purchase request.
 
 ```swift
-let transaction = try await Flare.default.purchase(product: product, options: [.appAccountToken(UUID())])
+let transaction = try await Flare.shared.purchase(product: product, options: [.appAccountToken(UUID())])
 ```
 
 ## Finishing Transaction
@@ -87,7 +87,7 @@ Finishing a transaction tells StoreKit that your app completed its workflow to m
 To finish the transaction, call the ``IFlare/finish(transaction:completion:)`` method.
 
 ```swift
-Flare.default.finish(transaction: transaction, completion: nil)
+Flare.shared.finish(transaction: transaction, completion: nil)
 ```
 
 > important: Don’t call the ``IFlare/finish(transaction:completion:)`` method before the transaction is actually complete and attempt to use some other mechanism in your app to track the transaction as unfinished. StoreKit doesn’t function that way, and doing that prevents your app from downloading Apple-hosted content and can lead to other issues.

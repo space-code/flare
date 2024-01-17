@@ -9,7 +9,7 @@ Starting with iOS 15, Flare now includes support for refunding purchases as part
 Flare suggest to use ``IFlare/beginRefundRequest(productID:)`` for refunding purchase.
 
 ```swift
-let status = try await Flare.default.beginRefundRequest(productID: "product_id")
+let status = try await Flare.shared.beginRefundRequest(productID: "product_id")
 ```
 
 > important: If an issue occurs during the refund process, this method throws an ``IAPError/refund(error:)`` error.

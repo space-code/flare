@@ -10,11 +10,11 @@ Flare provides a clear and convenient API for making in-app purchases.
 import Flare
 
 /// Fetch a product with the given id
-guard let product = try await Flare.default.products(productIDs: ["product_identifier"]) else { return }
+guard let product = try await Flare.shared.products(productIDs: ["product_identifier"]) else { return }
 /// Purchase a product
-let transaction = try await Flare.default.purchase(product: product)
+let transaction = try await Flare.shared.purchase(product: product)
 /// Finish a transaction
-Flare.default.finish(transaction: transaction, completion: nil)
+Flare.shared.finish(transaction: transaction, completion: nil)
 ```
 
 Flare supports both StoreKit and StoreKit2; it decides which one to use under the hood based on the operating system version. Flare provides two ways to work with in-app purchases (IAP): it supports the traditional closure-based syntax and the modern async/await approach.
@@ -23,7 +23,7 @@ Flare supports both StoreKit and StoreKit2; it decides which one to use under th
 import Flare
 
 /// Fetch a product with the given id
-Flare.default.products(productIDs: ["product_identifier"]) { result in 
+Flare.shared.products(productIDs: ["product_identifier"]) { result in 
     switch result {
         case let .success(products):
             // Purchase a product
@@ -64,3 +64,4 @@ flare is available under the MIT license. See the LICENSE file for more info.
 - <doc:perform-purchase>
 - <doc:restore-purchase>
 - <doc:refund-purchase>
+- <doc:promotional-offers>
