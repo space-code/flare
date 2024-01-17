@@ -1,10 +1,13 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
+import Flare
 import StoreKitTest
 import XCTest
+
+// MARK: - StoreSessionTestCase
 
 @available(iOS 14.0, tvOS 14.0, macOS 11.0, watchOS 7.0, *)
 class StoreSessionTestCase: XCTestCase {
@@ -27,5 +30,35 @@ class StoreSessionTestCase: XCTestCase {
         session?.clearTransactions()
         session = nil
         super.tearDown()
+    }
+}
+
+@available(iOS 14.0, tvOS 14.0, macOS 11.0, watchOS 7.0, *)
+extension StoreSessionTestCase {
+    func expireSubscription(product: StoreProduct) {
+        do {
+            try session?.expireSubscription(productIdentifier: product.productIdentifier)
+        } catch {
+            debugPrint(error.localizedDescription)
+        }
+    }
+
+    @available(iOS 15.2, tvOS 15.2, macOS 12.1, watchOS 8.3, *)
+    func findTransaction(for productIdentifier: String) async throws -> Transaction {
+        let transactions: [Transaction] = await Transaction.currentEntitlements
+            .compactMap { result in
+                switch result {
+                case let .verified(transaction):
+                    return transaction
+                case .unverified:
+                    return nil
+                }
+            }
+            .filter { (transaction: Transaction) in
+                transaction.productID == productIdentifier
+            }
+            .extractValues()
+
+        return try XCTUnwrap(transactions.first)
     }
 }

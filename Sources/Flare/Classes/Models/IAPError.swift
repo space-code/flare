@@ -127,6 +127,8 @@ extension IAPError: Equatable {
             return lhs == rhs
         case (.unknown, .unknown):
             return true
+        case let (.failedToDecodeSignature(lhs), .failedToDecodeSignature(rhs)):
+            return lhs == rhs
         default:
             return false
         }

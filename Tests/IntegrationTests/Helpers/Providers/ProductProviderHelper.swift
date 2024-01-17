@@ -17,11 +17,11 @@ enum ProductProviderHelper {
 
     static var subscriptions: [StoreKit.Product] {
         get async throws {
-            try await subscriptionsWithOffers + subscriptionsWithoutOffers
+            try await subscriptionsWithIntroductoryOffer + subscriptionsWithoutOffers + subscriptonsWithOffers
         }
     }
 
-    static var subscriptionsWithOffers: [StoreKit.Product] {
+    static var subscriptionsWithIntroductoryOffer: [StoreKit.Product] {
         get async throws {
             try await StoreKit.Product.products(for: [.subscription1ID])
         }
@@ -33,15 +33,11 @@ enum ProductProviderHelper {
         }
     }
 
-//
-//    static var all: [StoreKit.Product] {
-//        get async throws {
-//            let purchases = try await self.purchases
-//            let subscriptions = try await self.subscriptions
-//
-//            return purchases + subscriptions
-//        }
-//    }
+    static var subscriptonsWithOffers: [StoreKit.Product] {
+        get async throws {
+            try await StoreKit.Product.products(for: [.subscription3ID])
+        }
+    }
 }
 
 // MARK: - Constants
@@ -49,9 +45,12 @@ enum ProductProviderHelper {
 private extension String {
     static let testNonConsumableID = "com.flare.test_non_consumable_purchase_1"
 
-    /// The subscription's id with introductionary offer
-    static let subscription1ID = "subscription_1"
+    /// The subscription's id with introductory offer
+    static let subscription1ID = "com.flare.monthly_1.99_week_intro"
 
-    /// The subscription's id without introductionary offer
-    static let subscription2ID = "subscription_2"
+    /// The subscription's id without introductory offer
+    static let subscription2ID = "com.flare.monthly_0.99"
+
+    /// The subscription's id with promotional offer
+    static let subscription3ID = "com.flare.monthly_1.99_two_weeks_offer.free"
 }

@@ -50,7 +50,7 @@ struct SK1StoreProductDiscount: IStoreProductDiscount {
         self.productDiscount = productDiscount
 
         offerIdentifier = productDiscount.identifier
-        currencyCode = ""
+        currencyCode = productDiscount.priceLocale.currencyCodeID
         price = productDiscount.price as Decimal
         self.paymentMode = paymentMode
         self.subscriptionPeriod = subscriptionPeriod

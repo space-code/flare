@@ -41,6 +41,19 @@ public final class SubscriptionPeriod: NSObject, Sendable {
         self.value = value
         self.unit = unit
     }
+
+    override public func isEqual(_ object: Any?) -> Bool {
+        guard let other = object as? SubscriptionPeriod else { return false }
+        return value == other.value && unit == other.unit
+    }
+
+    override public var hash: Int {
+        var hasher = Hasher()
+        hasher.combine(value)
+        hasher.combine(unit)
+
+        return hasher.finalize()
+    }
 }
 
 // MARK: - Helpers

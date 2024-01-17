@@ -6,7 +6,7 @@
 @testable import Flare
 import XCTest
 
-@available(iOS 15.0, *)
+@available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)
 final class EligibilityProviderTests: StoreSessionTestCase {
     // MARK: Properties
 
@@ -39,7 +39,7 @@ final class EligibilityProviderTests: StoreSessionTestCase {
 
     func test_thatProviderReturnsEligible_whenProductHasIntroductoryOffer() async throws {
         // given
-        let product = try await ProductProviderHelper.subscriptionsWithOffers.randomElement()!
+        let product = try await ProductProviderHelper.subscriptionsWithIntroductoryOffer.randomElement()!
 
         // when
         let result = try await sut.checkEligibility(products: [StoreProduct(product: product)])
