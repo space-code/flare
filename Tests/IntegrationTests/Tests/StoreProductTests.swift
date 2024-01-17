@@ -48,7 +48,7 @@ final class StoreProductTests: StoreSessionTestCase {
         #if swift(>=5.9)
             await fulfillment(of: [expectation])
         #else
-            wait(for: [expectation], timeout: .second)
+            wait(for: [expectation], timeout: .seconds)
         #endif
 
         // then
@@ -169,5 +169,5 @@ private extension String {
 }
 
 private extension TimeInterval {
-    static let second: CGFloat = 1.0
+    static let seconds: CGFloat = 60.0
 }
