@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 @testable import Flare
@@ -80,6 +80,54 @@ final class FlareTests: StoreSessionTestCase {
         try await test_purchaseWithOptions(
             expectedResult: .failure(IAPError.unknown)
         )
+    }
+
+    @available(iOS 15.2, tvOS 15.2, macOS 12.1, watchOS 8.3, *)
+    func test_thatPurchaseIntorudctoryOffer() async throws {
+        // 1. Fetch a product
+        let product = try await ProductProviderHelper.subscriptionsWithIntroductoryOffer.randomElement()!
+        let storeProduct = StoreProduct(product: product)
+
+        // 2. Checking eligibility for a product
+        var eligibleResult = try await Flare.shared.checkEligibility(productIDs: [product.id])[product.id]
+        XCTAssertEqual(eligibleResult, .eligible)
+
+        // 3. Purchase the product
+        let purchaseTransaction = try await sut.purchase(product: storeProduct)
+
+        // 5. Retrieve a transaction
+        var transaction = try await findTransaction(for: product.id)
+
+        // 6. Checking transaction
+        XCTAssertEqual(transaction.productID, product.id)
+        XCTAssertEqual(transaction.offerType, .introductory)
+
+        // 7. Finish the transaction
+        let expectation = XCTestExpectation(description: "Finishing the transaction")
+        sut.finish(transaction: purchaseTransaction) { expectation.fulfill() }
+
+        #if swift(>=5.9)
+            await fulfillment(of: [expectation])
+        #else
+            wait(for: [expectation], timeout: .second)
+        #endif
+
+        // 8. Checking eligibility for the purchased product
+        eligibleResult = try await Flare.shared.checkEligibility(productIDs: [product.id])[product.id]
+        XCTAssertEqual(eligibleResult, .nonEligible)
+
+        // 9. Expire subscription
+        expireSubscription(product: storeProduct)
+
+        // 10. Purchase the same product again
+        _ = try await sut.purchase(product: storeProduct)
+
+        // 11. Retrieve a transaction
+        transaction = try await latestTransaction(for: product.id)
+
+        // 12. Checking the transaction
+        XCTAssertEqual(transaction.productID, product.id)
+        XCTAssertEqual(transaction.offerType, nil)
     }
 
     // MARK: Private
