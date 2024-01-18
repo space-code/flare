@@ -30,7 +30,7 @@ Flare is a framework written in Swift that makes it easy for you to work with in
 - [x] Support Subscription Purchase
 - [x] Support Promotional & Introductory Offers
 - [x] iOS, tvOS, watchOS, macOS, and visionOS compatible
-- [x] Complete Unit Test & Integration Coverage
+- [x] Complete Unit & Integration Test Coverage
 
 ## Documentation
 Check out [flare documentation](https://space-code.github.io/flare/documentation/flare/).

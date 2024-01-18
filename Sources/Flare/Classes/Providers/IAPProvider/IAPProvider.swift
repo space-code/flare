@@ -19,9 +19,9 @@ final class IAPProvider: IIAPProvider {
     private let receiptRefreshProvider: IReceiptRefreshProvider
     /// The provider is responsible for refunding purchases
     private let refundProvider: IRefundProvider
-    ///
+    /// The provider is responsible for eligibility checking.
     private let eligibilityProvider: IEligibilityProvider
-    ///
+    /// The provider is tasked with handling code redemption.
     private let redeemCodeProvider: IRedeemCodeProvider
 
     // MARK: Initialization
@@ -34,6 +34,8 @@ final class IAPProvider: IIAPProvider {
     ///   - purchaseProvider: The provider is respinsible for purchasing StoreKit product.
     ///   - receiptRefreshProvider: The provider is responsible for refreshing receipts.
     ///   - refundProvider: The provider is responsible for refunding purchases.
+    ///   - eligibilityProvider: The provider is responsible for eligibility checking.
+    ///   - redeemCodeProvider: The provider is tasked with handling code redemption.
     init(
         paymentQueue: PaymentQueue,
         productProvider: IProductProvider,

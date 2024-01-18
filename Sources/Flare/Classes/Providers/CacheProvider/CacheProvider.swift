@@ -7,13 +7,18 @@ import Foundation
 
 // MARK: - CacheProvider
 
+/// A class provides caching functionality.
 final class CacheProvider {
     // MARK: Properties
 
+    /// The user defaults.
     private let userDefaults: IUserDefaults
 
     // MARK: Initialization
 
+    /// Creates a `CacheProvider` instance.
+    ///
+    /// - Parameter userDefaults: The user defaults.
     init(userDefaults: IUserDefaults = UserDefaults.standard) {
         self.userDefaults = userDefaults
     }

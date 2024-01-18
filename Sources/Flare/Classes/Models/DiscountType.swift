@@ -8,6 +8,7 @@ import StoreKit
 
 // MARK: - DiscountType
 
+/// The type of discount offer.
 public enum DiscountType: Int, Sendable {
     /// Introductory offer
     case introductory = 0

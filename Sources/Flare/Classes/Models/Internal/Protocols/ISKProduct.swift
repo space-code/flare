@@ -34,11 +34,12 @@ protocol ISKProduct {
     /// The subscription period for the product, if applicable.
     var subscriptionPeriod: SubscriptionPeriod? { get }
 
-    /// <#Description#>
+    /// The details of an introductory offer for an auto-renewable subscription.
     var introductoryDiscount: StoreProductDiscount? { get }
 
-    /// <#Description#>
+    /// The details of promotional offers for an auto-renewable subscription.
     var discounts: [StoreProductDiscount] { get }
 
+    /// The subscription group identifier.
     var subscriptionGroupIdentifier: String? { get }
 }

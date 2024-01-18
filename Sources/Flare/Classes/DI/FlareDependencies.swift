@@ -7,7 +7,10 @@ import Concurrency
 import Foundation
 import StoreKit
 
+/// The package's dependencies.
 final class FlareDependencies: IFlareDependencies {
+    // MARK: Internal
+
     lazy var iapProvider: IIAPProvider = IAPProvider(
         paymentQueue: SKPaymentQueue.default(),
         productProvider: productProvider,

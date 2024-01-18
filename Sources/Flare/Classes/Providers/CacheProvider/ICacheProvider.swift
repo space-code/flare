@@ -5,7 +5,7 @@
 
 import Foundation
 
-// Type for a cache provider that supports reading and writing Codable values.
+/// Type for a cache provider that supports reading and writing Codable values.
 protocol ICacheProvider {
     /// Reads a Codable value from the cache using the specified key.
     ///

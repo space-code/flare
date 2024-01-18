@@ -7,6 +7,7 @@ import Foundation
 
 // MARK: - EligibilityProvider
 
+/// A class that provides eligibility checking functionality.
 final class EligibilityProvider {}
 
 // MARK: IEligibilityProvider

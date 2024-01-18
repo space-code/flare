@@ -7,13 +7,19 @@ import Foundation
 
 // MARK: - ConfigurationProvider
 
+/// A class responsible for providing configuration settings, utilizing a cache provider.
 final class ConfigurationProvider {
     // MARK: Properties
 
+    /// The cache provider used to store and retrieve configuration settings.
     private let cacheProvider: ICacheProvider
 
     // MARK: Initialization
 
+    /// Initializes a ConfigurationProvider with a specified cache provider.
+    ///
+    /// - Parameter cacheProvider: The cache provider to use. Defaults to an instance of
+    ///                            `CacheProvider` with standard UserDefaults.
     init(cacheProvider: ICacheProvider = CacheProvider(userDefaults: UserDefaults.standard)) {
         self.cacheProvider = cacheProvider
     }
