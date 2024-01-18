@@ -28,8 +28,9 @@ Flare is a framework written in Swift that makes it easy for you to work with in
 ## Features
 - [x] Support Consumable & Non-Consumable Purchases
 - [x] Support Subscription Purchase
-- [x] Refresh Receipt
-- [x] Complete Unit Test Coverage
+- [x] Support Promotional & Introductory Offers
+- [x] iOS, tvOS, watchOS, macOS, and visionOS compatible
+- [x] Complete Unit & Integration Test Coverage
 
 ## Documentation
 Check out [flare documentation](https://space-code.github.io/flare/documentation/flare/).

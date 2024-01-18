@@ -50,39 +50,51 @@ public extension StoreProduct {
 // MARK: ISKProduct
 
 extension StoreProduct: ISKProduct {
-    var localizedDescription: String {
+    public var localizedDescription: String {
         product.localizedDescription
     }
 
-    var localizedTitle: String {
+    public var localizedTitle: String {
         product.localizedTitle
     }
 
-    var currencyCode: String? {
+    public var currencyCode: String? {
         product.currencyCode
     }
 
-    var price: Decimal {
+    public var price: Decimal {
         product.price
     }
 
-    var localizedPriceString: String? {
+    public var localizedPriceString: String? {
         product.localizedPriceString
     }
 
-    var productIdentifier: String {
+    public var productIdentifier: String {
         product.productIdentifier
     }
 
-    var productType: ProductType? {
+    public var productType: ProductType? {
         product.productType
     }
 
-    var productCategory: ProductCategory? {
+    public var productCategory: ProductCategory? {
         product.productCategory
     }
 
-    var subscriptionPeriod: SubscriptionPeriod? {
+    public var subscriptionPeriod: SubscriptionPeriod? {
         product.subscriptionPeriod
+    }
+
+    public var introductoryDiscount: StoreProductDiscount? {
+        product.introductoryDiscount
+    }
+
+    public var discounts: [StoreProductDiscount] {
+        product.discounts
+    }
+
+    public var subscriptionGroupIdentifier: String? {
+        product.subscriptionGroupIdentifier
     }
 }

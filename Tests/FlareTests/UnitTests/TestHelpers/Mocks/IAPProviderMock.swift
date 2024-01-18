@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 @testable import Flare
@@ -189,5 +189,99 @@ final class IAPProviderMock: IIAPProvider {
         invokedAsyncPurchaseWithOptionsParameters = (product, options)
         invokedAsyncPurchaseWithOptionsParametersList.append((product, options))
         return stubbedAsyncPurchaseWithOptions
+    }
+
+    var invokedPurchaseWithPromotionalOffer = false
+    var invokedPurchaseWithPromotionalOfferCount = 0
+    var invokedPurchaseWithPromotionalOfferParameters: (product: StoreProduct, promotionalOffer: PromotionalOffer?)?
+    var invokedPurchaseWithPromotionalOfferParametersList = [(product: StoreProduct, VpromotionalOffer: PromotionalOffer?)]()
+    var stubbedPurchaseWithPromotionalOffer: Result<StoreTransaction, IAPError>?
+
+    func purchase(
+        product: StoreProduct,
+        promotionalOffer: PromotionalOffer?,
+        completion: @escaping Closure<Result<StoreTransaction, IAPError>>
+    ) {
+        invokedPurchaseWithPromotionalOffer = true
+        invokedPurchaseWithPromotionalOfferCount += 1
+        invokedPurchaseWithPromotionalOfferParameters = (product, promotionalOffer)
+        invokedPurchaseWithPromotionalOfferParametersList.append((product, promotionalOffer))
+
+        if let result = stubbedPurchaseWithPromotionalOffer {
+            completion(result)
+        }
+    }
+
+    var invokedPurchaseAsyncWithPromotionalOffer = false
+    var invokedPurchaseAsyncWithPromotionalOfferCount = 0
+    var invokedPurchaseAsyncWithPromotionalOfferParameters: (product: StoreProduct, promotionalOffer: PromotionalOffer?)?
+    var invokedPurchaseAsyncWithPromotionalOfferParametersList = [(product: StoreProduct, VpromotionalOffer: PromotionalOffer?)]()
+    var stubbedPurchaseAsyncWithPromotionalOffer: StoreTransaction!
+
+    func purchase(
+        product: StoreProduct,
+        promotionalOffer: PromotionalOffer?
+    ) async throws -> StoreTransaction {
+        invokedPurchaseAsyncWithPromotionalOffer = true
+        invokedPurchaseAsyncWithPromotionalOfferCount += 1
+        invokedPurchaseAsyncWithPromotionalOfferParameters = (product, promotionalOffer)
+        invokedPurchaseAsyncWithPromotionalOfferParametersList.append((product, promotionalOffer))
+        return stubbedPurchaseAsyncWithPromotionalOffer
+    }
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    func purchase(
+        product _: StoreProduct,
+        options _: Set<Product.PurchaseOption>,
+        promotionalOffer _: PromotionalOffer?,
+        completion _: @escaping SendableClosure<Result<StoreTransaction, IAPError>>
+    ) {}
+
+    var invokedPurchaseWithOptionsAndPromotionalOffer = false
+    var invokedPurchaseWithOptionsAndPromotionalOfferCount = 0
+    var stubbedPurchaseWithOptionsAndPromotionalOffer: StoreTransaction!
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    func purchase(
+        product _: StoreProduct,
+        options _: Set<Product.PurchaseOption>,
+        promotionalOffer _: PromotionalOffer?
+    ) async throws -> StoreTransaction {
+        invokedPurchaseWithOptionsAndPromotionalOffer = true
+        invokedPurchaseWithOptionsAndPromotionalOfferCount += 1
+        return stubbedPurchaseWithOptionsAndPromotionalOffer
+    }
+
+    var invokedCheckEligibility = false
+    var invokedCheckEligibilityCount = 0
+    var invokedCheckEligibilityParameters: (productIDs: Set<String>, Void)?
+    var invokedCheckEligibilityParametersList = [(productIDs: Set<String>, Void)]()
+    var stubbedCheckEligibility: [String: SubscriptionEligibility] = [:]
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    func checkEligibility(productIDs: Set<String>) async throws -> [String: SubscriptionEligibility] {
+        invokedCheckEligibility = true
+        invokedCheckEligibilityCount += 1
+        invokedCheckEligibilityParameters = (productIDs, ())
+        invokedCheckEligibilityParametersList = [(productIDs, ())]
+        return stubbedCheckEligibility
+    }
+
+    var invokedPresentCodeRedemptionSheet = false
+    var invokedPresentCodeRedemptionSheetCount = 0
+
+    @available(iOS 14.0, *)
+    func presentCodeRedemptionSheet() {
+        invokedPresentCodeRedemptionSheet = true
+        invokedPresentCodeRedemptionSheetCount += 1
+    }
+
+    var invokedPresentOfferCodeRedeemSheet = false
+    var invokedPresentOfferCodeRedeemSheetCount = 0
+
+    @available(iOS 16.0, *)
+    func presentOfferCodeRedeemSheet() async throws {
+        invokedPresentOfferCodeRedeemSheet = true
+        invokedPresentOfferCodeRedeemSheetCount += 1
     }
 }

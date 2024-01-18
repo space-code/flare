@@ -13,24 +13,41 @@ import StoreKit
 
 /// The class creates and manages in-app purchases.
 public final class Flare {
+    // MARK: Properties
+
+    /// The in-app purchase provider.
+    private let iapProvider: IIAPProvider
+
+    /// The configuration provider.
+    private let configurationProvider: IConfigurationProvider
+
+    /// The singleton instance.
+    private static let flare: Flare = .init()
+
+    /// Returns a shared `Flare` object.
+    public static var shared: IFlare { flare }
+
     // MARK: Initialization
 
     /// Creates a new `Flare` instance.
     ///
-    /// - Parameter iapProvider: The in-app purchase provider.
-    init(iapProvider: IIAPProvider = IAPProvider()) {
-        self.iapProvider = iapProvider
+    /// - Parameters:
+    ///    - dependencies: The package's dependencies.
+    ///    - configurationProvider: The configuration provider.
+    init(dependencies: IFlareDependencies = FlareDependencies()) {
+        iapProvider = dependencies.iapProvider
+        configurationProvider = dependencies.configurationProvider
     }
 
     // MARK: Public
 
-    /// Returns a default `Flare` object.
-    public static let `default`: IFlare = Flare()
-
-    // MARK: Private
-
-    /// The in-app purchase provider.
-    private let iapProvider: IIAPProvider
+    /// Configures the Flare package with the provided configuration.
+    ///
+    /// - Parameters:
+    ///   - configuration: The configuration object containing settings for Flare.
+    public static func configure(with configuration: Configuration) {
+        flare.configurationProvider.configure(with: configuration)
+    }
 }
 
 // MARK: IFlare
@@ -44,13 +61,17 @@ extension Flare: IFlare {
         try await iapProvider.fetch(productIDs: productIDs)
     }
 
-    public func purchase(product: StoreProduct, completion: @escaping Closure<Result<StoreTransaction, IAPError>>) {
+    public func purchase(
+        product: StoreProduct,
+        promotionalOffer: PromotionalOffer?,
+        completion: @escaping Closure<Result<StoreTransaction, IAPError>>
+    ) {
         guard iapProvider.canMakePayments else {
             completion(.failure(.paymentNotAllowed))
             return
         }
 
-        iapProvider.purchase(product: product) { result in
+        iapProvider.purchase(product: product, promotionalOffer: promotionalOffer) { result in
             switch result {
             case let .success(transaction):
                 completion(.success(transaction))
@@ -60,31 +81,33 @@ extension Flare: IFlare {
         }
     }
 
-    public func purchase(product: StoreProduct) async throws -> StoreTransaction {
+    public func purchase(product: StoreProduct, promotionalOffer: PromotionalOffer?) async throws -> StoreTransaction {
         guard iapProvider.canMakePayments else { throw IAPError.paymentNotAllowed }
-        return try await iapProvider.purchase(product: product)
+        return try await iapProvider.purchase(product: product, promotionalOffer: promotionalOffer)
     }
 
     @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
     public func purchase(
         product: StoreProduct,
         options: Set<StoreKit.Product.PurchaseOption>,
+        promotionalOffer: PromotionalOffer?,
         completion: @escaping SendableClosure<Result<StoreTransaction, IAPError>>
     ) {
         guard iapProvider.canMakePayments else {
             completion(.failure(.paymentNotAllowed))
             return
         }
-        iapProvider.purchase(product: product, options: options, completion: completion)
+        iapProvider.purchase(product: product, options: options, promotionalOffer: promotionalOffer, completion: completion)
     }
 
     @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
     public func purchase(
         product: StoreProduct,
-        options: Set<StoreKit.Product.PurchaseOption>
+        options: Set<StoreKit.Product.PurchaseOption>,
+        promotionalOffer: PromotionalOffer?
     ) async throws -> StoreTransaction {
         guard iapProvider.canMakePayments else { throw IAPError.paymentNotAllowed }
-        return try await iapProvider.purchase(product: product, options: options)
+        return try await iapProvider.purchase(product: product, options: options, promotionalOffer: promotionalOffer)
     }
 
     public func receipt(completion: @escaping Closure<Result<String, IAPError>>) {
@@ -114,6 +137,11 @@ extension Flare: IFlare {
         iapProvider.removeTransactionObserver()
     }
 
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    public func checkEligibility(productIDs: Set<String>) async throws -> [String: SubscriptionEligibility] {
+        try await iapProvider.checkEligibility(productIDs: productIDs)
+    }
+
     #if os(iOS) || VISION_OS
         @available(iOS 15.0, *)
         @available(macOS, unavailable)
@@ -121,6 +149,22 @@ extension Flare: IFlare {
         @available(tvOS, unavailable)
         public func beginRefundRequest(productID: String) async throws -> RefundRequestStatus {
             try await iapProvider.beginRefundRequest(productID: productID)
+        }
+
+        @available(iOS 14.0, *)
+        @available(macOS, unavailable)
+        @available(watchOS, unavailable)
+        @available(tvOS, unavailable)
+        public func presentCodeRedemptionSheet() {
+            iapProvider.presentCodeRedemptionSheet()
+        }
+
+        @available(iOS 16.0, *)
+        @available(macOS, unavailable)
+        @available(watchOS, unavailable)
+        @available(tvOS, unavailable)
+        public func presentOfferCodeRedeemSheet() async throws {
+            try await iapProvider.presentOfferCodeRedeemSheet()
         }
     #endif
 }

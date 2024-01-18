@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 @testable import Flare
@@ -25,7 +25,8 @@ final class PurchaseProviderTests: XCTestCase {
         paymentQueueMock = PaymentQueueMock()
         paymentProviderMock = PaymentProviderMock()
         sut = PurchaseProvider(
-            paymentProvider: paymentProviderMock
+            paymentProvider: paymentProviderMock,
+            configurationProvider: ConfigurationProviderMock()
         )
     }
 

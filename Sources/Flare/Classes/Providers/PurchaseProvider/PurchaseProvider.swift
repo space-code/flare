@@ -15,6 +15,8 @@ final class PurchaseProvider {
     private let paymentProvider: IPaymentProvider
     /// The transaction listener.
     private let transactionListener: ITransactionListener?
+    /// The configuration provider.
+    private let configurationProvider: IConfigurationProvider
 
     // MARK: Initialization
 
@@ -23,11 +25,14 @@ final class PurchaseProvider {
     /// - Parameters:
     ///   - paymentProvider: The provider is responsible for purchasing products.
     ///   - transactionListener: The transaction listener.
+    ///   - configurationProvider: The configuration provider.
     init(
-        paymentProvider: IPaymentProvider = PaymentProvider(),
-        transactionListener: ITransactionListener? = nil
+        paymentProvider: IPaymentProvider,
+        transactionListener: ITransactionListener? = nil,
+        configurationProvider: IConfigurationProvider
     ) {
         self.paymentProvider = paymentProvider
+        self.configurationProvider = configurationProvider
 
         if let transactionListener = transactionListener {
             self.transactionListener = transactionListener
@@ -42,9 +47,12 @@ final class PurchaseProvider {
 
     private func purchase(
         sk1StoreProduct: SK1StoreProduct,
+        promotionalOffer: PromotionalOffer?,
         completion: @escaping @MainActor (Result<StoreTransaction, IAPError>) -> Void
     ) {
-        let payment = SKPayment(product: sk1StoreProduct.product)
+        let payment = SKMutablePayment(product: sk1StoreProduct.product)
+        payment.applicationUsername = configurationProvider.applicationUsername
+        payment.paymentDiscount = promotionalOffer?.signedData.skPromotionalOffer
         paymentProvider.add(payment: payment) { _, result in
             Task {
                 switch result {
@@ -61,9 +69,10 @@ final class PurchaseProvider {
     private func purchase(
         sk2StoreProduct: SK2StoreProduct,
         options: Set<StoreKit.Product.PurchaseOption>? = nil,
+        promotionalOffer: PromotionalOffer?,
         completion: @escaping @MainActor (Result<StoreTransaction, IAPError>) -> Void
     ) {
-        AsyncHandler.call(completion: { result in
+        AsyncHandler.call(completion: { (result: Result<Product.PurchaseResult, Error>) in
             Task {
                 switch result {
                 case let .success(result):
@@ -77,21 +86,39 @@ final class PurchaseProvider {
                 }
             }
         }, asyncMethod: {
-            try await sk2StoreProduct.product.purchase(options: options ?? [])
+            var options: Set<StoreKit.Product.PurchaseOption> = options ?? []
+            try self.configure(options: &options, promotionalOffer: promotionalOffer)
+            return try await sk2StoreProduct.product.purchase(options: options)
         })
+    }
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    private func configure(options: inout Set<StoreKit.Product.PurchaseOption>, promotionalOffer: PromotionalOffer?) throws {
+        if let promotionalOffer {
+            try options.insert(promotionalOffer.signedData.promotionalOffer)
+        }
+
+        if let applicationUsername = configurationProvider.applicationUsername, let uuid = UUID(uuidString: applicationUsername) {
+            // If options contain an app account token, the next line of code doesn't affect it.
+            options.insert(.appAccountToken(uuid))
+        }
     }
 }
 
 // MARK: IPurchaseProvider
 
 extension PurchaseProvider: IPurchaseProvider {
-    func purchase(product: StoreProduct, completion: @escaping PurchaseCompletionHandler) {
+    func purchase(
+        product: StoreProduct,
+        promotionalOffer: PromotionalOffer?,
+        completion: @escaping PurchaseCompletionHandler
+    ) {
         if #available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *),
            let sk2Product = product.underlyingProduct as? SK2StoreProduct
         {
-            self.purchase(sk2StoreProduct: sk2Product, completion: completion)
+            self.purchase(sk2StoreProduct: sk2Product, promotionalOffer: promotionalOffer, completion: completion)
         } else if let sk1Product = product.underlyingProduct as? SK1StoreProduct {
-            purchase(sk1StoreProduct: sk1Product, completion: completion)
+            purchase(sk1StoreProduct: sk1Product, promotionalOffer: promotionalOffer, completion: completion)
         }
     }
 
@@ -99,10 +126,16 @@ extension PurchaseProvider: IPurchaseProvider {
     func purchase(
         product: StoreProduct,
         options: Set<Product.PurchaseOption>,
+        promotionalOffer: PromotionalOffer?,
         completion: @escaping PurchaseCompletionHandler
     ) {
         if let sk2Product = product.underlyingProduct as? SK2StoreProduct {
-            purchase(sk2StoreProduct: sk2Product, options: options, completion: completion)
+            purchase(
+                sk2StoreProduct: sk2Product,
+                options: options,
+                promotionalOffer: promotionalOffer,
+                completion: completion
+            )
         } else {
             Task {
                 await completion(.failure(.unknown))

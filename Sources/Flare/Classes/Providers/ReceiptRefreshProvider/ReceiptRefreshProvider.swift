@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 import Concurrency
@@ -38,10 +38,10 @@ final class ReceiptRefreshProvider: NSObject {
     ///   - appStoreReceiptProvider: The type that retrieves the App Store receipt URL.
     ///   - receiptRefreshRequestFactory: The receipt refresh request factory.
     init(
-        dispatchQueueFactory: IDispatchQueueFactory = DispatchQueueFactory(),
+        dispatchQueueFactory: IDispatchQueueFactory,
         fileManager: IFileManager = FileManager.default,
         appStoreReceiptProvider: IAppStoreReceiptProvider = Bundle.main,
-        receiptRefreshRequestFactory: IReceiptRefreshRequestFactory = ReceiptRefreshRequestFactory()
+        receiptRefreshRequestFactory: IReceiptRefreshRequestFactory
     ) {
         self.dispatchQueueFactory = dispatchQueueFactory
         self.fileManager = fileManager

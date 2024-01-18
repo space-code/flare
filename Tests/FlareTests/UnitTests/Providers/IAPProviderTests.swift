@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 @testable import Flare
@@ -34,7 +34,9 @@ class IAPProviderTests: XCTestCase {
             productProvider: productProviderMock,
             purchaseProvider: purchaseProvider,
             receiptRefreshProvider: receiptRefreshProviderMock,
-            refundProvider: refundProviderMock
+            refundProvider: refundProviderMock,
+            eligibilityProvider: EligibilityProviderMock(),
+            redeemCodeProvider: RedeemCodeProviderMock()
         )
     }
 

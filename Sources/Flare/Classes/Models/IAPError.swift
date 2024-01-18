@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 import StoreKit
@@ -34,10 +34,14 @@ public enum IAPError: Swift.Error {
     ///
     /// - Note: This is only available for StoreKit 2 transactions.
     case verification(error: VerificationError)
-    ///
+    /// The purchase is pending, and requires action from the customer.
     ///
     /// - Note: This is only available for StoreKit 2 transactions.
     case paymentDefferred
+    /// The decoding signature is failed.
+    ///
+    /// - Note: This is only available for StoreKit 2 transactions.
+    case failedToDecodeSignature(signature: String)
     /// The unknown error occurred.
     case unknown
 }
@@ -123,6 +127,8 @@ extension IAPError: Equatable {
             return lhs == rhs
         case (.unknown, .unknown):
             return true
+        case let (.failedToDecodeSignature(lhs), .failedToDecodeSignature(rhs)):
+            return lhs == rhs
         default:
             return false
         }

@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ## Added
+- Implement Support for Promotional Offers
+  - Added in Pull Request [#16](https://github.com/space-code/flare/pull/16).
+
 - Add additional badges to `README.md`
   - Added in Pull Request [#15](https://github.com/space-code/flare/pull/15).
 
