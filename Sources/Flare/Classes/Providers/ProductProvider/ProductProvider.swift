@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 import Concurrency
@@ -50,7 +50,7 @@ final class ProductProvider: NSObject, IProductProvider {
     // MARK: Private
 
     /// Dictionary to store request handlers with their corresponding request IDs.
-    private var handlers: [String: ProductsHandler] = [:]
+    private var handlers: [ProductsRequest: ProductsHandler] = [:]
     /// The dispatch queue factory for handling concurrent tasks.
     private let dispatchQueueFactory: IDispatchQueueFactory
 
@@ -77,7 +77,7 @@ final class ProductProvider: NSObject, IProductProvider {
     ///   - completion: A closure to be called upon completion with the fetched products.
     private func fetch(request: SKProductsRequest, completion: @escaping ProductsHandler) {
         dispatchQueue.async {
-            self.handlers[request.id] = completion
+            self.handlers[request.request] = completion
             self.dispatchQueueFactory.main().async {
                 request.start()
             }
@@ -90,7 +90,8 @@ final class ProductProvider: NSObject, IProductProvider {
 extension ProductProvider: SKProductsRequestDelegate {
     func request(_ request: SKRequest, didFailWithError error: Error) {
         dispatchQueue.async {
-            let handler = self.handlers.removeValue(forKey: request.id)
+            let handler = self.handlers.removeValue(forKey: request.request)
+
             self.dispatchQueueFactory.main().async {
                 handler?(.failure(IAPError(error: error)))
             }
@@ -99,7 +100,7 @@ extension ProductProvider: SKProductsRequestDelegate {
 
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         dispatchQueue.async {
-            let handler = self.handlers.removeValue(forKey: request.id)
+            let handler = self.handlers.removeValue(forKey: request.request)
 
             guard response.invalidProductIdentifiers.isEmpty else {
                 self.dispatchQueueFactory.main().async {
@@ -112,5 +113,13 @@ extension ProductProvider: SKProductsRequestDelegate {
                 handler?(.success(response.products.map { SK1StoreProduct($0) }))
             }
         }
+    }
+}
+
+// MARK: - Helpers
+
+private extension SKRequest {
+    var request: ProductsRequest {
+        ProductsRequest(self)
     }
 }
