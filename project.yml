@@ -11,6 +11,9 @@ packages:
   Concurrency:
     url: https://github.com/space-code/concurrency.git
     from: 0.0.1
+  Log:
+    url: https://github.com/space-code/log.git
+    from: 1.1.0
 targets:
   UnitTestHostApp:
     type: application
@@ -31,6 +34,8 @@ targets:
     dependencies:
       - package: Concurrency
         product: Concurrency
+      - package: Log
+        product: Log
     settings:
       base:
         GENERATE_INFOPLIST_FILE: YES

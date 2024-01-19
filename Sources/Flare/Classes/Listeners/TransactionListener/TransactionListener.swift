@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 import Foundation
@@ -38,6 +38,13 @@ actor TransactionListener {
                 jwtRepresentation: transactionResult.jwsRepresentation
             )
         case let .unverified(transaction, verificationError):
+            Logger.info(
+                message: L10n.Purchase.transactionUnverified(
+                    transaction.productID,
+                    verificationError.localizedDescription
+                )
+            )
+
             throw IAPError.verification(
                 error: .unverified(productID: transaction.productID, error: verificationError)
             )

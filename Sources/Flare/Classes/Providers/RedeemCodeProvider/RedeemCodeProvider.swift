@@ -37,7 +37,13 @@ extension RedeemCodeProvider: IRedeemCodeProvider {
         @MainActor
         func presentOfferCodeRedeemSheet() async throws {
             let windowScene = try systemInfoProvider.currentScene
-            try await AppStore.presentOfferCodeRedeemSheet(in: windowScene)
+            do {
+                Logger.debug(message: L10n.Redeem.presentingOfferCodeRedeemSheet)
+                try await AppStore.presentOfferCodeRedeemSheet(in: windowScene)
+            } catch {
+                Logger.error(message: L10n.Redeem.unableToPresentOfferCodeRedeemSheet(error.localizedDescription))
+                throw error
+            }
         }
     #endif
 }

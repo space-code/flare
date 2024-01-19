@@ -3,6 +3,7 @@
 // Copyright © 2024 Space Code. All rights reserved.
 //
 
+import struct Log.LogLevel
 import StoreKit
 
 #if os(iOS) || VISION_OS
@@ -26,6 +27,12 @@ public final class Flare {
 
     /// Returns a shared `Flare` object.
     public static var shared: IFlare { flare }
+
+    /// The log level.
+    public var logLevel: LogLevel {
+        get { Logger.logLevel }
+        set { Logger.logLevel = newValue }
+    }
 
     // MARK: Initialization
 
@@ -66,7 +73,7 @@ extension Flare: IFlare {
         promotionalOffer: PromotionalOffer?,
         completion: @escaping Closure<Result<StoreTransaction, IAPError>>
     ) {
-        guard iapProvider.canMakePayments else {
+        guard checkIfUserCanMakePayments() else {
             completion(.failure(.paymentNotAllowed))
             return
         }
@@ -82,7 +89,7 @@ extension Flare: IFlare {
     }
 
     public func purchase(product: StoreProduct, promotionalOffer: PromotionalOffer?) async throws -> StoreTransaction {
-        guard iapProvider.canMakePayments else { throw IAPError.paymentNotAllowed }
+        guard checkIfUserCanMakePayments() else { throw IAPError.paymentNotAllowed }
         return try await iapProvider.purchase(product: product, promotionalOffer: promotionalOffer)
     }
 
@@ -93,7 +100,7 @@ extension Flare: IFlare {
         promotionalOffer: PromotionalOffer?,
         completion: @escaping SendableClosure<Result<StoreTransaction, IAPError>>
     ) {
-        guard iapProvider.canMakePayments else {
+        guard checkIfUserCanMakePayments() else {
             completion(.failure(.paymentNotAllowed))
             return
         }
@@ -106,7 +113,7 @@ extension Flare: IFlare {
         options: Set<StoreKit.Product.PurchaseOption>,
         promotionalOffer: PromotionalOffer?
     ) async throws -> StoreTransaction {
-        guard iapProvider.canMakePayments else { throw IAPError.paymentNotAllowed }
+        guard checkIfUserCanMakePayments() else { throw IAPError.paymentNotAllowed }
         return try await iapProvider.purchase(product: product, options: options, promotionalOffer: promotionalOffer)
     }
 
@@ -167,4 +174,14 @@ extension Flare: IFlare {
             try await iapProvider.presentOfferCodeRedeemSheet()
         }
     #endif
+
+    // MARK: Private
+
+    private func checkIfUserCanMakePayments() -> Bool {
+        guard iapProvider.canMakePayments else {
+            Logger.error(message: L10n.Purchase.cannotPurcaseProduct)
+            return false
+        }
+        return true
+    }
 }

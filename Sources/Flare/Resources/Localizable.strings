@@ -1,0 +1,31 @@
+"purchase.transaction_unverified" = "Transaction for productID: %s is unverified by the App Store. Verification error: %s.";
+
+"purchase.finishing_transaction" = "Finishing transaction %s for product identifier: %s";
+
+"purchase.cannot_purcase_product" = "This device is not able or allowed to make payments.";
+
+"flare.init_with_configuration" = "Flare configured with configuration:\n%@";
+
+"payment.payment_queue_adding_payment" = "Adding payment for product: %s. %i transactions already in the queue";
+
+"purchase.purchased_product" = "Purchased product: %s";
+
+"purchase.purchasing_product" = "Purchasing product: %s";
+
+"purchase.purchasing_product_with_offer" = "Purchasing product %s with offer %s";
+
+"purchase.product_purchase_failed" = "Product purchase for %s failed with error: %s";
+
+"refund.failed_refund_request" = "Refund request submission failed: %s";
+
+"refund.duplicate_refund_request" = "Refund has already requested for this product: %s";
+
+"redeem.presenting_code_redemption_sheet" = "Presenting code redemption sheet.";
+
+"redeem.presenting_offer_code_redeem_sheet" = "Presenting offer code redeem sheet";
+
+"redeem.unable_to_present_offer_code_redeem_sheet" = "Unable to present offer code redeem sheet due to unexpected error: %s";
+
+"products.requested_products_not_found" = "Requested products %@ not found.";
+
+"products.requested_products_received" = "Requested products %@ have been received";

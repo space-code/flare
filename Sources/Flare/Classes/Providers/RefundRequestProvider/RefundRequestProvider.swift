@@ -58,8 +58,10 @@ extension RefundRequestProvider: IRefundRequestProvider {
             if let skError = error as? StoreKit.Transaction.RefundRequestError {
                 switch skError {
                 case .duplicateRequest:
+                    Logger.error(message: L10n.Refund.duplicateRefundRequest(skError.localizedDescription))
                     return .refund(error: .duplicateRequest)
                 case .failed:
+                    Logger.error(message: L10n.Refund.failedRefundRequest(skError.localizedDescription))
                     return .refund(error: .failed)
                 @unknown default:
                     return .unknown

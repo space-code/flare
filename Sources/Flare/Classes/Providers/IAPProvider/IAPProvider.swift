@@ -189,6 +189,7 @@ final class IAPProvider: IIAPProvider {
         @available(watchOS, unavailable)
         @available(tvOS, unavailable)
         func presentCodeRedemptionSheet() {
+            Logger.debug(message: L10n.Redeem.presentingCodeRedemptionSheet)
             paymentQueue.presentCodeRedemptionSheet()
         }
 
