@@ -66,7 +66,7 @@ extension TransactionListener: ITransactionListener {
                     do {
                         _ = try await self.handle(transactionResult: update, fromTransactionUpdate: true)
                     } catch {
-                        debugPrint("[TransactionListener] Error occurred: \(error.localizedDescription)")
+                        Logger.error(message: L10n.Purchase.errorUpdatingTransaction(error.localizedDescription))
                     }
                 }
             }

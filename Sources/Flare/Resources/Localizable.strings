@@ -6,6 +6,8 @@
 
 "purchase.transaction_not_found" = "Transaction for productID: %s not found.";
 
+"purchase.error_updating_transaction" = "An error occurred while listening for transactions: %s";
+
 "flare.init_with_configuration" = "Flare configured with configuration:\n%@";
 
 "payment.payment_queue_adding_payment" = "Adding payment for product: %s. %i transactions already in the queue";

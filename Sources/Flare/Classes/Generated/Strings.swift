@@ -72,9 +72,9 @@ internal enum L10n {
       }
     }
     internal enum With {
-      /// The error ocurred: %s
+      /// The error occurred: %s
       internal static func description(_ p1: UnsafePointer<CChar>) -> String {
-        return L10n.tr("Localizable", "error.with.description", p1, fallback: "The error ocurred: %s")
+        return L10n.tr("Localizable", "error.with.description", p1, fallback: "The error occurred: %s")
       }
     }
   }
@@ -104,6 +104,10 @@ internal enum L10n {
   internal enum Purchase {
     /// This device is not able or allowed to make payments.
     internal static let cannotPurcaseProduct = L10n.tr("Localizable", "purchase.cannot_purcase_product", fallback: "This device is not able or allowed to make payments.")
+    /// An error occurred while listening for transactions: %s
+    internal static func errorUpdatingTransaction(_ p1: UnsafePointer<CChar>) -> String {
+      return L10n.tr("Localizable", "purchase.error_updating_transaction", p1, fallback: "An error occurred while listening for transactions: %s")
+    }
     /// Finishing transaction %s for product identifier: %s
     internal static func finishingTransaction(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
       return L10n.tr("Localizable", "purchase.finishing_transaction", p1, p2, fallback: "Finishing transaction %s for product identifier: %s")
