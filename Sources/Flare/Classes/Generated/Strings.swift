@@ -10,6 +10,74 @@ import Foundation
 // swiftlint:disable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
 internal enum L10n {
+  internal enum Error {
+    internal enum FailedToDecodeSignature {
+      /// Decoding the signature has failed. The signature: %s
+      internal static func description(_ p1: UnsafePointer<CChar>) -> String {
+        return L10n.tr("Localizable", "error.failed_to_decode_signature.description", p1, fallback: "Decoding the signature has failed. The signature: %s")
+      }
+    }
+    internal enum InvalidProductIds {
+      /// Invalid product IDs: %@
+      internal static func description(_ p1: Any) -> String {
+        return L10n.tr("Localizable", "error.invalid_product_ids.description", String(describing: p1), fallback: "Invalid product IDs: %@")
+      }
+    }
+    internal enum PaymentCancelled {
+      /// The payment was canceled by the user.
+      internal static let description = L10n.tr("Localizable", "error.payment_cancelled.description", fallback: "The payment was canceled by the user.")
+    }
+    internal enum PaymentDefferred {
+      /// The purchase is pending, and requires action from the customer.
+      internal static let description = L10n.tr("Localizable", "error.payment_defferred.description", fallback: "The purchase is pending, and requires action from the customer.")
+    }
+    internal enum PaymentNotAllowed {
+      /// The current user is not eligible to make payments.
+      internal static let description = L10n.tr("Localizable", "error.payment_not_allowed.description", fallback: "The current user is not eligible to make payments.")
+      /// The payment card may have purchase restrictions, such as set limits or unavailability for online shopping.
+      internal static let failureReason = L10n.tr("Localizable", "error.payment_not_allowed.failure_reason", fallback: "The payment card may have purchase restrictions, such as set limits or unavailability for online shopping.")
+      /// Please check the payment card purchase restrictions.
+      internal static let recoverySuggestion = L10n.tr("Localizable", "error.payment_not_allowed.recovery_suggestion", fallback: "Please check the payment card purchase restrictions.")
+    }
+    internal enum Receipt {
+      /// The receipt could not be found.
+      internal static let description = L10n.tr("Localizable", "error.receipt.description", fallback: "The receipt could not be found.")
+    }
+    internal enum Refund {
+      /// The error occurred during the refund: %s
+      internal static func description(_ p1: UnsafePointer<CChar>) -> String {
+        return L10n.tr("Localizable", "error.refund.description", p1, fallback: "The error occurred during the refund: %s")
+      }
+    }
+    internal enum StoreProductNotAvailable {
+      /// The store product is currently unavailable.
+      internal static let description = L10n.tr("Localizable", "error.store_product_not_available.description", fallback: "The store product is currently unavailable.")
+      /// Make sure to create a product with the given identifier in App Store Connect.
+      internal static let recoverySuggestion = L10n.tr("Localizable", "error.store_product_not_available.recovery_suggestion", fallback: "Make sure to create a product with the given identifier in App Store Connect.")
+    }
+    internal enum TransactionNotFound {
+      /// Transaction for productID: %s couldn't be found.
+      internal static func description(_ p1: UnsafePointer<CChar>) -> String {
+        return L10n.tr("Localizable", "error.transaction_not_found.description", p1, fallback: "Transaction for productID: %s couldn't be found.")
+      }
+    }
+    internal enum Unknown {
+      /// The SKPayment returned unknown error.
+      internal static let description = L10n.tr("Localizable", "error.unknown.description", fallback: "The SKPayment returned unknown error.")
+    }
+    internal enum Verification {
+      /// The verification has failed with the following error: %s
+      internal static func description(_ p1: UnsafePointer<CChar>) -> String {
+        return L10n.tr("Localizable", "error.verification.description", p1, fallback: "The verification has failed with the following error: %s")
+      }
+    }
+    internal enum With {
+      /// The error ocurred: %s
+      internal static func description(_ p1: UnsafePointer<CChar>) -> String {
+        return L10n.tr("Localizable", "error.with.description", p1, fallback: "The error ocurred: %s")
+      }
+    }
+  }
   internal enum Flare {
     /// Flare configured with configuration:
     /// %@
@@ -97,6 +165,22 @@ internal enum L10n {
     /// Refund request submission failed: %s
     internal static func failedRefundRequest(_ p1: UnsafePointer<CChar>) -> String {
       return L10n.tr("Localizable", "refund.failed_refund_request", p1, fallback: "Refund request submission failed: %s")
+    }
+  }
+  internal enum RefundError {
+    internal enum DuplicateRequest {
+      /// The request has been duplicated.
+      internal static let description = L10n.tr("Localizable", "refund_error.duplicate_request.description", fallback: "The request has been duplicated.")
+    }
+    internal enum Failed {
+      /// The refund request failed.
+      internal static let description = L10n.tr("Localizable", "refund_error.failed.description", fallback: "The refund request failed.")
+    }
+  }
+  internal enum VerificationError {
+    /// Transaction for productID: %s is unverified by the App Store. Verification error: %s.
+    internal static func unverified(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
+      return L10n.tr("Localizable", "verification_error.unverified", p1, p2, fallback: "Transaction for productID: %s is unverified by the App Store. Verification error: %s.")
     }
   }
 }

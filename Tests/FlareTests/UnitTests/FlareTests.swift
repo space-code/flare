@@ -41,8 +41,6 @@ class FlareTests: XCTestCase {
     // MARK: - Tests
 
     func test_thatFlareFetchesProductsWithGivenProductIDs() {
-        print(IAPError.unknown)
-
         // when
         sut.fetch(productIDs: .ids, completion: { _ in })
 

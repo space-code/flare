@@ -104,7 +104,7 @@ extension ProductProvider: SKProductsRequestDelegate {
 
             guard response.invalidProductIdentifiers.isEmpty else {
                 self.dispatchQueueFactory.main().async {
-                    handler?(.failure(.invalid(productIds: response.invalidProductIdentifiers)))
+                    handler?(.failure(.invalid(productIDs: response.invalidProductIdentifiers)))
                     Logger.error(message: L10n.Products.requestedProductsNotFound(response.invalidProductIdentifiers))
                 }
                 return
