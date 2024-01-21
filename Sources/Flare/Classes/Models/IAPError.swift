@@ -10,8 +10,6 @@ import StoreKit
 /// `IAPError` is the error type returned by Flare.
 /// It encompasses a few different types of errors, each with their own associated reasons.
 public enum IAPError: Swift.Error {
-    /// The empty array of products were fetched.
-    case emptyProducts
     /// The attempt to fetch products with invalid identifiers.
     case invalid(productIds: [String])
     /// The attempt to purchase a product when payments are not allowed.
@@ -107,8 +105,6 @@ extension IAPError {
 extension IAPError: Equatable {
     public static func == (lhs: IAPError, rhs: IAPError) -> Bool {
         switch (lhs, rhs) {
-        case (.emptyProducts, .emptyProducts):
-            return true
         case let (.invalid(lhs), .invalid(rhs)):
             return lhs == rhs
         case (.paymentNotAllowed, .paymentNotAllowed):

@@ -56,9 +56,27 @@ internal enum L10n {
     internal static func purchasingProductWithOffer(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
       return L10n.tr("Localizable", "purchase.purchasing_product_with_offer", p1, p2, fallback: "Purchasing product %s with offer %s")
     }
+    /// Transaction for productID: %s not found.
+    internal static func transactionNotFound(_ p1: UnsafePointer<CChar>) -> String {
+      return L10n.tr("Localizable", "purchase.transaction_not_found", p1, fallback: "Transaction for productID: %s not found.")
+    }
     /// Transaction for productID: %s is unverified by the App Store. Verification error: %s.
     internal static func transactionUnverified(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
       return L10n.tr("Localizable", "purchase.transaction_unverified", p1, p2, fallback: "Transaction for productID: %s is unverified by the App Store. Verification error: %s.")
+    }
+  }
+  internal enum Receipt {
+    /// Refreshed receipt. Request id: %s.
+    internal static func refreshedReceipt(_ p1: UnsafePointer<CChar>) -> String {
+      return L10n.tr("Localizable", "receipt.refreshed_receipt", p1, fallback: "Refreshed receipt. Request id: %s.")
+    }
+    /// Refreshing receipt. Request id: %s.
+    internal static func refreshingReceipt(_ p1: UnsafePointer<CChar>) -> String {
+      return L10n.tr("Localizable", "receipt.refreshing_receipt", p1, fallback: "Refreshing receipt. Request id: %s.")
+    }
+    /// Refreshing receipt failed with error: %s. Request id: %s.
+    internal static func refreshingReceiptFailed(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
+      return L10n.tr("Localizable", "receipt.refreshing_receipt_failed", p1, p2, fallback: "Refreshing receipt failed with error: %s. Request id: %s.")
     }
   }
   internal enum Redeem {

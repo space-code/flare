@@ -4,6 +4,8 @@
 
 "purchase.cannot_purcase_product" = "This device is not able or allowed to make payments.";
 
+"purchase.transaction_not_found" = "Transaction for productID: %s not found.";
+
 "flare.init_with_configuration" = "Flare configured with configuration:\n%@";
 
 "payment.payment_queue_adding_payment" = "Adding payment for product: %s. %i transactions already in the queue";
@@ -29,3 +31,9 @@
 "products.requested_products_not_found" = "Requested products %@ not found.";
 
 "products.requested_products_received" = "Requested products %@ have been received";
+
+"receipt.refreshing_receipt" = "Refreshing receipt. Request id: %s.";
+
+"receipt.refreshed_receipt" = "Refreshed receipt. Request id: %s.";
+
+"receipt.refreshing_receipt_failed" = "Refreshing receipt failed with error: %s. Request id: %s.";
