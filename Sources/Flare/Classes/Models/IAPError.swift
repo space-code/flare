@@ -10,18 +10,14 @@ import StoreKit
 /// `IAPError` is the error type returned by Flare.
 /// It encompasses a few different types of errors, each with their own associated reasons.
 public enum IAPError: Swift.Error {
-    /// The empty array of products were fetched.
-    case emptyProducts
     /// The attempt to fetch products with invalid identifiers.
-    case invalid(productIds: [String])
+    case invalid(productIDs: [String])
     /// The attempt to purchase a product when payments are not allowed.
     case paymentNotAllowed
     /// The payment was cancelled.
     case paymentCancelled
     /// The attempt to fetch a product that doesn't available.
     case storeProductNotAvailable
-    /// The `SKPayment` returned unknown error.
-    case storeTrouble
     /// The operation failed with an underlying error.
     case with(error: Swift.Error)
     /// The App Store receipt wasn't found.
@@ -80,7 +76,7 @@ extension IAPError {
         case .storeProductNotAvailable:
             self = .storeProductNotAvailable
         case .unknown:
-            self = .storeTrouble
+            self = .unknown
         default:
             if let error = error {
                 self = .with(error: error)
@@ -103,12 +99,9 @@ extension IAPError {
 
 // MARK: Equatable
 
-// swiftlint:disable cyclomatic_complexity
 extension IAPError: Equatable {
     public static func == (lhs: IAPError, rhs: IAPError) -> Bool {
         switch (lhs, rhs) {
-        case (.emptyProducts, .emptyProducts):
-            return true
         case let (.invalid(lhs), .invalid(rhs)):
             return lhs == rhs
         case (.paymentNotAllowed, .paymentNotAllowed):
@@ -116,8 +109,6 @@ extension IAPError: Equatable {
         case (.paymentCancelled, .paymentCancelled):
             return true
         case (.storeProductNotAvailable, .storeProductNotAvailable):
-            return true
-        case (.storeTrouble, .storeTrouble):
             return true
         case let (.with(lhs), .with(rhs)):
             return (lhs as NSError) == (rhs as NSError)
@@ -135,4 +126,55 @@ extension IAPError: Equatable {
     }
 }
 
-// swiftlint:enable cyclomatic_complexity
+// MARK: LocalizedError
+
+extension IAPError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case let .invalid(productIDs):
+            return L10n.Error.InvalidProductIds.description(productIDs)
+        case .paymentNotAllowed:
+            return L10n.Error.PaymentNotAllowed.description
+        case .paymentCancelled:
+            return L10n.Error.PaymentCancelled.description
+        case .storeProductNotAvailable:
+            return L10n.Error.StoreProductNotAvailable.description
+        case let .with(error):
+            return L10n.Error.With.description(error.localizedDescription)
+        case .receiptNotFound:
+            return L10n.Error.Receipt.description
+        case let .transactionNotFound(productID):
+            return L10n.Error.TransactionNotFound.description(productID)
+        case let .refund(error):
+            return L10n.Error.Refund.description(error.localizedDescription)
+        case let .verification(error):
+            return L10n.Error.Verification.description(error.localizedDescription)
+        case .paymentDefferred:
+            return L10n.Error.PaymentDefferred.description
+        case let .failedToDecodeSignature(signature):
+            return L10n.Error.FailedToDecodeSignature.description(signature)
+        case .unknown:
+            return L10n.Error.Unknown.description
+        }
+    }
+
+    public var failureReason: String? {
+        switch self {
+        case .paymentNotAllowed:
+            return L10n.Error.PaymentNotAllowed.failureReason
+        default:
+            return nil
+        }
+    }
+
+    public var recoverySuggestion: String? {
+        switch self {
+        case .paymentNotAllowed:
+            return L10n.Error.PaymentNotAllowed.recoverySuggestion
+        case .storeProductNotAvailable:
+            return L10n.Error.StoreProductNotAvailable.recoverySuggestion
+        default:
+            return nil
+        }
+    }
+}

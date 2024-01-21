@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 import Concurrency
@@ -78,7 +78,7 @@ final class ProductProviderTests: XCTestCase {
         var error: IAPError?
         let completionHandler: IProductProvider.ProductsHandler = { error = $0.error }
         let request = PurchaseManagerTestHelper.makeRequest(with: .requestID)
-        let errorStub = IAPError.emptyProducts
+        let errorStub = IAPError.unknown
 
         // when
         sut.fetch(productIDs: .productIDs, requestID: .requestID, completion: completionHandler)

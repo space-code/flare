@@ -21,13 +21,16 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/space-code/concurrency.git", .upToNextMajor(from: "0.0.1")),
         .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.1.0"),
+        .package(url: "https://github.com/space-code/log.git", .upToNextMajor(from: "1.1.0")),
     ],
     targets: [
         .target(
             name: "Flare",
             dependencies: [
                 .product(name: "Concurrency", package: "concurrency"),
+                .product(name: "Log", package: "log"),
             ],
+            resources: [.process("Resources")],
             swiftSettings: [visionOSSetting]
         ),
         .testTarget(

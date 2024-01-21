@@ -39,6 +39,7 @@ extension RefundRequestProvider: IRefundRequestProvider {
         @available(tvOS, unavailable)
         func verifyTransaction(productID: String) async throws -> UInt64 {
             guard let state = await StoreKit.Transaction.latest(for: productID) else {
+                Logger.error(message: L10n.Purchase.transactionNotFound(productID))
                 throw IAPError.transactionNotFound(productID: productID)
             }
 
@@ -46,6 +47,7 @@ extension RefundRequestProvider: IRefundRequestProvider {
             case let .verified(transaction):
                 return transaction.id
             case let .unverified(_, result):
+                Logger.error(message: L10n.Purchase.transactionUnverified(productID, result.localizedDescription))
                 throw result
             }
         }
@@ -58,8 +60,10 @@ extension RefundRequestProvider: IRefundRequestProvider {
             if let skError = error as? StoreKit.Transaction.RefundRequestError {
                 switch skError {
                 case .duplicateRequest:
+                    Logger.error(message: L10n.Refund.duplicateRefundRequest(skError.localizedDescription))
                     return .refund(error: .duplicateRequest)
                 case .failed:
+                    Logger.error(message: L10n.Refund.failedRefundRequest(skError.localizedDescription))
                     return .refund(error: .failed)
                 @unknown default:
                     return .unknown

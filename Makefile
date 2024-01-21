@@ -16,10 +16,19 @@ lint:
 fmt:
 	mint run swiftformat Sources Tests
 
+strings:
+	swiftgen 
+
 generate:
 	xcodegen generate
 
 setup_build_tools:
 	sh scripts/setup_build_tools.sh
 
-.PHONY: all bootstrap hook mint lint fmt generate setup_build_tools
+build:
+	swift build -c release --target Flare
+
+test:
+	xcodebuild test -scheme "Flare" -destination "$(destination)" -testPlan AllTests clean -enableCodeCoverage YES
+
+.PHONY: all bootstrap hook mint lint fmt generate setup_build_tools strings build test

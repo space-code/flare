@@ -1,0 +1,77 @@
+"purchase.transaction_unverified" = "Transaction for productID: %s is unverified by the App Store. Verification error: %s.";
+
+"purchase.finishing_transaction" = "Finishing transaction %s for product identifier: %s";
+
+"purchase.cannot_purcase_product" = "This device is not able or allowed to make payments.";
+
+"purchase.transaction_not_found" = "Transaction for productID: %s not found.";
+
+"purchase.error_updating_transaction" = "An error occurred while listening for transactions: %s";
+
+"flare.init_with_configuration" = "Flare configured with configuration:\n%@";
+
+"payment.payment_queue_adding_payment" = "Adding payment for product: %s. %i transactions already in the queue";
+
+"purchase.purchased_product" = "Purchased product: %s";
+
+"purchase.purchasing_product" = "Purchasing product: %s";
+
+"purchase.purchasing_product_with_offer" = "Purchasing product %s with offer %s";
+
+"purchase.product_purchase_failed" = "Product purchase for %s failed with error: %s";
+
+"refund.failed_refund_request" = "Refund request submission failed: %s";
+
+"refund.duplicate_refund_request" = "Refund has already requested for this product: %s";
+
+"redeem.presenting_code_redemption_sheet" = "Presenting code redemption sheet.";
+
+"redeem.presenting_offer_code_redeem_sheet" = "Presenting offer code redeem sheet";
+
+"redeem.unable_to_present_offer_code_redeem_sheet" = "Unable to present offer code redeem sheet due to unexpected error: %s";
+
+"products.requested_products_not_found" = "Requested products %@ not found.";
+
+"products.requested_products_received" = "Requested products %@ have been received";
+
+"receipt.refreshing_receipt" = "Refreshing receipt. Request id: %s.";
+
+"receipt.refreshed_receipt" = "Refreshed receipt. Request id: %s.";
+
+"receipt.refreshing_receipt_failed" = "Refreshing receipt failed with error: %s. Request id: %s.";
+
+"error.invalid_product_ids.description" = "Invalid product IDs: %@";
+
+"error.payment_not_allowed.description" = "The current user is not eligible to make payments.";
+
+"error.payment_not_allowed.failure_reason" = "The payment card may have purchase restrictions, such as set limits or unavailability for online shopping.";
+
+"error.payment_not_allowed.recovery_suggestion" = "Please check the payment card purchase restrictions.";
+
+"error.payment_cancelled.description" = "The payment was canceled by the user.";
+
+"error.store_product_not_available.description" = "The store product is currently unavailable.";
+
+"error.store_product_not_available.recovery_suggestion" = "Make sure to create a product with the given identifier in App Store Connect.";
+
+"error.unknown.description" = "The SKPayment returned unknown error.";
+
+"error.with.description" = "The error occurred: %s";
+
+"error.receipt.description" = "The receipt could not be found.";
+
+"error.transaction_not_found.description" = "Transaction for productID: %s couldn't be found.";
+
+"error.refund.description" = "The error occurred during the refund: %s";
+
+"error.verification.description" = "The verification has failed with the following error: %s";
+
+"error.failed_to_decode_signature.description" = "Decoding the signature has failed. The signature: %s";
+
+"error.payment_defferred.description" = "The purchase is pending, and requires action from the customer.";
+
+"refund_error.duplicate_request.description" = "The request has been duplicated.";
+
+"refund_error.failed.description" = "The refund request failed.";
+
+"verification_error.unverified" = "Transaction for productID: %s is unverified by the App Store. Verification error: %s.";

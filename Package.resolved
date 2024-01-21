@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "log",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/space-code/log",
+      "state" : {
+        "revision" : "d99fff5656c31ef7e604965b90a50ec10539c98f",
+        "version" : "1.1.0"
+      }
+    },
+    {
       "identity" : "swift-docc-plugin",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-docc-plugin",

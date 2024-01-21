@@ -4,12 +4,16 @@
 //
 
 import Foundation
+import struct Log.LogLevel
 import StoreKit
 
 // MARK: - IFlare
 
 /// `Flare` creates and manages in-app purchases.
 public protocol IFlare {
+    /// The log level.
+    var logLevel: Log.LogLevel { get set }
+
     /// Retrieves localized information from the App Store about a specified list of products.
     ///
     /// - Parameters:

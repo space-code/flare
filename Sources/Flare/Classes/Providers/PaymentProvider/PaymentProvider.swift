@@ -63,6 +63,13 @@ extension PaymentProvider: IPaymentProvider {
         addPaymentHandler(productID: payment.productIdentifier, handler: handler)
         dispatchQueueFactory.main().async {
             self.paymentQueue.add(payment)
+
+            Logger.info(
+                message: L10n.Payment.paymentQueueAddingPayment(
+                    payment.productIdentifier,
+                    self.paymentQueue.transactions.count
+                )
+            )
         }
     }
 
@@ -157,6 +164,13 @@ extension PaymentProvider: SKPaymentTransactionObserver {
     #endif
 
     func finish(transaction: PaymentTransaction) {
+        Logger.info(
+            message: L10n.Purchase.finishingTransaction(
+                transaction.transactionIdentifier ?? "",
+                transaction.productIdentifier
+            )
+        )
+
         paymentQueue.finishTransaction(transaction.skTransaction)
     }
 

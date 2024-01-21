@@ -41,17 +41,6 @@ final class IAPErrorTests: XCTestCase {
         XCTAssertEqual(error, IAPError.storeProductNotAvailable)
     }
 
-    func test_thatIAPErrorInstantiatesANewInstanceFromSkError_whenCodeIsEqualToUnknown() {
-        // given
-        let skError = SKError(SKError.Code.unknown)
-
-        // when
-        let error = IAPError(error: skError)
-
-        // then
-        XCTAssertEqual(error, IAPError.storeTrouble)
-    }
-
     func test_thatIAPErrorInstantiatesANewInstanceFromSkError_whenErrorIsNil() {
         // when
         let error = IAPError(error: nil)

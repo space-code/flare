@@ -34,6 +34,7 @@ extension ConfigurationProvider: IConfigurationProvider {
 
     func configure(with configuration: Configuration) {
         cacheProvider.write(key: .applicationUsername, value: configuration.applicationUsername)
+        Logger.debug(message: L10n.Flare.initWithConfiguration(configuration))
     }
 }
 
