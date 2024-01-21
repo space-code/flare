@@ -54,7 +54,7 @@
 
 "error.unknown.description" = "The SKPayment returned unknown error.";
 
-"error.with.description" = "The error ocurred: %s";
+"error.with.description" = "The error occurred: %s";
 
 "error.receipt.description" = "The receipt could not be found.";
 
