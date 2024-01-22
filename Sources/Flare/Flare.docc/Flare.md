@@ -65,3 +65,4 @@ flare is available under the MIT license. See the LICENSE file for more info.
 - <doc:restore-purchase>
 - <doc:refund-purchase>
 - <doc:promotional-offers>
+- <doc:logging>

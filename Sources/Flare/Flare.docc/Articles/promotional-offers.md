@@ -16,7 +16,7 @@ Learn how to use promotional offers.
 
 First, check if the user is eligible for an introductory offer.
 
-> tip For this purpose can be used ``IFlare/checkEligibility(productIDs:)`` method. This method requires iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0. Otherwise, see [Determine Eligibility](https://developer.apple.com/documentation/storekit/in-app_purchase/original_api_for_in-app_purchase/subscriptions_and_offers/implementing_introductory_offers_in_your_app#2940726). 
+> tip: For this purpose can be used ``IFlare/checkEligibility(productIDs:)`` method. This method requires iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0. Otherwise, see [Determine Eligibility](https://developer.apple.com/documentation/storekit/in-app_purchase/original_api_for_in-app_purchase/subscriptions_and_offers/implementing_introductory_offers_in_your_app#2940726). 
 
 ```swift
 func isEligibleForIntroductoryOffer(productID: String) async -> Bool {
@@ -29,15 +29,19 @@ Second, proceed with the purchase as usual. See [Perform Purchase](<doc:perform-
 
 ## Promotional Offers
 
-First, you need to fetch the signature from your server. See [Generation a signature for promotional offers](https://developer.apple.com/documentation/storekit/in-app_purchase/original_api_for_in-app_purchase/subscriptions_and_offers/generating_a_signature_for_promotional_offers) for more information.
+### Configuration 
 
-Second, configure ``IFlare`` with a ``Configuration``.
+Configure ``IFlare`` with a ``Configuration``.
 
 ```swift
 Flare.configure(configuration: Configuration(applicationUsername: "username"))
 ```
 
-Third, request a signature from your server and prepare the discount offer.
+### Creating & Requesting a Signature
+
+> important: You need to fetch the signature from your server. See [Generation a signature for promotional offers](https://developer.apple.com/documentation/storekit/in-app_purchase/original_api_for_in-app_purchase/subscriptions_and_offers/generating_a_signature_for_promotional_offers) for more information.
+
+Request a signature from your server and prepare the discount offer.
 
 ```swift
 func prepareOffer(username: String, productID: String, offerID: String, completion: @escaping (PromotionalOffer.SignedData) -> Void) {
@@ -59,7 +63,9 @@ func prepareOffer(username: String, productID: String, offerID: String, completi
 }
 ```
 
-Fourth, complete the purchase with the promotional offer.
+### Perform a Purchase with the Promotional Offer
+
+Complete the purchase with the promotional offer.
 
 ```swift
 func purchase(product: StoreProduct, discount: StoreProductDiscount, signedData: SignedData) {
@@ -79,7 +85,9 @@ func purchase(product: StoreProduct, discount: StoreProductDiscount, signedData:
 }
 ```
 
-Fifth, complete the transaction.
+### Finish the Transaction
+
+Complete the transaction after purchasing.
 
 ```swift
 Flare.default.finish(transaction: transaction)
