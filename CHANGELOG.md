@@ -37,6 +37,10 @@ All notable changes to this project will be documented in this file.
 - Added `visionOS` to list of supported platforms
   - Added in Pull Request [#5](https://github.com/space-code/flare/pull/5).
 
+## Updated
+- Update the documentation page for Promotional Offer
+  - Updated in Pull Request [#18](https://github.com/space-code/flare/pull/18).
+
 ## Fixed
 - Fix typos in `CONTRIBUTING.md`
   - Added in Pull Request[#14](https://github.com/space-code/flare/pull/14).
