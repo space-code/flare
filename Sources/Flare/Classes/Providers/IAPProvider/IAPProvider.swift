@@ -63,8 +63,13 @@ final class IAPProvider: IIAPProvider {
     func fetch(productIDs: Set<String>, completion: @escaping Closure<Result<[StoreProduct], IAPError>>) {
         if #available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *) {
             AsyncHandler.call(
-                completion: { [weak self] (result: Result<[SK2StoreProduct], Error>) in
-                    self?.handleFetchResult(result: result, completion)
+                completion: { (result: Result<[StoreProduct], Error>) in
+                    switch result {
+                    case let .success(products):
+                        completion(.success(products))
+                    case let .failure(error):
+                        completion(.failure(.with(error: error)))
+                    }
                 },
                 asyncMethod: {
                     try await self.productProvider.fetch(productIDs: productIDs)
@@ -73,10 +78,9 @@ final class IAPProvider: IIAPProvider {
         } else {
             productProvider.fetch(
                 productIDs: productIDs,
-                requestID: UUID().uuidString
-            ) { [weak self] result in
-                self?.handleFetchResult(result: result, completion)
-            }
+                requestID: UUID().uuidString,
+                completion: completion
+            )
         }
     }
 
@@ -201,22 +205,4 @@ final class IAPProvider: IIAPProvider {
             try await redeemCodeProvider.presentOfferCodeRedeemSheet()
         }
     #endif
-
-    // MARK: Private
-
-    private func handleFetchResult<T: ISKProduct, E: Error>(
-        result: Result<[T], E>,
-        _ completion: @escaping (Result<[StoreProduct], IAPError>) -> Void
-    ) {
-        switch result {
-        case let .success(products):
-            completion(.success(products.map { StoreProduct($0) }))
-        case let .failure(error):
-            if let iapError = error as? IAPError {
-                completion(.failure(iapError))
-            } else {
-                completion(.failure(IAPError(error: error)))
-            }
-        }
-    }
 }

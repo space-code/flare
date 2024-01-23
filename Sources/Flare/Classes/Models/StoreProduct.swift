@@ -13,7 +13,7 @@ public final class StoreProduct: NSObject {
     // MARK: Properties
 
     /// Protocol representing a Store Kit product.
-    private let product: ISKProduct
+    let product: ISKProduct
 
     /// <#Description#>
     var underlyingProduct: ISKProduct { product }

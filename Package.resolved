@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "atomic",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/space-code/atomic.git",
+      "state" : {
+        "revision" : "53fae2fc8216bb5c27c87b245f893176d0d290eb",
+        "version" : "1.0.0"
+      }
+    },
+    {
       "identity" : "concurrency",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/space-code/concurrency",

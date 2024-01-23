@@ -14,6 +14,9 @@ packages:
   Log:
     url: https://github.com/space-code/log.git
     from: 1.1.0
+  Atomic:
+    url: https://github.com/space-code/atomic.git
+    from: 1.0.0
 targets:
   UnitTestHostApp:
     type: application
@@ -36,6 +39,8 @@ targets:
         product: Concurrency
       - package: Log
         product: Log
+      - package: Atomic
+        package: Atomic
     settings:
       base:
         GENERATE_INFOPLIST_FILE: YES

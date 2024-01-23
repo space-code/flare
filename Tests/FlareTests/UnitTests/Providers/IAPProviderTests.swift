@@ -120,7 +120,7 @@ class IAPProviderTests: XCTestCase {
         try AvailabilityChecker.iOS15APINotAvailableOrSkipTest()
 
         // given
-        let productsMock = [0 ... 2].map { _ in SK1StoreProduct(ProductMock()) }
+        let productsMock = [0 ... 2].map { _ in StoreProduct(SK1StoreProduct(ProductMock())) }
         productProviderMock.stubbedFetchResult = .success(productsMock)
 
         // when
@@ -145,7 +145,7 @@ class IAPProviderTests: XCTestCase {
 
     func test_thatIAPProviderReturnsError_whenAddingPaymentFailed() {
         // given
-        productProviderMock.stubbedFetchResult = .success([SK1StoreProduct(ProductMock())])
+        productProviderMock.stubbedFetchResult = .success([StoreProduct(SK1StoreProduct(ProductMock()))])
         purchaseProvider.stubbedPurchaseCompletionResult = (.failure(.unknown), ())
 
         // when
