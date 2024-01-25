@@ -19,13 +19,17 @@ final class CachingProductsProviderDecorator {
     /// The product provider.
     private let productProvider: IProductProvider
 
+    /// The configuration provider.
+    private let configurationProvider: IConfigurationProvider
+
     // MARK: Initialization
 
     /// Creates a `CachingProductsProviderDecorator`instance.
     ///
     /// - Parameter productProvider: The product provider.
-    init(productProvider: IProductProvider) {
+    init(productProvider: IProductProvider, configurationProvider: IConfigurationProvider) {
         self.productProvider = productProvider
+        self.configurationProvider = configurationProvider
     }
 
     // MARK: Private
@@ -53,8 +57,8 @@ final class CachingProductsProviderDecorator {
     ///   - productIDs: The set of product IDs to check the cache for.
     ///   - fetcher: A closure to fetch missing products from the product provider.
     ///   - completion: A closure to be called with the fetched products or an error.
-    private func checkCache(
-        for productIDs: Set<String>,
+    private func fetch(
+        productIDs: Set<String>,
         fetcher: (Set<String>, @escaping (Result<[StoreProduct], IAPError>) -> Void) -> Void,
         completion: @escaping ProductsHandler
     ) {
@@ -75,14 +79,58 @@ final class CachingProductsProviderDecorator {
             }
         }
     }
+
+    /// Retrieves localized information from the App Store about a specified list of products.
+    ///
+    /// - Parameters:
+    ///   - fetchPolicy: The cache policy for fetching products.
+    ///   - productIDs: The set of product IDs to check the cache for.
+    ///   - fetcher: A closure to fetch missing products from the product provider.
+    ///   - completion: A closure to be called with the fetched products or an error.
+    private func fetch(
+        fetchPolicy: FetchCachePolicy,
+        productIDs: Set<String>,
+        fetcher: (Set<String>, @escaping (Result<[StoreProduct], IAPError>) -> Void) -> Void,
+        completion: @escaping ProductsHandler
+    ) {
+        switch fetchPolicy {
+        case .fetch:
+            fetcher(productIDs, completion)
+        case .cachedOrFetch:
+            fetch(productIDs: productIDs, fetcher: fetcher, completion: completion)
+        }
+    }
+
+    /// Retrieves localized information from the App Store about a specified list of products.
+    ///
+    /// - Parameters:
+    ///   - productIDs: The set of product IDs to check the cache for.
+    ///   - completion: A closure to be called with the fetched products or an error.
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    private func fetchSK2Products(productIDs: Set<String>, completion: @escaping ProductsHandler) {
+        AsyncHandler.call(
+            completion: { result in
+                switch result {
+                case let .success(products):
+                    completion(.success(products))
+                case let .failure(error):
+                    completion(.failure(IAPError.with(error: error)))
+                }
+            },
+            asyncMethod: {
+                try await self.productProvider.fetch(productIDs: productIDs)
+            }
+        )
+    }
 }
 
 // MARK: ICachingProductsProviderDecorator
 
 extension CachingProductsProviderDecorator: ICachingProductsProviderDecorator {
     func fetch(productIDs: Set<String>, requestID: String, completion: @escaping ProductsHandler) {
-        checkCache(
-            for: productIDs,
+        fetch(
+            fetchPolicy: configurationProvider.fetchCachePolicy,
+            productIDs: productIDs,
             fetcher: { [weak self] ids, completion in
                 self?.productProvider.fetch(productIDs: ids, requestID: requestID, completion: completion)
             }, completion: completion
@@ -97,22 +145,11 @@ extension CachingProductsProviderDecorator: ICachingProductsProviderDecorator {
                 return
             }
 
-            self.checkCache(
-                for: productIDs,
-                fetcher: { _, completion in
-                    AsyncHandler.call(
-                        completion: { result in
-                            switch result {
-                            case let .success(products):
-                                completion(.success(products))
-                            case let .failure(error):
-                                completion(.failure(IAPError.with(error: error)))
-                            }
-                        },
-                        asyncMethod: {
-                            try await self.productProvider.fetch(productIDs: productIDs)
-                        }
-                    )
+            self.fetch(
+                fetchPolicy: self.configurationProvider.fetchCachePolicy,
+                productIDs: productIDs,
+                fetcher: { [weak self] _, completion in
+                    self?.fetchSK2Products(productIDs: productIDs, completion: completion)
                 },
                 completion: { result in
                     continuation.resume(with: result)

@@ -14,6 +14,9 @@ final class ConfigurationProvider {
     /// The cache provider used to store and retrieve configuration settings.
     private let cacheProvider: ICacheProvider
 
+    /// The cache policy for fetching products.
+    private(set) var fetchCachePolicy: FetchCachePolicy = .default
+
     // MARK: Initialization
 
     /// Initializes a ConfigurationProvider with a specified cache provider.
@@ -34,6 +37,7 @@ extension ConfigurationProvider: IConfigurationProvider {
 
     func configure(with configuration: Configuration) {
         cacheProvider.write(key: .applicationUsername, value: configuration.applicationUsername)
+        fetchCachePolicy = configuration.fetchCachePolicy
         Logger.debug(message: L10n.Flare.initWithConfiguration(configuration))
     }
 }
@@ -42,4 +46,5 @@ extension ConfigurationProvider: IConfigurationProvider {
 
 private extension String {
     static let applicationUsername = "flare.configuration.application_username"
+    static let fetchCachePolicy = "flare.configuration.fetch_cache_policy"
 }

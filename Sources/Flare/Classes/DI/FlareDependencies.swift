@@ -26,7 +26,10 @@ final class FlareDependencies: IFlareDependencies {
     // MARK: Private
 
     private var cachingProductProviderDecorator: ICachingProductsProviderDecorator {
-        CachingProductsProviderDecorator(productProvider: productProvider)
+        CachingProductsProviderDecorator(
+            productProvider: productProvider,
+            configurationProvider: configurationProvider
+        )
     }
 
     private var productProvider: IProductProvider {
