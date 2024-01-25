@@ -52,6 +52,8 @@ do {
 }
 ```
 
+> note: Products are cached by default. If caching is not possible for specific usecases, set ``Configuration/fetchCachePolicy`` to ``FetchCachePolicy/fetch``.
+
 ## Purchasing Product
 
 Flare provides a few methods to perform a purchase:
