@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ## Added
+- Implement products caching mechanism
+  - Added in Pull Request [#19](https://github.com/space-code/flare/pull/19).
+
 - Implement Logging Functionality
   - Added in Pull Request [#17](https://github.com/space-code/flare/pull/17).
 

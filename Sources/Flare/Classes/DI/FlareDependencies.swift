@@ -13,7 +13,7 @@ final class FlareDependencies: IFlareDependencies {
 
     lazy var iapProvider: IIAPProvider = IAPProvider(
         paymentQueue: SKPaymentQueue.default(),
-        productProvider: productProvider,
+        productProvider: cachingProductProviderDecorator,
         purchaseProvider: purchaseProvider,
         receiptRefreshProvider: receiptRefreshProvider,
         refundProvider: refundProvider,
@@ -24,6 +24,13 @@ final class FlareDependencies: IFlareDependencies {
     lazy var configurationProvider: IConfigurationProvider = ConfigurationProvider()
 
     // MARK: Private
+
+    private var cachingProductProviderDecorator: ICachingProductsProviderDecorator {
+        CachingProductsProviderDecorator(
+            productProvider: productProvider,
+            configurationProvider: configurationProvider
+        )
+    }
 
     private var productProvider: IProductProvider {
         ProductProvider(

@@ -5,7 +5,7 @@
 
 import Foundation
 
-public struct Configuration {
+public struct Configuration: Sendable {
     // MARK: Properties
 
     // swiftlint:disable:next line_length
@@ -16,12 +16,21 @@ public struct Configuration {
     /// - Important: You must set `applicationUsername` to be the same as the one used to generate the signature.
     public let applicationUsername: String
 
+    /// The cache policy for fetching products.
+    public let fetchCachePolicy: FetchCachePolicy
+
     // MARK: Initialization
 
     /// Creates a `Configuration` instance.
     ///
-    /// - Parameter applicationUsername: A string that associates the transaction with a user account on your service.
-    public init(applicationUsername: String) {
+    /// - Parameters:
+    ///    - applicationUsername: A string that associates the transaction with a user account on your service.
+    ///    - fetchCachePolicy: The cache policy for fetching products.
+    public init(
+        applicationUsername: String,
+        fetchCachePolicy: FetchCachePolicy = .cachedOrFetch
+    ) {
         self.applicationUsername = applicationUsername
+        self.fetchCachePolicy = fetchCachePolicy
     }
 }

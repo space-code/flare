@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 import StoreKit
@@ -8,7 +8,7 @@ import StoreKit
 final class ProductMock: SKProduct {
     var invokedProductIdentifier = false
     var invokedProductIdentifierCount = 0
-    var stubbedProductIdentifier: String = ""
+    var stubbedProductIdentifier: String = "product_id"
 
     override var productIdentifier: String {
         invokedProductIdentifier = true

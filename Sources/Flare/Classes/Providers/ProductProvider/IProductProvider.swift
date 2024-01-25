@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 import StoreKit
@@ -14,7 +14,7 @@ typealias ReceiptRefreshHandler = (Result<Void, IAPError>) -> Void
 
 /// A type that is responsible for retrieving StoreKit products.
 protocol IProductProvider {
-    typealias ProductsHandler = Closure<Result<[SK1StoreProduct], IAPError>>
+    typealias ProductsHandler = Closure<Result<[StoreProduct], IAPError>>
 
     /// Retrieves localized information from the App Store about a specified list of products.
     ///
@@ -32,5 +32,5 @@ protocol IProductProvider {
     ///
     /// - Returns: The requested products.
     @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
-    func fetch(productIDs: Set<String>) async throws -> [SK2StoreProduct]
+    func fetch(productIDs: Set<String>) async throws -> [StoreProduct]
 }

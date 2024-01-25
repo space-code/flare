@@ -17,6 +17,16 @@ final class ConfigurationProviderMock: IConfigurationProvider {
         return stubbedApplicationUsername
     }
 
+    var invokedFetchCachePolicyGetter = false
+    var invokedFetchCachePolicyGetterCount = 0
+    var stubbedFetchCachePolicy: FetchCachePolicy!
+
+    var fetchCachePolicy: FetchCachePolicy {
+        invokedFetchCachePolicyGetter = true
+        invokedFetchCachePolicyGetterCount += 1
+        return stubbedFetchCachePolicy
+    }
+
     var invokedConfigure = false
     var invokedConfigureCount = 0
     var invokedConfigureParameters: (configuration: Configuration, Void)?

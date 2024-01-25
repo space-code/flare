@@ -3,6 +3,7 @@
 // Copyright © 2024 Space Code. All rights reserved.
 //
 
+import Atomic
 import Concurrency
 import StoreKit
 
@@ -43,8 +44,8 @@ final class ProductProvider: NSObject, IProductProvider {
     }
 
     @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
-    func fetch(productIDs ids: Set<String>) async throws -> [SK2StoreProduct] {
-        try await StoreKit.Product.products(for: ids).map(SK2StoreProduct.init)
+    func fetch(productIDs ids: Set<String>) async throws -> [StoreProduct] {
+        try await StoreKit.Product.products(for: ids).map { StoreProduct(product: $0) }
     }
 
     // MARK: Private
@@ -83,6 +84,22 @@ final class ProductProvider: NSObject, IProductProvider {
             }
         }
     }
+
+    private func handleFetchResult<T: ISKProduct, E: Error>(
+        result: Result<[T], E>,
+        _ completion: @escaping (Result<[StoreProduct], IAPError>) -> Void
+    ) {
+        switch result {
+        case let .success(products):
+            completion(.success(products.map { StoreProduct($0) }))
+        case let .failure(error):
+            if let iapError = error as? IAPError {
+                completion(.failure(iapError))
+            } else {
+                completion(.failure(IAPError(error: error)))
+            }
+        }
+    }
 }
 
 // MARK: SKProductsRequestDelegate
@@ -113,7 +130,7 @@ extension ProductProvider: SKProductsRequestDelegate {
             Logger.debug(message: L10n.Products.requestedProductsReceived(response.products.map(\.productIdentifier)))
 
             self.dispatchQueueFactory.main().async {
-                handler?(.success(response.products.map { SK1StoreProduct($0) }))
+                handler?(.success(response.products.map { StoreProduct(skProduct: $0) }))
             }
         }
     }

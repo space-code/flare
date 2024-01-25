@@ -42,13 +42,15 @@ final class PurchaseProviderTests: XCTestCase {
     func test_thatPurchaseProviderReturnsPaymentTransaction_whenSK1ProductExist() {
         // given
         let productMock = StoreProduct(skProduct: ProductMock())
+        let paymentTransaction = SKPaymentTransaction()
+        let storeTransaction = StoreTransaction(paymentTransaction: PaymentTransaction(paymentTransaction))
 
-        paymentProviderMock.stubbedAddResult = (paymentQueueMock, .success(SKPaymentTransaction()))
+        paymentProviderMock.stubbedAddResult = (paymentQueueMock, .success(paymentTransaction))
 
         // when
         sut.purchase(product: productMock) { result in
             if case let .success(transaction) = result {
-                XCTAssertEqual(transaction.productIdentifier, productMock.productIdentifier)
+                XCTAssertEqual(transaction, storeTransaction)
             } else {
                 XCTFail("The products' ids must be equal")
             }
