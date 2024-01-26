@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/space-code/atomic.git",
       "state" : {
-        "revision" : "53fae2fc8216bb5c27c87b245f893176d0d290eb",
-        "version" : "1.0.0"
+        "revision" : "6a1473440c31c6debf1de2404265949ed7892b14",
+        "version" : "1.0.1"
       }
     },
     {
