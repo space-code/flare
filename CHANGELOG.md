@@ -1,7 +1,17 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+#### 3.x Releases
+- `3.0.0` Release Candidates - [`3.0.0-rc.1`](#300-rc1)
+
+#### 2.x Releases
+- `2.0.x` Releases - [2.0.0](#200)
+
+#### 1.x Releases
+- `1.0.x` Releases - [1.0.0](#100)
+
+## [3.0.0-rc.1](https://github.com/space-code/flare/releases/tag/3.0.0-rc.1)
+Released on 2024-02-12.
 
 ## Added
 - Implement products caching mechanism
@@ -48,9 +58,6 @@ All notable changes to this project will be documented in this file.
 - Fix typos in `CONTRIBUTING.md`
   - Added in Pull Request[#14](https://github.com/space-code/flare/pull/14).
 
-#### 2.x Releases
-- `2.0.x` Releases - [2.0.0](#200)
-
 ## [2.0.0](https://github.com/space-code/flare/releases/tag/2.0.0)
 Released on 2023-09-13.
 
@@ -59,9 +66,6 @@ Released on 2023-09-13.
 
 #### Updated
 - Rename public methods and parameters to increase readability.
-
-#### 1.x Releases
-- `1.0.x` Releases - [1.0.0](#100)
 
 ## [1.0.0](https://github.com/space-code/flare/releases/tag/1.0.0)
 Released on 2023-01-20.
