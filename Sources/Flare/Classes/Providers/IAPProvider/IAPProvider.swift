@@ -1,30 +1,57 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 import StoreKit
 
+/// A class that provides in-app purchase functionality.
 final class IAPProvider: IIAPProvider {
     // MARK: Properties
 
+    /// The queue of payment transactions to be processed by the App Store.
     private let paymentQueue: PaymentQueue
+    /// The provider is responsible for fetching StoreKit products.
     private let productProvider: IProductProvider
-    private let paymentProvider: IPaymentProvider
+    /// The provider is responsible for purchasing products.
+    private let purchaseProvider: IPurchaseProvider
+    /// The provider is responsible for refreshing receipts.
     private let receiptRefreshProvider: IReceiptRefreshProvider
+    /// The provider is responsible for refunding purchases
+    private let refundProvider: IRefundProvider
+    /// The provider is responsible for eligibility checking.
+    private let eligibilityProvider: IEligibilityProvider
+    /// The provider is tasked with handling code redemption.
+    private let redeemCodeProvider: IRedeemCodeProvider
 
     // MARK: Initialization
 
+    /// Creates a new `IAPProvider` instance.
+    ///
+    /// - Parameters:
+    ///   - paymentQueue: The queue of payment transactions to be processed by the App Store.
+    ///   - productProvider: The provider is responsible for fetching StoreKit products.
+    ///   - purchaseProvider: The provider is respinsible for purchasing StoreKit product.
+    ///   - receiptRefreshProvider: The provider is responsible for refreshing receipts.
+    ///   - refundProvider: The provider is responsible for refunding purchases.
+    ///   - eligibilityProvider: The provider is responsible for eligibility checking.
+    ///   - redeemCodeProvider: The provider is tasked with handling code redemption.
     init(
-        paymentQueue: PaymentQueue = SKPaymentQueue.default(),
-        productProvider: IProductProvider = ProductProvider(),
-        paymentProvider: IPaymentProvider = PaymentProvider(),
-        receiptRefreshProvider: IReceiptRefreshProvider = ReceiptRefreshProvider()
+        paymentQueue: PaymentQueue,
+        productProvider: IProductProvider,
+        purchaseProvider: IPurchaseProvider,
+        receiptRefreshProvider: IReceiptRefreshProvider,
+        refundProvider: IRefundProvider,
+        eligibilityProvider: IEligibilityProvider,
+        redeemCodeProvider: IRedeemCodeProvider
     ) {
         self.paymentQueue = paymentQueue
         self.productProvider = productProvider
-        self.paymentProvider = paymentProvider
+        self.purchaseProvider = purchaseProvider
         self.receiptRefreshProvider = receiptRefreshProvider
+        self.refundProvider = refundProvider
+        self.eligibilityProvider = eligibilityProvider
+        self.redeemCodeProvider = redeemCodeProvider
     }
 
     // MARK: Internal
@@ -33,15 +60,31 @@ final class IAPProvider: IIAPProvider {
         paymentQueue.canMakePayments
     }
 
-    func fetch(productIDs: Set<String>, completion: @escaping Closure<Result<[SKProduct], IAPError>>) {
-        productProvider.fetch(
-            productIDs: productIDs,
-            requestID: UUID().uuidString,
-            completion: completion
-        )
+    func fetch(productIDs: Set<String>, completion: @escaping Closure<Result<[StoreProduct], IAPError>>) {
+        if #available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *) {
+            AsyncHandler.call(
+                completion: { (result: Result<[StoreProduct], Error>) in
+                    switch result {
+                    case let .success(products):
+                        completion(.success(products))
+                    case let .failure(error):
+                        completion(.failure(.with(error: error)))
+                    }
+                },
+                asyncMethod: {
+                    try await self.productProvider.fetch(productIDs: productIDs)
+                }
+            )
+        } else {
+            productProvider.fetch(
+                productIDs: productIDs,
+                requestID: UUID().uuidString,
+                completion: completion
+            )
+        }
     }
 
-    func fetch(productIDs: Set<String>) async throws -> [SKProduct] {
+    func fetch(productIDs: Set<String>) async throws -> [StoreProduct] {
         try await withCheckedThrowingContinuation { continuation in
             self.fetch(productIDs: productIDs) { result in
                 continuation.resume(with: result)
@@ -49,34 +92,47 @@ final class IAPProvider: IIAPProvider {
         }
     }
 
-    func purchase(productID: String, completion: @escaping Closure<Result<PaymentTransaction, IAPError>>) {
-        productProvider.fetch(productIDs: [productID], requestID: UUID().uuidString) { result in
+    func purchase(
+        product: StoreProduct,
+        promotionalOffer: PromotionalOffer?,
+        completion: @escaping Closure<Result<StoreTransaction, IAPError>>
+    ) {
+        purchaseProvider.purchase(product: product, promotionalOffer: promotionalOffer) { result in
             switch result {
-            case let .success(products):
-                guard let product = products.first else {
-                    completion(.failure(.storeProductNotAvailable))
-                    return
-                }
-
-                let payment = SKPayment(product: product)
-
-                self.paymentProvider.add(payment: payment) { _, result in
-                    switch result {
-                    case let .success(transaction):
-                        completion(.success(PaymentTransaction(transaction)))
-                    case let .failure(error):
-                        completion(.failure(error))
-                    }
-                }
+            case let .success(transaction):
+                completion(.success(transaction))
             case let .failure(error):
                 completion(.failure(error))
             }
         }
     }
 
-    func purchase(productID: String) async throws -> PaymentTransaction {
+    func purchase(product: StoreProduct, promotionalOffer: PromotionalOffer?) async throws -> StoreTransaction {
         try await withCheckedThrowingContinuation { continuation in
-            purchase(productID: productID) { result in
+            self.purchase(product: product, promotionalOffer: promotionalOffer) { result in
+                continuation.resume(with: result)
+            }
+        }
+    }
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    func purchase(
+        product: StoreProduct,
+        options: Set<StoreKit.Product.PurchaseOption>,
+        promotionalOffer: PromotionalOffer?,
+        completion: @escaping SendableClosure<Result<StoreTransaction, IAPError>>
+    ) {
+        purchaseProvider.purchase(product: product, options: options, promotionalOffer: promotionalOffer, completion: completion)
+    }
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    func purchase(
+        product: StoreProduct,
+        options: Set<StoreKit.Product.PurchaseOption>,
+        promotionalOffer: PromotionalOffer?
+    ) async throws -> StoreTransaction {
+        try await withCheckedThrowingContinuation { continuation in
+            purchase(product: product, options: options, promotionalOffer: promotionalOffer) { result in
                 continuation.resume(with: result)
             }
         }
@@ -105,23 +161,48 @@ final class IAPProvider: IIAPProvider {
         }
     }
 
-    func finish(transaction: PaymentTransaction) {
-        paymentProvider.finish(transaction: transaction)
+    func finish(transaction: StoreTransaction, completion: (@Sendable () -> Void)?) {
+        purchaseProvider.finish(transaction: transaction, completion: completion)
     }
 
     func addTransactionObserver(fallbackHandler: Closure<Result<PaymentTransaction, IAPError>>?) {
-        paymentProvider.set { _, result in
-            switch result {
-            case let .success(transaction):
-                fallbackHandler?(.success(PaymentTransaction(transaction)))
-            case let .failure(error):
-                fallbackHandler?(.failure(error))
-            }
-        }
-        paymentProvider.addTransactionObserver()
+        purchaseProvider.addTransactionObserver(fallbackHandler: fallbackHandler)
     }
 
     func removeTransactionObserver() {
-        paymentProvider.removeTransactionObserver()
+        purchaseProvider.removeTransactionObserver()
     }
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    func checkEligibility(productIDs: Set<String>) async throws -> [String: SubscriptionEligibility] {
+        let products = try await fetch(productIDs: productIDs)
+        return try await eligibilityProvider.checkEligibility(products: products)
+    }
+
+    #if os(iOS) || VISION_OS
+        @available(iOS 15.0, *)
+        @available(macOS, unavailable)
+        @available(watchOS, unavailable)
+        @available(tvOS, unavailable)
+        func beginRefundRequest(productID: String) async throws -> RefundRequestStatus {
+            try await refundProvider.beginRefundRequest(productID: productID)
+        }
+
+        @available(iOS 14.0, *)
+        @available(macOS, unavailable)
+        @available(watchOS, unavailable)
+        @available(tvOS, unavailable)
+        func presentCodeRedemptionSheet() {
+            Logger.debug(message: L10n.Redeem.presentingCodeRedemptionSheet)
+            paymentQueue.presentCodeRedemptionSheet()
+        }
+
+        @available(iOS 16.0, *)
+        @available(macOS, unavailable)
+        @available(watchOS, unavailable)
+        @available(tvOS, unavailable)
+        func presentOfferCodeRedeemSheet() async throws {
+            try await redeemCodeProvider.presentOfferCodeRedeemSheet()
+        }
+    #endif
 }

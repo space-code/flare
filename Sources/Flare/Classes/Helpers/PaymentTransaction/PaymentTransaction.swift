@@ -77,6 +77,10 @@ public struct PaymentTransaction: Equatable {
         return skTransaction.error
     }
 
+    public var transactionDate: Date? {
+        skTransaction.transactionDate
+    }
+
     /// A `Bool` value indicating that the user canceled a payment request.
     public var isCancelled: Bool {
         (skTransaction.error as? SKError)?.code == SKError.Code.paymentCancelled

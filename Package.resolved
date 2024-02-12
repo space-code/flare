@@ -1,16 +1,50 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "Concurrency",
-        "repositoryURL": "https://github.com/space-code/concurrency",
-        "state": {
-          "branch": null,
-          "revision": "f9611694f77f64e43d9467a16b2f5212cd04099b",
-          "version": "0.0.1"
-        }
+  "pins" : [
+    {
+      "identity" : "atomic",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/space-code/atomic.git",
+      "state" : {
+        "revision" : "6a1473440c31c6debf1de2404265949ed7892b14",
+        "version" : "1.0.1"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "concurrency",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/space-code/concurrency",
+      "state" : {
+        "revision" : "f9611694f77f64e43d9467a16b2f5212cd04099b",
+        "version" : "0.0.1"
+      }
+    },
+    {
+      "identity" : "log",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/space-code/log",
+      "state" : {
+        "revision" : "d99fff5656c31ef7e604965b90a50ec10539c98f",
+        "version" : "1.1.0"
+      }
+    },
+    {
+      "identity" : "swift-docc-plugin",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-docc-plugin",
+      "state" : {
+        "revision" : "26ac5758409154cc448d7ab82389c520fa8a8247",
+        "version" : "1.3.0"
+      }
+    },
+    {
+      "identity" : "swift-docc-symbolkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-docc-symbolkit",
+      "state" : {
+        "revision" : "b45d1f2ed151d057b54504d653e0da5552844e34",
+        "version" : "1.0.0"
+      }
+    }
+  ],
+  "version" : 2
 }

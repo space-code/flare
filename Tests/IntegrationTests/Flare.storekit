@@ -1,0 +1,242 @@
+{
+  "identifier" : "95D98A48",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "1CBF43E6",
+      "localizations" : [
+        {
+          "description" : "com.flare.test_non_consumable_purchase_1",
+          "displayName" : "com.flare.test_non_consumable_",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.flare.test_non_consumable_purchase_1",
+      "referenceName" : null,
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_failTransactionsEnabled" : false,
+    "_locale" : "en_US",
+    "_storefront" : "USA",
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Refund Request Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      }
+    ]
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "C3C61FEC",
+      "localizations" : [
+
+      ],
+      "name" : "subscription_group",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "1.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "138CEE33",
+          "introductoryOffer" : {
+            "displayPrice" : "0.99",
+            "internalID" : "970CA16D",
+            "numberOfPeriods" : 1,
+            "paymentMode" : "payAsYouGo",
+            "subscriptionPeriod" : "P1M"
+          },
+          "localizations" : [
+            {
+              "description" : "",
+              "displayName" : "",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.flare.monthly_1.99_week_intro",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Subscription with Introductory Offer",
+          "subscriptionGroupID" : "C3C61FEC",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "0.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "9CB5F7A9",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "",
+              "displayName" : "",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.flare.monthly_0.99",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Subscription Without Offers",
+          "subscriptionGroupID" : "C3C61FEC",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+            {
+              "internalID" : "479390B8",
+              "offerID" : "subscription_3_offer",
+              "paymentMode" : "free",
+              "referenceName" : "subscription_3_offer",
+              "subscriptionPeriod" : "P2W"
+            }
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "0.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "8D29D6BD",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "",
+              "displayName" : "",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.flare.monthly_1.99_two_weeks_offer.free",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Subscription with Promotional Offer",
+          "subscriptionGroupID" : "C3C61FEC",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+            {
+              "displayPrice" : "0.99",
+              "internalID" : "A05B39A3",
+              "numberOfPeriods" : 1,
+              "offerID" : "com.flare.monthly_0.99.1_week_intro",
+              "paymentMode" : "payAsYouGo",
+              "referenceName" : "com.flare.monthly_0.99.1_week_intro",
+              "subscriptionPeriod" : "P1M"
+            },
+            {
+              "displayPrice" : "1.99",
+              "internalID" : "79BD229A",
+              "offerID" : "com.flare.monthly_0.99.1_week_intro",
+              "paymentMode" : "payUpFront",
+              "referenceName" : "com.flare.monthly_0.99.1_week_intro",
+              "subscriptionPeriod" : "P1M"
+            },
+            {
+              "internalID" : "C181C3BF",
+              "offerID" : "com.flare.monthly_0.99.1_week_intro",
+              "paymentMode" : "free",
+              "referenceName" : "com.flare.monthly_0.99.1_week_intro",
+              "subscriptionPeriod" : "P1W"
+            }
+          ],
+          "codeOffers" : [
+            {
+              "displayPrice" : "0.99",
+              "eligibility" : [
+                "existing",
+                "expired",
+                "new"
+              ],
+              "internalID" : "A9D00827",
+              "isStackable" : true,
+              "paymentMode" : "payUpFront",
+              "referenceName" : "offer",
+              "subscriptionPeriod" : "P1M"
+            }
+          ],
+          "displayPrice" : "0.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "7867CD16",
+          "introductoryOffer" : {
+            "displayPrice" : "0.99",
+            "internalID" : "0A94C45A",
+            "paymentMode" : "payUpFront",
+            "subscriptionPeriod" : "P1M"
+          },
+          "localizations" : [
+            {
+              "description" : "Subscription",
+              "displayName" : "Subscription",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.flare.monthly_0.99.1_week_intro",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Subscription Full",
+          "subscriptionGroupID" : "C3C61FEC",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}

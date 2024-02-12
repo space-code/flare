@@ -1,0 +1,42 @@
+name: Deploy DocC
+
+on:
+  push:
+    branches: 
+      - main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: macos-12
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+      - name: Build DocC
+        run: |
+          swift build;
+          swift package \
+            --allow-writing-to-directory ./docs \
+            generate-documentation \
+            --target Flare \
+            --output-path ./docs \
+            --transform-for-static-hosting \
+            --hosting-base-path flare;
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: 'docs'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1

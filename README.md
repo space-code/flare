@@ -3,20 +3,21 @@
 <h1 align="center" style="margin-top: 0px;">flare</h1>
 
 <p align="center">
-<a href="https://github.com/space-code/flare/blob/main/LICENSE"><img alt="Liscence" src="https://img.shields.io/cocoapods/l/service-core.svg?style=flat"></a> 
-<a href="https://developer.apple.com/"><img alt="Platform" src="https://img.shields.io/badge/platform-ios%20%7C%20osx%20%7C%20watchos%20%7C%20tvos-%23989898"/></a> 
-<a href="https://developer.apple.com/swift"><img alt="Swift5.5" src="https://img.shields.io/badge/language-Swift5.5-orange.svg"/></a>
+<a href="https://github.com/space-code/flare/blob/main/LICENSE"><img alt="Licence" src="https://img.shields.io/cocoapods/l/service-core.svg?style=flat"></a> 
+<a href="https://swiftpackageindex.com/space-code/flare"><img alt="Swift Compatibility" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fspace-code%2Fflare%2Fbadge%3Ftype%3Dswift-versions"/></a> 
+<a href="https://swiftpackageindex.com/space-code/flare"><img alt="Platform Compatibility" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fspace-code%2Fflare%2Fbadge%3Ftype%3Dplatforms"/></a> 
 <a href="https://github.com/space-code/flare"><img alt="CI" src="https://github.com/space-code/flare/actions/workflows/ci.yml/badge.svg?branch=main"></a>
 <a href="https://codecov.io/gh/space-code/flare"><img alt="CodeCov" src="https://codecov.io/gh/space-code/flare/graph/badge.svg?token=WUWUSKQZWY"></a>
 <a href="https://github.com/apple/swift-package-manager" alt="Flare on Swift Package Manager" title="Flare on Swift Package Manager"><img src="https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg" /></a>
-<a href="https://github.com/space-code/flare"><img alt="CI" src="https://github.com/space-code/flare/actions/workflows/ci.yml/badge.svg?branch=main"></a>
+<a href="https://codecov.io/gh/space-code/flare"><img alt="GitHub release; latest by date" src="https://img.shields.io/github/v/release/space-code/flare"></a>
+<a href="https://codecov.io/gh/space-code/flare"><img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/m/space-code/flare"></a>
 </p>
 
 ## Description
 Flare is a framework written in Swift that makes it easy for you to work with in-app purchases and subscriptions.
 
 - [Features](#features)
-- [Documentaton](#documentation)
+- [Documentation](#documentation)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Communication](#communication)
@@ -27,16 +28,17 @@ Flare is a framework written in Swift that makes it easy for you to work with in
 ## Features
 - [x] Support Consumable & Non-Consumable Purchases
 - [x] Support Subscription Purchase
-- [x] Refresh Receipt
-- [x] Complete Unit Test Coverage
+- [x] Support Promotional & Introductory Offers
+- [x] iOS, tvOS, watchOS, macOS, and visionOS compatible
+- [x] Complete Unit & Integration Test Coverage
 
 ## Documentation
-Check out [flare documentation](https://github.com/space-code/flare/blob/main/Documentation/Usage.md).
+Check out the [flare documentation](https://space-code.github.io/flare/documentation/flare/).
 
 ## Requirements
-- iOS 13.0+ / macOS 10.15+ / tvOS 13.0+ / watchOS 7.0+
+- iOS 13.0+ / macOS 10.15+ / tvOS 13.0+ / watchOS 7.0+ / visionOS 1.0+
 - Xcode 14.0
-- Swift 5.5
+- Swift 5.7
 
 ## Installation
 ### Swift Package Manager

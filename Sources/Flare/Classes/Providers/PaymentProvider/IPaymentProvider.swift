@@ -6,7 +6,7 @@
 import StoreKit
 
 /// Type that provides payment functionality.
-public protocol IPaymentProvider: AnyObject {
+protocol IPaymentProvider: AnyObject {
     /// False if this device is not able or allowed to make payments
     var canMakePayments: Bool { get }
 

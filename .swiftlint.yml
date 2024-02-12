@@ -1,6 +1,9 @@
 excluded:
   - Tests
   - Package.swift
+  - Package@swift-5.7.swift
+  - Package@swift-5.8.swift
+  - Sources/Flare/Classes/Generated/Strings.swift
   - .build
 
 # Rules
@@ -9,6 +12,7 @@ disabled_rules:
   - trailing_comma
   - todo
   - opening_brace
+  - unneeded_synthesized_initializer
 
 opt_in_rules: # some rules are only opt-in
   - anyobject_protocol

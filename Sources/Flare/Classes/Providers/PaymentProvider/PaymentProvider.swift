@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 import Concurrency
@@ -8,23 +8,36 @@ import StoreKit
 
 // MARK: - PaymentProvider
 
+/// A class provides functionality to make payments.
 final class PaymentProvider: NSObject {
     // MARK: Properties
 
+    /// The queue of payment transactions to be processed by the App Store.
     private let paymentQueue: PaymentQueue
+    /// Dictionary to store payment handlers associated with transaction identifiers.
     private var paymentHandlers: [String: [PaymentHandler]] = [:]
+    /// Array to store restore handlers for completed transactions.
     private var restoreHandlers: [RestoreHandler] = []
+    /// Optional fallback handler for handling payments if no specific handler is found.
     private var fallbackHandler: PaymentHandler?
+    /// Optional handler to determine whether to add a payment to the App Store.
     private var shouldAddStorePaymentHandler: ShouldAddStorePaymentHandler?
+    /// The dispatch queue factory for handling concurrent tasks.
     private var dispatchQueueFactory: IDispatchQueueFactory
 
+    /// Lazy-initialized private dispatch queue for handling tasks related to payment processing.
     private lazy var privateQueue: IDispatchQueue = dispatchQueueFactory.privateQueue(label: String(describing: self))
 
     // MARK: Initialization
 
+    /// Creates a new `PaymentProvider` instance.
+    ///
+    /// - Parameters:
+    ///   - paymentQueue: The queue of payment transactions to be processed by the App Store.
+    ///   - dispatchQueueFactory: The dispatch queue factory.
     init(
-        paymentQueue: PaymentQueue = SKPaymentQueue.default(),
-        dispatchQueueFactory: IDispatchQueueFactory = DispatchQueueFactory()
+        paymentQueue: PaymentQueue,
+        dispatchQueueFactory: IDispatchQueueFactory
     ) {
         self.paymentQueue = paymentQueue
         self.dispatchQueueFactory = dispatchQueueFactory
@@ -50,6 +63,13 @@ extension PaymentProvider: IPaymentProvider {
         addPaymentHandler(productID: payment.productIdentifier, handler: handler)
         dispatchQueueFactory.main().async {
             self.paymentQueue.add(payment)
+
+            Logger.info(
+                message: L10n.Payment.paymentQueueAddingPayment(
+                    payment.productIdentifier,
+                    self.paymentQueue.transactions.count
+                )
+            )
         }
     }
 
@@ -144,6 +164,13 @@ extension PaymentProvider: SKPaymentTransactionObserver {
     #endif
 
     func finish(transaction: PaymentTransaction) {
+        Logger.info(
+            message: L10n.Purchase.finishingTransaction(
+                transaction.transactionIdentifier ?? "",
+                transaction.productIdentifier
+            )
+        )
+
         paymentQueue.finishTransaction(transaction.skTransaction)
     }
 
