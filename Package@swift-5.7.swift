@@ -14,6 +14,7 @@ let package = Package(
     ],
     products: [
         .library(name: "Flare", targets: ["Flare"]),
+        .library(name: "FlareUI", targets: ["FlareUI"]),
     ],
     dependencies: [
         .package(url: "https://github.com/space-code/concurrency.git", .upToNextMajor(from: "0.0.1")),
@@ -31,6 +32,7 @@ let package = Package(
             ],
             resources: [.process("Resources")]
         ),
+        .target(name: "FlareUI", dependencies: ["Flare"]),
         .testTarget(
             name: "FlareTests",
             dependencies: [
