@@ -6,8 +6,7 @@
 import Foundation
 
 struct ProductsViewModel {
-    static let initial = ProductsViewModel(isLoading: false, products: [])
-
     let isLoading: Bool
     let products: [ProductView.ViewModel]
+    let presenter: IProductsPresenter
 }

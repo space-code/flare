@@ -5,29 +5,33 @@
 
 import SwiftUI
 
-struct ProductsView: View {
+struct ProductsView: View, IViewWrapper {
     // MARK: Properties
 
-    private let presenter: IProductsPresenter
+    private let viewModel: ProductsViewModel
 
     // MARK: Initialization
 
-    init(presenter: IProductsPresenter) {
-        self.presenter = presenter
+    init(viewModel: ProductsViewModel) {
+        self.viewModel = viewModel
     }
 
     // MARK: View
 
     var body: some View {
         contentView
-            .onAppear { presenter.viewDidLoad() }
+            .onAppear { viewModel.presenter.viewDidLoad() }
     }
 
     // MARK: Private
 
     private var contentView: some View {
-        List(presenter.viewModel.model.products) { product in
-            ProductView(viewModel: product)
+        List(viewModel.products) { product in
+            ProductView(viewModel: product) {
+                Task {
+                    await viewModel.presenter.purchase(productID: product.id)
+                }
+            }
         }
     }
 }

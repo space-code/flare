@@ -9,7 +9,7 @@ import SwiftUI
 // MARK: - IProductsViewAssembly
 
 protocol IProductsViewAssembly {
-    func assemble(ids: Set<String>) -> ProductsView
+    func assemble(ids: Set<String>) -> ViewWrapper<ProductsViewModel, ProductsView>
 }
 
 // MARK: - ProductsViewAssembly
@@ -27,12 +27,19 @@ final class ProductsViewAssembly: IProductsViewAssembly {
 
     // MARK: IProductsViewAssembly
 
-    func assemble(ids: Set<String>) -> ProductsView {
+    func assemble(ids: Set<String>) -> ViewWrapper<ProductsViewModel, ProductsView> {
         let presenter = ProductsPresenter(
             ids: ids,
             iap: iap,
-            viewModel: ViewModel(model: ProductsViewModel.initial)
+            viewModelFactory: ProductsViewModelFactory()
         )
-        return ProductsView(presenter: presenter)
+        let viewModel = ViewModel<ProductsViewModel>(
+            model: ProductsViewModel(isLoading: false, products: [], presenter: presenter)
+        )
+        presenter.viewModel = viewModel
+
+        return ViewWrapper<ProductsViewModel, ProductsView>(
+            viewModel: viewModel
+        )
     }
 }
