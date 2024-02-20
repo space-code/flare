@@ -29,7 +29,7 @@ Flare.shared.removeTransactionObserver()
 
 The fetch method sends a request to the App Store, which retrieves the products if they are available. The productIDs parameter takes the product ids, which should be given from the App Store.
 
-> important: Before attempting to add a payment always check if the user can actually make payments. The Flare does it under the hood, if a user cannot make payments, you will get an ``IAPError`` with the value ``IAPError/paymentNotAllowed``.
+> important: Before attempting to add a payment always check if the user can actually make payments. The Flare does it under the hood, if a user cannot make payments, you will get an ``IAPError/paymentNotAllowed``.
 
 ```swift
 Flare.shared.fetch(productIDs: ["product_id"]) { result in
@@ -42,7 +42,7 @@ Flare.shared.fetch(productIDs: ["product_id"]) { result in
 }
 ```
 
-Additionally, there are versions of both fetch that provide an `async` method, allowing the use of await.
+Additionally, there is an `await` version of the ``IFlare/fetch(productIDs:)`` method.
 
 ```swift
 do {
@@ -53,6 +53,14 @@ do {
 ```
 
 > note: Products are cached by default. If caching is not possible for specific usecases, set ``Configuration/fetchCachePolicy`` to ``FetchCachePolicy/fetch``.
+
+```swift
+import Flare
+
+let configuration = Configuration(fetchCachePolicy: .fetch)
+
+Flare.configure(with: configuration)
+```
 
 ## Purchasing Product
 
@@ -93,4 +101,3 @@ Flare.shared.finish(transaction: transaction, completion: nil)
 ```
 
 > important: Don’t call the ``IFlare/finish(transaction:completion:)`` method before the transaction is actually complete and attempt to use some other mechanism in your app to track the transaction as unfinished. StoreKit doesn’t function that way, and doing that prevents your app from downloading Apple-hosted content and can lead to other issues.
-

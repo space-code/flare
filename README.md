@@ -22,6 +22,7 @@ Flare is a framework written in Swift that makes it easy for you to work with in
 - [Installation](#installation)
 - [Communication](#communication)
 - [Contributing](#contributing)
+- [Have a Question](#have-a-question)
 - [Author](#author)
 - [License](#license)
 
@@ -37,7 +38,7 @@ Check out the [flare documentation](https://space-code.github.io/flare/documenta
 
 ## Requirements
 - iOS 13.0+ / macOS 10.15+ / tvOS 13.0+ / watchOS 7.0+ / visionOS 1.0+
-- Xcode 14.0
+- Xcode 15.0
 - Swift 5.7
 
 ## Installation
@@ -66,6 +67,10 @@ make bootstrap
 ```
 
 Please feel free to help out with this project! If you see something that could be made better or want a new feature, open up an issue or send a Pull Request!
+
+## Have a Question?
+
+Contact us via [issues on GitHub](https://github.com/space-code/flare/issues).
 
 ## Author
 Nikita Vasilev, nv3212@gmail.com
