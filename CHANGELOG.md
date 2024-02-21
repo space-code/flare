@@ -4,8 +4,10 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ## Fixed
+- Fix switching to the main thread
+  - Fixed in Pull Request [#24](https://github.com/space-code/flare/pull/24).
 - Update the documentation
-  - Fixed in Pull Request[#23](https://github.com/space-code/flare/pull/23).
+  - Fixed in Pull Request [#23](https://github.com/space-code/flare/pull/23).
 
 #### 3.x Releases
 - `3.0.0` Release Candidates - [`3.0.0-rc.1`](#300-rc1)
