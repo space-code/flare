@@ -123,6 +123,13 @@ public protocol IIAPProvider {
     ///   - completion: If a completion closure is provided, call it after finishing the transaction.
     func finish(transaction: StoreTransaction, completion: (@Sendable () -> Void)?)
 
+    /// Removes a finished (i.e. failed or completed) transaction from the queue.
+    /// Attempting to finish a purchasing transaction will throw an exception.
+    ///
+    /// - Parameters:
+    ///   - transaction: An object in the payment queue.
+    func finish(transaction: StoreTransaction) async
+
     /// Adds transaction observer to the payment queue.
     /// The transactions array will only be synchronized with the server while the queue has observers.
     ///
