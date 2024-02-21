@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## Added
+- Implement asynchronous transaction completion
+  - Added in Pull Request [#25](https://github.com/space-code/flare/pull/25).
+
 ## Fixed
 - Fix switching to the main thread
   - Fixed in Pull Request [#24](https://github.com/space-code/flare/pull/24).
