@@ -70,6 +70,18 @@ final class IAPProviderMock: IIAPProvider {
         invokedFinishTransactionParanetersList.append((transaction, ()))
     }
 
+    var invokedFinishAsyncTransaction = false
+    var invokedFinishAsyncTransactionCount = 0
+    var invokedFinishAsyncTransactionParameters: (StoreTransaction, Void)?
+    var invokedFinishAsyncTransactionParanetersList = [(StoreTransaction, Void)]()
+
+    func finish(transaction: StoreTransaction) async {
+        invokedFinishAsyncTransaction = true
+        invokedFinishAsyncTransactionCount += 1
+        invokedFinishAsyncTransactionParameters = (transaction, ())
+        invokedFinishAsyncTransactionParanetersList = [(transaction, ())]
+    }
+
     var invokedAddTransactionObserver = false
     var invokedAddTransactionObserverCount = 0
     var invokedAddTransactionObserverParameters: (fallbackHandler: Closure<Result<PaymentTransaction, IAPError>>?, Void)?

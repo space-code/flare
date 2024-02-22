@@ -99,6 +99,17 @@ class IAPProviderTests: XCTestCase {
         XCTAssertTrue(purchaseProvider.invokedFinish)
     }
 
+    func test_thatIAPProviderFinishesAsyncTransaction() async {
+        // given
+        let transaction = PurchaseManagerTestHelper.makePaymentTransaction(state: .purchased)
+
+        // when
+        await sut.finish(transaction: StoreTransaction(paymentTransaction: PaymentTransaction(transaction)))
+
+        // then
+        XCTAssertTrue(purchaseProvider.invokedFinish)
+    }
+
     func test_thatIAPProviderAddsTransactionObserver() {
         // when
         sut.addTransactionObserver(fallbackHandler: { _ in })

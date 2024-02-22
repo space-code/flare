@@ -166,6 +166,14 @@ final class IAPProvider: IIAPProvider {
         purchaseProvider.finish(transaction: transaction, completion: completion)
     }
 
+    func finish(transaction: StoreTransaction) async {
+        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+            finish(transaction: transaction) {
+                continuation.resume(returning: ())
+            }
+        }
+    }
+
     func addTransactionObserver(fallbackHandler: Closure<Result<PaymentTransaction, IAPError>>?) {
         purchaseProvider.addTransactionObserver(fallbackHandler: fallbackHandler)
     }
