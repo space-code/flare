@@ -216,6 +216,17 @@ class FlareTests: XCTestCase {
         XCTAssertTrue(iapProviderMock.invokedFinishTransaction)
     }
 
+    func test_thatFlareFinishesAsyncTransaction() async {
+        // given
+        let transaction = PaymentTransaction(PaymentTransactionMock())
+
+        // when
+        await sut.finish(transaction: StoreTransaction(paymentTransaction: transaction))
+
+        // then
+        XCTAssertTrue(iapProviderMock.invokedFinishAsyncTransaction)
+    }
+
     func test_thatFlareAddsTransactionObserver() {
         // when
         sut.addTransactionObserver(fallbackHandler: { _ in })

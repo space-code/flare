@@ -12,11 +12,12 @@ final class PurchaseProviderMock: IPurchaseProvider {
     var invokedFinishParameters: (transaction: StoreTransaction, Void)?
     var invokedFinishParametersList = [(transaction: StoreTransaction, Void)]()
 
-    func finish(transaction: StoreTransaction, completion _: (@Sendable () -> Void)?) {
+    func finish(transaction: StoreTransaction, completion: (@Sendable () -> Void)?) {
         invokedFinish = true
         invokedFinishCount += 1
         invokedFinishParameters = (transaction, ())
         invokedFinishParametersList.append((transaction, ()))
+        completion?()
     }
 
     var invokedAddTransactionObserver = false
