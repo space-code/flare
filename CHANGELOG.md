@@ -8,6 +8,8 @@ All notable changes to this project will be documented in this file.
   - Added in Pull Request [#25](https://github.com/space-code/flare/pull/25).
 
 ## Fixed
+- Fix handling of cancelling operations
+  - Fixed in Pull Request [#26](https://github.com/space-code/flare/pull/26).
 - Fix switching to the main thread
   - Fixed in Pull Request [#24](https://github.com/space-code/flare/pull/24).
 - Update the documentation
