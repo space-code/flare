@@ -78,12 +78,20 @@ final class PurchaseProvider {
             Task {
                 switch result {
                 case let .success(result):
-                    if let transaction = try await self.transactionListener?.handle(purchaseResult: result) {
-                        await completion(.success(transaction))
-                        Logger.info(message: L10n.Purchase.purchasedProduct(sk2StoreProduct.productIdentifier))
-                    } else {
-                        await completion(.failure(IAPError.unknown))
-                        self.log(error: IAPError.unknown, productID: sk2StoreProduct.productIdentifier)
+                    do {
+                        if let transaction = try await self.transactionListener?.handle(purchaseResult: result) {
+                            await completion(.success(transaction))
+                            Logger.info(message: L10n.Purchase.purchasedProduct(sk2StoreProduct.productIdentifier))
+                        } else {
+                            await completion(.failure(IAPError.unknown))
+                            self.log(error: IAPError.unknown, productID: sk2StoreProduct.productIdentifier)
+                        }
+                    } catch {
+                        if let error = error as? IAPError {
+                            await completion(.failure(error))
+                        } else {
+                            await completion(.failure(IAPError.with(error: error)))
+                        }
                     }
                 case let .failure(error):
                     await completion(.failure(IAPError(error: error)))
