@@ -5,30 +5,18 @@
 
 import SwiftUI
 
-// MARK: - ProductView
+// MARK: - ProductInfoView
 
-struct ProductView: View {
-    // MARK: Properties
-
+struct ProductInfoView: View {
     private let viewModel: ViewModel
     private let action: () -> Void
-
-    // MARK: Initialization
 
     init(viewModel: ViewModel, action: @escaping () -> Void) {
         self.viewModel = viewModel
         self.action = action
     }
 
-    // MARK: View
-
     var body: some View {
-        contentView
-    }
-
-    // MARK: Private
-
-    private var contentView: some View {
         HStack(alignment: .center) {
             VStack(alignment: .leading) {
                 Text(viewModel.title)
@@ -53,9 +41,9 @@ struct ProductView: View {
     }
 }
 
-// MARK: ProductView.ViewModel
+// MARK: ProductInfoView.ViewModel
 
-extension ProductView {
+extension ProductInfoView {
     struct ViewModel: Identifiable {
         let id: String
         let title: String
@@ -64,11 +52,9 @@ extension ProductView {
     }
 }
 
-// MARK: Preview
-
 #Preview {
-    ProductView(
-        viewModel: ProductView.ViewModel(
+    ProductInfoView(
+        viewModel: .init(
             id: UUID().uuidString,
             title: "My App Lifetime",
             description: "Lifetime access to additional content",

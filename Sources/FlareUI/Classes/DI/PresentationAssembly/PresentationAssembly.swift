@@ -19,7 +19,11 @@ final class PresentationAssembly: IPresentationAssembly {
     // MARK: IPresentationAssembly
 
     var productsViewAssembly: IProductsViewAssembly {
-        ProductsViewAssembly(iap: dependencies.iap)
+        ProductsViewAssembly(productAssembly: productViewAssembly)
+    }
+
+    var productViewAssembly: IProductViewAssembly {
+        ProductViewAssembly(iap: dependencies.iap)
     }
 
     var subscritpionsViewAssembly: ISubscriptionAssembly {

@@ -3,7 +3,10 @@
 // Copyright © 2024 Space Code. All rights reserved.
 //
 
+import StoreKit
 import SwiftUI
+
+// MARK: - ProductsView
 
 struct ProductsView: View, IViewWrapper {
     // MARK: Properties
@@ -25,12 +28,12 @@ struct ProductsView: View, IViewWrapper {
 
     // MARK: Private
 
+    @ViewBuilder
     private var contentView: some View {
-        List(viewModel.products) { product in
-            ProductView(viewModel: product) {
-                Task {
-                    await viewModel.presenter.purchase(productID: product.id)
-                }
+        switch viewModel.state {
+        case let .productIDs(ids):
+            List(Array(ids), id: \.self) { id in
+                viewModel.productAssembly.assemble(id: id)
             }
         }
     }

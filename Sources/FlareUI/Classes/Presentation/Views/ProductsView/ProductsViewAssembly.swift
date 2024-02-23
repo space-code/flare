@@ -3,7 +3,6 @@
 // Copyright © 2024 Space Code. All rights reserved.
 //
 
-import Flare
 import SwiftUI
 
 // MARK: - IProductsViewAssembly
@@ -17,24 +16,26 @@ protocol IProductsViewAssembly {
 final class ProductsViewAssembly: IProductsViewAssembly {
     // MARK: Properties
 
-    private let iap: IFlare
+    private let productAssembly: IProductViewAssembly
 
-    // MARK: Initialization
+    // MARK: Initializaiton
 
-    init(iap: IFlare) {
-        self.iap = iap
+    init(productAssembly: IProductViewAssembly) {
+        self.productAssembly = productAssembly
     }
 
     // MARK: IProductsViewAssembly
 
     func assemble(ids: Set<String>) -> ViewWrapper<ProductsViewModel, ProductsView> {
         let presenter = ProductsPresenter(
-            ids: ids,
-            iap: iap,
-            viewModelFactory: ProductsViewModelFactory()
+            ids: ids
         )
         let viewModel = ViewModel<ProductsViewModel>(
-            model: ProductsViewModel(isLoading: false, products: [], presenter: presenter)
+            model: ProductsViewModel(
+                state: .productIDs(ids: ids),
+                presenter: presenter,
+                productAssembly: productAssembly
+            )
         )
         presenter.viewModel = viewModel
 

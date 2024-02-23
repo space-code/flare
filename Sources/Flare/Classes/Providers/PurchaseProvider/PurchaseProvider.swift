@@ -90,7 +90,7 @@ final class PurchaseProvider {
                         if let error = error as? IAPError {
                             await completion(.failure(error))
                         } else {
-                            await completion(.failure(IAPError.with(error: error)))
+                            await completion(.failure(.with(error: error)))
                         }
                     }
                 case let .failure(error):
