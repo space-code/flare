@@ -25,7 +25,7 @@ struct DefaultProductStyle: IProductStyle {
             loadingView
         case let .product(product):
             let viewModel = viewModelFactory.make(product)
-            ProductInfoView(viewModel: viewModel) { configuration.purchase() }
+            ProductInfoView(viewModel: viewModel, icon: configuration.icon) { configuration.purchase() }
         case let .error(error):
             Text(error.localizedDescription)
         }

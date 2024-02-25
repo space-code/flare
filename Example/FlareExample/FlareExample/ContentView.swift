@@ -27,29 +27,3 @@ struct ContentView: View {
 #Preview {
     ContentView()
 }
-
-// import StoreKit
-//
-// struct ContentView: View {
-//    var body: some View {
-//        ScrollView {
-//            ProductView(id: "55667744") { _ in
-//                Image(systemName: "crown")
-//                    .resizable()
-//                    .scaledToFit()
-//            } placeholderIcon: {
-//                ProgressView()
-//            }
-//            .productViewStyle(.large)
-//
-//            StoreView(
-//                ids: [
-//                    "123456789",
-//                    "987654321"
-//                ]
-//            )
-//            .productViewStyle(.compact)
-//            .storeButton(.visible, for: .restorePurchases)
-//        }
-//    }
-// }

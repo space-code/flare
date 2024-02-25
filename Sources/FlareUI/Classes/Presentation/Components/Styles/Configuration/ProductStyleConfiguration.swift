@@ -4,7 +4,7 @@
 //
 
 import Flare
-import Foundation
+import SwiftUI
 
 public struct ProductStyleConfiguration {
     public enum State {
@@ -13,10 +13,20 @@ public struct ProductStyleConfiguration {
         case error(error: IAPError)
     }
 
+    public struct Icon: View {
+        public init<Content: View>(content: Content) {
+            body = AnyView(content)
+        }
+
+        public var body: AnyView
+    }
+
+    public let icon: Icon?
     public let state: State
     public let purchase: () -> Void
 
-    public init(state: State, purchase: @escaping () -> Void = {}) {
+    public init(icon: Icon? = nil, state: State, purchase: @escaping () -> Void = {}) {
+        self.icon = icon
         self.state = state
         self.purchase = purchase
     }

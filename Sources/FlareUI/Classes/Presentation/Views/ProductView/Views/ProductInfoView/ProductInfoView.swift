@@ -11,12 +11,14 @@ struct ProductInfoView: View {
     // MARK: Properties
 
     private let viewModel: ViewModel
+    private let icon: ProductStyleConfiguration.Icon?
     private let action: () -> Void
 
     // MARK: Initialization
 
-    init(viewModel: ViewModel, action: @escaping () -> Void) {
+    init(viewModel: ViewModel, icon: ProductStyleConfiguration.Icon?, action: @escaping () -> Void) {
         self.viewModel = viewModel
+        self.icon = icon
         self.action = action
     }
 
@@ -24,6 +26,7 @@ struct ProductInfoView: View {
 
     var body: some View {
         HStack(alignment: .center) {
+            icon.map { $0 }
             VStack(alignment: .leading) {
                 Text(viewModel.title)
                     .font(.body)
@@ -67,6 +70,8 @@ extension ProductInfoView {
             title: "My App Lifetime",
             description: "Lifetime access to additional content",
             price: "$19.99"
-        ), action: {}
+        ),
+        icon: nil,
+        action: {}
     )
 }
