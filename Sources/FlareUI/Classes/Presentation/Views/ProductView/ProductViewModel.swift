@@ -8,10 +8,11 @@ import Foundation
 
 // MARK: - ProductViewModel
 
-struct ProductViewModel {
-    enum State {
+struct ProductViewModel: IModel {
+    enum State: Equatable {
         case loading
         case product(StoreProduct)
+        case error(IAPError)
     }
 
     let state: State

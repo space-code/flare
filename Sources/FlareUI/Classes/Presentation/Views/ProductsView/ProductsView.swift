@@ -22,8 +22,10 @@ struct ProductsView: View, IViewWrapper {
     // MARK: View
 
     var body: some View {
-        contentView
-            .onAppear { viewModel.presenter.viewDidLoad() }
+        NavigationView {
+            contentView
+                .onAppear { viewModel.presenter.viewDidLoad() }
+        }
     }
 
     // MARK: Private

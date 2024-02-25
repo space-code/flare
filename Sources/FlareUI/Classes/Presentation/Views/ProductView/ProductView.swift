@@ -11,6 +11,7 @@ struct ProductView: View, IViewWrapper {
     // MARK: Properties
 
     @Environment(\.productViewStyle) var productViewStyle
+    @State private var error: Error?
 
     private let viewModel: ProductViewModel
 
@@ -24,7 +25,8 @@ struct ProductView: View, IViewWrapper {
 
     var body: some View {
         contentView
-            .onAppear { viewModel.presenter.viewDidLoad() }
+            .onLoad { viewModel.presenter.viewDidLoad() }
+            .errorAlert($error)
     }
 
     // MARK: Private
@@ -38,15 +40,21 @@ struct ProductView: View, IViewWrapper {
             productViewStyle.makeBody(
                 configuration: .init(
                     state: .product(item: storeProduct),
-                    purchase: { purchase(productID: storeProduct.productIdentifier) }
+                    purchase: purchase
                 )
             )
+        case let .error(error):
+            productViewStyle.makeBody(configuration: .init(state: .error(error: error)))
         }
     }
 
-    private func purchase(productID: String) {
-        Task {
-            await viewModel.presenter.purchase(productID: productID)
+    private func purchase() {
+        Task { @MainActor in
+            do {
+                try await viewModel.presenter.purchase()
+            } catch {
+                self.error = error
+            }
         }
     }
 }

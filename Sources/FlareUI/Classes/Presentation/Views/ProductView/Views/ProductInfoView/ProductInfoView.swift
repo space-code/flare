@@ -8,13 +8,19 @@ import SwiftUI
 // MARK: - ProductInfoView
 
 struct ProductInfoView: View {
+    // MARK: Properties
+
     private let viewModel: ViewModel
     private let action: () -> Void
+
+    // MARK: Initialization
 
     init(viewModel: ViewModel, action: @escaping () -> Void) {
         self.viewModel = viewModel
         self.action = action
     }
+
+    // MARK: View
 
     var body: some View {
         HStack(alignment: .center) {
@@ -32,7 +38,7 @@ struct ProductInfoView: View {
                 },
                 label: {
                     Text(viewModel.price)
-                        .font(.footnote)
+                        .font(.subheadline)
                         .fontWeight(.bold)
                 }
             )
@@ -51,6 +57,8 @@ extension ProductInfoView {
         let price: String
     }
 }
+
+// MARK: Preview
 
 #Preview {
     ProductInfoView(

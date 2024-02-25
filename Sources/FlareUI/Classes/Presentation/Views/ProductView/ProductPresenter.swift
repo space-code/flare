@@ -5,17 +5,18 @@
 
 import Flare
 import Foundation
+import SwiftUI
 
 // MARK: - IProductPresenter
 
 protocol IProductPresenter {
     func viewDidLoad()
-    func purchase(productID id: String) async
+    func purchase() async throws
 }
 
 // MARK: - ProductPresenter
 
-final class ProductPresenter {
+final class ProductPresenter: IPresenter {
     // MARK: Properties
 
     private let id: String
@@ -32,13 +33,6 @@ final class ProductPresenter {
         self.id = id
         self.iap = iap
     }
-
-    // MARK: Private
-
-    private func update(state: ProductViewModel.State) {
-        guard let viewModel else { return }
-        viewModel.model = viewModel.model.setState(state)
-    }
 }
 
 // MARK: IProductPresenter
@@ -48,31 +42,33 @@ extension ProductPresenter: IProductPresenter {
         update(state: .loading)
 
         iap.fetch(productIDs: [id]) { [weak self] result in
-            guard let self = self else { return }
+            guard let self = self, let viewModel = self.viewModel else { return }
 
             switch result {
             case let .success(product):
-                guard let viewModel = self.viewModel, let product = product.first else { return }
-
-                viewModel.model = viewModel.model.setState(.product(product))
+                guard let product = product.first else { return }
+                self.update(state: .product(product))
             case let .failure(error):
-                break
+                self.update(state: .error(error))
             }
         }
     }
 
     @MainActor
-    func purchase(productID _: String) async {
+    func purchase() async throws {
         guard case let .product(product) = viewModel?.model.state else {
-            // Throw an error
-            return
+            throw IAPError.unknown
         }
 
         do {
             let transaction = try await iap.purchase(product: product)
             await iap.finish(transaction: transaction)
         } catch {
-            print(error.localizedDescription)
+            if let error = error as? IAPError, error == .paymentCancelled {
+                print(error.localizedDescription)
+            } else {
+                throw error
+            }
         }
     }
 }

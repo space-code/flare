@@ -25,21 +25,29 @@ struct DefaultProductStyle: IProductStyle {
             loadingView
         case let .product(product):
             let viewModel = viewModelFactory.make(product)
-            ProductInfoView(viewModel: viewModel) {
-                configuration.purchase()
-            }
+            ProductInfoView(viewModel: viewModel) { configuration.purchase() }
+        case let .error(error):
+            Text(error.localizedDescription)
         }
     }
 
     // MARK: Private
 
+    @ViewBuilder
     private var loadingView: some View {
         HStack(alignment: .center) {
-            if #available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *) {
-                ProgressView()
-            } else {
-                Text("Loading")
+            VStack(alignment: .leading) {
+                Color(UIColor.systemGray5)
+                    .frame(width: 123, height: 20.0)
+                    .mask(RoundedRectangle(cornerRadius: 4.0))
+                Color(UIColor.systemGray6)
+                    .frame(width: 208, height: 14.0)
+                    .mask(RoundedRectangle(cornerRadius: 4.0))
             }
+            Spacer()
+            Color(UIColor.systemGray6)
+                .frame(width: 76, height: 34.0)
+                .mask(Capsule())
         }
     }
 }

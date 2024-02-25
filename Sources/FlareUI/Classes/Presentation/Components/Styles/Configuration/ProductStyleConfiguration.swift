@@ -10,6 +10,7 @@ public struct ProductStyleConfiguration {
     public enum State {
         case loading
         case product(item: StoreProduct)
+        case error(error: IAPError)
     }
 
     public let state: State
