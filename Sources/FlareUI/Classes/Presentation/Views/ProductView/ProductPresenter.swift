@@ -22,6 +22,8 @@ final class ProductPresenter: IPresenter {
     private let id: String
     private let iap: IFlare
 
+    private var isInProgress = false
+
     weak var viewModel: ViewModel<ProductViewModel>?
 
     // MARK: Initialization
@@ -56,6 +58,11 @@ extension ProductPresenter: IProductPresenter {
 
     @MainActor
     func purchase() async throws {
+        guard !isInProgress else { return }
+
+        defer { isInProgress = false }
+        isInProgress = true
+
         guard case let .product(product) = viewModel?.model.state else {
             throw IAPError.unknown
         }
@@ -64,9 +71,7 @@ extension ProductPresenter: IProductPresenter {
             let transaction = try await iap.purchase(product: product)
             await iap.finish(transaction: transaction)
         } catch {
-            if let error = error as? IAPError, error == .paymentCancelled {
-                print(error.localizedDescription)
-            } else {
+            if let error = error as? IAPError, error != .paymentCancelled {
                 throw error
             }
         }

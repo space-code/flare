@@ -36,8 +36,8 @@ struct DefaultProductStyle: IProductStyle {
     @ViewBuilder
     private var loadingView: some View {
         HStack(alignment: .center) {
-            VStack(alignment: .leading) {
-                Color(UIColor.systemGray5)
+            VStack(alignment: .leading, spacing: 2.0) {
+                Color(UIColor.systemGray6)
                     .frame(width: 123, height: 20.0)
                     .mask(RoundedRectangle(cornerRadius: 4.0))
                 Color(UIColor.systemGray6)
@@ -49,5 +49,7 @@ struct DefaultProductStyle: IProductStyle {
                 .frame(width: 76, height: 34.0)
                 .mask(Capsule())
         }
+        .frame(height: 34.0)
+        .padding(.vertical, 2.0)
     }
 }
