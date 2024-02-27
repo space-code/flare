@@ -8,9 +8,10 @@ import Foundation
 
 // MARK: - ProductsViewModel
 
-struct ProductsViewModel {
+struct ProductsViewModel: IModel {
     enum State {
-        case productIDs(ids: Set<String>)
+        case products([StoreProduct])
+        case error(Error)
     }
 
     let state: State

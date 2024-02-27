@@ -14,26 +14,19 @@ protocol IProductsPresenter {
 
 // MARK: - ProductsPresenter
 
-final class ProductsPresenter {
+final class ProductsPresenter: IPresenter {
     // MARK: Properties
 
     private let ids: Set<String>
+    private let iap: IFlare
 
     weak var viewModel: ViewModel<ProductsViewModel>?
 
     // MARK: Initialization
 
-    init(
-        ids: Set<String>
-    ) {
+    init(ids: Set<String>, iap: IFlare) {
         self.ids = ids
-    }
-
-    // MARK: Private
-
-    private func update(state: ProductsViewModel.State) {
-        guard let viewModel else { return }
-        viewModel.model = viewModel.model.setState(state)
+        self.iap = iap
     }
 }
 
@@ -41,6 +34,13 @@ final class ProductsPresenter {
 
 extension ProductsPresenter: IProductsPresenter {
     func viewDidLoad() {
-        update(state: .productIDs(ids: ids))
+        Task { @MainActor in
+            do {
+                let products = try await iap.fetch(productIDs: ids)
+                self.update(state: .products(products))
+            } catch {
+                self.update(state: .error(error))
+            }
+        }
     }
 }

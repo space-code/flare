@@ -10,6 +10,7 @@ import SwiftUI
 
 protocol IProductViewAssembly {
     func assemble(id: String) -> ViewWrapper<ProductViewModel, ProductView>
+    func assemble(storeProduct: StoreProduct) -> ViewWrapper<ProductViewModel, ProductView>
 }
 
 // MARK: - ProductViewAssembly
@@ -28,9 +29,19 @@ final class ProductViewAssembly: IProductViewAssembly {
     // MARK: IProductViewAssembly
 
     func assemble(id: String) -> ViewWrapper<ProductViewModel, ProductView> {
+        assemble(with: .productID(id))
+    }
+
+    func assemble(storeProduct: StoreProduct) -> ViewWrapper<ProductViewModel, ProductView> {
+        assemble(with: .product(storeProduct))
+    }
+
+    // MARK: Private
+
+    private func assemble(with type: ProductViewType) -> ViewWrapper<ProductViewModel, ProductView> {
         let presenter = ProductPresenter(
-            id: id,
-            iap: iap
+            iap: iap,
+            productFetcher: ProductStrategy(type: type, iap: iap)
         )
         let viewModel = ViewModel<ProductViewModel>(
             model: ProductViewModel(state: .loading, presenter: presenter)

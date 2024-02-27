@@ -22,34 +22,15 @@ struct DefaultProductStyle: IProductStyle {
     func makeBody(configuration: ProductStyleConfiguration) -> some View {
         switch configuration.state {
         case .loading:
-            loadingView
+            ProductPlaceholderView()
         case let .product(product):
             let viewModel = viewModelFactory.make(product)
             ProductInfoView(viewModel: viewModel, icon: configuration.icon) { configuration.purchase() }
         case let .error(error):
-            Text(error.localizedDescription)
-        }
-    }
-
-    // MARK: Private
-
-    @ViewBuilder
-    private var loadingView: some View {
-        HStack(alignment: .center) {
-            VStack(alignment: .leading, spacing: 2.0) {
-                Color(UIColor.systemGray6)
-                    .frame(width: 123, height: 20.0)
-                    .mask(RoundedRectangle(cornerRadius: 4.0))
-                Color(UIColor.systemGray6)
-                    .frame(width: 208, height: 14.0)
-                    .mask(RoundedRectangle(cornerRadius: 4.0))
+            VStack {
+                Text("App Store Unavailable")
+                Text(error.localizedDescription)
             }
-            Spacer()
-            Color(UIColor.systemGray6)
-                .frame(width: 76, height: 34.0)
-                .mask(Capsule())
         }
-        .frame(height: 34.0)
-        .padding(.vertical, 2.0)
     }
 }

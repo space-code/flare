@@ -4,6 +4,7 @@ excluded:
   - Package@swift-5.7.swift
   - Package@swift-5.8.swift
   - Sources/Flare/Classes/Generated/Strings.swift
+  - Sources/FlareUI/Classes/Presentation/Components/Core/Constants/UIConstants.swift
   - .build
 
 # Rules

@@ -33,10 +33,12 @@ struct ProductsView: View, IViewWrapper {
     @ViewBuilder
     private var contentView: some View {
         switch viewModel.state {
-        case let .productIDs(ids):
-            List(Array(ids), id: \.self) { id in
-                viewModel.productAssembly.assemble(id: id)
+        case let .products(products):
+            List(Array(products), id: \.self) { product in
+                viewModel.productAssembly.assemble(storeProduct: product)
             }
+        case let .error(error):
+            Text("Error")
         }
     }
 }

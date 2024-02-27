@@ -19,8 +19,8 @@ protocol IProductPresenter {
 final class ProductPresenter: IPresenter {
     // MARK: Properties
 
-    private let id: String
     private let iap: IFlare
+    private let productFetcher: IProductFetcherStrategy
 
     private var isInProgress = false
 
@@ -29,11 +29,11 @@ final class ProductPresenter: IPresenter {
     // MARK: Initialization
 
     init(
-        id: String,
-        iap: IFlare
+        iap: IFlare,
+        productFetcher: IProductFetcherStrategy
     ) {
-        self.id = id
         self.iap = iap
+        self.productFetcher = productFetcher
     }
 }
 
@@ -43,16 +43,11 @@ extension ProductPresenter: IProductPresenter {
     func viewDidLoad() {
         update(state: .loading)
 
-        iap.fetch(productIDs: [id]) { [weak self] result in
-            guard let self = self, let viewModel = self.viewModel else { return }
-
-            switch result {
-            case let .success(product):
-                guard let product = product.first else { return }
+        Task { @MainActor in
+            do {
+                let product = try await productFetcher.product()
                 self.update(state: .product(product))
-            case let .failure(error):
-                self.update(state: .error(error))
-            }
+            } catch {}
         }
     }
 
