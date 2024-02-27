@@ -5,7 +5,11 @@
 
 import Foundation
 
+/// An enum represents a paywall type.
 public enum PaywallType {
+    /// Represents a paywall for subscriptions.
     case subscriptions(type: SubscptionType)
+
+    /// Represents a paywall for specific products identified by their IDs.
     case products(productIDs: Set<String>)
 }

@@ -5,6 +5,8 @@
 
 import Flare
 
+/// A type defines dependencies for the package.
 protocol IFlareDependencies {
+    /// An IAP manager.
     var iap: IFlare { get }
 }

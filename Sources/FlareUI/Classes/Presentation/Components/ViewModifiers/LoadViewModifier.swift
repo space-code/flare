@@ -7,15 +7,21 @@ import SwiftUI
 
 // MARK: - LoadViewModifier
 
+/// A view modifier that triggers a handler once when view is loaded.
 struct LoadViewModifier: ViewModifier {
     // MARK: Private
 
+    /// A Bool value that indicates the view is loaded.
     @State private var isLoaded = false
 
+    /// A handler closure.
     private let handler: () -> Void
 
     // MARK: Initialization
 
+    /// Creates a ``LoadViewModifier`` instance.
+    ///
+    /// - Parameter handler: A handler closure to be preformed when view is loaded.
     init(handler: @escaping () -> Void) {
         self.handler = handler
     }
@@ -31,6 +37,8 @@ struct LoadViewModifier: ViewModifier {
         }
     }
 }
+
+// MARK: - Extensions
 
 extension View {
     func onLoad(_ handler: @escaping () -> Void) -> some View {

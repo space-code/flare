@@ -7,8 +7,8 @@ import SwiftUI
 
 // MARK: - ProductStyleKey
 
-public struct ProductStyleKey: EnvironmentKey {
-    public static var defaultValue = AnyProductStyle(style: DefaultProductStyle())
+struct ProductStyleKey: EnvironmentKey {
+    static var defaultValue = AnyProductStyle(style: DefaultProductStyle())
 }
 
 extension EnvironmentValues {

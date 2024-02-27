@@ -5,7 +5,11 @@
 
 import Foundation
 
+/// A type defines a presentation assembly.
 protocol IPresentationAssembly {
+    /// A products view assembly.
     var productsViewAssembly: IProductsViewAssembly { get }
+
+    /// A subscriptions view assembly.
     var subscritpionsViewAssembly: ISubscriptionAssembly { get }
 }

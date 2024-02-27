@@ -7,9 +7,13 @@ import SwiftUI
 
 // MARK: - IViewWrapper
 
+/// A type defines a wrapper for a view.
 protocol IViewWrapper: View {
     associatedtype ViewModel
 
+    /// Creates a new `IViewWrapper` instance.
+    ///
+    /// - Parameter viewModel: The view model.
     init(viewModel: ViewModel)
 }
 

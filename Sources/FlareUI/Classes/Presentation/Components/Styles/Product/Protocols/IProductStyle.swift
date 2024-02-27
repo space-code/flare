@@ -5,6 +5,7 @@
 
 import SwiftUI
 
+/// A type that represents a product style.
 public protocol IProductStyle {
     /// The properties of an in-app store product.
     typealias Configuration = ProductStyleConfiguration
