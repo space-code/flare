@@ -1,4 +1,4 @@
-name: "flare"
+name: "flare-ui"
 
 on:
   push:
@@ -9,8 +9,10 @@ on:
     paths:
       - '.swiftlint.yml'
       - ".github/workflows/**"
+      - "Package@swift-5.7.swift"
+      - "Package@swift-5.8.swift"
       - "Package.swift"
-      - "Source/**"
+      - "Source/FlareUI/**"
       - "Tests/**"
 
 jobs:
@@ -49,7 +51,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: ${{ matrix.name }}
-        run: xcodebuild test -scheme "Flare" -destination "platform=macOS" clean -enableCodeCoverage YES -resultBundlePath "test_output/${{ matrix.name }}.xcresult" || exit 1
+        run: |
+          xcodebuild clean build-for-testing \
+            -scheme "FlareUI" \
+            -destination "platform=macOS" \
+            -enableCodeCoverage YES \
+            -resultBundlePath "test_output/${{ matrix.name }}.xcresult" || exit 1
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3.1.0
         with:
@@ -86,7 +93,13 @@ jobs:
       - name: Generate project
         run: make generate
       - name: ${{ matrix.name }}
-        run: xcodebuild test -scheme "Flare" -destination "${{ matrix.destination }}" -testPlan AllTests clean -enableCodeCoverage YES -resultBundlePath "test_output/${{ matrix.name }}.xcresult" || exit 1
+        run: |
+          xcodebuild clean build-for-testing \
+            -scheme "FlareUI" \
+            -destination "${{ matrix.destination }}" \
+            -testPlan FlareUI \
+            -enableCodeCoverage YES \
+            -resultBundlePath "test_output/${{ matrix.name }}.xcresult" || exit 1
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.name }}
@@ -117,7 +130,13 @@ jobs:
       - name: Generate project
         run: make generate
       - name: ${{ matrix.name }}
-        run: xcodebuild test -scheme "Flare" -destination "${{ matrix.destination }}" -testPlan AllTests clean -enableCodeCoverage YES -resultBundlePath "test_output/${{ matrix.name }}.xcresult" || exit 1
+        run: |
+          xcodebuild clean build-for-testing \
+            -scheme "FlareUI" \
+            -destination "${{ matrix.destination }}" \
+            -testPlan FlareUI \
+            -enableCodeCoverage YES \
+            -resultBundlePath "test_output/${{ matrix.name }}.xcresult" || exit 1
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3.1.0
         with:
@@ -158,7 +177,13 @@ jobs:
       - name: Generate project
         run: make generate
       - name: ${{ matrix.name }}
-        run: xcodebuild test -scheme "Flare" -destination "${{ matrix.destination }}" -testPlan UnitTests clean -enableCodeCoverage YES -resultBundlePath "test_output/${{ matrix.name }}.xcresult" || exit 1
+        run: |
+          xcodebuild clean build-for-testing \
+            -scheme "FlareUI" \
+            -destination "${{ matrix.destination }}" \
+            -testPlan FlareUI \
+            -enableCodeCoverage YES \
+            -resultBundlePath "test_output/${{ matrix.name }}.xcresult" || exit 1
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3.1.0
         with:
@@ -189,7 +214,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: ${{ matrix.name }}
-        run: swift build -c release --target Flare
+        run: swift build -c release --target FlareUI
 
   merge-test-reports:
     needs: [iOS, macOS, watchOS, tvOS]

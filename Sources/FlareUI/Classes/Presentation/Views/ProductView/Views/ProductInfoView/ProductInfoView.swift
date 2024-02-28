@@ -32,7 +32,7 @@ struct ProductInfoView: View {
                     .font(.body)
                 Text(viewModel.description)
                     .font(.caption)
-                    .foregroundColor(Color(UIColor.systemGray))
+                    .foregroundColor(Palette.systemGray)
             }
             Spacer()
             Button(
@@ -45,7 +45,7 @@ struct ProductInfoView: View {
                         .fontWeight(.bold)
                 }
             )
-            .buttonStyle(.bordered)
+            .buttonStyle(BorderedButtonStyle())
         }
     }
 }
@@ -63,15 +63,17 @@ extension ProductInfoView {
 
 // MARK: Preview
 
-#Preview {
-    ProductInfoView(
-        viewModel: .init(
-            id: UUID().uuidString,
-            title: "My App Lifetime",
-            description: "Lifetime access to additional content",
-            price: "$19.99"
-        ),
-        icon: nil,
-        action: {}
-    )
-}
+#if swift(>=5.9)
+    #Preview {
+        ProductInfoView(
+            viewModel: .init(
+                id: UUID().uuidString,
+                title: "My App Lifetime",
+                description: "Lifetime access to additional content",
+                price: "$19.99"
+            ),
+            icon: nil,
+            action: {}
+        )
+    }
+#endif

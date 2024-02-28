@@ -13,15 +13,15 @@ struct ProductPlaceholderView: View {
     var body: some View {
         HStack(alignment: .center) {
             VStack(alignment: .leading, spacing: .spacing) {
-                Color(UIColor.systemGray6)
+                Palette.gray
                     .frame(width: .titleWidth, height: .titleHeight)
                     .mask(RoundedRectangle(cornerRadius: .cornerRadius4px))
-                Color(UIColor.systemGray6)
+                Palette.gray
                     .frame(width: .descriptionWidth, height: .descriptionHeight)
                     .mask(RoundedRectangle(cornerRadius: .cornerRadius4px))
             }
             Spacer()
-            Color(UIColor.systemGray6)
+            Palette.gray
                 .frame(width: .buttonWidth, height: .buttonHeight)
                 .mask(Capsule())
         }
@@ -32,9 +32,11 @@ struct ProductPlaceholderView: View {
 
 // MARK: Preview
 
-#Preview {
-    ProductPlaceholderView()
-}
+#if swift(>=5.9)
+    #Preview {
+        ProductPlaceholderView()
+    }
+#endif
 
 // MARK: Constants
 

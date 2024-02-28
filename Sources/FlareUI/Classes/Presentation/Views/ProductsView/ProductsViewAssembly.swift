@@ -20,7 +20,7 @@ final class ProductsViewAssembly: IProductsViewAssembly {
     private let productAssembly: IProductViewAssembly
     private let iap: IFlare
 
-    // MARK: Initializaiton
+    // MARK: Initialization
 
     init(productAssembly: IProductViewAssembly, iap: IFlare) {
         self.productAssembly = productAssembly

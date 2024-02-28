@@ -11,7 +11,7 @@ struct BorderedButtonStyle: ButtonStyle {
     // MARK: Properties
 
     private var backgroundColor: Color {
-        Color(UIColor.systemGray6)
+        Palette.gray
     }
 
     // MARK: ButtonStyle
@@ -27,7 +27,7 @@ struct BorderedButtonStyle: ButtonStyle {
     }
 }
 
-// MARK: Extentions
+// MARK: Extensions
 
 extension ButtonStyle where Self == BorderedButtonStyle {
     static var bordered: Self {

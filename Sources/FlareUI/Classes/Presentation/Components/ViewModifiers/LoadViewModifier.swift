@@ -21,7 +21,7 @@ struct LoadViewModifier: ViewModifier {
 
     /// Creates a ``LoadViewModifier`` instance.
     ///
-    /// - Parameter handler: A handler closure to be preformed when view is loaded.
+    /// - Parameter handler: A handler closure to be performed when view is loaded.
     init(handler: @escaping () -> Void) {
         self.handler = handler
     }

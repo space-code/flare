@@ -40,5 +40,11 @@ let package = Package(
                 .product(name: "TestConcurrency", package: "concurrency"),
             ]
         ),
+        .testTarget(
+            name: "FlareUITests",
+            dependencies: [
+                "Flare",
+            ]
+        ),
     ]
 )

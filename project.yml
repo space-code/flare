@@ -47,7 +47,7 @@ targets:
         TARGETED_DEVICE_FAMILY: "1,2,3,4"
         SUPPORTED_PLATFORMS: "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator"
     sources:
-      - path: Sources
+      - path: Sources/Flare
     scheme:
       testPlans:
         - path: Tests/TestPlans/AllTests.xctestplan
@@ -57,6 +57,25 @@ targets:
       gatherCoverageData: true
       coverageTargets:
         - Flare
+  FlareUI:
+    type: framework
+    supportedDestinations: [iOS, tvOS, macOS]
+    dependencies:
+      - target: Flare
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        TARGETED_DEVICE_FAMILY: "1,2,3,4"
+        SUPPORTED_PLATFORMS: "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator"
+    sources:
+      - path: Sources/FlareUI
+    scheme:
+      testPlans:
+        - path: Tests/TestPlans/FlareUI.xctestplan
+          defaultPlan: true
+      gatherCoverageData: true
+      coverageTargets:
+        - FlareUI
   FlareTests:
     type: bundle.unit-test
     supportedDestinations: [iOS, tvOS, macOS]
@@ -72,6 +91,19 @@ targets:
         TARGETED_DEVICE_FAMILY: "1,2,3,4"
     sources:
       - Tests/FlareTests/UnitTests
+  FlareUITests:
+    type: bundle.unit-test
+    supportedDestinations: [iOS, tvOS, macOS]
+    dependencies:
+      - target: Flare
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.spacecode.flare-unit-tests
+        SUPPORTED_PLATFORMS: "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator"
+        TARGETED_DEVICE_FAMILY: "1,2,3,4"
+    sources:
+      - Tests/FlareUITests/UnitTests
   IntegrationTests:
     type: bundle.unit-test
     supportedDestinations: [iOS, tvOS, macOS]
