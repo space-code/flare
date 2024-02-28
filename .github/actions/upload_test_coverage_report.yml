@@ -1,0 +1,30 @@
+name: Upload Test Coverate Report
+
+on:
+  workflow_call:
+    inputs:
+      filename:
+        required: true
+        type: string
+      scheme_name:
+        required: true
+        type: string
+    secrets:
+      codecov_token:
+        required: true
+
+jobs:
+  do-it:
+    runs-on: macos-13
+
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v3.1.0
+      with:
+        token: ${{ secrets.codecov_token }}
+        xcode: true
+        flags: ${{ inputs.scheme_name }}
+        xcode_archive_path: test_output/${{ inputs.filename }}.xcresult
+    - uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.inputs.filename }}
+        path: test_output

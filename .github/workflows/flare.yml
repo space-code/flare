@@ -137,16 +137,12 @@ jobs:
             -testPlan AllTests \
             -enableCodeCoverage YES \
             -resultBundlePath "test_output/${{ matrix.name }}.xcresult" || exit 1
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v3.1.0
+      - name: Upload test coverage reports to Codecov
+        uses: ./.github/actions/upload_test_coverage_report.yml
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          xcode: true
-          xcode_archive_path: test_output/${{ matrix.name }}.xcresult
-      - uses: actions/upload-artifact@v4
-        with:
-          name: ${{ matrix.name }}
-          path: test_output
+          scheme_name: Flare
+          filename: ${{ matrix.name }}
+          codecov_token: ${{ secrets.CODECOV_TOKEN }}
 
   watchOS:
     name: ${{ matrix.name }}
