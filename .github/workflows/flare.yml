@@ -41,12 +41,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: ${{ matrix.name }}
-        run: |
-          xcodebuild clean build-for-testing \
-            -scheme "Flare" \
-            -destination "platform=macOS" \
-            -enableCodeCoverage YES \
-            -resultBundlePath "test_output/${{ matrix.name }}.xcresult" || exit 1
+        uses: ./.github/actions/build_and_test
+        with:
+          scheme: Flare
+          destination: "platform=macOS"
+          name: ${{ matrix.name }}
+          generate_project: false
       - name: Upload test coverage reports to Codecov
         uses: ./.github/actions/upload_test_coverage_report
         with:
@@ -74,18 +74,13 @@ jobs:
             runsOn: macos-13
     steps:
       - uses: actions/checkout@v3
-      - name: Install Dependencies
-        run: make setup_build_tools
-      - name: Generate project
-        run: make generate
       - name: ${{ matrix.name }}
-        run: |
-          xcodebuild clean build-for-testing \
-            -scheme "Flare" \
-            -destination "${{ matrix.destination }}" \
-            -testPlan AllTests \
-            -enableCodeCoverage YES \
-            -resultBundlePath "test_output/${{ matrix.name }}.xcresult" || exit 1
+        uses: ./.github/actions/build_and_test
+        with:
+          scheme: Flare
+          destination: ${{ matrix.destination }}
+          name: ${{ matrix.name }}
+          test_plan: AllTests
       - name: Upload test coverage reports to Codecov
         uses: ./.github/actions/upload_test_coverage_report
         with:
@@ -113,18 +108,13 @@ jobs:
             runsOn: macos-13
     steps:
       - uses: actions/checkout@v3
-      - name: Install Dependencies
-        run: make setup_build_tools
-      - name: Generate project
-        run: make generate
       - name: ${{ matrix.name }}
-        run: |
-          xcodebuild clean build-for-testing \
-            -scheme "Flare" \
-            -destination "${{ matrix.destination }}" \
-            -testPlan AllTests \
-            -enableCodeCoverage YES \
-            -resultBundlePath "test_output/${{ matrix.name }}.xcresult" || exit 1
+        uses: ./.github/actions/build_and_test
+        with:
+          scheme: Flare
+          destination: ${{ matrix.destination }}
+          name: ${{ matrix.name }}
+          test_plan: AllTests
       - name: Upload test coverage reports to Codecov
         uses: ./.github/actions/upload_test_coverage_report
         with:
@@ -156,18 +146,13 @@ jobs:
             runsOn: macos-13
     steps:
       - uses: actions/checkout@v3
-      - name: Install Dependencies
-        run: make setup_build_tools
-      - name: Generate project
-        run: make generate
       - name: ${{ matrix.name }}
-        run: |
-          xcodebuild clean build-for-testing \
-            -scheme "Flare" \
-            -destination "${{ matrix.destination }}" \
-            -testPlan UnitTests \
-            -enableCodeCoverage YES \
-            -resultBundlePath "test_output/${{ matrix.name }}.xcresult" || exit 1
+        uses: ./.github/actions/build_and_test
+        with:
+          scheme: Flare
+          destination: ${{ matrix.destination }}
+          name: ${{ matrix.name }}
+          test_plan: UnitTests
       - name: Upload test coverage reports to Codecov
         uses: ./.github/actions/upload_test_coverage_report
         with:

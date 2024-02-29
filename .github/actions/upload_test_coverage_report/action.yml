@@ -1,4 +1,4 @@
-name: Build and Test Action
+name: Upload a Test Coverage Report
 
 inputs:
   filename:
