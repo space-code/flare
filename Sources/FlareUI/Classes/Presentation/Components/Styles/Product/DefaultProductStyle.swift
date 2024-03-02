@@ -27,10 +27,7 @@ struct DefaultProductStyle: IProductStyle {
             let viewModel = viewModelFactory.make(product)
             ProductInfoView(viewModel: viewModel, icon: configuration.icon) { configuration.purchase() }
         case let .error(error):
-            VStack {
-                Text("App Store Unavailable")
-                Text(error.localizedDescription)
-            }
+            ProductPlaceholderView()
         }
     }
 }

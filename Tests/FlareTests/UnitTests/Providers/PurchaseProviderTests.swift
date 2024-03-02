@@ -4,6 +4,7 @@
 //
 
 @testable import Flare
+import FlareMock
 import StoreKit
 import StoreKitTest
 import XCTest

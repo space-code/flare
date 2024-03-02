@@ -4,6 +4,7 @@
 //
 
 @testable import Flare
+import FlareMock
 import Foundation
 import class StoreKit.SKProduct
 import XCTest

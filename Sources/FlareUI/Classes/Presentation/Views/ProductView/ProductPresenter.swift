@@ -47,7 +47,13 @@ extension ProductPresenter: IProductPresenter {
             do {
                 let product = try await productFetcher.product()
                 self.update(state: .product(product))
-            } catch {}
+            } catch {
+                if let error = error as? IAPError {
+                    self.update(state: .error(error))
+                } else {
+                    self.update(state: .error(IAPError.with(error: error)))
+                }
+            }
         }
     }
 

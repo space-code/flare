@@ -76,6 +76,18 @@ targets:
       gatherCoverageData: true
       coverageTargets:
         - FlareUI
+  FlareMock:
+    type: framework
+    supportedDestinations: [iOS, tvOS, macOS]
+    dependencies:
+      - target: Flare
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        TARGETED_DEVICE_FAMILY: "1,2,3,4"
+        SUPPORTED_PLATFORMS: "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator"
+    sources:
+      - path: Sources/FlareMock
   FlareTests:
     type: bundle.unit-test
     supportedDestinations: [iOS, tvOS, macOS]
@@ -83,6 +95,7 @@ targets:
       - package: Concurrency
         product: TestConcurrency
       - target: Flare
+      - target: FlareMock
     settings:
       base:
         GENERATE_INFOPLIST_FILE: YES
@@ -96,6 +109,7 @@ targets:
     supportedDestinations: [iOS, tvOS, macOS]
     dependencies:
       - target: Flare
+      - target: FlareMock
     settings:
       base:
         GENERATE_INFOPLIST_FILE: YES

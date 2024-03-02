@@ -1,9 +1,10 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 @testable import Flare
+import FlareMock
 import StoreKit
 
 enum PurchaseManagerTestHelper {
