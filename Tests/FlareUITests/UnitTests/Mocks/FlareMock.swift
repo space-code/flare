@@ -48,6 +48,7 @@ final class FlareMock: IFlare {
     var invokedFetchCount = 0
     var invokedFetchParameters: (productIDs: Set<String>, Void)?
     var invokedFetchParametersList = [(productIDs: Set<String>, Void)]()
+    var stubbedFetchError: Error?
     var stubbedInvokedFetch: [StoreProduct] = []
 
     func fetch(productIDs: Set<String>) async throws -> [StoreProduct] {
@@ -55,6 +56,9 @@ final class FlareMock: IFlare {
         invokedFetchCount += 1
         invokedFetchParameters = (productIDs, ())
         invokedFetchParametersList.append((productIDs, ()))
+        if let stubbedFetchError = stubbedFetchError {
+            throw stubbedFetchError
+        }
         return stubbedInvokedFetch
     }
 

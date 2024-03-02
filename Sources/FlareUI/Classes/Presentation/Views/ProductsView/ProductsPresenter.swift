@@ -39,7 +39,7 @@ extension ProductsPresenter: IProductsPresenter {
                 let products = try await iap.fetch(productIDs: ids)
                 self.update(state: .products(products))
             } catch {
-                self.update(state: .error(error))
+                self.update(state: .error(error.iap))
             }
         }
     }

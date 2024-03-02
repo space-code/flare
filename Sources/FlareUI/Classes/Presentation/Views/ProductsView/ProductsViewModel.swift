@@ -9,9 +9,9 @@ import Foundation
 // MARK: - ProductsViewModel
 
 struct ProductsViewModel: IModel {
-    enum State {
+    enum State: Equatable {
         case products([StoreProduct])
-        case error(Error)
+        case error(IAPError)
     }
 
     let state: State
