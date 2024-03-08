@@ -41,15 +41,7 @@ struct ProductsView: View, IViewWrapper {
                 storeButtonView
             }
         case .error:
-            VStack {
-                Text("Store Unavailable")
-                    .font(.title)
-                Text("No in-app purchases are availiable in the current storefront.")
-                    .font(.body)
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(Palette.systemGray)
-            }
-            .padding()
+            StoreUnavaliableView()
         }
     }
 

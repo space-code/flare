@@ -15,15 +15,11 @@ import SwiftUI
 
 enum Palette {
     static var gray: Color {
-        #if os(macOS)
-            Color(NSColor.systemGray)
-        #elseif os(watchOS)
-            Color(UIColor.gray)
-        #elseif os(tvOS)
-            Color(UIColor.systemGray)
-        #else
-            Color(UIColor.systemGray6)
-        #endif
+        Color(Asset.Colors.gray.color)
+    }
+
+    static var dynamicBackground: Color {
+        Color(Asset.Colors.dynamicBackground.color)
     }
 
     static var systemGray: Color {
