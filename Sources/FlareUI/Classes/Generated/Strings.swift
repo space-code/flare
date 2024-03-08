@@ -22,16 +22,6 @@ internal enum L10n {
       internal static func price(_ p1: Any, _ p2: Any) -> String {
         return L10n.tr("Localizable", "product.subscription.price", String(describing: p1), String(describing: p2), fallback: "%@/%@")
       }
-      internal enum Duration {
-        /// Day
-        internal static let day = L10n.tr("Localizable", "product.subscription.duration.day", fallback: "Day")
-        /// Month
-        internal static let month = L10n.tr("Localizable", "product.subscription.duration.month", fallback: "Month")
-        /// Week
-        internal static let week = L10n.tr("Localizable", "product.subscription.duration.week", fallback: "Week")
-        /// Year
-        internal static let year = L10n.tr("Localizable", "product.subscription.duration.year", fallback: "Year")
-      }
     }
   }
   internal enum StoreButton {

@@ -67,7 +67,11 @@ final class IAPProvider: IIAPProvider {
                 completion: { (result: Result<[StoreProduct], Error>) in
                     switch result {
                     case let .success(products):
-                        completion(.success(products))
+                        if products.isEmpty {
+                            completion(.failure(.invalid(productIDs: Array(productIDs))))
+                        } else {
+                            completion(.success(products))
+                        }
                     case let .failure(error):
                         completion(.failure(.with(error: error)))
                     }

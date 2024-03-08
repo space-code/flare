@@ -22,6 +22,10 @@ enum Palette {
         Color(Asset.Colors.dynamicBackground.color)
     }
 
+    static var systemBackground: Color {
+        Color(Asset.Colors.systemBackground.color)
+    }
+
     static var systemGray: Color {
         #if os(macOS)
             Color(NSColor.systemGray)

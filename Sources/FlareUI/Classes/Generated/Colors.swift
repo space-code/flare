@@ -25,6 +25,7 @@ internal enum Asset {
   internal enum Colors {
     internal static let dynamicBackground = ColorAsset(name: "Colors/dynamic_background")
     internal static let gray = ColorAsset(name: "Colors/gray")
+    internal static let systemBackground = ColorAsset(name: "Colors/system_background")
   }
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name

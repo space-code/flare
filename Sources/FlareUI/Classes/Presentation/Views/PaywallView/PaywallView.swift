@@ -16,7 +16,11 @@ struct PaywallView: View {
 
     // MARK: Initialization
 
-    init(paywallType: PaywallType, productsAssembly: IProductsViewAssembly, subscriptionsAssembly: ISubscriptionAssembly) {
+    init(
+        paywallType: PaywallType,
+        productsAssembly: IProductsViewAssembly,
+        subscriptionsAssembly: ISubscriptionAssembly
+    ) {
         self.paywallType = paywallType
         self.productsAssembly = productsAssembly
         self.subscriptionsAssembly = subscriptionsAssembly
@@ -25,11 +29,15 @@ struct PaywallView: View {
     // MARK: View
 
     var body: some View {
-        switch paywallType {
-        case let .subscriptions(type):
-            return AnyView(subscriptionsAssembly.assembly(type: type))
-        case let .products(productIDs):
-            return AnyView(productsAssembly.assemble(ids: productIDs))
+        VStack(alignment: .leading) {
+            Group {
+                switch paywallType {
+                case let .subscriptions(type):
+                    AnyView(subscriptionsAssembly.assembly(type: type))
+                case let .products(productIDs):
+                    AnyView(productsAssembly.assemble(ids: productIDs))
+                }
+            }
         }
     }
 }

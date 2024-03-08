@@ -5,13 +5,14 @@
 
 import Flare
 import Foundation
+import StoreKit
 import SwiftUI
 
 // MARK: - IProductPresenter
 
 protocol IProductPresenter {
     func viewDidLoad()
-    func purchase() async throws
+    func purchase(options: PurchaseOptions?) async throws -> Bool
 }
 
 // MARK: - ProductPresenter
@@ -58,8 +59,8 @@ extension ProductPresenter: IProductPresenter {
     }
 
     @MainActor
-    func purchase() async throws {
-        guard !isInProgress else { return }
+    func purchase(options: PurchaseOptions?) async throws -> Bool {
+        guard !isInProgress else { return false }
 
         defer { isInProgress = false }
         isInProgress = true
@@ -69,12 +70,23 @@ extension ProductPresenter: IProductPresenter {
         }
 
         do {
-            let transaction = try await iap.purchase(product: product)
+            let transaction = try await purchase(product: product, options: options)
+            // TODO: Don't finish transaction
             await iap.finish(transaction: transaction)
+            return true
         } catch {
             if let error = error as? IAPError, error != .paymentCancelled {
                 throw error
             }
+            return false
+        }
+    }
+
+    private func purchase(product: StoreProduct, options: PurchaseOptions?) async throws -> StoreTransaction {
+        if #available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *), let options = options?.options {
+            return try await iap.purchase(product: product, options: options)
+        } else {
+            return try await iap.purchase(product: product)
         }
     }
 }

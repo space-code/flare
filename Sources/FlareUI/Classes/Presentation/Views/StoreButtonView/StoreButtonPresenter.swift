@@ -34,6 +34,12 @@ final class StoreButtonPresenter: IPresenter {
 extension StoreButtonPresenter: IStoreButtonPresenter {
     @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
     func restore() async throws {
-        try await iap.restore()
+        do {
+            try await iap.restore()
+        } catch {
+            if let error = error as? IAPError, error != .paymentCancelled {
+                throw error
+            }
+        }
     }
 }

@@ -37,7 +37,8 @@ struct ProductsView: View, IViewWrapper {
                 ForEach(Array(products), id: \.self) { product in
                     viewModel.productAssembly.assemble(storeProduct: product)
                 }
-                .padding()
+                .padding(.horizontal)
+                Spacer()
                 storeButtonView
             }
         case .error:

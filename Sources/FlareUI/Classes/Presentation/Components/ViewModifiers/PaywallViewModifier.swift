@@ -24,7 +24,11 @@ struct PaywallViewModifier: ViewModifier {
     ///   - paywallType: The paywall type.
     ///   - presented: The binding to control the presentation state of the paywall.
     ///   - presentationAssembly: The presentation assembly.
-    init(paywallType: PaywallType, presented: Binding<Bool>, presentationAssembly: IPresentationAssembly) {
+    init(
+        paywallType: PaywallType,
+        presented: Binding<Bool>,
+        presentationAssembly: IPresentationAssembly
+    ) {
         self.paywallType = paywallType
         self.presented = presented
         self.presentationAssembly = presentationAssembly
@@ -35,11 +39,14 @@ struct PaywallViewModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .sheet(isPresented: presented) {
-                PaywallView(
-                    paywallType: paywallType,
-                    productsAssembly: presentationAssembly.productsViewAssembly,
-                    subscriptionsAssembly: presentationAssembly.subscritpionsViewAssembly
-                )
+                ZStack {
+                    Palette.systemBackground.edgesIgnoringSafeArea(.all)
+                    PaywallView(
+                        paywallType: paywallType,
+                        productsAssembly: presentationAssembly.productsViewAssembly,
+                        subscriptionsAssembly: presentationAssembly.subscritpionsViewAssembly
+                    )
+                }
             }
     }
 }

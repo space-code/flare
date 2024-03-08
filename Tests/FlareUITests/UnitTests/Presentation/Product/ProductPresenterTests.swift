@@ -66,7 +66,7 @@ final class ProductPresenterTests: XCTestCase {
 
     func test_thatPresenterThrowsAnErrorIfProductIsMissing_whenPurchase() async throws {
         // when
-        let error: Error? = await error(for: { try await sut.purchase() })
+        let error: Error? = await error(for: { try await sut.purchase(options: nil) })
 
         // then
         let iapError = try XCTUnwrap(error as? IAPError)
@@ -79,7 +79,7 @@ final class ProductPresenterTests: XCTestCase {
         flareMock.stubbedPurchase = .fake()
 
         // when
-        _ = try await sut.purchase()
+        _ = try await sut.purchase(options: nil)
 
         // then
         XCTAssertEqual(flareMock.invokedPurchaseCount, 1)
@@ -92,7 +92,7 @@ final class ProductPresenterTests: XCTestCase {
         flareMock.stubbedPurchaseError = IAPError.paymentCancelled
 
         // when
-        _ = try await sut.purchase()
+        _ = try await sut.purchase(options: nil)
 
         // then
         XCTAssertEqual(flareMock.invokedPurchaseCount, 1)
