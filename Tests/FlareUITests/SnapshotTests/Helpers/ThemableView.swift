@@ -4,7 +4,7 @@
 //
 
 #if os(macOS)
-    import Cocoa
+    import SwiftUI
 
     final class ThemableView<Content: View>: NSHostingView<Content> {
         required init(rootView: Content, appearance: NSAppearance?) {
