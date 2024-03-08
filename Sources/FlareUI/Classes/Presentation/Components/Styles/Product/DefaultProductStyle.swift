@@ -22,12 +22,12 @@ struct DefaultProductStyle: IProductStyle {
     func makeBody(configuration: ProductStyleConfiguration) -> some View {
         switch configuration.state {
         case .loading:
-            ProductPlaceholderView()
+            ProductPlaceholderView(isIconHidden: configuration.icon == nil)
         case let .product(product):
             let viewModel = viewModelFactory.make(product)
             ProductInfoView(viewModel: viewModel, icon: configuration.icon) { configuration.purchase() }
         case .error:
-            ProductPlaceholderView()
+            ProductPlaceholderView(isIconHidden: configuration.icon == nil)
         }
     }
 }

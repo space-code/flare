@@ -12,7 +12,7 @@ import Foundation
 final class ProductPlaceholderViewSnapshotTests: SnapshotTestCase {
     func test_productPlaceholderView() {
         assertSnapshots(
-            of: ProductPlaceholderView(),
+            of: ProductPlaceholderView(isIconHidden: true),
             size: .size
         )
     }
