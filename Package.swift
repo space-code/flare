@@ -8,6 +8,7 @@ let visionOSSetting: SwiftSetting = .define("VISION_OS", .when(platforms: [.visi
 
 let package = Package(
     name: "Flare",
+    defaultLocalization: "en",
     platforms: [
         .macOS(.v10_15),
         .iOS(.v13),

@@ -27,20 +27,20 @@ struct ProductPlaceholderView: View {
     // MARK: Private
 
     private var contentView: some View {
-        Group {
-            HStack(spacing: .iconSpacing) {
+        HStack(spacing: .iconSpacing) {
+            if !isIconHidden {
                 iconView
-                HStack {
-                    textView
-                    Spacer()
-                    buttonView
-                }
-                .padding(.padding)
             }
-            .background(value(default: Color.clear, tvOS: Palette.dynamicBackground))
-            .frame(height: .height)
-            .padding(.vertical, value(default: .spacing, tvOS: .zero))
+            HStack(alignment: .center) {
+                textView
+                Spacer()
+                buttonView
+            }
+            .padding(.padding)
         }
+        .background(value(default: Color.clear, tvOS: Palette.dynamicBackground))
+        .frame(height: .height)
+        .padding(.vertical, value(default: .spacing, tvOS: .zero))
     }
 
     private var textView: some View {
@@ -97,8 +97,10 @@ struct ProductPlaceholderView: View {
 #if swift(>=5.9)
     #Preview {
         Group {
-            ProductPlaceholderView(isIconHidden: true)
-            ProductPlaceholderView(isIconHidden: false)
+            ForEach(0 ..< 10) { _ in
+                ProductPlaceholderView(isIconHidden: true)
+                ProductPlaceholderView(isIconHidden: false)
+            }
         }
     }
 #endif

@@ -57,7 +57,7 @@ class SnapshotTestCase: XCTestCase {
             )
         #elseif os(macOS)
             SnapshotTesting.assertSnapshots(
-                of: NSHostingView(rootView: view.preferredColorScheme(userInterfaceStyle.colorScheme)),
+                of: ThemableView(rootView: view, appearance: userInterfaceStyle.appearance),
                 as: [.image(precision: 1.0, size: size)],
                 file: file,
                 testName: testName + osName,
@@ -76,6 +76,15 @@ class SnapshotTestCase: XCTestCase {
                     return .light
                 case .dark:
                     return .dark
+                }
+            }
+        #else
+            var appearance: NSAppearance? {
+                switch self {
+                case .light:
+                    return .init(named: .vibrantLight)
+                case .dark:
+                    return .init(named: .darkAqua)
                 }
             }
         #endif

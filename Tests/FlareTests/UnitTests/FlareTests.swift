@@ -52,9 +52,9 @@ class FlareTests: XCTestCase {
     func test_thatFlareFetchesProductsWithGivenProductIDs() async throws {
         // given
         let productMocks = [
-            StoreProduct(skProduct: ProductMock()),
-            StoreProduct(skProduct: ProductMock()),
-            StoreProduct(skProduct: ProductMock()),
+            StoreProduct(ProductMock()),
+            StoreProduct(ProductMock()),
+            StoreProduct(ProductMock()),
         ]
         iapProviderMock.fetchAsyncResult = productMocks
 
@@ -70,7 +70,7 @@ class FlareTests: XCTestCase {
         iapProviderMock.stubbedCanMakePayments = true
 
         // when
-        sut.purchase(product: .fake(skProduct: .fake(id: .productID)), completion: { _ in })
+        sut.purchase(product: .fake(productIdentifier: .productID), completion: { _ in })
 
         // then
         XCTAssertTrue(iapProviderMock.invokedPurchaseWithPromotionalOffer)
@@ -82,7 +82,7 @@ class FlareTests: XCTestCase {
         iapProviderMock.stubbedCanMakePayments = false
 
         // when
-        sut.purchase(product: .fake(skProduct: .fake(id: .productID)), completion: { _ in })
+        sut.purchase(product: .fake(productIdentifier: .productID), completion: { _ in })
 
         // then
         XCTAssertFalse(iapProviderMock.invokedPurchase)
@@ -96,7 +96,7 @@ class FlareTests: XCTestCase {
 
         // when
         var transaction: IStoreTransaction?
-        sut.purchase(product: .fake(skProduct: .fake(id: .productID)), completion: { result in
+        sut.purchase(product: .fake(productIdentifier: .productID), completion: { result in
             transaction = result.success
         })
         iapProviderMock.invokedPurchaseParameters?.completion(.success(paymentTransaction))
@@ -114,7 +114,7 @@ class FlareTests: XCTestCase {
 
         // when
         var error: IAPError?
-        sut.purchase(product: .fake(skProduct: .fake(id: .productID)), completion: { result in
+        sut.purchase(product: .fake(productIdentifier: .productID), completion: { result in
             error = result.error
         })
         iapProviderMock.invokedPurchaseParameters?.completion(.failure(errorMock))
@@ -130,7 +130,7 @@ class FlareTests: XCTestCase {
         iapProviderMock.stubbedAsyncPurchase = StoreTransaction(storeTransaction: StoreTransactionStub())
 
         // when
-        let iapError: IAPError? = await error(for: { try await sut.purchase(product: .fake(skProduct: .fake(id: .productID))) })
+        let iapError: IAPError? = await error(for: { try await sut.purchase(product: .fake(productIdentifier: .productID)) })
 
         // then
         XCTAssertFalse(iapProviderMock.invokedAsyncPurchase)
@@ -145,7 +145,7 @@ class FlareTests: XCTestCase {
         iapProviderMock.stubbedPurchaseAsyncWithPromotionalOffer = transactionMock
 
         // when
-        let transaction = await value(for: { try await sut.purchase(product: .fake(skProduct: .fake(id: .productID))) })
+        let transaction = await value(for: { try await sut.purchase(product: .fake(productIdentifier: .productID)) })
 
         // then
         XCTAssertTrue(iapProviderMock.invokedPurchaseAsyncWithPromotionalOffer)

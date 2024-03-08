@@ -24,7 +24,7 @@ enum PurchaseManagerTestHelper {
     }
 
     static func makeProduct(with productIdentifier: String) -> SKProduct {
-        let product = ProductMock()
+        let product = SKProductMock()
         product.stubbedProductIdentifier = productIdentifier
         return product
     }

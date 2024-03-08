@@ -22,10 +22,8 @@ struct StoreButtonView: View, IViewWrapper {
     // MARK: View
 
     var body: some View {
-        NavigationView {
-            contentView
-                .errorAlert($error)
-        }
+        contentView
+            .errorAlert($error)
     }
 
     // MARK: Private

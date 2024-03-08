@@ -6,6 +6,7 @@ import PackageDescription
 
 let package = Package(
     name: "Flare",
+    defaultLocalization: "en",
     platforms: [
         .macOS(.v10_15),
         .iOS(.v13),

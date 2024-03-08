@@ -37,7 +37,7 @@ final class ProductInfoViewSnapshotTests: SnapshotTestCase {
 // MARK: - Constants
 
 private extension CGSize {
-    static let size = CGSize(width: 375.0, height: 76.0)
+    static let size = value(default: CGSize(width: 375.0, height: 76.0), tvOS: CGSize(width: 1920, height: 1080))
 }
 
 private extension ProductInfoView.ViewModel {

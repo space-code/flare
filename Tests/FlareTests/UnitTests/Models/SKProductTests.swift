@@ -14,7 +14,7 @@ import XCTest
 final class SKProductTests: XCTestCase {
     func test_thatSKProductFormatsPriceValueAccoringToLocale() {
         // given
-        let product = ProductMock()
+        let product = SKProductMock()
         product.stubbedPrice = NSDecimalNumber(value: UInt.price)
         product.stubbedPriceLocale = Locale(identifier: .localeID)
 

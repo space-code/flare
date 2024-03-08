@@ -73,5 +73,5 @@ private extension ProductViewSnapshotTests {
 // MARK: - Constants
 
 private extension CGSize {
-    static let size = CGSize(width: 375.0, height: 812.0)
+    static let size = value(default: CGSize(width: 375.0, height: 812.0), tvOS: CGSize(width: 1920, height: 1080))
 }

@@ -7,15 +7,12 @@ import SwiftUI
 
 public extension View {
     func storeButton(_ visibility: StoreButtonVisibility, type: StoreButtonType) -> some View {
-        @Environment(\.storeButton) var values
-
-        let filteredValues = {
+        transformEnvironment(\.storeButton) { values in
             if visibility == .hidden {
-                return values.filter { $0 != type }
+                values = values.filter { $0 != type }
+            } else {
+                values += [type]
             }
-            return values
-        }()
-
-        return environment(\.storeButton, filteredValues)
+        }
     }
 }

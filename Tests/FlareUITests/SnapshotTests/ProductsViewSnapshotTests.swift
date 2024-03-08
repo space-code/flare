@@ -23,6 +23,7 @@ final class ProductsViewSnapshotTests: SnapshotTestCase {
         )
     }
 
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
     func test_productsView_products() {
         let iapMock = FlareMock()
         iapMock.stubbedInvokedFetch = [.fake(), .fake(), .fake()]
@@ -33,9 +34,9 @@ final class ProductsViewSnapshotTests: SnapshotTestCase {
                     state: .products(iapMock.stubbedInvokedFetch),
                     presenter: ProductsPresenterMock(),
                     productAssembly: ProductViewAssembly(iap: iapMock),
-                    storeButtonAssembly: StoreButtonAssemblyMock()
+                    storeButtonAssembly: StoreButtonAssembly(iap: FlareMock())
                 )
-            ),
+            ).storeButton(.visible, type: .restore),
             size: .size
         )
     }
@@ -44,5 +45,9 @@ final class ProductsViewSnapshotTests: SnapshotTestCase {
 // MARK: - Constants
 
 private extension CGSize {
-    static let size = CGSize(width: 375.0, height: 812.0)
+    static let size = value(
+        default: CGSize(width: 375.0, height: 812.0),
+        tvOS: CGSize(width: 1920, height: 1080),
+        macOS: CGSize(width: 1920, height: 1080)
+    )
 }

@@ -42,7 +42,7 @@ final class PurchaseProviderTests: XCTestCase {
 
     func test_thatPurchaseProviderReturnsPaymentTransaction_whenSK1ProductExist() {
         // given
-        let productMock = StoreProduct(skProduct: ProductMock())
+        let productMock = StoreProduct(ProductMock())
         let paymentTransaction = SKPaymentTransaction()
         let storeTransaction = StoreTransaction(paymentTransaction: PaymentTransaction(paymentTransaction))
 

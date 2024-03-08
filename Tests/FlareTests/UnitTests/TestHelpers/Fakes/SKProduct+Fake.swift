@@ -9,7 +9,7 @@ import StoreKit
 
 extension SKProduct {
     static func fake(id: String) -> SKProduct {
-        let product = ProductMock()
+        let product = SKProductMock()
         product.stubbedProductIdentifier = id
         return product
     }

@@ -22,10 +22,9 @@ struct ProductsView: View, IViewWrapper {
     // MARK: View
 
     var body: some View {
-        NavigationView {
-            contentView
-                .onAppear { viewModel.presenter.viewDidLoad() }
-        }
+        contentView
+            .onAppear { viewModel.presenter.viewDidLoad() }
+            .padding()
     }
 
     // MARK: Private
@@ -34,10 +33,11 @@ struct ProductsView: View, IViewWrapper {
     private var contentView: some View {
         switch viewModel.state {
         case let .products(products):
-            VStack {
-                List(Array(products), id: \.self) { product in
+            VStack(alignment: .center) {
+                ForEach(Array(products), id: \.self) { product in
                     viewModel.productAssembly.assemble(storeProduct: product)
                 }
+                .padding()
                 storeButtonView
             }
         case .error:
@@ -46,10 +46,8 @@ struct ProductsView: View, IViewWrapper {
     }
 
     private var storeButtonView: some View {
-        Group {
-            ForEach(storeButton, id: \.self) { type in
-                viewModel.storeButtonAssembly.assemble(storeButtonType: type)
-            }
+        ForEach(storeButton, id: \.self) { type in
+            viewModel.storeButtonAssembly.assemble(storeButtonType: type)
         }
     }
 }
