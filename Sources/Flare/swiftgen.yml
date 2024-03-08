@@ -1,5 +1,5 @@
-input_dir: Sources/Flare/Resources
-output_dir: Sources/Flare/Classes/Generated
+input_dir: Resources
+output_dir: Classes/Generated
 strings:
     inputs:
         - Localizable.strings
