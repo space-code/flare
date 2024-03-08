@@ -26,7 +26,7 @@ struct DefaultProductStyle: IProductStyle {
         case let .product(product):
             let viewModel = viewModelFactory.make(product)
             ProductInfoView(viewModel: viewModel, icon: configuration.icon) { configuration.purchase() }
-        case let .error(error):
+        case .error:
             ProductPlaceholderView()
         }
     }

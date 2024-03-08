@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-extension View {
+public extension View {
     func productViewStyle(_ style: some IProductStyle) -> some View {
         environment(\.productViewStyle, AnyProductStyle(style: style))
     }

@@ -15,7 +15,8 @@ final class ProductsViewSnapshotTests: SnapshotTestCase {
                 viewModel: ProductsViewModel(
                     state: .error(.storeProductNotAvailable),
                     presenter: ProductsPresenterMock(),
-                    productAssembly: ProductViewAssemblyMock()
+                    productAssembly: ProductViewAssemblyMock(),
+                    storeButtonAssembly: StoreButtonAssemblyMock()
                 )
             ),
             size: .size
@@ -31,7 +32,8 @@ final class ProductsViewSnapshotTests: SnapshotTestCase {
                 viewModel: ProductsViewModel(
                     state: .products(iapMock.stubbedInvokedFetch),
                     presenter: ProductsPresenterMock(),
-                    productAssembly: ProductViewAssembly(iap: iapMock)
+                    productAssembly: ProductViewAssembly(iap: iapMock),
+                    storeButtonAssembly: StoreButtonAssemblyMock()
                 )
             ),
             size: .size

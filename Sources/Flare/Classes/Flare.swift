@@ -153,6 +153,11 @@ extension Flare: IFlare {
         try await iapProvider.checkEligibility(productIDs: productIDs)
     }
 
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    public func restore() async throws {
+        try await iapProvider.restore()
+    }
+
     #if os(iOS) || VISION_OS
         @available(iOS 15.0, *)
         @available(macOS, unavailable)

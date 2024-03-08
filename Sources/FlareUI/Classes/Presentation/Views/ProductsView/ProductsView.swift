@@ -3,7 +3,6 @@
 // Copyright © 2024 Space Code. All rights reserved.
 //
 
-import StoreKit
 import SwiftUI
 
 // MARK: - ProductsView
@@ -11,6 +10,7 @@ import SwiftUI
 struct ProductsView: View, IViewWrapper {
     // MARK: Properties
 
+    @Environment(\.storeButton) var storeButton
     private let viewModel: ProductsViewModel
 
     // MARK: Initialization
@@ -34,8 +34,11 @@ struct ProductsView: View, IViewWrapper {
     private var contentView: some View {
         switch viewModel.state {
         case let .products(products):
-            List(Array(products), id: \.self) { product in
-                viewModel.productAssembly.assemble(storeProduct: product)
+            VStack {
+                List(Array(products), id: \.self) { product in
+                    viewModel.productAssembly.assemble(storeProduct: product)
+                }
+                storeButtonView
             }
         case .error:
             VStack {
@@ -47,6 +50,14 @@ struct ProductsView: View, IViewWrapper {
                     .foregroundColor(Palette.systemGray)
             }
             .padding()
+        }
+    }
+
+    private var storeButtonView: some View {
+        Group {
+            ForEach(storeButton, id: \.self) { type in
+                viewModel.storeButtonAssembly.assemble(storeButtonType: type)
+            }
         }
     }
 }

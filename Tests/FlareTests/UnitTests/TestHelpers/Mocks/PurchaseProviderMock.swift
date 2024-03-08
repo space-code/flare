@@ -80,4 +80,7 @@ final class PurchaseProviderMock: IPurchaseProvider {
             completion(result.0)
         }
     }
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    func restore() async throws {}
 }

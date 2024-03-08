@@ -188,6 +188,11 @@ final class IAPProvider: IIAPProvider {
         return try await eligibilityProvider.checkEligibility(products: products)
     }
 
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    func restore() async throws {
+        try await purchaseProvider.restore()
+    }
+
     #if os(iOS) || VISION_OS
         @available(iOS 15.0, *)
         @available(macOS, unavailable)

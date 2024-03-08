@@ -17,13 +17,15 @@ protocol IProductsViewAssembly {
 final class ProductsViewAssembly: IProductsViewAssembly {
     // MARK: Properties
 
+    private let storeButtonAssembly: IStoreButtonAssembly
     private let productAssembly: IProductViewAssembly
     private let iap: IFlare
 
     // MARK: Initialization
 
-    init(productAssembly: IProductViewAssembly, iap: IFlare) {
+    init(productAssembly: IProductViewAssembly, storeButtonAssembly: IStoreButtonAssembly, iap: IFlare) {
         self.productAssembly = productAssembly
+        self.storeButtonAssembly = storeButtonAssembly
         self.iap = iap
     }
 
@@ -38,7 +40,8 @@ final class ProductsViewAssembly: IProductsViewAssembly {
             model: ProductsViewModel(
                 state: .products([]),
                 presenter: presenter,
-                productAssembly: productAssembly
+                productAssembly: productAssembly,
+                storeButtonAssembly: storeButtonAssembly
             )
         )
         presenter.viewModel = viewModel
