@@ -2,3 +2,4 @@
 "store_unavailable.message" = "No in-app purchases are availiable in the current storefront.";
 "store_button.restore_purchases" = "Restore Missing Purchases";
 "error.default.title" = "Error Occurred";
+"product.subscription.price" = "%@/%@";

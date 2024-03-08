@@ -16,6 +16,24 @@ internal enum L10n {
       internal static let title = L10n.tr("Localizable", "error.default.title", fallback: "Error Occurred")
     }
   }
+  internal enum Product {
+    internal enum Subscription {
+      /// %@/%@
+      internal static func price(_ p1: Any, _ p2: Any) -> String {
+        return L10n.tr("Localizable", "product.subscription.price", String(describing: p1), String(describing: p2), fallback: "%@/%@")
+      }
+      internal enum Duration {
+        /// Day
+        internal static let day = L10n.tr("Localizable", "product.subscription.duration.day", fallback: "Day")
+        /// Month
+        internal static let month = L10n.tr("Localizable", "product.subscription.duration.month", fallback: "Month")
+        /// Week
+        internal static let week = L10n.tr("Localizable", "product.subscription.duration.week", fallback: "Week")
+        /// Year
+        internal static let year = L10n.tr("Localizable", "product.subscription.duration.year", fallback: "Year")
+      }
+    }
+  }
   internal enum StoreButton {
     /// Restore Missing Purchases
     internal static let restorePurchases = L10n.tr("Localizable", "store_button.restore_purchases", fallback: "Restore Missing Purchases")
