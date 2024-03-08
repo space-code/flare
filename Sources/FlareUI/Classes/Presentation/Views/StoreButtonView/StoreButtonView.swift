@@ -11,6 +11,7 @@ struct StoreButtonView: View, IViewWrapper {
     // MARK: Properties
 
     private let viewModel: StoreButtonViewModel
+    @State private var error: Error?
 
     // MARK: Initialization
 
@@ -23,6 +24,7 @@ struct StoreButtonView: View, IViewWrapper {
     var body: some View {
         NavigationView {
             contentView
+                .errorAlert($error)
         }
     }
 
@@ -36,7 +38,9 @@ struct StoreButtonView: View, IViewWrapper {
                     if #available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *) {
                         try await viewModel.presenter.restore()
                     }
-                } catch {}
+                } catch {
+                    self.error = error
+                }
             }
         }, label: {
             Text(viewModel.state.title)

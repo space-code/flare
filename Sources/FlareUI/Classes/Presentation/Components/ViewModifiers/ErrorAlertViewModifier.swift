@@ -33,7 +33,7 @@ struct ErrorAlertViewModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .alert(isPresented: isErrorPresented) {
-                Alert(title: Text("Error Occurred"), message: Text(error?.localizedDescription ?? ""))
+                Alert(title: Text(L10n.Error.Default.title), message: Text(error?.localizedDescription ?? ""))
             }
     }
 }

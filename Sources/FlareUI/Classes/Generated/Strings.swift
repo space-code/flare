@@ -10,6 +10,12 @@ import Foundation
 // swiftlint:disable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
 internal enum L10n {
+  internal enum Error {
+    internal enum Default {
+      /// Error Occurred
+      internal static let title = L10n.tr("Localizable", "error.default.title", fallback: "Error Occurred")
+    }
+  }
   internal enum StoreButton {
     /// Restore Missing Purchases
     internal static let restorePurchases = L10n.tr("Localizable", "store_button.restore_purchases", fallback: "Restore Missing Purchases")
