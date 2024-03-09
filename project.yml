@@ -17,6 +17,9 @@ packages:
   Atomic:
     url: https://github.com/space-code/atomic.git
     from: 1.0.0
+  SnapshotTesting:
+    url: https://github.com/pointfreeco/swift-snapshot-testing.git
+    from: 1.15.3
 targets:
   UnitTestHostApp:
     type: application
@@ -67,6 +70,7 @@ targets:
         GENERATE_INFOPLIST_FILE: YES
         TARGETED_DEVICE_FAMILY: "1,2,3,4"
         SUPPORTED_PLATFORMS: "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator"
+        PRODUCT_BUNDLE_IDENTIFIER: com.spacecode.flare.ui
     sources:
       - path: Sources/FlareUI
     scheme:
@@ -110,6 +114,8 @@ targets:
     dependencies:
       - target: Flare
       - target: FlareMock
+      - target: FlareUI
+      - package: SnapshotTesting
     settings:
       base:
         GENERATE_INFOPLIST_FILE: YES
@@ -117,7 +123,7 @@ targets:
         SUPPORTED_PLATFORMS: "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator"
         TARGETED_DEVICE_FAMILY: "1,2,3,4"
     sources:
-      - Tests/FlareUITests/UnitTests
+      - Tests/FlareUITests
   IntegrationTests:
     type: bundle.unit-test
     supportedDestinations: [iOS, tvOS, macOS]

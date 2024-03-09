@@ -22,6 +22,7 @@ final class ProductInfoViewSnapshotTests: SnapshotTestCase {
         )
     }
 
+    @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 12.0, *)
     func test_productInfoView_whenIconIsNotNil() {
         assertSnapshots(
             of: ProductInfoView(

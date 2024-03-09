@@ -29,8 +29,8 @@ internal enum L10n {
     internal static let restorePurchases = L10n.tr("Localizable", "store_button.restore_purchases", fallback: "Restore Missing Purchases")
   }
   internal enum StoreUnavailable {
-    /// No in-app purchases are availiable in the current storefront.
-    internal static let message = L10n.tr("Localizable", "store_unavailable.message", fallback: "No in-app purchases are availiable in the current storefront.")
+    /// No in-app purchases are available in the current storefront.
+    internal static let message = L10n.tr("Localizable", "store_unavailable.message", fallback: "No in-app purchases are available in the current storefront.")
     /// Store Unavailable
     internal static let title = L10n.tr("Localizable", "store_unavailable.title", fallback: "Store Unavailable")
   }

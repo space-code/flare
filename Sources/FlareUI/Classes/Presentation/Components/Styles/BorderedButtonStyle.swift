@@ -8,19 +8,13 @@ import SwiftUI
 // MARK: - BorderedButtonStyle
 
 struct BorderedButtonStyle: ButtonStyle {
-    // MARK: Properties
-
-    private var backgroundColor: Color {
-        Palette.gray
-    }
-
     // MARK: ButtonStyle
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .padding(.horizontal, .horizontalPadding)
             .padding(.vertical, .verticalPadding)
-            .background(backgroundColor)
+            .background(Palette.gray)
             .foregroundColor(.blue)
             .mask(Capsule())
             .opacity(configuration.isPressed ? 0.5 : 1.0)

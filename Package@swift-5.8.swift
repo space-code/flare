@@ -37,7 +37,11 @@ let package = Package(
             ],
             resources: [.process("Resources")]
         ),
-        .target(name: "FlareUI", dependencies: ["Flare"]),
+        .target(
+            name: "FlareUI",
+            dependencies: ["Flare"],
+            resources: [.process("Resources")]
+        ),
         .target(name: "FlareMock", dependencies: ["Flare"]),
         .testTarget(
             name: "FlareTests",

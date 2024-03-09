@@ -1,7 +1,7 @@
 input_dir: Resources
 output_dir: Classes/Generated
 xcassets:
-    inputs: Assets/Media.xcassets
+    inputs: Assets/Assets.xcassets
     outputs:
         templateName: swift5
         output: Colors.swift

@@ -41,7 +41,11 @@ let package = Package(
             resources: [.process("Resources")],
             swiftSettings: [visionOSSetting]
         ),
-        .target(name: "FlareUI", dependencies: ["Flare"]),
+        .target(
+            name: "FlareUI",
+            dependencies: ["Flare"],
+            resources: [.process("Resources")]
+        ),
         .target(name: "FlareMock", dependencies: ["Flare"]),
         .testTarget(
             name: "FlareTests",

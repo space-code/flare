@@ -15,15 +15,15 @@ import SwiftUI
 
 enum Palette {
     static var gray: Color {
-        Color(Asset.Colors.gray.color)
+        Asset.Colors.gray.swiftUIColor
     }
 
     static var dynamicBackground: Color {
-        Color(Asset.Colors.dynamicBackground.color)
+        Asset.Colors.dynamicBackground.swiftUIColor
     }
 
     static var systemBackground: Color {
-        Color(Asset.Colors.systemBackground.color)
+        Asset.Colors.systemBackground.swiftUIColor
     }
 
     static var systemGray: Color {
