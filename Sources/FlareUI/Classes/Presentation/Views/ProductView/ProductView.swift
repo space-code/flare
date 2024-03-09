@@ -17,6 +17,7 @@ struct ProductView: View, IViewWrapper {
     @Environment(\.purchaseOptions) var purchaseOptions
 
     @State private var error: Error?
+    @State private var isExecuted = false
 
     private let viewModel: ProductViewModel
 
@@ -54,19 +55,23 @@ struct ProductView: View, IViewWrapper {
     }
 
     private func purchase() {
-        guard case let .product(storeProduct) = viewModel.state else { return }
+        guard case let .product(storeProduct) = viewModel.state, !isExecuted else { return }
+
+        isExecuted = true
 
         Task { @MainActor in
+            defer { isExecuted = false }
+
             do {
                 let options = purchaseOptions?(storeProduct)
-                let result = try await viewModel.presenter.purchase(options: options)
+                let transaction = try await viewModel.presenter.purchase(options: options)
 
-                if result {
-                    purchaseCompletion?(storeProduct, .success(()))
-                }
+                purchaseCompletion?(storeProduct, .success(transaction))
             } catch {
-                self.error = error
-                purchaseCompletion?(storeProduct, .failure(error))
+                if error.iap != .paymentCancelled {
+                    self.error = error.iap
+                    purchaseCompletion?(storeProduct, .failure(error))
+                }
             }
         }
     }

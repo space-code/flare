@@ -9,11 +9,11 @@ import SwiftUI
 // MARK: - PurchaseCompletionKey
 
 struct PurchaseCompletionKey: EnvironmentKey {
-    static var defaultValue: ((StoreProduct, Result<Void, Error>) -> Void)?
+    static var defaultValue: ((StoreProduct, Result<StoreTransaction, Error>) -> Void)?
 }
 
 extension EnvironmentValues {
-    var purchaseCompletion: ((StoreProduct, Result<Void, Error>) -> Void)? {
+    var purchaseCompletion: ((StoreProduct, Result<StoreTransaction, Error>) -> Void)? {
         get { self[PurchaseCompletionKey.self] }
         set { self[PurchaseCompletionKey.self] = newValue }
     }

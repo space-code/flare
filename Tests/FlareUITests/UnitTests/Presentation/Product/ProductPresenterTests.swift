@@ -12,7 +12,7 @@ import XCTest
 final class ProductPresenterTests: XCTestCase {
     // MARK: Properties
 
-    private var flareMock: FlareMock!
+    private var purchaseServiceMock: ProductPurchaseServiceMock!
     private var productFetcherMock: ProductFetcherMock!
     private var viewModelMock: ViewModel<ProductViewModel>!
 
@@ -22,11 +22,11 @@ final class ProductPresenterTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        flareMock = FlareMock()
+        purchaseServiceMock = ProductPurchaseServiceMock()
         productFetcherMock = ProductFetcherMock()
         sut = ProductPresenter(
-            iap: flareMock,
-            productFetcher: productFetcherMock
+            productFetcher: productFetcherMock,
+            purchaseService: purchaseServiceMock
         )
         viewModelMock = ViewModel(model: ProductViewModel(state: .loading, presenter: sut))
         sut.viewModel = viewModelMock
@@ -35,7 +35,7 @@ final class ProductPresenterTests: XCTestCase {
     override func tearDown() {
         sut = nil
         productFetcherMock = nil
-        flareMock = nil
+        purchaseServiceMock = nil
         viewModelMock = nil
         super.tearDown()
     }
@@ -77,26 +77,12 @@ final class ProductPresenterTests: XCTestCase {
     func test_thatPresenterFinishesTransaction_whenPurchase() async throws {
         // given
         viewModelMock.model = .init(state: .product(.fake()), presenter: sut)
-        flareMock.stubbedPurchase = .fake()
+        purchaseServiceMock.stubbedPurchase = .fake()
 
         // when
         _ = try await sut.purchase(options: nil)
 
         // then
-        XCTAssertEqual(flareMock.invokedPurchaseCount, 1)
-        XCTAssertEqual(flareMock.invokedFinishCount, 1)
-    }
-
-    func test_thatPresenterDoesThrowAnErrorIfUserCancelsARequest_whenPurchase() async throws {
-        // given
-        viewModelMock.model = .init(state: .product(.fake()), presenter: sut)
-        flareMock.stubbedPurchaseError = IAPError.paymentCancelled
-
-        // when
-        _ = try await sut.purchase(options: nil)
-
-        // then
-        XCTAssertEqual(flareMock.invokedPurchaseCount, 1)
-        XCTAssertEqual(flareMock.invokedFinishCount, 0)
+        XCTAssertEqual(purchaseServiceMock.invokedPurchaseCount, 1)
     }
 }

@@ -40,8 +40,8 @@ final class ProductViewAssembly: IProductViewAssembly {
 
     private func assemble(with type: ProductViewType) -> ViewWrapper<ProductViewModel, ProductView> {
         let presenter = ProductPresenter(
-            iap: iap,
-            productFetcher: ProductStrategy(type: type, iap: iap)
+            productFetcher: ProductStrategy(type: type, iap: iap),
+            purchaseService: ProductPurchaseService(iap: iap)
         )
         let viewModel = ViewModel<ProductViewModel>(
             model: ProductViewModel(state: .loading, presenter: presenter)

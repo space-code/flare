@@ -7,7 +7,7 @@ import Flare
 import SwiftUI
 
 public extension View {
-    func onInAppPurchaseCompletion(completion: ((StoreProduct, Result<Void, Error>) -> Void)?) -> some View {
+    func onInAppPurchaseCompletion(completion: ((StoreProduct, Result<StoreTransaction, Error>) -> Void)?) -> some View {
         environment(\.purchaseCompletion, completion)
     }
 }
