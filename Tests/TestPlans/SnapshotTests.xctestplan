@@ -26,6 +26,15 @@
   },
   "testTargets" : [
     {
+      "skippedTests" : [
+        "ArrayExtensionsTests",
+        "ProductPresenterTests",
+        "ProductStrategyTests",
+        "ProductViewModelFactoryTests",
+        "ProductsPresenterTests",
+        "StoreButtonPresenterTests",
+        "SubscriptionDateComponentsFactoryTests"
+      ],
       "target" : {
         "containerPath" : "container:Flare.xcodeproj",
         "identifier" : "514A62DAD52F32058E8084C4",

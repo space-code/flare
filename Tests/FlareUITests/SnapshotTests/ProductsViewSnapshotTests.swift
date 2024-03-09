@@ -8,6 +8,8 @@ import Foundation
 
 // MARK: - ProductsViewSnapshotTests
 
+@available(watchOS, unavailable)
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, *)
 final class ProductsViewSnapshotTests: SnapshotTestCase {
     func test_productsView_error() {
         assertSnapshots(

@@ -75,8 +75,9 @@ targets:
       - path: Sources/FlareUI
     scheme:
       testPlans:
-        - path: Tests/TestPlans/FlareUI.xctestplan
+        - path: Tests/TestPlans/FlareUIUnitTests.xctestplan
           defaultPlan: true
+        - path: Tests/TestPlans/SnapshotTests.xctestplan
       gatherCoverageData: true
       coverageTargets:
         - FlareUI
@@ -124,6 +125,22 @@ targets:
         TARGETED_DEVICE_FAMILY: "1,2,3,4"
     sources:
       - Tests/FlareUITests
+  # FlareUISnapshotTests:
+  #   type: bundle.unit-test
+  #   supportedDestinations: [iOS, tvOS, macOS]
+  #   dependencies:
+  #     - target: Flare
+  #     - target: FlareMock
+  #     - target: FlareUI
+  #     - package: SnapshotTesting
+  #   settings:
+  #     base:
+  #       GENERATE_INFOPLIST_FILE: YES
+  #       PRODUCT_BUNDLE_IDENTIFIER: com.spacecode.flare-unit-tests
+  #       SUPPORTED_PLATFORMS: "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator"
+  #       TARGETED_DEVICE_FAMILY: "1,2,3,4"
+  #   sources:
+  #     - Tests/FlareUITests/SnapshotTests
   IntegrationTests:
     type: bundle.unit-test
     supportedDestinations: [iOS, tvOS, macOS]

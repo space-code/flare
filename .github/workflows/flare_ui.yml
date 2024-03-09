@@ -80,7 +80,7 @@ jobs:
           scheme: FlareUI
           destination: ${{ matrix.destination }}
           name: ${{ matrix.name }}
-          test_plan: FlareUI
+          test_plan: FlareUIUnitTests
       - name: Upload test coverage reports to Codecov
         uses: ./.github/actions/upload_test_coverage_report
         with:
@@ -114,7 +114,7 @@ jobs:
           scheme: FlareUI
           destination: ${{ matrix.destination }}
           name: ${{ matrix.name }}
-          test_plan: FlareUI
+          test_plan: FlareUIUnitTests
       - name: Upload test coverage reports to Codecov
         uses: ./.github/actions/upload_test_coverage_report
         with:
@@ -152,7 +152,7 @@ jobs:
           scheme: FlareUI
           destination: ${{ matrix.destination }}
           name: ${{ matrix.name }}
-          test_plan: FlareUI
+          test_plan: FlareUIUnitTests
       - name: Upload test coverage reports to Codecov
         uses: ./.github/actions/upload_test_coverage_report
         with:
@@ -180,6 +180,44 @@ jobs:
       - uses: actions/checkout@v3
       - name: ${{ matrix.name }}
         run: swift build -c release --target FlareUI
+
+  snapshots:
+    name: snapshots / ${{ matrix.name }}
+    runs-on: ${{ matrix.runsOn }}
+    env:
+      DEVELOPER_DIR: "/Applications/${{ matrix.xcode }}.app/Contents/Developer"
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - destination: "platform=macOS"
+            xcode: "Xcode_15.0"
+            runsOn: macos-13
+            name: "macOS 13, Xcode 15.0, Swift 5.9.0"
+          - destination: "OS=17.0.1,name=iPhone 15 Pro"
+            name: "iOS 17.0.1"
+            xcode: "Xcode_15.0"
+            runsOn: macos-13
+          - destination: "OS=17.0,name=Apple TV"
+            name: "tvOS 17.0"
+            xcode: "Xcode_15.0"
+            runsOn: macos-13
+    steps:
+      - uses: actions/checkout@v3
+      - name: ${{ matrix.name }}
+        uses: ./.github/actions/build_and_test
+        with:
+          scheme: FlareUI
+          destination: ${{ matrix.destination }}
+          name: ${{ matrix.name }}SnapshotTests
+          test_plan: SnapshotTests
+      - name: Upload test coverage reports to Codecov
+        uses: ./.github/actions/upload_test_coverage_report
+        with:
+          scheme_name: FlareUI
+          filename: ${{ matrix.name }}SnapshotTests
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   merge-test-reports:
     needs: [iOS, macOS, watchOS, tvOS]

@@ -75,7 +75,7 @@ extension ProductPresenter: IProductPresenter {
             await iap.finish(transaction: transaction)
             return true
         } catch {
-            if let error = error as? IAPError, error != .paymentCancelled {
+            if error.iap != .paymentCancelled {
                 throw error
             }
             return false

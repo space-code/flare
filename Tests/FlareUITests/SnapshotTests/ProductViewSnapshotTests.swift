@@ -10,6 +10,7 @@ import XCTest
 // MARK: - ProductViewSnapshotTests
 
 @available(watchOS, unavailable)
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, *)
 final class ProductViewSnapshotTests: SnapshotTestCase {
     func test_productView_loading() {
         assertSnapshots(
@@ -50,6 +51,8 @@ final class ProductViewSnapshotTests: SnapshotTestCase {
 
 // MARK: ProductViewSnapshotTests.CustomProductStyle
 
+@available(watchOS, unavailable)
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, *)
 private extension ProductViewSnapshotTests {
     struct CustomProductStyle: IProductStyle {
         @ViewBuilder

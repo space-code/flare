@@ -78,7 +78,8 @@ class SnapshotTestCase: XCTestCase {
                     return .dark
                 }
             }
-        #else
+
+        #elseif os(macOS)
             var appearance: NSAppearance? {
                 switch self {
                 case .light:
