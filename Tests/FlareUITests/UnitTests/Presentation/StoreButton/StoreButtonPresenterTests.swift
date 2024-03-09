@@ -4,6 +4,7 @@
 //
 
 @testable import FlareUI
+import FlareUIMock
 import XCTest
 
 final class StoreButtonPresenterTests: XCTestCase {

@@ -3,7 +3,9 @@
 // Copyright © 2024 Space Code. All rights reserved.
 //
 
+import FlareMock
 @testable import FlareUI
+import FlareUIMock
 import Foundation
 
 // MARK: - ProductsViewSnapshotTests

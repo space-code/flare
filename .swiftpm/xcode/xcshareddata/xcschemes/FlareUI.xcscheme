@@ -48,6 +48,23 @@
                BlueprintName = "FlareUITests"
                ReferencedContainer = "container:">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "ProductInfoViewSnapshotTests">
+               </Test>
+               <Test
+                  Identifier = "ProductPlaceholderViewSnapshotTests">
+               </Test>
+               <Test
+                  Identifier = "ProductViewSnapshotTests">
+               </Test>
+               <Test
+                  Identifier = "ProductsViewSnapshotTests">
+               </Test>
+               <Test
+                  Identifier = "SnapshotTestCase">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
    </TestAction>

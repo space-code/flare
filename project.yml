@@ -93,6 +93,19 @@ targets:
         SUPPORTED_PLATFORMS: "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator"
     sources:
       - path: Sources/FlareMock
+  FlareUIMock:
+    type: framework
+    supportedDestinations: [iOS, tvOS, macOS]
+    dependencies:
+      - target: FlareUI
+      - target: FlareMock
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        TARGETED_DEVICE_FAMILY: "1,2,3,4"
+        SUPPORTED_PLATFORMS: "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator"
+    sources:
+      - path: Sources/FlareUIMock
   FlareTests:
     type: bundle.unit-test
     supportedDestinations: [iOS, tvOS, macOS]
@@ -116,7 +129,7 @@ targets:
       - target: Flare
       - target: FlareMock
       - target: FlareUI
-      - package: SnapshotTesting
+      - target: FlareUIMock
     settings:
       base:
         GENERATE_INFOPLIST_FILE: YES
@@ -125,22 +138,23 @@ targets:
         TARGETED_DEVICE_FAMILY: "1,2,3,4"
     sources:
       - Tests/FlareUITests
-  # FlareUISnapshotTests:
-  #   type: bundle.unit-test
-  #   supportedDestinations: [iOS, tvOS, macOS]
-  #   dependencies:
-  #     - target: Flare
-  #     - target: FlareMock
-  #     - target: FlareUI
-  #     - package: SnapshotTesting
-  #   settings:
-  #     base:
-  #       GENERATE_INFOPLIST_FILE: YES
-  #       PRODUCT_BUNDLE_IDENTIFIER: com.spacecode.flare-unit-tests
-  #       SUPPORTED_PLATFORMS: "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator"
-  #       TARGETED_DEVICE_FAMILY: "1,2,3,4"
-  #   sources:
-  #     - Tests/FlareUITests/SnapshotTests
+  FlareUISnapshotTests:
+    type: bundle.unit-test
+    supportedDestinations: [iOS, tvOS, macOS]
+    dependencies:
+      - target: Flare
+      - target: FlareMock
+      - target: FlareUIMock
+      - target: FlareUI
+      - package: SnapshotTesting
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.spacecode.flare-snapshot-tests
+        SUPPORTED_PLATFORMS: "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator"
+        TARGETED_DEVICE_FAMILY: "1,2,3,4"
+    sources:
+      - Tests/SnapshotTests
   IntegrationTests:
     type: bundle.unit-test
     supportedDestinations: [iOS, tvOS, macOS]

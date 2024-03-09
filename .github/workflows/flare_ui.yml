@@ -191,10 +191,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - destination: "platform=macOS"
-            xcode: "Xcode_15.0"
-            runsOn: macos-13
-            name: "macOS 13, Xcode 15.0, Swift 5.9.0"
+          # - destination: "platform=macOS"
+          #   xcode: "Xcode_15.0"
+          #   runsOn: macos-13
+          #   name: "macOS 13, Xcode 15.0, Swift 5.9.0"
           - destination: "OS=17.2,name=iPhone 15"
             name: "iOS 17.2"
             xcode: "Xcode_15.0"

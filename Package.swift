@@ -47,6 +47,7 @@ let package = Package(
             resources: [.process("Resources")]
         ),
         .target(name: "FlareMock", dependencies: ["Flare"]),
+        .target(name: "FlareUIMock", dependencies: ["FlareMock", "FlareUI"]),
         .testTarget(
             name: "FlareTests",
             dependencies: [
@@ -60,6 +61,14 @@ let package = Package(
             dependencies: [
                 "FlareUI",
                 "FlareMock",
+                "FlareUIMock",
+            ]
+        ),
+        .testTarget(
+            name: "SnapshotTests",
+            dependencies: [
+                "Flare",
+                "FlareUIMock",
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
             ]
         ),

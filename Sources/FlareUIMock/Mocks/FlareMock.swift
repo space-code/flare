@@ -9,16 +9,18 @@ import Foundation
 import Log
 import StoreKit
 
-final class FlareMock: IFlare {
-    var invokedLogLevelSetter = false
-    var invokedLogLevelSetterCount = 0
-    var invokedLogLevel: Log.LogLevel?
-    var invokedLogLevelList = [Log.LogLevel]()
-    var invokedLogLevelGetter = false
-    var invokedLogLevelGetterCount = 0
-    var stubbedLogLevel: Log.LogLevel!
+public final class FlareMock: IFlare {
+    public init() {}
 
-    var logLevel: Log.LogLevel {
+    public var invokedLogLevelSetter = false
+    public var invokedLogLevelSetterCount = 0
+    public var invokedLogLevel: Log.LogLevel?
+    public var invokedLogLevelList = [Log.LogLevel]()
+    public var invokedLogLevelGetter = false
+    public var invokedLogLevelGetterCount = 0
+    public var stubbedLogLevel: Log.LogLevel!
+
+    public var logLevel: Log.LogLevel {
         set {
             invokedLogLevelSetter = true
             invokedLogLevelSetterCount += 1
@@ -32,26 +34,26 @@ final class FlareMock: IFlare {
         }
     }
 
-    var invokedFetchProductIDs = false
-    var invokedFetchProductIDsCount = 0
-    var invokedFetchProductIDsParameters: (productIDs: Set<String>, completion: Closure<Result<[StoreProduct], IAPError>>)?
-    var invokedFetchProductIDsParametersList = [(productIDs: Set<String>, completion: Closure<Result<[StoreProduct], IAPError>>)]()
+    public var invokedFetchProductIDs = false
+    public var invokedFetchProductIDsCount = 0
+    public var invokedFetchProductIDsParameters: (productIDs: Set<String>, completion: Closure<Result<[StoreProduct], IAPError>>)?
+    public var invokedFetchProductIDsParametersList = [(productIDs: Set<String>, completion: Closure<Result<[StoreProduct], IAPError>>)]()
 
-    func fetch(productIDs: Set<String>, completion: @escaping Closure<Result<[StoreProduct], IAPError>>) {
+    public func fetch(productIDs: Set<String>, completion: @escaping Closure<Result<[StoreProduct], IAPError>>) {
         invokedFetchProductIDs = true
         invokedFetchProductIDsCount += 1
         invokedFetchProductIDsParameters = (productIDs, completion)
         invokedFetchProductIDsParametersList.append((productIDs, completion))
     }
 
-    var invokedFetch = false
-    var invokedFetchCount = 0
-    var invokedFetchParameters: (productIDs: Set<String>, Void)?
-    var invokedFetchParametersList = [(productIDs: Set<String>, Void)]()
-    var stubbedFetchError: Error?
-    var stubbedInvokedFetch: [StoreProduct] = []
+    public var invokedFetch = false
+    public var invokedFetchCount = 0
+    public var invokedFetchParameters: (productIDs: Set<String>, Void)?
+    public var invokedFetchParametersList = [(productIDs: Set<String>, Void)]()
+    public var stubbedFetchError: Error?
+    public var stubbedInvokedFetch: [StoreProduct] = []
 
-    func fetch(productIDs: Set<String>) async throws -> [StoreProduct] {
+    public func fetch(productIDs: Set<String>) async throws -> [StoreProduct] {
         invokedFetch = true
         invokedFetchCount += 1
         invokedFetchParameters = (productIDs, ())
@@ -62,20 +64,20 @@ final class FlareMock: IFlare {
         return stubbedInvokedFetch
     }
 
-    var invokedPurchaseProductPromotionalOffer = false
-    var invokedPurchaseProductPromotionalOfferCount = 0
-    var invokedPurchaseProductPromotionalOfferParameters: (
+    public var invokedPurchaseProductPromotionalOffer = false
+    public var invokedPurchaseProductPromotionalOfferCount = 0
+    public var invokedPurchaseProductPromotionalOfferParameters: (
         product: StoreProduct,
         promotionalOffer: PromotionalOffer?,
         completion: Closure<Result<StoreTransaction, IAPError>>
     )?
-    var invokedPurchaseProductPromotionalOfferParametersList = [(
+    public var invokedPurchaseProductPromotionalOfferParametersList = [(
         product: StoreProduct,
         promotionalOffer: PromotionalOffer?,
         completion: Closure<Result<StoreTransaction, IAPError>>
     )]()
 
-    func purchase(
+    public func purchase(
         product: StoreProduct,
         promotionalOffer: PromotionalOffer?,
         completion: @escaping Closure<Result<StoreTransaction, IAPError>>
@@ -86,14 +88,14 @@ final class FlareMock: IFlare {
         invokedPurchaseProductPromotionalOfferParametersList.append((product, promotionalOffer, completion))
     }
 
-    var invokedPurchase = false
-    var invokedPurchaseCount = 0
-    var invokedPurchaseParameters: (product: StoreProduct, promotionalOffer: PromotionalOffer?)?
-    var invokedPurchaseParametersList = [(product: StoreProduct, promotionalOffer: PromotionalOffer?)]()
-    var stubbedPurchaseError: Error?
-    var stubbedPurchase: StoreTransaction!
+    public var invokedPurchase = false
+    public var invokedPurchaseCount = 0
+    public var invokedPurchaseParameters: (product: StoreProduct, promotionalOffer: PromotionalOffer?)?
+    public var invokedPurchaseParametersList = [(product: StoreProduct, promotionalOffer: PromotionalOffer?)]()
+    public var stubbedPurchaseError: Error?
+    public var stubbedPurchase: StoreTransaction!
 
-    func purchase(product: StoreProduct, promotionalOffer: PromotionalOffer?) async throws -> StoreTransaction {
+    public func purchase(product: StoreProduct, promotionalOffer: PromotionalOffer?) async throws -> StoreTransaction {
         invokedPurchase = true
         invokedPurchaseCount += 1
         invokedPurchaseParameters = (product, promotionalOffer)
@@ -104,15 +106,15 @@ final class FlareMock: IFlare {
         return stubbedPurchase
     }
 
-    var invokedPurchaseProductOptionsPromotionalOffer = false
-    var invokedPurchaseProductOptionsPromotionalOfferCount = 0
-    var invokedPurchaseProductOptionsPromotionalOfferParameters: (
+    public var invokedPurchaseProductOptionsPromotionalOffer = false
+    public var invokedPurchaseProductOptionsPromotionalOfferCount = 0
+    public var invokedPurchaseProductOptionsPromotionalOfferParameters: (
         product: StoreProduct,
         options: Any,
         promotionalOffer: PromotionalOffer?,
         completion: SendableClosure<Result<StoreTransaction, IAPError>>
     )?
-    var invokedPurchaseProductOptionsPromotionalOfferParametersList = [(
+    public var invokedPurchaseProductOptionsPromotionalOfferParametersList = [(
         product: StoreProduct,
         options: Any,
         promotionalOffer: PromotionalOffer?,
@@ -120,7 +122,7 @@ final class FlareMock: IFlare {
     )]()
 
     @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
-    func purchase(
+    public func purchase(
         product: StoreProduct,
         options: Set<StoreKit.Product.PurchaseOption>,
         promotionalOffer: PromotionalOffer?,
@@ -132,13 +134,13 @@ final class FlareMock: IFlare {
         invokedPurchaseProductOptionsPromotionalOfferParametersList.append((product, options, promotionalOffer, completion))
     }
 
-    var invokedPurchaseProductOptions = false
-    var invokedPurchaseProductOptionsCount = 0
-    var invokedPurchaseProductOptionsParameters: (product: StoreProduct, options: Any, promotionalOffer: PromotionalOffer?)?
-    var invokedPurchaseProductOptionsParametersList = [(product: StoreProduct, options: Any, promotionalOffer: PromotionalOffer?)]()
+    public var invokedPurchaseProductOptions = false
+    public var invokedPurchaseProductOptionsCount = 0
+    public var invokedPurchaseProductOptionsParameters: (product: StoreProduct, options: Any, promotionalOffer: PromotionalOffer?)?
+    public var invokedPurchaseProductOptionsParametersList = [(product: StoreProduct, options: Any, promotionalOffer: PromotionalOffer?)]()
 
     @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
-    func purchase(
+    public func purchase(
         product: StoreProduct,
         options: Set<StoreKit.Product.PurchaseOption>,
         promotionalOffer: PromotionalOffer?
@@ -149,33 +151,33 @@ final class FlareMock: IFlare {
         invokedPurchaseProductOptionsParametersList.append((product, options, promotionalOffer))
     }
 
-    var invokedReceiptCompletion = false
-    var invokedReceiptCompletionCount = 0
-    var invokedReceiptCompletionParameters: (completion: Closure<Result<String, IAPError>>, Void)?
-    var invokedReceiptCompletionParametersList = [(completion: Closure<Result<String, IAPError>>, Void)]()
+    public var invokedReceiptCompletion = false
+    public var invokedReceiptCompletionCount = 0
+    public var invokedReceiptCompletionParameters: (completion: Closure<Result<String, IAPError>>, Void)?
+    public var invokedReceiptCompletionParametersList = [(completion: Closure<Result<String, IAPError>>, Void)]()
 
-    func receipt(completion: @escaping Closure<Result<String, IAPError>>) {
+    public func receipt(completion: @escaping Closure<Result<String, IAPError>>) {
         invokedReceiptCompletion = true
         invokedReceiptCompletionCount += 1
         invokedReceiptCompletionParameters = (completion, ())
         invokedReceiptCompletionParametersList.append((completion, ()))
     }
 
-    var invokedReceipt = false
-    var invokedReceiptCount = 0
+    public var invokedReceipt = false
+    public var invokedReceiptCount = 0
 
-    func receipt() {
+    public func receipt() {
         invokedReceipt = true
         invokedReceiptCount += 1
     }
 
-    var invokedFinishTransaction = false
-    var invokedFinishTransactionCount = 0
-    var invokedFinishTransactionParameters: (transaction: StoreTransaction, Void)?
-    var invokedFinishTransactionParametersList = [(transaction: StoreTransaction, Void)]()
-    var shouldInvokeFinishTransactionCompletion = false
+    public var invokedFinishTransaction = false
+    public var invokedFinishTransactionCount = 0
+    public var invokedFinishTransactionParameters: (transaction: StoreTransaction, Void)?
+    public var invokedFinishTransactionParametersList = [(transaction: StoreTransaction, Void)]()
+    public var shouldInvokeFinishTransactionCompletion = false
 
-    func finish(transaction: StoreTransaction, completion: (@Sendable () -> Void)?) {
+    public func finish(transaction: StoreTransaction, completion: (@Sendable () -> Void)?) {
         invokedFinishTransaction = true
         invokedFinishTransactionCount += 1
         invokedFinishTransactionParameters = (transaction, ())
@@ -185,44 +187,44 @@ final class FlareMock: IFlare {
         }
     }
 
-    var invokedFinish = false
-    var invokedFinishCount = 0
-    var invokedFinishParameters: (transaction: StoreTransaction, Void)?
-    var invokedFinishParametersList = [(transaction: StoreTransaction, Void)]()
+    public var invokedFinish = false
+    public var invokedFinishCount = 0
+    public var invokedFinishParameters: (transaction: StoreTransaction, Void)?
+    public var invokedFinishParametersList = [(transaction: StoreTransaction, Void)]()
 
-    func finish(transaction: StoreTransaction) {
+    public func finish(transaction: StoreTransaction) {
         invokedFinish = true
         invokedFinishCount += 1
         invokedFinishParameters = (transaction, ())
         invokedFinishParametersList.append((transaction, ()))
     }
 
-    var invokedAddTransactionObserver = false
-    var invokedAddTransactionObserverCount = 0
-    var invokedAddTransactionObserverParameters: (fallbackHandler: Closure<Result<PaymentTransaction, IAPError>>?, Void)?
-    var invokedAddTransactionObserverParametersList = [(fallbackHandler: Closure<Result<PaymentTransaction, IAPError>>?, Void)]()
+    public var invokedAddTransactionObserver = false
+    public var invokedAddTransactionObserverCount = 0
+    public var invokedAddTransactionObserverParameters: (fallbackHandler: Closure<Result<PaymentTransaction, IAPError>>?, Void)?
+    public var invokedAddTransactionObserverParametersList = [(fallbackHandler: Closure<Result<PaymentTransaction, IAPError>>?, Void)]()
 
-    func addTransactionObserver(fallbackHandler: Closure<Result<PaymentTransaction, IAPError>>?) {
+    public func addTransactionObserver(fallbackHandler: Closure<Result<PaymentTransaction, IAPError>>?) {
         invokedAddTransactionObserver = true
         invokedAddTransactionObserverCount += 1
         invokedAddTransactionObserverParameters = (fallbackHandler, ())
         invokedAddTransactionObserverParametersList.append((fallbackHandler, ()))
     }
 
-    var invokedRemoveTransactionObserver = false
-    var invokedRemoveTransactionObserverCount = 0
+    public var invokedRemoveTransactionObserver = false
+    public var invokedRemoveTransactionObserverCount = 0
 
-    func removeTransactionObserver() {
+    public func removeTransactionObserver() {
         invokedRemoveTransactionObserver = true
         invokedRemoveTransactionObserverCount += 1
     }
 
-    var invokedCheckEligibility = false
-    var invokedCheckEligibilityCount = 0
-    var invokedCheckEligibilityParameters: (productIDs: Set<String>, Void)?
-    var invokedCheckEligibilityParametersList = [(productIDs: Set<String>, Void)]()
+    public var invokedCheckEligibility = false
+    public var invokedCheckEligibilityCount = 0
+    public var invokedCheckEligibilityParameters: (productIDs: Set<String>, Void)?
+    public var invokedCheckEligibilityParametersList = [(productIDs: Set<String>, Void)]()
 
-    func checkEligibility(productIDs: Set<String>) {
+    public func checkEligibility(productIDs: Set<String>) {
         invokedCheckEligibility = true
         invokedCheckEligibilityCount += 1
         invokedCheckEligibilityParameters = (productIDs, ())
@@ -230,42 +232,42 @@ final class FlareMock: IFlare {
     }
 
     @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
-    func purchase(
+    public func purchase(
         product _: StoreProduct,
         options _: Set<Product.PurchaseOption>,
         promotionalOffer _: PromotionalOffer?
     ) async throws -> StoreTransaction {
-        .fake()
+        StoreTransaction(paymentTransaction: PaymentTransaction(PaymentTransactionMock()))
     }
 
-    func receipt() async throws -> String {
+    public func receipt() async throws -> String {
         ""
     }
 
-    func checkEligibility(productIDs _: Set<String>) async throws -> [String: SubscriptionEligibility] {
+    public func checkEligibility(productIDs _: Set<String>) async throws -> [String: SubscriptionEligibility] {
         [:]
     }
 
-    var invokedRestore = false
-    var invokedRestoreCount = 0
+    public var invokedRestore = false
+    public var invokedRestoreCount = 0
     @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
-    func restore() async throws {
+    public func restore() async throws {
         invokedRestore = true
         invokedRestoreCount += 1
     }
 
     #if os(iOS) || VISION_OS
-        var invokedBeginRefundRequest = false
-        var invokedBeginRefundRequestCount = 0
-        var invokedBeginRefundRequestParameters: (productID: String, Void)?
-        var invokedBeginRefundRequestParametersList = [(productID: String, Void)]()
-        var stubbedBeginRefundRequest: RefundRequestStatus!
+        public var invokedBeginRefundRequest = false
+        public var invokedBeginRefundRequestCount = 0
+        public var invokedBeginRefundRequestParameters: (productID: String, Void)?
+        public var invokedBeginRefundRequestParametersList = [(productID: String, Void)]()
+        public var stubbedBeginRefundRequest: RefundRequestStatus!
 
         @available(iOS 15.0, *)
         @available(macOS, unavailable)
         @available(watchOS, unavailable)
         @available(tvOS, unavailable)
-        func beginRefundRequest(productID: String) async throws -> RefundRequestStatus {
+        public func beginRefundRequest(productID: String) async throws -> RefundRequestStatus {
             invokedBeginRefundRequest = true
             invokedBeginRefundRequestCount += 1
             invokedBeginRefundRequestParameters = (productID, ())
@@ -273,26 +275,26 @@ final class FlareMock: IFlare {
             return stubbedBeginRefundRequest
         }
 
-        var invokedPresentCodeRedemptionSheet = false
-        var invokedPresentCodeRedemptionSheetCount = 0
+        public var invokedPresentCodeRedemptionSheet = false
+        public var invokedPresentCodeRedemptionSheetCount = 0
 
         @available(iOS 14.0, *)
         @available(macOS, unavailable)
         @available(watchOS, unavailable)
         @available(tvOS, unavailable)
-        func presentCodeRedemptionSheet() {
+        public func presentCodeRedemptionSheet() {
             invokedPresentCodeRedemptionSheet = true
             invokedPresentCodeRedemptionSheetCount += 1
         }
 
-        var invokedPresentOfferCodeRedeemSheet = false
-        var invokedPresentOfferCodeRedeemSheetCount = 0
+        public var invokedPresentOfferCodeRedeemSheet = false
+        public var invokedPresentOfferCodeRedeemSheetCount = 0
 
         @available(iOS 16.0, *)
         @available(macOS, unavailable)
         @available(watchOS, unavailable)
         @available(tvOS, unavailable)
-        func presentOfferCodeRedeemSheet() {
+        public func presentOfferCodeRedeemSheet() {
             invokedPresentOfferCodeRedeemSheet = true
             invokedPresentOfferCodeRedeemSheetCount += 1
         }

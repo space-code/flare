@@ -6,6 +6,7 @@
 import Flare
 import FlareMock
 @testable import FlareUI
+import FlareUIMock
 import XCTest
 
 final class ProductPresenterTests: XCTestCase {

@@ -7,6 +7,7 @@ excluded:
   - Sources/FlareUI/Classes/Generated/Strings.swift
   - Sources/FlareUI/Classes/Generated/Colors.swift
   - Sources/FlareUI/Classes/Presentation/Components/Core/Constants/UIConstants.swift
+  - Sources/FlareUIMock/Mocks/
   - .build
 
 # Rules
