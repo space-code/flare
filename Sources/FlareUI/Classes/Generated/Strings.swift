@@ -17,6 +17,10 @@ internal enum L10n {
     }
   }
   internal enum Product {
+    /// Every %@
+    internal static func priceDescription(_ p1: Any) -> String {
+      return L10n.tr("Localizable", "product.price_description", String(describing: p1), fallback: "Every %@")
+    }
     internal enum Subscription {
       /// %@/%@
       internal static func price(_ p1: Any, _ p2: Any) -> String {

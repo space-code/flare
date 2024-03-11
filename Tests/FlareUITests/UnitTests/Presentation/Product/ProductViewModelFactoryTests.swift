@@ -53,10 +53,10 @@ final class ProductViewModelFactoryTests: XCTestCase {
         XCTAssertEqual(viewModel.price, product.localizedPriceString)
     }
 
-    func test_thatFactoryMakesAProduct_whenProductIsAutoRenewableSubscription() {
+    func test_thatFactoryMakesAProduct_whenProductIsAutoRenewableSubscriptionWithADaySubscriptionPeriod() {
         // given
         subscriptionDateComponentsFactoryMock.stubbedDateComponentsResult = DateComponents(day: 1)
-        dateComponentsFormatterMock.stubbedStringResult = .price
+        dateComponentsFormatterMock.stubbedStringResult = "1 month"
 
         let product: StoreProduct = .fake(
             localizedPriceString: .price,
@@ -71,7 +71,8 @@ final class ProductViewModelFactoryTests: XCTestCase {
         XCTAssertEqual(viewModel.id, product.productIdentifier)
         XCTAssertEqual(viewModel.title, product.localizedTitle)
         XCTAssertEqual(viewModel.description, product.localizedDescription)
-        XCTAssertEqual(viewModel.price, product.localizedPriceString)
+        XCTAssertEqual(viewModel.price, "10 $/month")
+        XCTAssertEqual(viewModel.priceDescription, "Every Month")
     }
 }
 

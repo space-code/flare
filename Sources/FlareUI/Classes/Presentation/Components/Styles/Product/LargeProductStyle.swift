@@ -5,7 +5,11 @@
 
 import SwiftUI
 
-struct DefaultProductStyle: IProductStyle {
+@available(iOS 13, *)
+@available(macOS, unavailable)
+@available(watchOS, unavailable)
+@available(tvOS, unavailable)
+struct LargeProductStyle: IProductStyle {
     // MARK: Properties
 
     private var viewModelFactory: IProductViewModelFactory
@@ -22,12 +26,12 @@ struct DefaultProductStyle: IProductStyle {
     func makeBody(configuration: ProductStyleConfiguration) -> some View {
         switch configuration.state {
         case .loading:
-            ProductPlaceholderView(isIconHidden: configuration.icon == nil)
+            ProductPlaceholderView(isIconHidden: configuration.icon == nil, style: .large)
         case let .product(product):
             let viewModel = viewModelFactory.make(product)
-            ProductInfoView(viewModel: viewModel, icon: configuration.icon) { configuration.purchase() }
+            ProductInfoView(viewModel: viewModel, icon: configuration.icon, style: .large) { configuration.purchase() }
         case .error:
-            ProductPlaceholderView(isIconHidden: configuration.icon == nil)
+            ProductPlaceholderView(isIconHidden: configuration.icon == nil, style: .large)
         }
     }
 }
