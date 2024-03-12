@@ -9,12 +9,16 @@ import SwiftUI
 @available(macOS, unavailable)
 @available(watchOS, unavailable)
 @available(tvOS, unavailable)
-struct LargeProductStyle: IProductStyle {
+public struct LargeProductStyle: IProductStyle {
     // MARK: Properties
 
     private var viewModelFactory: IProductViewModelFactory
 
     // MARK: Initialization
+
+    public init() {
+        self.init(viewModelFactory: ProductViewModelFactory())
+    }
 
     init(viewModelFactory: IProductViewModelFactory = ProductViewModelFactory()) {
         self.viewModelFactory = viewModelFactory
@@ -23,7 +27,7 @@ struct LargeProductStyle: IProductStyle {
     // MARK: IProductStyle
 
     @ViewBuilder
-    func makeBody(configuration: ProductStyleConfiguration) -> some View {
+    public func makeBody(configuration: ProductStyleConfiguration) -> some View {
         switch configuration.state {
         case .loading:
             ProductPlaceholderView(isIconHidden: configuration.icon == nil, style: .large)

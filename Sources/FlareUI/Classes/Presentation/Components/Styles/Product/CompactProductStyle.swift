@@ -5,12 +5,16 @@
 
 import SwiftUI
 
-struct CompactProductStyle: IProductStyle {
+public struct CompactProductStyle: IProductStyle {
     // MARK: Properties
 
     private var viewModelFactory: IProductViewModelFactory
 
     // MARK: Initialization
+
+    public init() {
+        self.init(viewModelFactory: ProductViewModelFactory())
+    }
 
     init(viewModelFactory: IProductViewModelFactory = ProductViewModelFactory()) {
         self.viewModelFactory = viewModelFactory
@@ -19,7 +23,7 @@ struct CompactProductStyle: IProductStyle {
     // MARK: IProductStyle
 
     @ViewBuilder
-    func makeBody(configuration: ProductStyleConfiguration) -> some View {
+    public func makeBody(configuration: ProductStyleConfiguration) -> some View {
         switch configuration.state {
         case .loading:
             ProductPlaceholderView(isIconHidden: configuration.icon == nil, style: .compact)
