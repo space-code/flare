@@ -11,6 +11,9 @@ struct ProductsView: View, IViewWrapper {
     // MARK: Properties
 
     @Environment(\.storeButton) var storeButton
+    @Environment(\.productViewAssembly) var productViewAssembly
+    @Environment(\.storeButtonAssembly) var storeButtonAssembly
+
     private let viewModel: ProductsViewModel
 
     // MARK: Initialization
@@ -35,7 +38,7 @@ struct ProductsView: View, IViewWrapper {
         case let .products(products):
             VStack(alignment: .center) {
                 ForEach(Array(products), id: \.self) { product in
-                    viewModel.productAssembly.assemble(storeProduct: product)
+                    productViewAssembly.map { $0.assemble(storeProduct: product) }
                 }
                 .padding(.horizontal)
                 Spacer()
@@ -48,7 +51,7 @@ struct ProductsView: View, IViewWrapper {
 
     private var storeButtonView: some View {
         ForEach(storeButton, id: \.self) { type in
-            viewModel.storeButtonAssembly.assemble(storeButtonType: type)
+            storeButtonAssembly.map { $0.assemble(storeButtonType: type) }
         }
     }
 }

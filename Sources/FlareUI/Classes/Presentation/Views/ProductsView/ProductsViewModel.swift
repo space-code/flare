@@ -16,17 +16,13 @@ struct ProductsViewModel: IModel {
 
     let state: State
     let presenter: IProductsPresenter
-    let productAssembly: IProductViewAssembly
-    let storeButtonAssembly: IStoreButtonAssembly
 }
 
 extension ProductsViewModel {
     func setState(_ state: State) -> ProductsViewModel {
         ProductsViewModel(
             state: state,
-            presenter: presenter,
-            productAssembly: productAssembly,
-            storeButtonAssembly: storeButtonAssembly
+            presenter: presenter
         )
     }
 }

@@ -18,9 +18,7 @@ final class ProductsViewSnapshotTests: SnapshotTestCase {
             of: ProductsView(
                 viewModel: ProductsViewModel(
                     state: .error(.storeProductNotAvailable),
-                    presenter: ProductsPresenterMock(),
-                    productAssembly: ProductViewAssemblyMock(),
-                    storeButtonAssembly: StoreButtonAssemblyMock()
+                    presenter: ProductsPresenterMock()
                 )
             ),
             size: .size
@@ -36,11 +34,11 @@ final class ProductsViewSnapshotTests: SnapshotTestCase {
             of: ProductsView(
                 viewModel: ProductsViewModel(
                     state: .products(iapMock.stubbedInvokedFetch),
-                    presenter: ProductsPresenterMock(),
-                    productAssembly: ProductViewAssembly(iap: iapMock),
-                    storeButtonAssembly: StoreButtonAssembly(iap: FlareMock())
+                    presenter: ProductsPresenterMock()
                 )
             )
+            .environment(\.productViewAssembly, ProductViewAssembly(iap: iapMock))
+            .environment(\.storeButtonAssembly, StoreButtonAssembly(iap: FlareMock()))
             .storeButton(.visible, types: .restore, .restore),
             size: .size
         )
@@ -55,11 +53,11 @@ final class ProductsViewSnapshotTests: SnapshotTestCase {
             of: ProductsView(
                 viewModel: ProductsViewModel(
                     state: .products(iapMock.stubbedInvokedFetch),
-                    presenter: ProductsPresenterMock(),
-                    productAssembly: ProductViewAssembly(iap: iapMock),
-                    storeButtonAssembly: StoreButtonAssembly(iap: FlareMock())
+                    presenter: ProductsPresenterMock()
                 )
-            ),
+            )
+            .environment(\.productViewAssembly, ProductViewAssembly(iap: iapMock))
+            .environment(\.storeButtonAssembly, StoreButtonAssembly(iap: FlareMock())),
             size: .size
         )
     }

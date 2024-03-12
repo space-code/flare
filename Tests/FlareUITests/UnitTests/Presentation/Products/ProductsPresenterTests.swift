@@ -29,9 +29,7 @@ final class ProductsPresenterTests: XCTestCase {
         viewModelMock = ViewModel(
             model: ProductsViewModel(
                 state: .products([]),
-                presenter: sut,
-                productAssembly: ProductViewAssemblyMock(),
-                storeButtonAssembly: StoreButtonAssemblyMock()
+                presenter: sut
             )
         )
         sut.viewModel = viewModelMock

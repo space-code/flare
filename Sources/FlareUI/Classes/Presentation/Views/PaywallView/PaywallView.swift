@@ -33,9 +33,9 @@ struct PaywallView: View {
             Group {
                 switch paywallType {
                 case let .subscriptions(type):
-                    AnyView(subscriptionsAssembly.assembly(type: type))
+                    subscriptionsAssembly.assembly(type: type)
                 case let .products(productIDs):
-                    AnyView(productsAssembly.assemble(ids: productIDs))
+                    productsAssembly.assemble(ids: productIDs)
                 }
             }
         }
