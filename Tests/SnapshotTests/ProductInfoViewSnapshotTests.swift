@@ -23,22 +23,6 @@ final class ProductInfoViewSnapshotTests: SnapshotTestCase {
         )
     }
 
-    @available(iOS 13.0, *)
-    @available(macOS, unavailable)
-    @available(watchOS, unavailable)
-    @available(tvOS, unavailable)
-    func test_productInfoView_largeStyle_whenIconIsNil() {
-        assertSnapshots(
-            of: ProductInfoView(
-                viewModel: .viewModel,
-                icon: nil,
-                style: .large,
-                action: {}
-            ),
-            size: .largeSize
-        )
-    }
-
     @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 12.0, *)
     func test_productInfoView_compactStyle_whenIconIsNotNil() {
         assertSnapshots(
@@ -52,21 +36,31 @@ final class ProductInfoViewSnapshotTests: SnapshotTestCase {
         )
     }
 
-    @available(iOS 13.0, *)
-    @available(macOS, unavailable)
-    @available(watchOS, unavailable)
-    @available(tvOS, unavailable)
-    func test_productInfoView_largeStyle_whenIconIsNotNil() {
-        assertSnapshots(
-            of: ProductInfoView(
-                viewModel: .viewModel,
-                icon: .init(content: Image(systemName: "crown")),
-                style: .large,
-                action: {}
-            ),
-            size: .largeSize
-        )
-    }
+    #if os(iOS)
+        func test_productInfoView_largeStyle_whenIconIsNil() {
+            assertSnapshots(
+                of: ProductInfoView(
+                    viewModel: .viewModel,
+                    icon: nil,
+                    style: .large,
+                    action: {}
+                ),
+                size: .largeSize
+            )
+        }
+
+        func test_productInfoView_largeStyle_whenIconIsNotNil() {
+            assertSnapshots(
+                of: ProductInfoView(
+                    viewModel: .viewModel,
+                    icon: .init(content: Image(systemName: "crown")),
+                    style: .large,
+                    action: {}
+                ),
+                size: .largeSize
+            )
+        }
+    #endif
 }
 
 // MARK: - Constants

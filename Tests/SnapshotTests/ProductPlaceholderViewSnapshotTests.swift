@@ -24,27 +24,21 @@ final class ProductPlaceholderViewSnapshotTests: SnapshotTestCase {
         )
     }
 
-    @available(iOS 13.0, *)
-    @available(macOS, unavailable)
-    @available(watchOS, unavailable)
-    @available(tvOS, unavailable)
-    func test_productPlaceholderView_largeStyle_whenIconIsHidden() {
-        assertSnapshots(
-            of: ProductPlaceholderView(isIconHidden: true, style: .large),
-            size: .largeSize
-        )
-    }
+    #if os(iOS)
+        func test_productPlaceholderView_largeStyle_whenIconIsHidden() {
+            assertSnapshots(
+                of: ProductPlaceholderView(isIconHidden: true, style: .large),
+                size: .largeSize
+            )
+        }
 
-    @available(iOS 13.0, *)
-    @available(macOS, unavailable)
-    @available(watchOS, unavailable)
-    @available(tvOS, unavailable)
-    func test_productPlaceholderView_largeStyle_whenIconIsVisible() {
-        assertSnapshots(
-            of: ProductPlaceholderView(isIconHidden: false, style: .large),
-            size: .largeSize
-        )
-    }
+        func test_productPlaceholderView_largeStyle_whenIconIsVisible() {
+            assertSnapshots(
+                of: ProductPlaceholderView(isIconHidden: false, style: .large),
+                size: .largeSize
+            )
+        }
+    #endif
 }
 
 // MARK: - Constants
