@@ -32,7 +32,7 @@ public struct LargeProductStyle: IProductStyle {
         case .loading:
             ProductPlaceholderView(isIconHidden: configuration.icon == nil, style: .large)
         case let .product(product):
-            let viewModel = viewModelFactory.make(product)
+            let viewModel = viewModelFactory.make(product, style: .large)
             ProductInfoView(viewModel: viewModel, icon: configuration.icon, style: .large) { configuration.purchase() }
         case .error:
             ProductPlaceholderView(isIconHidden: configuration.icon == nil, style: .large)

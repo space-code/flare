@@ -28,7 +28,7 @@ public struct CompactProductStyle: IProductStyle {
         case .loading:
             ProductPlaceholderView(isIconHidden: configuration.icon == nil, style: .compact)
         case let .product(product):
-            let viewModel = viewModelFactory.make(product)
+            let viewModel = viewModelFactory.make(product, style: .compact)
             ProductInfoView(viewModel: viewModel, icon: configuration.icon, style: .compact) { configuration.purchase() }
         case .error:
             ProductPlaceholderView(isIconHidden: configuration.icon == nil, style: .compact)

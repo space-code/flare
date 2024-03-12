@@ -9,7 +9,7 @@ import Foundation
 // MARK: - IProductViewModelFactory
 
 protocol IProductViewModelFactory {
-    func make(_ product: StoreProduct) -> ProductInfoView.ViewModel
+    func make(_ product: StoreProduct, style: ProductStyle) -> ProductInfoView.ViewModel
 }
 
 // MARK: - ProductViewModelFactory
@@ -32,34 +32,39 @@ final class ProductViewModelFactory: IProductViewModelFactory {
 
     // MARK: IProductViewModelFactory
 
-    func make(_ product: StoreProduct) -> ProductInfoView.ViewModel {
+    func make(_ product: StoreProduct, style: ProductStyle) -> ProductInfoView.ViewModel {
         ProductInfoView.ViewModel(
             id: product.productIdentifier,
             title: product.localizedTitle,
             description: product.localizedDescription,
-            price: makePrice(from: product),
+            price: makePrice(from: product, style: style),
             priceDescription: makePriceDescription(from: product)
         )
     }
 
     // MARK: Private
 
-    private func makePrice(from product: StoreProduct) -> String {
+    private func makePrice(from product: StoreProduct, style: ProductStyle) -> String {
         switch product.productType {
         case .consumable, .nonConsumable, .nonRenewableSubscription:
             return product.localizedPriceString ?? ""
         case .autoRenewableSubscription:
             guard let period = product.subscriptionPeriod else { return "" }
 
-            let unit = makeUnit(from: period.unit)
-            dateFormatter.allowedUnits = [unit]
+            switch style {
+            case .compact:
+                return product.localizedPriceString ?? ""
+            case .large:
+                let unit = makeUnit(from: period.unit)
+                dateFormatter.allowedUnits = [unit]
 
-            let dateComponents = subscriptionDateComponentsFactory.dateComponents(for: period)
-            let localizedPeriod = dateFormatter.string(from: dateComponents)
+                let dateComponents = subscriptionDateComponentsFactory.dateComponents(for: period)
+                let localizedPeriod = dateFormatter.string(from: dateComponents)
 
-            return [product.localizedPriceString, String(localizedPeriod?.words.last)]
-                .compactMap { $0 }
-                .joined(separator: "/")
+                return [product.localizedPriceString, String(localizedPeriod?.words.last)]
+                    .compactMap { $0 }
+                    .joined(separator: "/")
+            }
         case .none:
             return ""
         }

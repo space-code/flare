@@ -44,7 +44,7 @@ final class ProductViewModelFactoryTests: XCTestCase {
         let product: StoreProduct = .fake(productType: .consumable)
 
         // when
-        let viewModel = sut.make(product)
+        let viewModel = sut.make(product, style: .compact)
 
         // then
         XCTAssertEqual(viewModel.id, product.productIdentifier)
@@ -53,7 +53,7 @@ final class ProductViewModelFactoryTests: XCTestCase {
         XCTAssertEqual(viewModel.price, product.localizedPriceString)
     }
 
-    func test_thatFactoryMakesAProduct_whenProductIsAutoRenewableSubscriptionWithADaySubscriptionPeriod() {
+    func test_thatFactoryMakesProductWithCompactStyle_whenProductTypeIsRenewableSubscription() {
         // given
         subscriptionDateComponentsFactoryMock.stubbedDateComponentsResult = DateComponents(day: 1)
         dateComponentsFormatterMock.stubbedStringResult = "1 month"
@@ -65,7 +65,29 @@ final class ProductViewModelFactoryTests: XCTestCase {
         )
 
         // when
-        let viewModel = sut.make(product)
+        let viewModel = sut.make(product, style: .compact)
+
+        // then
+        XCTAssertEqual(viewModel.id, product.productIdentifier)
+        XCTAssertEqual(viewModel.title, product.localizedTitle)
+        XCTAssertEqual(viewModel.description, product.localizedDescription)
+        XCTAssertEqual(viewModel.price, "10 $")
+        XCTAssertEqual(viewModel.priceDescription, "Every Month")
+    }
+
+    func test_thatFactoryMakesProductWithLargeStyle_whenProductTypeIsRenewableSubscription() {
+        // given
+        subscriptionDateComponentsFactoryMock.stubbedDateComponentsResult = DateComponents(day: 1)
+        dateComponentsFormatterMock.stubbedStringResult = "1 month"
+
+        let product: StoreProduct = .fake(
+            localizedPriceString: .price,
+            productType: .autoRenewableSubscription,
+            subscriptionPeriod: .init(value: 1, unit: .day)
+        )
+
+        // when
+        let viewModel = sut.make(product, style: .large)
 
         // then
         XCTAssertEqual(viewModel.id, product.productIdentifier)
