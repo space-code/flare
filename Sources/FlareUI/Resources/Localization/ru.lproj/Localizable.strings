@@ -1,0 +1,6 @@
+"store_unavailable.title" = "Магазин недоступен";
+"store_unavailable.message" = "В текущем магазине недоступны покупки в приложении.";
+"store_button.restore_purchases" = "Восстановить покупки";
+"error.default.title" = "Произошла ошибка";
+"product.subscription.price" = "%@/%@";
+"product.price_description" = "Каждый %@";

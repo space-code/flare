@@ -9,7 +9,7 @@ xcassets:
             publicAccess: false
 strings:
     inputs:
-        - Localization/Localizable.strings
+        - Localization/en.lproj/Localizable.strings
     outputs:
         templateName: structured-swift5
         output: Strings.swift
