@@ -3,13 +3,20 @@
 // Copyright © 2024 Space Code. All rights reserved.
 //
 
-import UIKit
+#if canImport(UIKit)
+    import UIKit
+#elseif canImport(Cocoa)
+    import Cocoa
+#endif
 
-extension UIViewController {
-    func add(_ controller: UIViewController) {
+extension ViewController {
+    func add(_ controller: ViewController) {
         addChild(controller)
         view.addSubview(controller.view)
-        controller.didMove(toParent: self)
+
+        #if os(iOS) || os(tvOS)
+            controller.didMove(toParent: self)
+        #endif
 
         controller.view.translatesAutoresizingMaskIntoConstraints = false
 

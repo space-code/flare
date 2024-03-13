@@ -5,7 +5,8 @@
 
 import SwiftUI
 
-class BaseHostingController<View: SwiftUI.View>: UIHostingController<View> {
+@available(watchOS, unavailable)
+class BaseHostingController<View: SwiftUI.View>: HostingController<View> {
     // MARK: Initialization
 
     override init?(coder aDecoder: NSCoder, rootView: View) {
@@ -26,6 +27,11 @@ class BaseHostingController<View: SwiftUI.View>: UIHostingController<View> {
     // MARK: Private
 
     private func setupUI() {
-        self.view.backgroundColor = .clear
+        #if os(iOS) || os(tvOS)
+            self.view.backgroundColor = .clear
+        #elseif os(macOS)
+            self.view.wantsLayer = true
+            self.view.layer?.backgroundColor = .clear
+        #endif
     }
 }

@@ -9,13 +9,13 @@ import SwiftUI
 
 // MARK: - ProductViewController
 
-// TODO: Different platforms
-public final class ProductViewController: UIViewController {
+@available(watchOS, unavailable)
+public final class ProductViewController: ViewController {
     // MARK: - Properties
 
     private lazy var viewModel = ProductViewControllerViewModel()
 
-    private lazy var productView: UIHostingController<some View> = {
+    private lazy var productView: HostingController<some View> = {
         let view = ProductView(id: self.id)
             .onInAppPurchaseCompletion(completion: viewModel.onInAppPurchaseCompletion)
             .inAppPurchaseOptions(viewModel.inAppPurchaseOptions)
@@ -53,7 +53,9 @@ public final class ProductViewController: UIViewController {
     // MARK: Private
 
     private func setupUI() {
-        self.view.backgroundColor = Asset.Colors.systemBackground.color
+        #if os(iOS) || os(tvOS)
+            self.view.backgroundColor = Asset.Colors.systemBackground.color
+        #endif
         self.add(productView)
     }
 }

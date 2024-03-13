@@ -6,7 +6,8 @@
 import Flare
 import SwiftUI
 
-class ProductViewControllerViewModel: ObservableObject {
+@available(watchOS, unavailable)
+final class ProductViewControllerViewModel: ObservableObject {
     @Published var onInAppPurchaseCompletion: PurchaseCompletionHandler?
     @Published var inAppPurchaseOptions: PurchaseOptionHandler?
 }

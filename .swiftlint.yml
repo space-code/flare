@@ -8,6 +8,8 @@ excluded:
   - Sources/FlareUI/Classes/Generated/Colors.swift
   - Sources/FlareUI/Classes/Presentation/Components/Core/Constants/UIConstants.swift
   - Sources/FlareUIMock/Mocks/
+  - Sources/FlareUI/Classes/Presentation/Components/Controllers/ViewController/ViewController.swift
+  - Sources/FlareUI/Classes/Presentation/Components/Controllers/ViewController/HostingController.swift
   - .build
 
 # Rules

@@ -6,16 +6,21 @@
 import Flare
 import StoreKit
 import SwiftUI
-import UIKit
+#if canImport(UIKit)
+    import UIKit
+#elseif canImport(Cocoa)
+    import Cocoa
+#endif
 
 // MARK: - ProductsViewController
 
-public final class ProductsViewController: UIViewController {
+@available(watchOS, unavailable)
+public final class ProductsViewController: ViewController {
     // MARK: - Properties
 
     private lazy var viewModel = ProductsViewControllerViewModel()
 
-    private lazy var productsView: UIHostingController<some View> = {
+    private lazy var productsView: HostingController<some View> = {
         let view = ProductsView(ids: self.ids)
             .onInAppPurchaseCompletion(completion: viewModel.onInAppPurchaseCompletion)
             .storeButton(.visible, types: viewModel.visibleStoreButtons)
@@ -55,7 +60,9 @@ public final class ProductsViewController: UIViewController {
     // MARK: Private
 
     private func setupUI() {
-        self.view.backgroundColor = Asset.Colors.systemBackground.color
+        #if os(iOS) || os(tvOS)
+            self.view.backgroundColor = Asset.Colors.systemBackground.color
+        #endif
         self.add(productsView)
     }
 
