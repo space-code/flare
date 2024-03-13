@@ -10,4 +10,5 @@ import SwiftUI
 final class ProductViewControllerViewModel: ObservableObject {
     @Published var onInAppPurchaseCompletion: PurchaseCompletionHandler?
     @Published var inAppPurchaseOptions: PurchaseOptionHandler?
+    @Published var productStyle = AnyProductStyle(style: CompactProductStyle())
 }

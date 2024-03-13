@@ -19,6 +19,7 @@ public final class ProductViewController: ViewController {
         let view = ProductView(id: self.id)
             .onInAppPurchaseCompletion(completion: viewModel.onInAppPurchaseCompletion)
             .inAppPurchaseOptions(viewModel.inAppPurchaseOptions)
+            .productViewStyle(viewModel.productStyle)
 
         return BaseHostingController(rootView: view)
     }()
@@ -28,6 +29,12 @@ public final class ProductViewController: ViewController {
     public var onInAppPurchaseCompletion: PurchaseCompletionHandler? {
         didSet {
             viewModel.onInAppPurchaseCompletion = onInAppPurchaseCompletion
+        }
+    }
+
+    public var productStyle: any IProductStyle = CompactProductStyle() {
+        didSet {
+            viewModel.productStyle = AnyProductStyle(style: productStyle)
         }
     }
 

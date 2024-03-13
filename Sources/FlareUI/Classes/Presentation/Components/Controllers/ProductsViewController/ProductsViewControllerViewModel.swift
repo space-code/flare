@@ -12,4 +12,5 @@ final class ProductsViewControllerViewModel: ObservableObject {
     @Published var visibleStoreButtons: [StoreButtonType] = []
     @Published var hiddenStoreButtons: [StoreButtonType] = []
     @Published var inAppPurchaseOptions: PurchaseOptionHandler?
+    @Published var productStyle = AnyProductStyle(style: CompactProductStyle())
 }

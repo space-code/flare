@@ -26,6 +26,7 @@ public final class ProductsViewController: ViewController {
             .storeButton(.visible, types: viewModel.visibleStoreButtons)
             .storeButton(.hidden, types: viewModel.hiddenStoreButtons)
             .inAppPurchaseOptions(viewModel.inAppPurchaseOptions)
+            .productViewStyle(viewModel.productStyle)
 
         return BaseHostingController(rootView: view)
     }()
@@ -35,6 +36,12 @@ public final class ProductsViewController: ViewController {
     public var onInAppPurchaseCompletion: PurchaseCompletionHandler? {
         didSet {
             viewModel.onInAppPurchaseCompletion = onInAppPurchaseCompletion
+        }
+    }
+
+    public var productStyle: any IProductStyle = CompactProductStyle() {
+        didSet {
+            viewModel.productStyle = AnyProductStyle(style: productStyle)
         }
     }
 
