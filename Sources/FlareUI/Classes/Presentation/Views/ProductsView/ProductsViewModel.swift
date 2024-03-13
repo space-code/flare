@@ -10,6 +10,7 @@ import Foundation
 
 struct ProductsViewModel: IModel {
     enum State: Equatable {
+        case loading(Int)
         case products([StoreProduct])
         case error(IAPError)
     }

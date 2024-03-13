@@ -38,7 +38,7 @@ final class ProductsViewAssembly: IProductsViewAssembly {
         )
         let viewModel = ViewModel<ProductsViewModel>(
             model: ProductsViewModel(
-                state: .products([]),
+                state: .loading(ids.count),
                 presenter: presenter
             )
         )

@@ -92,7 +92,9 @@ final class IAPProvider: IIAPProvider {
     func fetch(productIDs: Set<String>) async throws -> [StoreProduct] {
         try await withCheckedThrowingContinuation { continuation in
             self.fetch(productIDs: productIDs) { result in
-                continuation.resume(with: result)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    continuation.resume(with: result)
+                }
             }
         }
     }
