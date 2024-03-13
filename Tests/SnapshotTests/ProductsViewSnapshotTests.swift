@@ -15,7 +15,7 @@ import Foundation
 final class ProductsViewSnapshotTests: SnapshotTestCase {
     func test_productsView_error() {
         assertSnapshots(
-            of: ProductsView(
+            of: ProductsWrapperView(
                 viewModel: ProductsViewModel(
                     state: .error(.storeProductNotAvailable),
                     presenter: ProductsPresenterMock()
@@ -31,7 +31,7 @@ final class ProductsViewSnapshotTests: SnapshotTestCase {
         iapMock.stubbedInvokedFetch = [.fake(), .fake(), .fake()]
 
         assertSnapshots(
-            of: ProductsView(
+            of: ProductsWrapperView(
                 viewModel: ProductsViewModel(
                     state: .products(iapMock.stubbedInvokedFetch),
                     presenter: ProductsPresenterMock()
@@ -50,7 +50,7 @@ final class ProductsViewSnapshotTests: SnapshotTestCase {
         iapMock.stubbedInvokedFetch = [.fake(), .fake(), .fake()]
 
         assertSnapshots(
-            of: ProductsView(
+            of: ProductsWrapperView(
                 viewModel: ProductsViewModel(
                     state: .products(iapMock.stubbedInvokedFetch),
                     presenter: ProductsPresenterMock()

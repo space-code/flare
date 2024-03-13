@@ -8,36 +8,27 @@ import SwiftUI
 struct PaywallView: View {
     // MARK: Properties
 
+    private let presentationAssembly: IPresentationAssembly
     private let paywallType: PaywallType
-
-    // FIXME: Lazy
-    private let productsAssembly: IProductsViewAssembly
-    private let subscriptionsAssembly: ISubscriptionAssembly
 
     // MARK: Initialization
 
     init(
         paywallType: PaywallType,
-        productsAssembly: IProductsViewAssembly,
-        subscriptionsAssembly: ISubscriptionAssembly
+        presentationAssembly: IPresentationAssembly = PresentationAssembly()
     ) {
         self.paywallType = paywallType
-        self.productsAssembly = productsAssembly
-        self.subscriptionsAssembly = subscriptionsAssembly
+        self.presentationAssembly = presentationAssembly
     }
 
     // MARK: View
 
     var body: some View {
-        VStack(alignment: .leading) {
-            Group {
-                switch paywallType {
-                case let .subscriptions(type):
-                    subscriptionsAssembly.assembly(type: type)
-                case let .products(productIDs):
-                    productsAssembly.assemble(ids: productIDs)
-                }
-            }
+        switch paywallType {
+        case let .subscriptions(type):
+            presentationAssembly.subscritpionsViewAssembly.assemble(type: type)
+        case let .products(productIDs):
+            presentationAssembly.productsViewAssembly.assemble(ids: productIDs)
         }
     }
 }

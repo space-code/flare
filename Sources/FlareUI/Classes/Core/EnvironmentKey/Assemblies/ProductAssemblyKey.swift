@@ -7,7 +7,7 @@ import SwiftUI
 
 // MARK: - ProductAssemblyKey
 
-struct ProductAssemblyKey: EnvironmentKey {
+private struct ProductAssemblyKey: EnvironmentKey {
     static var defaultValue: IProductViewAssembly?
 }
 

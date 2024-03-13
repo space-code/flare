@@ -8,7 +8,7 @@ import SwiftUI
 
 // MARK: - PurchaseCompletionKey
 
-struct PurchaseCompletionKey: EnvironmentKey {
+private struct PurchaseCompletionKey: EnvironmentKey {
     static var defaultValue: ((StoreProduct, Result<StoreTransaction, Error>) -> Void)?
 }
 

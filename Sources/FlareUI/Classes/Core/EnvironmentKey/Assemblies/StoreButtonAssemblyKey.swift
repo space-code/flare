@@ -7,7 +7,7 @@ import SwiftUI
 
 // MARK: - StoreButtonAssemblyKey
 
-struct StoreButtonAssemblyKey: EnvironmentKey {
+private struct StoreButtonAssemblyKey: EnvironmentKey {
     static var defaultValue: IStoreButtonAssembly?
 }
 

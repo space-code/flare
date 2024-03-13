@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-// MARK: - ProductsView
+// MARK: - StoreButtonView
 
 struct StoreButtonView: View, IViewWrapper {
     // MARK: Properties

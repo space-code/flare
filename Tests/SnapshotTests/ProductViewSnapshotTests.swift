@@ -16,7 +16,7 @@ import XCTest
 final class ProductViewSnapshotTests: SnapshotTestCase {
     func test_productView_loading() {
         assertSnapshots(
-            of: ProductView(
+            of: ProductWrapperView(
                 viewModel: .init(state: .loading, presenter: ProductPresenterMock())
             ),
             size: .size
@@ -25,7 +25,7 @@ final class ProductViewSnapshotTests: SnapshotTestCase {
 
     func test_productView_product() {
         assertSnapshots(
-            of: ProductView(
+            of: ProductWrapperView(
                 viewModel: .init(state: .product(.fake()), presenter: ProductPresenterMock())
             ),
             size: .size
@@ -34,7 +34,7 @@ final class ProductViewSnapshotTests: SnapshotTestCase {
 
     func test_productView_error() {
         assertSnapshots(
-            of: ProductView(
+            of: ProductWrapperView(
                 viewModel: .init(state: .error(.unknown), presenter: ProductPresenterMock())
             ),
             size: .size
@@ -43,7 +43,7 @@ final class ProductViewSnapshotTests: SnapshotTestCase {
 
     func test_productView_customStyle_product() {
         assertSnapshots(
-            of: ProductView(
+            of: ProductWrapperView(
                 viewModel: .init(state: .product(.fake()), presenter: ProductPresenterMock())
             ).productViewStyle(CustomProductStyle()),
             size: .size

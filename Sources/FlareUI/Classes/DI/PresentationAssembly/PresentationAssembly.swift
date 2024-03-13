@@ -12,7 +12,7 @@ final class PresentationAssembly: IPresentationAssembly {
 
     // MARK: Initialization
 
-    init(dependencies: IFlareDependencies) {
+    init(dependencies: IFlareDependencies = FlareDependencies()) {
         self.dependencies = dependencies
     }
 

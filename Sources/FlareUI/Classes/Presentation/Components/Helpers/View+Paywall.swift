@@ -18,8 +18,7 @@ public extension View {
         modifier(
             PaywallViewModifier(
                 paywallType: paywallType,
-                presented: presented,
-                presentationAssembly: PresentationAssembly(dependencies: FlareDependencies())
+                presented: presented
             )
         )
     }

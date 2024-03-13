@@ -5,53 +5,22 @@
 
 import SwiftUI
 
-// MARK: - ProductsView
-
-struct ProductsView: View, IViewWrapper {
+public struct ProductsView: View {
     // MARK: Properties
 
-    @Environment(\.storeButton) var storeButton
-    @Environment(\.productViewAssembly) var productViewAssembly
-    @Environment(\.storeButtonAssembly) var storeButtonAssembly
+    private let presentationAssembly = PresentationAssembly()
 
-    private let viewModel: ProductsViewModel
+    private let ids: Set<String>
 
     // MARK: Initialization
 
-    init(viewModel: ProductsViewModel) {
-        self.viewModel = viewModel
+    public init(ids: Set<String>) {
+        self.ids = ids
     }
 
     // MARK: View
 
-    var body: some View {
-        contentView
-            .onAppear { viewModel.presenter.viewDidLoad() }
-            .padding()
-    }
-
-    // MARK: Private
-
-    @ViewBuilder
-    private var contentView: some View {
-        switch viewModel.state {
-        case let .products(products):
-            VStack(alignment: .center) {
-                ForEach(Array(products), id: \.self) { product in
-                    productViewAssembly.map { $0.assemble(storeProduct: product) }
-                }
-                .padding(.horizontal)
-                Spacer()
-                storeButtonView
-            }
-        case .error:
-            StoreUnavaliableView()
-        }
-    }
-
-    private var storeButtonView: some View {
-        ForEach(storeButton, id: \.self) { type in
-            storeButtonAssembly.map { $0.assemble(storeButtonType: type) }
-        }
+    public var body: some View {
+        presentationAssembly.productsViewAssembly.assemble(ids: ids)
     }
 }

@@ -9,7 +9,7 @@ import SwiftUI
 // MARK: - ISubscriptionAssembly
 
 protocol ISubscriptionAssembly {
-    func assembly(type: SubscptionType) -> SubscriptionsView
+    func assemble(type: SubscptionType) -> SubscriptionsView
 }
 
 // MARK: - SubscriptionAssembly
@@ -27,7 +27,7 @@ final class SubscriptionAssembly: ISubscriptionAssembly {
 
     // MARK: ISubscriptionAssembly
 
-    func assembly(type: SubscptionType) -> SubscriptionsView {
+    func assemble(type: SubscptionType) -> SubscriptionsView {
         let presenter = SubscriptionsPresenter(iap: iap, type: type)
         return SubscriptionsView(presenter: presenter)
     }

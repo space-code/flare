@@ -12,4 +12,7 @@ protocol IPresentationAssembly {
 
     /// A subscriptions view assembly.
     var subscritpionsViewAssembly: ISubscriptionAssembly { get }
+
+    /// A product view assembly.
+    var productViewAssembly: IProductViewAssembly { get }
 }

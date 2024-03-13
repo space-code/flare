@@ -9,7 +9,7 @@ import SwiftUI
 
 // MARK: - PurchaseOptionKey
 
-struct PurchaseOptionKey: EnvironmentKey {
+private struct PurchaseOptionKey: EnvironmentKey {
     static var defaultValue: ((StoreProduct) -> PurchaseOptions)?
 }
 

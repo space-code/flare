@@ -44,7 +44,7 @@ final class ProductsViewAssembly: IProductsViewAssembly {
         )
         presenter.viewModel = viewModel
 
-        return ViewWrapper<ProductsViewModel, ProductsView>(viewModel: viewModel)
+        return ViewWrapper<ProductsViewModel, ProductsWrapperView>(viewModel: viewModel)
             .environment(\.productViewAssembly, productAssembly)
             .environment(\.storeButtonAssembly, storeButtonAssembly)
             .eraseToAnyView()

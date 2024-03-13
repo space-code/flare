@@ -19,7 +19,7 @@ protocol IViewWrapper: View {
 
 // MARK: - ViewWrapper
 
-struct ViewWrapper<ViewModel, ViewWrapper: IViewWrapper>: IViewWrapper where ViewWrapper.ViewModel == ViewModel {
+struct ViewWrapper<ViewModel, ViewWrapper: IViewWrapper>: View where ViewWrapper.ViewModel == ViewModel {
     // MARK: Properties
 
     @ObservedObject private var viewModel: FlareUI.ViewModel<ViewModel>
