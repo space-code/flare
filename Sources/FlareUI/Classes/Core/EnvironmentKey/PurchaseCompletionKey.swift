@@ -6,14 +6,16 @@
 import Flare
 import SwiftUI
 
+public typealias PurchaseCompletionHandler = (StoreProduct, Result<StoreTransaction, Error>) -> Void
+
 // MARK: - PurchaseCompletionKey
 
 private struct PurchaseCompletionKey: EnvironmentKey {
-    static var defaultValue: ((StoreProduct, Result<StoreTransaction, Error>) -> Void)?
+    static var defaultValue: PurchaseCompletionHandler?
 }
 
 extension EnvironmentValues {
-    var purchaseCompletion: ((StoreProduct, Result<StoreTransaction, Error>) -> Void)? {
+    var purchaseCompletion: PurchaseCompletionHandler? {
         get { self[PurchaseCompletionKey.self] }
         set { self[PurchaseCompletionKey.self] = newValue }
     }

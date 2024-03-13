@@ -18,12 +18,14 @@ public extension View {
         }
     }
 
-    func storeButton(_ visibility: StoreButtonVisibility, type: StoreButtonType) -> some View {
+    func storeButton(_ visibility: StoreButtonVisibility, types: [StoreButtonType]) -> some View {
         transformEnvironment(\.storeButton) { values in
             if visibility == .hidden {
-                values = values.filter { $0 != type }
+                values = values.filter { !types.contains($0) }
             } else {
-                values += [type]
+                let types = types.removingDuplicates()
+                let diff = types.filter { !values.contains($0) }
+                values += diff
             }
         }
     }
