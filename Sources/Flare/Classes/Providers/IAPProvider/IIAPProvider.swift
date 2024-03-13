@@ -17,7 +17,7 @@ public protocol IIAPProvider {
     /// - Parameters:
     ///   - productIDs: The list of product identifiers for which you wish to retrieve descriptions.
     ///   - completion: The completion containing the response of retrieving products.
-    func fetch(productIDs: Set<String>, completion: @escaping Closure<Result<[StoreProduct], IAPError>>)
+    func fetch(productIDs: some Collection<String>, completion: @escaping Closure<Result<[StoreProduct], IAPError>>)
 
     /// Retrieves localized information from the App Store about a specified list of products.
     ///
@@ -26,7 +26,7 @@ public protocol IIAPProvider {
     /// - Throws: `IAPError(error:)` if the request did fail with error.
     ///
     /// - Returns: An array of products.
-    func fetch(productIDs: Set<String>) async throws -> [StoreProduct]
+    func fetch(productIDs: some Collection<String>) async throws -> [StoreProduct]
 
     /// Performs a purchase of a product.
     ///

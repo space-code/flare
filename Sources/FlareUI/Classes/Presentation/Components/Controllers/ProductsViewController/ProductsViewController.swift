@@ -31,7 +31,7 @@ public final class ProductsViewController: ViewController {
         return BaseHostingController(rootView: view)
     }()
 
-    private let ids: Set<String>
+    private let ids: any Collection<String>
 
     public var onInAppPurchaseCompletion: PurchaseCompletionHandler? {
         didSet {
@@ -47,7 +47,7 @@ public final class ProductsViewController: ViewController {
 
     // MARK: Initialization
 
-    public init(ids: Set<String>) {
+    public init(ids: some Collection<String>) {
         self.ids = ids
         super.init(nibName: nil, bundle: nil)
     }
@@ -75,8 +75,7 @@ public final class ProductsViewController: ViewController {
 
     private func updateStoreButtons(
         _ buttons: inout [StoreButtonType],
-        add newButtons: [StoreButtonType],
-        remove _: [StoreButtonType]
+        add newButtons: [StoreButtonType]
     ) {
         buttons += newButtons
         buttons = buttons.removingDuplicates()
@@ -89,10 +88,10 @@ public extension ProductsViewController {
     func storeButton(_ visibility: StoreButtonVisibility, types: [StoreButtonType]) {
         switch visibility {
         case .visible:
-            updateStoreButtons(&viewModel.visibleStoreButtons, add: types, remove: viewModel.hiddenStoreButtons)
+            updateStoreButtons(&viewModel.visibleStoreButtons, add: types)
             viewModel.hiddenStoreButtons.removeAll { types.contains($0) }
         case .hidden:
-            updateStoreButtons(&viewModel.hiddenStoreButtons, add: types, remove: viewModel.visibleStoreButtons)
+            updateStoreButtons(&viewModel.hiddenStoreButtons, add: types)
             viewModel.visibleStoreButtons.removeAll { types.contains($0) }
         }
     }

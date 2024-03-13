@@ -17,14 +17,14 @@ protocol IProductsPresenter {
 final class ProductsPresenter: IPresenter {
     // MARK: Properties
 
-    private let ids: Set<String>
+    private let ids: any Collection<String>
     private let iap: IFlare
 
     weak var viewModel: ViewModel<ProductsViewModel>?
 
     // MARK: Initialization
 
-    init(ids: Set<String>, iap: IFlare) {
+    init(ids: some Collection<String>, iap: IFlare) {
         self.ids = ids
         self.iap = iap
     }

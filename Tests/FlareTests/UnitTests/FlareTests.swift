@@ -43,7 +43,7 @@ class FlareTests: XCTestCase {
 
     func test_thatFlareFetchesProductsWithGivenProductIDs() {
         // when
-        sut.fetch(productIDs: .ids, completion: { _ in })
+        sut.fetch(productIDs: Set.ids, completion: { _ in })
 
         // then
         XCTAssertTrue(iapProviderMock.invokedFetch)
@@ -59,7 +59,7 @@ class FlareTests: XCTestCase {
         iapProviderMock.fetchAsyncResult = productMocks
 
         // when
-        let products = try await sut.fetch(productIDs: .ids)
+        let products = try await sut.fetch(productIDs: Set.ids)
 
         // then
         XCTAssertEqual(products, productMocks)

@@ -10,11 +10,11 @@ public struct ProductsView: View {
 
     private let presentationAssembly = PresentationAssembly()
 
-    private let ids: Set<String>
+    private let ids: any Collection<String>
 
     // MARK: Initialization
 
-    public init(ids: Set<String>) {
+    public init(ids: some Collection<String>) {
         self.ids = ids
     }
 

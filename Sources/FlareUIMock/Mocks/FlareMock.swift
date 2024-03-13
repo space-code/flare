@@ -36,10 +36,10 @@ public final class FlareMock: IFlare {
 
     public var invokedFetchProductIDs = false
     public var invokedFetchProductIDsCount = 0
-    public var invokedFetchProductIDsParameters: (productIDs: Set<String>, completion: Closure<Result<[StoreProduct], IAPError>>)?
-    public var invokedFetchProductIDsParametersList = [(productIDs: Set<String>, completion: Closure<Result<[StoreProduct], IAPError>>)]()
+    public var invokedFetchProductIDsParameters: (productIDs: Any, completion: Closure<Result<[StoreProduct], IAPError>>)?
+    public var invokedFetchProductIDsParametersList = [(productIDs: Any, completion: Closure<Result<[StoreProduct], IAPError>>)]()
 
-    public func fetch(productIDs: Set<String>, completion: @escaping Closure<Result<[StoreProduct], IAPError>>) {
+    public func fetch(productIDs: some Collection<String>, completion: @escaping Closure<Result<[StoreProduct], IAPError>>) {
         invokedFetchProductIDs = true
         invokedFetchProductIDsCount += 1
         invokedFetchProductIDsParameters = (productIDs, completion)
@@ -48,12 +48,12 @@ public final class FlareMock: IFlare {
 
     public var invokedFetch = false
     public var invokedFetchCount = 0
-    public var invokedFetchParameters: (productIDs: Set<String>, Void)?
-    public var invokedFetchParametersList = [(productIDs: Set<String>, Void)]()
+    public var invokedFetchParameters: (productIDs: Any, Void)?
+    public var invokedFetchParametersList = [(productIDs: Any, Void)]()
     public var stubbedFetchError: Error?
     public var stubbedInvokedFetch: [StoreProduct] = []
 
-    public func fetch(productIDs: Set<String>) async throws -> [StoreProduct] {
+    public func fetch(productIDs: some Collection<String>) async throws -> [StoreProduct] {
         invokedFetch = true
         invokedFetchCount += 1
         invokedFetchParameters = (productIDs, ())

@@ -60,7 +60,7 @@ final class IAPProvider: IIAPProvider {
         paymentQueue.canMakePayments
     }
 
-    func fetch(productIDs: Set<String>, completion: @escaping Closure<Result<[StoreProduct], IAPError>>) {
+    func fetch(productIDs: some Collection<String>, completion: @escaping Closure<Result<[StoreProduct], IAPError>>) {
         if #available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *) {
             AsyncHandler.call(
                 strategy: .runOnMain,
@@ -77,24 +77,22 @@ final class IAPProvider: IIAPProvider {
                     }
                 },
                 asyncMethod: {
-                    try await self.productProvider.fetch(productIDs: productIDs)
+                    try await self.productProvider.fetch(productIDs: Set(productIDs))
                 }
             )
         } else {
             productProvider.fetch(
-                productIDs: productIDs,
+                productIDs: Set(productIDs),
                 requestID: UUID().uuidString,
                 completion: completion
             )
         }
     }
 
-    func fetch(productIDs: Set<String>) async throws -> [StoreProduct] {
+    func fetch(productIDs: some Collection<String>) async throws -> [StoreProduct] {
         try await withCheckedThrowingContinuation { continuation in
             self.fetch(productIDs: productIDs) { result in
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                    continuation.resume(with: result)
-                }
+                continuation.resume(with: result)
             }
         }
     }

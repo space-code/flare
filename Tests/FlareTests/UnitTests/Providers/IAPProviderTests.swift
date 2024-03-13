@@ -65,11 +65,11 @@ class IAPProviderTests: XCTestCase {
         try AvailabilityChecker.iOS15APINotAvailableOrSkipTest()
 
         // when
-        sut.fetch(productIDs: .productIDs, completion: { _ in })
+        sut.fetch(productIDs: Set.productIDs, completion: { _ in })
 
         // then
         let parameters = try XCTUnwrap(productProviderMock.invokedFetchParameters)
-        XCTAssertEqual(parameters.productIDs, .productIDs)
+        XCTAssertEqual(parameters.productIDs as? Set<String>, Set.productIDs)
         XCTAssertTrue(!parameters.requestID.isEmpty)
     }
 
@@ -136,7 +136,7 @@ class IAPProviderTests: XCTestCase {
         productProviderMock.stubbedFetchResult = .success(productsMock)
 
         // when
-        let products = try await sut.fetch(productIDs: .productIDs)
+        let products = try await sut.fetch(productIDs: Set.productIDs)
 
         // then
         XCTAssertEqual(productsMock.count, products.count)
@@ -149,7 +149,7 @@ class IAPProviderTests: XCTestCase {
         productProviderMock.stubbedFetchResult = .failure(IAPError.unknown)
 
         // when
-        let errorResult: Error? = await error(for: { try await sut.fetch(productIDs: .productIDs) })
+        let errorResult: Error? = await error(for: { try await sut.fetch(productIDs: Set.productIDs) })
 
         // then
         XCTAssertEqual(errorResult as? NSError, IAPError.unknown as NSError)

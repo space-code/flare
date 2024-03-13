@@ -9,7 +9,7 @@ import SwiftUI
 // MARK: - IProductsViewAssembly
 
 protocol IProductsViewAssembly {
-    func assemble(ids: Set<String>) -> AnyView
+    func assemble(ids: some Collection<String>) -> AnyView
 }
 
 // MARK: - ProductsViewAssembly
@@ -31,7 +31,7 @@ final class ProductsViewAssembly: IProductsViewAssembly {
 
     // MARK: IProductsViewAssembly
 
-    func assemble(ids: Set<String>) -> AnyView {
+    func assemble(ids: some Collection<String>) -> AnyView {
         let presenter = ProductsPresenter(
             ids: ids,
             iap: iap
