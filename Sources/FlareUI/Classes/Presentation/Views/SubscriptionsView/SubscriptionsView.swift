@@ -5,27 +5,22 @@
 
 import SwiftUI
 
-struct SubscriptionsView: View {
-    // MARK: Propertirs
+public struct SubscriptionsView: View {
+    // MARK: Properties
 
-    private let presenter: ISubscriptionsPresenter
+    private let presentationAssembly = PresentationAssembly()
+
+    private let ids: any Collection<String>
 
     // MARK: Initialization
 
-    init(presenter: ISubscriptionsPresenter) {
-        self.presenter = presenter
+    public init(ids: some Collection<String>) {
+        self.ids = ids
     }
 
     // MARK: View
 
-    var body: some View {
-        contentView
-            .onAppear { presenter.viewDidLoad() }
-    }
-
-    // MARK: Private
-
-    private var contentView: some View {
-        Text("View")
+    public var body: some View {
+        presentationAssembly.subscritpionsViewAssembly.assemble(ids: ids)
     }
 }

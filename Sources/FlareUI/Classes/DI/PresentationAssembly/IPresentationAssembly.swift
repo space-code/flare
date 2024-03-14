@@ -11,7 +11,7 @@ protocol IPresentationAssembly {
     var productsViewAssembly: IProductsViewAssembly { get }
 
     /// A subscriptions view assembly.
-    var subscritpionsViewAssembly: ISubscriptionAssembly { get }
+    var subscritpionsViewAssembly: ISubscriptionsAssembly { get }
 
     /// A product view assembly.
     var productViewAssembly: IProductViewAssembly { get }

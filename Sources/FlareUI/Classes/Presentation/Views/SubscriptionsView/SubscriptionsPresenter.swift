@@ -14,22 +14,39 @@ protocol ISubscriptionsPresenter {
 
 // MARK: - SubscriptionsPresenter
 
-final class SubscriptionsPresenter {
+final class SubscriptionsPresenter: IPresenter {
     // MARK: Properties
 
     private let iap: IFlare
-    private let type: SubscptionType
+    private let ids: any Collection<String>
+
+    weak var viewModel: ViewModel<SubscriptionsViewModel>?
 
     // MARK: Initialization
 
-    init(iap: IFlare, type: SubscptionType) {
+    init(iap: IFlare, ids: some Collection<String>) {
         self.iap = iap
-        self.type = type
+        self.ids = ids
     }
 }
 
 // MARK: ISubscriptionsPresenter
 
 extension SubscriptionsPresenter: ISubscriptionsPresenter {
-    func viewDidLoad() {}
+    func viewDidLoad() {
+        Task { @MainActor in
+            do {
+                let products = try await iap.fetch(productIDs: ids)
+                    .filter { $0.productCategory == .subscription }
+
+                if products.isEmpty {
+                    update(state: .error(.storeProductNotAvailable))
+                }
+
+                update(state: .products(products))
+            } catch {
+                update(state: .error(error.iap))
+            }
+        }
+    }
 }

@@ -33,10 +33,16 @@ internal enum L10n {
     internal static let restorePurchases = L10n.tr("Localizable", "store_button.restore_purchases", fallback: "Restore Missing Purchases")
   }
   internal enum StoreUnavailable {
-    /// No in-app purchases are available in the current storefront.
-    internal static let message = L10n.tr("Localizable", "store_unavailable.message", fallback: "No in-app purchases are available in the current storefront.")
     /// Store Unavailable
     internal static let title = L10n.tr("Localizable", "store_unavailable.title", fallback: "Store Unavailable")
+    internal enum Product {
+      /// No in-app purchases are available in the current storefront.
+      internal static let message = L10n.tr("Localizable", "store_unavailable.product.message", fallback: "No in-app purchases are available in the current storefront.")
+    }
+    internal enum Subscription {
+      /// The subscription is unavailable in the current storefront.
+      internal static let message = L10n.tr("Localizable", "store_unavailable.subscription.message", fallback: "The subscription is unavailable in the current storefront.")
+    }
   }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length

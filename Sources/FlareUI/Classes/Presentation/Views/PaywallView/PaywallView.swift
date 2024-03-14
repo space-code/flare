@@ -25,8 +25,8 @@ struct PaywallView: View {
 
     var body: some View {
         switch paywallType {
-        case let .subscriptions(type):
-            presentationAssembly.subscritpionsViewAssembly.assemble(type: type)
+        case let .subscriptions(productIDs):
+            presentationAssembly.subscritpionsViewAssembly.assemble(ids: productIDs)
         case let .products(productIDs):
             presentationAssembly.productsViewAssembly.assemble(ids: productIDs)
         }

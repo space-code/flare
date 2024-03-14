@@ -8,11 +8,39 @@ import SwiftUI
 // MARK: - StoreUnavaliableView
 
 struct StoreUnavaliableView: View {
+    // MARK: Types
+
+    enum ProductType {
+        case product
+        case subscription
+
+        var message: String {
+            switch self {
+            case .product:
+                L10n.StoreUnavailable.Product.message
+            case .subscription:
+                L10n.StoreUnavailable.Subscription.message
+            }
+        }
+    }
+
+    // MARK: Properties
+
+    private let productType: ProductType
+
+    // MARK: Initialization
+
+    init(productType: ProductType) {
+        self.productType = productType
+    }
+
+    // MARK: View
+
     var body: some View {
         VStack {
             Text(L10n.StoreUnavailable.title)
                 .font(.title)
-            Text(L10n.StoreUnavailable.message)
+            Text(productType.message)
                 .font(.body)
                 .multilineTextAlignment(.center)
                 .foregroundColor(Palette.systemGray)
@@ -23,6 +51,6 @@ struct StoreUnavaliableView: View {
 
 #if swift(>=5.9)
     #Preview {
-        StoreUnavaliableView()
+        StoreUnavaliableView(productType: .product)
     }
 #endif

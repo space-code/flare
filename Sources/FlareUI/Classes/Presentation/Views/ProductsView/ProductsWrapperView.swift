@@ -49,7 +49,7 @@ struct ProductsWrapperView: View, IViewWrapper {
                 }
             }
         case .error:
-            StoreUnavaliableView()
+            StoreUnavaliableView(productType: .product)
         }
     }
 
