@@ -10,11 +10,11 @@ public final class StoreButtonAssemblyMock: IStoreButtonAssembly {
 
     public var invokedAssemble = false
     public var invokedAssembleCount = 0
-    public var invokedAssembleParameters: (storeButtonType: StoreButtonType, Void)?
-    public var invokedAssembleParametersList = [(storeButtonType: StoreButtonType, Void)]()
+    public var invokedAssembleParameters: (storeButtonType: StoreButton, Void)?
+    public var invokedAssembleParametersList = [(storeButtonType: StoreButton, Void)]()
     public var stubbedAssembleResult: ViewWrapper<StoreButtonViewModel, StoreButtonView>!
 
-    public func assemble(storeButtonType: StoreButtonType) -> ViewWrapper<StoreButtonViewModel, StoreButtonView> {
+    public func assemble(storeButtonType: StoreButton) -> ViewWrapper<StoreButtonViewModel, StoreButtonView> {
         invokedAssemble = true
         invokedAssembleCount += 1
         invokedAssembleParameters = (storeButtonType, ())

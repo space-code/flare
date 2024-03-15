@@ -13,7 +13,7 @@ private struct SubscriptionPrivacyPolicyDestinationKey: EnvironmentKey {
 
 extension EnvironmentValues {
     var subscriptionPrivacyPolicyDestination: AnyView? {
-        get { self[SubscriptionPrivacyPolicyDestinationKey] }
-        set { self[SubscriptionPrivacyPolicyDestinationKey] = newValue }
+        get { self[SubscriptionPrivacyPolicyDestinationKey.self] }
+        set { self[SubscriptionPrivacyPolicyDestinationKey.self] = newValue }
     }
 }

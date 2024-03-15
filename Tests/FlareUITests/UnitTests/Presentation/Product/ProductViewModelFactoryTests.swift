@@ -13,8 +13,7 @@ import XCTest
 final class ProductViewModelFactoryTests: XCTestCase {
     // MARK: Properties
 
-    private var dateComponentsFormatterMock: DateComponentsFormatterMock!
-    private var subscriptionDateComponentsFactoryMock: SubscriptionDateComponentsFactoryMock!
+    private var subscriptionPriceViewModelFactoryMock: SubscriptionPriceViewModelFactoryMock!
 
     private var sut: ProductViewModelFactory!
 
@@ -22,17 +21,14 @@ final class ProductViewModelFactoryTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        dateComponentsFormatterMock = DateComponentsFormatterMock()
-        subscriptionDateComponentsFactoryMock = SubscriptionDateComponentsFactoryMock()
+        subscriptionPriceViewModelFactoryMock = SubscriptionPriceViewModelFactoryMock()
         sut = ProductViewModelFactory(
-            dateFormatter: dateComponentsFormatterMock,
-            subscriptionDateComponentsFactory: subscriptionDateComponentsFactoryMock
+            subscriptionPriceViewModelFactory: subscriptionPriceViewModelFactoryMock
         )
     }
 
     override func tearDown() {
-        dateComponentsFormatterMock = nil
-        subscriptionDateComponentsFactoryMock = nil
+        subscriptionPriceViewModelFactoryMock = nil
         sut = nil
         super.tearDown()
     }
@@ -41,7 +37,9 @@ final class ProductViewModelFactoryTests: XCTestCase {
 
     func test_thatFactoryMakesAProduct_whenProductIsConsumable() {
         // given
-        let product: StoreProduct = .fake(productType: .consumable)
+        subscriptionPriceViewModelFactoryMock.stubbedMakeResult = .price
+
+        let product: StoreProduct = .fake(localizedPriceString: .price, productType: .consumable)
 
         // when
         let viewModel = sut.make(product, style: .compact)
@@ -55,8 +53,8 @@ final class ProductViewModelFactoryTests: XCTestCase {
 
     func test_thatFactoryMakesProductWithCompactStyle_whenProductTypeIsRenewableSubscription() {
         // given
-        subscriptionDateComponentsFactoryMock.stubbedDateComponentsResult = DateComponents(day: 1)
-        dateComponentsFormatterMock.stubbedStringResult = "1 month"
+        subscriptionPriceViewModelFactoryMock.stubbedMakeResult = .price
+        subscriptionPriceViewModelFactoryMock.stubbedPeriodResult = "Month"
 
         let product: StoreProduct = .fake(
             localizedPriceString: .price,
@@ -71,14 +69,14 @@ final class ProductViewModelFactoryTests: XCTestCase {
         XCTAssertEqual(viewModel.id, product.productIdentifier)
         XCTAssertEqual(viewModel.title, product.localizedTitle)
         XCTAssertEqual(viewModel.description, product.localizedDescription)
-        XCTAssertEqual(viewModel.price, "10 $")
+        XCTAssertEqual(viewModel.price, .price)
         XCTAssertEqual(viewModel.priceDescription, "Every Month")
     }
 
     func test_thatFactoryMakesProductWithLargeStyle_whenProductTypeIsRenewableSubscription() {
         // given
-        subscriptionDateComponentsFactoryMock.stubbedDateComponentsResult = DateComponents(day: 1)
-        dateComponentsFormatterMock.stubbedStringResult = "1 month"
+        subscriptionPriceViewModelFactoryMock.stubbedMakeResult = .price
+        subscriptionPriceViewModelFactoryMock.stubbedPeriodResult = "Month"
 
         let product: StoreProduct = .fake(
             localizedPriceString: .price,
@@ -93,7 +91,7 @@ final class ProductViewModelFactoryTests: XCTestCase {
         XCTAssertEqual(viewModel.id, product.productIdentifier)
         XCTAssertEqual(viewModel.title, product.localizedTitle)
         XCTAssertEqual(viewModel.description, product.localizedDescription)
-        XCTAssertEqual(viewModel.price, "10 $/month")
+        XCTAssertEqual(viewModel.price, .price)
         XCTAssertEqual(viewModel.priceDescription, "Every Month")
     }
 }

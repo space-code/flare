@@ -38,7 +38,13 @@ final class ProductsViewSnapshotTests: SnapshotTestCase {
                 )
             )
             .environment(\.productViewAssembly, ProductViewAssembly(iap: iapMock))
-            .environment(\.storeButtonAssembly, StoreButtonAssembly(iap: FlareMock()))
+            .environment(
+                \.storeButtonsAssembly,
+                StoreButtonsAssembly(
+                    storeButtonAssembly: StoreButtonAssembly(iap: FlareMock()),
+                    policiesButtonAssembly: PoliciesButtonAssembly()
+                )
+            )
             .storeButton(.visible, types: .restore, .restore),
             size: .size
         )
@@ -57,7 +63,13 @@ final class ProductsViewSnapshotTests: SnapshotTestCase {
                 )
             )
             .environment(\.productViewAssembly, ProductViewAssembly(iap: iapMock))
-            .environment(\.storeButtonAssembly, StoreButtonAssembly(iap: FlareMock())),
+            .environment(
+                \.storeButtonsAssembly,
+                StoreButtonsAssembly(
+                    storeButtonAssembly: StoreButtonAssembly(iap: FlareMock()),
+                    policiesButtonAssembly: PoliciesButtonAssembly()
+                )
+            ),
             size: .size
         )
     }

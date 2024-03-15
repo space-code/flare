@@ -13,7 +13,7 @@ private struct SubscriptionTermsOfServiceDestinationKey: EnvironmentKey {
 
 extension EnvironmentValues {
     var subscriptionTermsOfServiceDestination: AnyView? {
-        get { self[SubscriptionTermsOfServiceDestinationKey] }
-        set { self[SubscriptionTermsOfServiceDestinationKey] = newValue }
+        get { self[SubscriptionTermsOfServiceDestinationKey.self] }
+        set { self[SubscriptionTermsOfServiceDestinationKey.self] = newValue }
     }
 }

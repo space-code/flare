@@ -13,7 +13,7 @@ private struct SubscriptionTermsOfServiceURLKey: EnvironmentKey {
 
 extension EnvironmentValues {
     var subscriptionTermsOfServiceURL: URL? {
-        get { self[SubscriptionTermsOfServiceURLKey] }
-        set { self[SubscriptionTermsOfServiceURLKey] = newValue }
+        get { self[SubscriptionTermsOfServiceURLKey.self] }
+        set { self[SubscriptionTermsOfServiceURLKey.self] = newValue }
     }
 }

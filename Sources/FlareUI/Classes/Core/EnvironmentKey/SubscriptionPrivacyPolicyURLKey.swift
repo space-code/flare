@@ -13,7 +13,7 @@ private struct SubscriptionPrivacyPolicyURLKey: EnvironmentKey {
 
 extension EnvironmentValues {
     var subscriptionPrivacyPolicyURL: URL? {
-        get { self[SubscriptionPrivacyPolicyURLKey] }
-        set { self[SubscriptionPrivacyPolicyURLKey] = newValue }
+        get { self[SubscriptionPrivacyPolicyURLKey.self] }
+        set { self[SubscriptionPrivacyPolicyURLKey.self] = newValue }
     }
 }
