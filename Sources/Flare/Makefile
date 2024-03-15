@@ -1,0 +1,2 @@
+swiftgen:
+	swiftgen

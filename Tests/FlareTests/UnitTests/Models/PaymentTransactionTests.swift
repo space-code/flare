@@ -4,6 +4,7 @@
 //
 
 @testable import Flare
+import FlareMock
 import struct StoreKit.SKError
 import class StoreKit.SKPaymentTransaction
 import enum StoreKit.SKPaymentTransactionState

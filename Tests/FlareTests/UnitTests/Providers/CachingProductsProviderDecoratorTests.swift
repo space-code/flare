@@ -40,7 +40,7 @@ final class CachingProductsProviderDecoratorTests: XCTestCase {
     func test_thatProviderFetchesCachedProducts_whenFetchCachePolicyIsCachedOrFetch() {
         // given
         configurationProviderMock.stubbedFetchCachePolicy = .cachedOrFetch
-        productProviderMock.stubbedFetchResult = .success([StoreProduct.fake()])
+        productProviderMock.stubbedFetchResult = .success([StoreProduct.fake(productIdentifier: .productID)])
 
         // when
         sut.fetch(productIDs: [.productID], requestID: "", completion: { _ in })

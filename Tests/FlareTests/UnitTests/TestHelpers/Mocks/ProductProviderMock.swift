@@ -9,11 +9,11 @@ import StoreKit
 final class ProductProviderMock: IProductProvider {
     var invokedFetch = false
     var invokedFetchCount = 0
-    var invokedFetchParameters: (productIDs: Set<String>, requestID: String, completion: ProductsHandler)?
-    var invokedFetchParamtersList = [(productIDs: Set<String>, requestID: String, completion: ProductsHandler)]()
+    var invokedFetchParameters: (productIDs: Any, requestID: String, completion: ProductsHandler)?
+    var invokedFetchParamtersList = [(productIDs: Any, requestID: String, completion: ProductsHandler)]()
     var stubbedFetchResult: Result<[StoreProduct], IAPError>?
 
-    func fetch(productIDs: Set<String>, requestID: String, completion: @escaping ProductsHandler) {
+    func fetch(productIDs: some Collection<String>, requestID: String, completion: @escaping ProductsHandler) {
         invokedFetch = true
         invokedFetchCount += 1
         invokedFetchParameters = (productIDs, requestID, completion)
@@ -26,12 +26,12 @@ final class ProductProviderMock: IProductProvider {
 
     var invokedAsyncFetch = false
     var invokedAsyncFetchCount = 0
-    var invokedAsyncFetchParameters: (productIDs: Set<String>, Void)?
-    var invokedAsyncFetchParamtersList = [(productIDs: Set<String>, Void)]()
+    var invokedAsyncFetchParameters: (productIDs: Any, Void)?
+    var invokedAsyncFetchParamtersList = [(productIDs: Any, Void)]()
     var stubbedAsyncFetchResult: Result<[StoreProduct], Error>?
 
     @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
-    func fetch(productIDs: Set<String>) async throws -> [StoreProduct] {
+    func fetch(productIDs: some Collection<String>) async throws -> [StoreProduct] {
         invokedAsyncFetch = true
         invokedAsyncFetchCount += 1
         invokedAsyncFetchParameters = (productIDs, ())

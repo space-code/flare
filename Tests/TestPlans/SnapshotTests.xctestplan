@@ -1,0 +1,37 @@
+{
+  "configurations" : [
+    {
+      "id" : "982AD05B-EBD5-4A98-A373-D1868847261D",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:Flare.xcodeproj",
+          "identifier" : "8D5BAE0D59CA24F5E8E0C695",
+          "name" : "FlareUI"
+        }
+      ]
+    },
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:Flare.xcodeproj",
+      "identifier" : "8D5BAE0D59CA24F5E8E0C695",
+      "name" : "FlareUI"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Flare.xcodeproj",
+        "identifier" : "12A0F956FEAD55CFA5B3AF45",
+        "name" : "FlareUISnapshotTests"
+      }
+    }
+  ],
+  "version" : 1
+}

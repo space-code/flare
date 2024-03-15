@@ -1,0 +1,34 @@
+name: Upload a Test Coverage Report
+
+inputs:
+  filename:
+    required: true
+    type: string
+  scheme_name:
+    required: true
+    type: string
+  token:
+    description: 'A CodeCov Token'
+    required: true
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: Dir
+      shell: bash
+      run: pwd && ls -al
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v3.1.0
+      with:
+        token: ${{ inputs.token }}
+        xcode: true
+        flags: ${{ inputs.scheme_name }}
+        xcode_archive_path: test_output/${{ inputs.filename }}.xcresult
+    - name: Dir
+      shell: bash
+      run: pwd && ls -al
+    - uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.filename }}
+        path: test_output

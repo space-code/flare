@@ -1,3 +1,5 @@
+CHILD_MAKEFILES_DIRS = $(sort $(dir $(wildcard Sources/*/Makefile)))
+
 all: bootstrap
 
 bootstrap: hook
@@ -16,8 +18,8 @@ lint:
 fmt:
 	mint run swiftformat Sources Tests
 
-strings:
-	swiftgen 
+swiftgen:
+	@for d in $(CHILD_MAKEFILES_DIRS); do ( cd $$d && make swiftgen; ); done
 
 generate:
 	xcodegen generate

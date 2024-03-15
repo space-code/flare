@@ -47,7 +47,7 @@ final class ProductProviderTests: XCTestCase {
         response.stubbedInvokedInvalidProductsIdentifiers = [.productID]
 
         // when
-        sut.fetch(productIDs: .productIDs, requestID: .requestID, completion: completionHandler)
+        sut.fetch(productIDs: Set.productIDs, requestID: .requestID, completion: completionHandler)
         sut.productsRequest(request, didReceive: response)
 
         // then
@@ -66,7 +66,7 @@ final class ProductProviderTests: XCTestCase {
         let response = ProductResponseMock()
 
         // when
-        sut.fetch(productIDs: .productIDs, requestID: .requestID, completion: completionHandler)
+        sut.fetch(productIDs: Set.productIDs, requestID: .requestID, completion: completionHandler)
         sut.productsRequest(request, didReceive: response)
 
         // then
@@ -81,7 +81,7 @@ final class ProductProviderTests: XCTestCase {
         let errorStub = IAPError.unknown
 
         // when
-        sut.fetch(productIDs: .productIDs, requestID: .requestID, completion: completionHandler)
+        sut.fetch(productIDs: Set.productIDs, requestID: .requestID, completion: completionHandler)
         sut.request(request, didFailWithError: errorStub)
 
         // then

@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ## Added
+- Implement the `FlareUI` package
+  - Added in Pull Request [#28](https://github.com/space-code/flare/pull/28).
 - Implement asynchronous transaction completion
   - Added in Pull Request [#25](https://github.com/space-code/flare/pull/25).
 

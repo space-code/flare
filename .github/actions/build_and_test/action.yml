@@ -1,0 +1,48 @@
+name: Build and Test Action
+
+inputs:
+  scheme:
+    required: true
+    type: string
+  destination:
+    required: true
+    type: string
+  name:
+    required: true
+    type: string
+  test_plan:
+    required: false
+    type: string
+  generate_project:
+    required: false
+    type: boolean
+    default: true
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: Install Dependencies & Generate project
+      shell: bash
+      run: | 
+        if [ "${{ inputs.generate_project }}" = "true" ]; then
+          make setup_build_tools
+          make generate
+        fi
+    - name: ${{ inputs.name }}
+      shell: bash
+      run: |
+        if [ -n "${{ inputs.test_plan }}" ]; then
+          xcodebuild clean test \
+            -scheme ${{ inputs.scheme }} \
+            -destination "${{ inputs.destination }}" \
+            -testPlan ${{ inputs.test_plan }} \
+            -enableCodeCoverage YES \
+            -resultBundlePath "test_output/${{ inputs.name }}.xcresult" || exit 1
+        else
+          xcodebuild clean test \
+            -scheme ${{ inputs.scheme }} \
+            -destination "${{ inputs.destination }}" \
+            -enableCodeCoverage YES \
+            -resultBundlePath "test_output/${{ inputs.name }}.xcresult" || exit 1
+        fi

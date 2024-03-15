@@ -90,7 +90,7 @@ final class PurchaseProvider {
                         if let error = error as? IAPError {
                             await completion(.failure(error))
                         } else {
-                            await completion(.failure(IAPError.with(error: error)))
+                            await completion(.failure(.with(error: error)))
                         }
                     }
                 case let .failure(error):
@@ -213,5 +213,10 @@ extension PurchaseProvider: IPurchaseProvider {
 
     func removeTransactionObserver() {
         paymentProvider.removeTransactionObserver()
+    }
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    func restore() async throws {
+        try await AppStore.sync()
     }
 }
