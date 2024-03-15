@@ -18,20 +18,29 @@ final class SubscriptionsAssembly: ISubscriptionsAssembly {
     // MARK: Properties
 
     private let iap: IFlare
+    private let storeButtonAssembly: IStoreButtonAssembly
 
     // MARK: Initialization
 
-    init(iap: IFlare) {
+    init(iap: IFlare, storeButtonAssembly: IStoreButtonAssembly) {
         self.iap = iap
+        self.storeButtonAssembly = storeButtonAssembly
     }
 
     // MARK: ISubscriptionAssembly
 
     func assemble(ids: some Collection<String>) -> AnyView {
-        let presenter = SubscriptionsPresenter(iap: iap, ids: ids)
-        let viewModel = ViewModel(model: SubscriptionsViewModel(state: .loading, presenter: presenter))
+        let presenter = SubscriptionsPresenter(iap: iap, ids: ids, viewModelFactory: SubscriptionsViewModelViewFactory())
+        let viewModel = ViewModel(
+            model: SubscriptionsViewModel(
+                state: .loading,
+                selectedProductID: ids.first,
+                presenter: presenter
+            )
+        )
         presenter.viewModel = viewModel
         return ViewWrapper<SubscriptionsViewModel, SubscriptionsWrapperView>(viewModel: viewModel)
+            .environment(\.storeButtonAssembly, storeButtonAssembly)
             .eraseToAnyView()
     }
 }

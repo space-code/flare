@@ -58,12 +58,12 @@ extension SortingProductsProviderDecorator: ISortingProductsProviderDecorator {
 
     @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
     func fetch(productIDs: some Collection<String>) async throws -> [StoreProduct] {
-        /// It shouldn't be sorted because StoreKit 2 returns the ordered sequence.
-        try await productProvider.fetch(productIDs: productIDs)
+        let products = try await productProvider.fetch(productIDs: productIDs)
+        return sort(productIDs: productIDs, products: products)
     }
 }
 
-// MARK: - Extensions
+// MARK: Private
 
 private extension Array where Element: StoreProduct {
     func by(id: String) -> StoreProduct? {

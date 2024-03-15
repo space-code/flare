@@ -5,3 +5,4 @@
 "error.default.title" = "Произошла ошибка";
 "product.subscription.price" = "%@/%@";
 "product.price_description" = "Каждый %@";
+"subscriptions.renewable.subscription_description" = "Plan auto-renews for %@ until cancelled.";

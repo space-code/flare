@@ -77,12 +77,12 @@ final class IAPProvider: IIAPProvider {
                     }
                 },
                 asyncMethod: {
-                    try await self.productProvider.fetch(productIDs: Set(productIDs))
+                    try await self.productProvider.fetch(productIDs: productIDs)
                 }
             )
         } else {
             productProvider.fetch(
-                productIDs: Set(productIDs),
+                productIDs: productIDs,
                 requestID: UUID().uuidString,
                 completion: completion
             )

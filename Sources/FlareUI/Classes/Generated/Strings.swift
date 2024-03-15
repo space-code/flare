@@ -44,6 +44,14 @@ internal enum L10n {
       internal static let message = L10n.tr("Localizable", "store_unavailable.subscription.message", fallback: "The subscription is unavailable in the current storefront.")
     }
   }
+  internal enum Subscriptions {
+    internal enum Renewable {
+      /// Plan auto-renews for %@ until cancelled.
+      internal static func subscriptionDescription(_ p1: Any) -> String {
+        return L10n.tr("Localizable", "subscriptions.renewable.subscription_description", String(describing: p1), fallback: "Plan auto-renews for %@ until cancelled.")
+      }
+    }
+  }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:enable nesting type_body_length type_name vertical_whitespace_opening_braces

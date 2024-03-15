@@ -11,16 +11,29 @@ import Foundation
 struct SubscriptionsViewModel: IModel {
     enum State: Equatable {
         case loading
-        case products([StoreProduct])
+        case products([SubscriptionView.ViewModel])
         case error(IAPError)
     }
 
     let state: State
+    let selectedProductID: String?
     let presenter: ISubscriptionsPresenter
 }
 
 extension SubscriptionsViewModel {
     func setState(_ state: State) -> SubscriptionsViewModel {
-        SubscriptionsViewModel(state: state, presenter: presenter)
+        SubscriptionsViewModel(
+            state: state,
+            selectedProductID: selectedProductID,
+            presenter: presenter
+        )
+    }
+
+    func setSelectedProductID(_ selectedProductID: String?) -> SubscriptionsViewModel {
+        SubscriptionsViewModel(
+            state: state,
+            selectedProductID: selectedProductID,
+            presenter: presenter
+        )
     }
 }

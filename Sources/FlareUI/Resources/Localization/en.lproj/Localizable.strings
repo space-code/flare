@@ -5,3 +5,4 @@
 "error.default.title" = "Error Occurred";
 "product.subscription.price" = "%@/%@";
 "product.price_description" = "Every %@";
+"subscriptions.renewable.subscription_description" = "Plan auto-renews for %@ until cancelled.";

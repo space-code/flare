@@ -31,7 +31,10 @@ final class PresentationAssembly: IPresentationAssembly {
     }
 
     var subscritpionsViewAssembly: ISubscriptionsAssembly {
-        SubscriptionsAssembly(iap: dependencies.iap)
+        SubscriptionsAssembly(
+            iap: dependencies.iap,
+            storeButtonAssembly: storeButtonAssembly
+        )
     }
 
     // MARK: Private
