@@ -15,6 +15,8 @@ struct SubscriptionsWrapperView: View, IViewWrapper {
     @Environment(\.subscriptionStoreButtonLabel) private var subscriptionStoreButtonLabel
     @Environment(\.subscriptionViewTint) private var subscriptionViewTint
     @Environment(\.subscriptionMarketingContent) private var subscriptionMarketingContent
+    @Environment(\.subscriptionBackground) private var subscriptionBackground
+    @Environment(\.subscriptionHeaderContentBackground) private var subscriptionHeaderContentBackground
 
     @State private var selectedProduct: SubscriptionView.ViewModel?
     @State private var error: Error?
@@ -43,10 +45,18 @@ struct SubscriptionsWrapperView: View, IViewWrapper {
         case .loading:
             loadingView
         case let .products(products):
-            productsView(products: products)
-                .onAppear { selectedProduct = products.first(where: { $0.id == viewModel.selectedProductID }) }
-                .padding(.bottom)
-            bottomToolbar { purchaseButtonContainerView }
+            VStack(spacing: .zero) {
+                productsView(products: products)
+                    .onAppear { selectedProduct = products.first(where: { $0.id == viewModel.selectedProductID }) }
+
+                bottomToolbar { purchaseButtonContainerView }
+                    .background(
+                        Color.clear
+                            .blurEffect()
+                            .edgesIgnoringSafeArea(.all)
+                    )
+            }
+            .background(subscriptionBackground.edgesIgnoringSafeArea(.all))
         case .error:
             StoreUnavaliableView(productType: .subscription)
         }
@@ -63,26 +73,37 @@ struct SubscriptionsWrapperView: View, IViewWrapper {
             } else {
                 ActivityIndicatorView(isAnimating: .constant(true), style: .large)
             }
-            Text("Loading Subscriptions...")
+
+            Text(L10n.Subscription.Loading.message)
                 .font(.subheadline)
                 .foregroundColor(Palette.systemGray)
         }
     }
 
     private func productsView(products: [SubscriptionView.ViewModel]) -> some View {
-        VStack(alignment: .center) {
-            ScrollView {
-                subscriptionMarketingContent.map { $0.frame(minHeight: 250.0) }
-                ForEach(products) { viewModel in
-                    SubscriptionView(
-                        viewModel: viewModel,
-                        isSelected: .constant(viewModel.id == self.viewModel.selectedProductID)
-                    ) {
-                        self.selectedProduct = viewModel
-                        self.viewModel.presenter.selectProduct(with: viewModel.id)
+        VStack(alignment: .center, spacing: .zero) {
+            GeometryReader { geo in
+                ScrollView {
+                    subscriptionMarketingContent.map { content in
+                        content.frame(maxWidth: .infinity, minHeight: 250.0)
+                            .padding(.top, geo.safeAreaInsets.top)
                     }
-                    .padding(.horizontal)
+                    .background(subscriptionHeaderContentBackground.edgesIgnoringSafeArea(.all))
+                    VStack {
+                        ForEach(products) { viewModel in
+                            SubscriptionView(
+                                viewModel: viewModel,
+                                isSelected: .constant(viewModel.id == self.viewModel.selectedProductID)
+                            ) {
+                                self.selectedProduct = viewModel
+                                self.viewModel.presenter.selectProduct(with: viewModel.id)
+                            }
+                            .padding(.horizontal)
+                        }
+                    }
+                    .padding(.bottom)
                 }
+                .edgesIgnoringSafeArea(.top)
             }
         }
     }
@@ -142,9 +163,8 @@ struct SubscriptionsWrapperView: View, IViewWrapper {
     }
 
     private func bottomToolbar(@ViewBuilder content: () -> some View) -> some View {
-        VStack {
-            content()
-        }
+        content()
+            .padding(.top)
     }
 
     private var subscriptionsDetailsView: some View {

@@ -44,6 +44,12 @@ internal enum L10n {
       internal static let message = L10n.tr("Localizable", "store_unavailable.subscription.message", fallback: "The subscription is unavailable in the current storefront.")
     }
   }
+  internal enum Subscription {
+    internal enum Loading {
+      /// Loading Subscriptions...
+      internal static let message = L10n.tr("Localizable", "subscription.loading.message", fallback: "Loading Subscriptions...")
+    }
+  }
   internal enum Subscriptions {
     internal enum Renewable {
       /// Plan auto-renews for %@ until cancelled.

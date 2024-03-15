@@ -6,3 +6,4 @@
 "product.subscription.price" = "%@/%@";
 "product.price_description" = "Каждый %@";
 "subscriptions.renewable.subscription_description" = "Plan auto-renews for %@ until cancelled.";
+"subscription.loading.message" = "Загрузка подписок...";

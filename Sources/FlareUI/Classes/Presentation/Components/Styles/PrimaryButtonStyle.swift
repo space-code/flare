@@ -7,12 +7,6 @@ import SwiftUI
 
 struct PrimaryButtonStyle: ButtonStyle {
     @Environment(\.tintColor) private var tintColor
-//
-//    var backgroundColor: Color
-//
-//    init(backgroundColor: Color = .blue) {
-//        self.backgroundColor = backgroundColor
-//    }
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
