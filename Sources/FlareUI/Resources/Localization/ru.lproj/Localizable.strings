@@ -7,3 +7,10 @@
 "product.price_description" = "Каждый %@";
 "subscriptions.renewable.subscription_description" = "Plan auto-renews for %@ until cancelled.";
 "subscription.loading.message" = "Загрузка подписок...";
+"common.terms_of_service" = "Условия использования";
+"common.privacy_policy" = "Политика конфиденциальности";
+"common.words.and" = "и";
+"policies.unavailable.terms_of_service.title" = "Условия предоставления услуг недоступны";
+"policies.unavailable.privacy_policy.title" = "Политика конфиденциальности недоступна";
+"policies.unavailable.terms_of_service.message" = "Что-то пошло не так. Попробуйте снова.";
+"policies.unavailable.privacy_policy.message" = "Что-то пошло не так. Попробуйте снова.";

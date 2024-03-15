@@ -17,15 +17,15 @@ protocol IProductsViewAssembly {
 final class ProductsViewAssembly: IProductsViewAssembly {
     // MARK: Properties
 
-    private let storeButtonAssembly: IStoreButtonAssembly
+    private let storeButtonsAssembly: IStoreButtonsAssembly
     private let productAssembly: IProductViewAssembly
     private let iap: IFlare
 
     // MARK: Initialization
 
-    init(productAssembly: IProductViewAssembly, storeButtonAssembly: IStoreButtonAssembly, iap: IFlare) {
+    init(productAssembly: IProductViewAssembly, storeButtonsAssembly: IStoreButtonsAssembly, iap: IFlare) {
         self.productAssembly = productAssembly
-        self.storeButtonAssembly = storeButtonAssembly
+        self.storeButtonsAssembly = storeButtonsAssembly
         self.iap = iap
     }
 
@@ -46,7 +46,7 @@ final class ProductsViewAssembly: IProductsViewAssembly {
 
         return ViewWrapper<ProductsViewModel, ProductsWrapperView>(viewModel: viewModel)
             .environment(\.productViewAssembly, productAssembly)
-            .environment(\.storeButtonAssembly, storeButtonAssembly)
+            .environment(\.storeButtonsAssembly, storeButtonsAssembly)
             .eraseToAnyView()
     }
 }

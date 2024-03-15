@@ -8,7 +8,7 @@ import SwiftUI
 struct SubscriptionsWrapperView: View, IViewWrapper {
     // MARK: Propertirs
 
-    @Environment(\.storeButtonAssembly) private var storeButtonAssembly
+    @Environment(\.storeButtonsAssembly) private var storeButtonsAssembly
     @Environment(\.storeButton) private var storeButton
     @Environment(\.purchaseCompletion) private var purchaseCompletion
     @Environment(\.purchaseOptions) private var purchaseOptions
@@ -80,15 +80,27 @@ struct SubscriptionsWrapperView: View, IViewWrapper {
         }
     }
 
+    @ViewBuilder
+    private var headerBackground: some View {
+        if subscriptionMarketingContent != nil {
+            subscriptionHeaderContentBackground.edgesIgnoringSafeArea(.all)
+        }
+    }
+
     private func productsView(products: [SubscriptionView.ViewModel]) -> some View {
         VStack(alignment: .center, spacing: .zero) {
             GeometryReader { geo in
                 ScrollView {
-                    subscriptionMarketingContent.map { content in
-                        content.frame(maxWidth: .infinity, minHeight: 250.0)
-                            .padding(.top, geo.safeAreaInsets.top)
+                    VStack {
+                        subscriptionMarketingContent.map { content in
+                            content.frame(maxWidth: .infinity, minHeight: 250.0)
+                                .padding(.top, geo.safeAreaInsets.top)
+                        }
+                        policiesButton
+                            .tintColor(subscriptionViewTint)
+                            .padding(.bottom)
                     }
-                    .background(subscriptionHeaderContentBackground.edgesIgnoringSafeArea(.all))
+                    .background(headerBackground)
                     VStack {
                         ForEach(products) { viewModel in
                             SubscriptionView(
@@ -103,7 +115,7 @@ struct SubscriptionsWrapperView: View, IViewWrapper {
                     }
                     .padding(.bottom)
                 }
-                .edgesIgnoringSafeArea(.top)
+                .edgesIgnoringSafeArea(subscriptionMarketingContent != nil ? .top : [])
             }
         }
     }
@@ -175,12 +187,22 @@ struct SubscriptionsWrapperView: View, IViewWrapper {
     }
 
     private var storeButtonView: some View {
-        ForEach(storeButton, id: \.self) { type in
-            storeButtonAssembly.map {
-                $0.assemble(storeButtonType: type)
-                    .storeButtonViewFontWeight(.bold)
+        Group {
+            if #available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *) {
+                if storeButton.contains(.restore) {
+                    storeButtonsAssembly?.assemble(storeButtonType: .restore)
+                        .storeButtonViewFontWeight(.bold)
+                        .foregroundColor(subscriptionViewTint)
+                }
             }
         }
-        .foregroundColor(subscriptionViewTint)
+    }
+
+    private var policiesButton: some View {
+        Group {
+            if storeButton.contains(.policies) {
+                storeButtonsAssembly?.assemble(storeButtonType: .policies)
+            }
+        }
     }
 }

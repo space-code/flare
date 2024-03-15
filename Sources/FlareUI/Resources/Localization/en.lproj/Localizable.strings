@@ -7,3 +7,10 @@
 "product.price_description" = "Every %@";
 "subscriptions.renewable.subscription_description" = "Plan auto-renews for %@ until cancelled.";
 "subscription.loading.message" = "Loading Subscriptions...";
+"common.terms_of_service" = "Terms of Service";
+"common.privacy_policy" = "Privacy Policy";
+"common.words.and" = "and";
+"policies.unavailable.terms_of_service.title" = "Terms of Service Unavailable";
+"policies.unavailable.privacy_policy.title" = "Privacy Policy Unavailable";
+"policies.unavailable.terms_of_service.message" = "Something went wrong. Try again.";
+"policies.unavailable.privacy_policy.message" = "Something went wrong. Try again.";

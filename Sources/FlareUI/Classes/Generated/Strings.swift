@@ -10,10 +10,36 @@ import Foundation
 // swiftlint:disable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
 internal enum L10n {
+  internal enum Common {
+    /// Privacy Policy
+    internal static let privacyPolicy = L10n.tr("Localizable", "common.privacy_policy", fallback: "Privacy Policy")
+    /// Terms of Service
+    internal static let termsOfService = L10n.tr("Localizable", "common.terms_of_service", fallback: "Terms of Service")
+    internal enum Words {
+      /// and
+      internal static let and = L10n.tr("Localizable", "common.words.and", fallback: "and")
+    }
+  }
   internal enum Error {
     internal enum Default {
       /// Error Occurred
       internal static let title = L10n.tr("Localizable", "error.default.title", fallback: "Error Occurred")
+    }
+  }
+  internal enum Policies {
+    internal enum Unavailable {
+      internal enum PrivacyPolicy {
+        /// Something went wrong. Try again.
+        internal static let message = L10n.tr("Localizable", "policies.unavailable.privacy_policy.message", fallback: "Something went wrong. Try again.")
+        /// Privacy Policy Unavailable
+        internal static let title = L10n.tr("Localizable", "policies.unavailable.privacy_policy.title", fallback: "Privacy Policy Unavailable")
+      }
+      internal enum TermsOfService {
+        /// Something went wrong. Try again.
+        internal static let message = L10n.tr("Localizable", "policies.unavailable.terms_of_service.message", fallback: "Something went wrong. Try again.")
+        /// Terms of Service Unavailable
+        internal static let title = L10n.tr("Localizable", "policies.unavailable.terms_of_service.title", fallback: "Terms of Service Unavailable")
+      }
     }
   }
   internal enum Product {

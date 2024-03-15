@@ -13,7 +13,7 @@ struct ProductsWrapperView: View, IViewWrapper {
     @Environment(\.productViewStyle) var productViewStyle
     @Environment(\.storeButton) var storeButton
     @Environment(\.productViewAssembly) var productViewAssembly
-    @Environment(\.storeButtonAssembly) var storeButtonAssembly
+    @Environment(\.storeButtonsAssembly) var storeButtonsAssembly
 
     private let viewModel: ProductsViewModel
 
@@ -55,7 +55,7 @@ struct ProductsWrapperView: View, IViewWrapper {
 
     private var storeButtonView: some View {
         ForEach(storeButton, id: \.self) { type in
-            storeButtonAssembly.map { $0.assemble(storeButtonType: type) }
+            storeButtonsAssembly.map { $0.assemble(storeButtonType: type) }
         }
     }
 

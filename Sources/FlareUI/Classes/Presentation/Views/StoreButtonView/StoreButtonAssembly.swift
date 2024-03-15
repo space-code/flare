@@ -9,7 +9,7 @@ import Foundation
 // MARK: - IStoreButtonAssembly
 
 protocol IStoreButtonAssembly {
-    func assemble(storeButtonType: StoreButtonType) -> ViewWrapper<StoreButtonViewModel, StoreButtonView>
+    func assemble(storeButtonType: StoreButton) -> ViewWrapper<StoreButtonViewModel, StoreButtonView>
 }
 
 // MARK: - StoreButtonAssembly
@@ -27,7 +27,7 @@ final class StoreButtonAssembly: IStoreButtonAssembly {
 
     // MARK: IStoreButtonAssembly
 
-    func assemble(storeButtonType: StoreButtonType) -> ViewWrapper<StoreButtonViewModel, StoreButtonView> {
+    func assemble(storeButtonType: StoreButton) -> ViewWrapper<StoreButtonViewModel, StoreButtonView> {
         let presenter = StoreButtonPresenter(iap: iap)
         let viewModel = ViewModel<StoreButtonViewModel>(
             model: StoreButtonViewModel(
@@ -44,7 +44,7 @@ final class StoreButtonAssembly: IStoreButtonAssembly {
 
     // MARK: Private
 
-    private func map(storeButtonType: StoreButtonType) -> StoreButtonViewModel.State {
+    private func map(storeButtonType: StoreButton) -> StoreButtonViewModel.State {
         switch storeButtonType {
         case .restore:
             return .restore(viewModel: .init(title: L10n.StoreButton.restorePurchases))

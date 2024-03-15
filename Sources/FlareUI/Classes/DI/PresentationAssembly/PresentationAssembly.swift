@@ -21,7 +21,7 @@ final class PresentationAssembly: IPresentationAssembly {
     var productsViewAssembly: IProductsViewAssembly {
         ProductsViewAssembly(
             productAssembly: productViewAssembly,
-            storeButtonAssembly: storeButtonAssembly,
+            storeButtonsAssembly: storeButtonsAssembly,
             iap: dependencies.iap
         )
     }
@@ -33,7 +33,7 @@ final class PresentationAssembly: IPresentationAssembly {
     var subscritpionsViewAssembly: ISubscriptionsAssembly {
         SubscriptionsAssembly(
             iap: dependencies.iap,
-            storeButtonAssembly: storeButtonAssembly
+            storeButtonsAssembly: storeButtonsAssembly
         )
     }
 
@@ -41,5 +41,16 @@ final class PresentationAssembly: IPresentationAssembly {
 
     private var storeButtonAssembly: IStoreButtonAssembly {
         StoreButtonAssembly(iap: dependencies.iap)
+    }
+
+    private var storeButtonsAssembly: IStoreButtonsAssembly {
+        StoreButtonsAssembly(
+            storeButtonAssembly: storeButtonAssembly,
+            policiesButtonAssembly: policiesButtonAssembly
+        )
+    }
+
+    private var policiesButtonAssembly: IPoliciesButtonAssembly {
+        PoliciesButtonAssembly()
     }
 }

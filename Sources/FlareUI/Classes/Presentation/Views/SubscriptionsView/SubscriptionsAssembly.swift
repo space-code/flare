@@ -18,13 +18,13 @@ final class SubscriptionsAssembly: ISubscriptionsAssembly {
     // MARK: Properties
 
     private let iap: IFlare
-    private let storeButtonAssembly: IStoreButtonAssembly
+    private let storeButtonsAssembly: IStoreButtonsAssembly
 
     // MARK: Initialization
 
-    init(iap: IFlare, storeButtonAssembly: IStoreButtonAssembly) {
+    init(iap: IFlare, storeButtonsAssembly: IStoreButtonsAssembly) {
         self.iap = iap
-        self.storeButtonAssembly = storeButtonAssembly
+        self.storeButtonsAssembly = storeButtonsAssembly
     }
 
     // MARK: ISubscriptionAssembly
@@ -40,7 +40,7 @@ final class SubscriptionsAssembly: ISubscriptionsAssembly {
         )
         presenter.viewModel = viewModel
         return ViewWrapper<SubscriptionsViewModel, SubscriptionsWrapperView>(viewModel: viewModel)
-            .environment(\.storeButtonAssembly, storeButtonAssembly)
+            .environment(\.storeButtonsAssembly, storeButtonsAssembly)
             .eraseToAnyView()
     }
 }
