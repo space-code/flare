@@ -17,17 +17,14 @@ protocol IProductViewModelFactory {
 final class ProductViewModelFactory: IProductViewModelFactory {
     // MARK: Properties
 
-    private var dateFormatter: IDateComponentsFormatter
-    private let subscriptionDateComponentsFactory: ISubscriptionDateComponentsFactory
+    private let subscriptionPriceViewModelFactory: ISubscriptionPriceViewModelFactory
 
     // MARK: Initialization
 
     init(
-        dateFormatter: IDateComponentsFormatter = DateComponentsFormatter.full,
-        subscriptionDateComponentsFactory: ISubscriptionDateComponentsFactory = SubscriptionDateComponentsFactory()
+        subscriptionPriceViewModelFactory: ISubscriptionPriceViewModelFactory = SubscriptionPriceViewModelFactory()
     ) {
-        self.dateFormatter = dateFormatter
-        self.subscriptionDateComponentsFactory = subscriptionDateComponentsFactory
+        self.subscriptionPriceViewModelFactory = subscriptionPriceViewModelFactory
     }
 
     // MARK: IProductViewModelFactory
@@ -45,71 +42,19 @@ final class ProductViewModelFactory: IProductViewModelFactory {
     // MARK: Private
 
     private func makePrice(from product: StoreProduct, style: ProductStyle) -> String {
-        switch product.productType {
-        case .consumable, .nonConsumable, .nonRenewableSubscription:
-            return product.localizedPriceString ?? ""
-        case .autoRenewableSubscription:
-            guard let period = product.subscriptionPeriod else { return "" }
-
-            switch style {
-            case .compact:
-                return product.localizedPriceString ?? ""
-            case .large:
-                let unit = makeUnit(from: period.unit)
-                dateFormatter.allowedUnits = [unit]
-
-                let dateComponents = subscriptionDateComponentsFactory.dateComponents(for: period)
-                let localizedPeriod = dateFormatter.string(from: dateComponents)
-
-                return [product.localizedPriceString, String(localizedPeriod?.words.last)]
-                    .compactMap { $0 }
-                    .joined(separator: "/")
-            }
-        case .none:
-            return ""
+        switch style {
+        case .compact:
+            return subscriptionPriceViewModelFactory.make(product, format: .short)
+        case .large:
+            return subscriptionPriceViewModelFactory.make(product, format: .full)
         }
-    }
-
-    private func makeUnit(from unit: SubscriptionPeriod.Unit) -> NSCalendar.Unit {
-        switch unit {
-        case .day:
-            return .day
-        case .week:
-            return .weekOfMonth
-        case .month:
-            return .month
-        case .year:
-            return .year
-        }
-    }
-
-    private func period(from product: StoreProduct) -> String? {
-        guard let period = product.subscriptionPeriod else { return nil }
-
-        let unit = makeUnit(from: period.unit)
-        dateFormatter.allowedUnits = [unit]
-
-        let dateComponents = subscriptionDateComponentsFactory.dateComponents(for: period)
-        let localizedPeriod = dateFormatter.string(from: dateComponents)
-
-        return localizedPeriod
     }
 
     private func makePriceDescription(from product: StoreProduct) -> String? {
-        let localizedPeriod = period(from: product)
+        let localizedPeriod = subscriptionPriceViewModelFactory.period(from: product)
 
         guard let string = localizedPeriod?.words.last else { return nil }
 
         return L10n.Product.priceDescription(string).capitalized
     }
-}
-
-extension DateComponentsFormatter {
-    static let full: IDateComponentsFormatter = {
-        let formatter = DateComponentsFormatter()
-        formatter.maximumUnitCount = 1
-        formatter.unitsStyle = .full
-        formatter.zeroFormattingBehavior = .dropAll
-        return formatter
-    }()
 }

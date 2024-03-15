@@ -15,12 +15,24 @@ protocol ISubscriptionsViewModelViewFactory {
 // MARK: - SubscriptionsViewModelViewFactory
 
 final class SubscriptionsViewModelViewFactory: ISubscriptionsViewModelViewFactory {
+    // MARK: Properties
+
+    private let subscriptionPriceViewModelFactory: ISubscriptionPriceViewModelFactory
+
+    // MARK: Initialization
+
+    init(subscriptionPriceViewModelFactory: ISubscriptionPriceViewModelFactory = SubscriptionPriceViewModelFactory()) {
+        self.subscriptionPriceViewModelFactory = subscriptionPriceViewModelFactory
+    }
+
+    // MARK: ISubscriptionsViewModelViewFactory
+
     func make(_ products: [StoreProduct]) -> [SubscriptionView.ViewModel] {
         products.map {
             SubscriptionView.ViewModel(
                 id: $0.productIdentifier,
                 title: $0.localizedTitle,
-                price: $0.localizedPriceString ?? "",
+                price: subscriptionPriceViewModelFactory.make($0, format: .full),
                 description: $0.localizedDescription
             )
         }
