@@ -54,16 +54,19 @@ struct SubscriptionView: View {
         Text(viewModel.title)
             .font(.headline)
             .fontWeight(.bold)
+            .contrast(subscriptionPickerItemBackground)
     }
 
     private var priceView: some View {
         Text(viewModel.price)
             .font(.subheadline)
+            .contrast(subscriptionPickerItemBackground)
     }
 
     private var descriptionView: some View {
         Text(viewModel.description)
             .font(.subheadline)
+            .contrast(subscriptionPickerItemBackground)
     }
 
     private var checkmarkView: some View {

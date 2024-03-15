@@ -151,12 +151,13 @@ struct SubscriptionsWrapperView: View, IViewWrapper {
         VStack(spacing: 6.0) {
             if viewModel.numberOfProducts > 1, subscriptionStoreButtonLabel == .action {
                 subscriptionsDetailsView
-                    .foregroundColor(Palette.systemGray)
+                    .contrast(subscriptionBackground, lightColor: Palette.systemGray, darkColor: Palette.systemGray)
                     .font(.footnote)
                 content()
             } else if viewModel.numberOfProducts == 1, subscriptionStoreButtonLabel == .action {
                 content()
                 subscriptionsDetailsView
+                    .contrast(subscriptionBackground)
                     .font(.subheadline)
             }
         }

@@ -11,6 +11,7 @@ struct SubscribeButton: View {
     // MARK: Properties
 
     @Environment(\.subscriptionStoreButtonLabel) private var subscriptionStoreButtonLabel
+    @Environment(\.tintColor) private var tintColor
 
     private let viewModel: ViewModel
     private let action: () -> Void
@@ -47,18 +48,14 @@ struct SubscribeButton: View {
         Group {
             switch subscriptionStoreButtonLabel {
             case .action:
-                Text("Subscribe")
-                    .font(.body)
-                    .fontWeight(.bold)
+                textView
             case .displayName:
                 Text(viewModel.displayName)
                     .font(.body)
                     .fontWeight(.bold)
             case .multiline:
                 VStack {
-                    Text("Subscribe")
-                        .font(.body)
-                        .fontWeight(.bold)
+                    textView
                     Text(viewModel.price)
                         .font(.footnote)
                         .fontWeight(.medium)
@@ -69,6 +66,13 @@ struct SubscribeButton: View {
                     .fontWeight(.medium)
             }
         }
+    }
+
+    private var textView: some View {
+        Text("Subscribe")
+            .font(.body)
+            .fontWeight(.bold)
+            .contrast(tintColor)
     }
 }
 
