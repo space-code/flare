@@ -176,15 +176,11 @@ struct SubscriptionsWrapperView: View, IViewWrapper {
 
     private var storeButtonView: some View {
         ForEach(storeButton, id: \.self) { type in
-            storeButtonAssembly.map { $0.assemble(storeButtonType: type) }
+            storeButtonAssembly.map {
+                $0.assemble(storeButtonType: type)
+                    .storeButtonViewFontWeight(.bold)
+            }
         }
         .foregroundColor(subscriptionViewTint)
     }
 }
-
-//    .subscriptionStorePickerItemBackground(.thinMaterial)
-// func onInAppPurchaseCompletion(perform: ((Product, Result<Product.PurchaseResult, any Error>) -> ())?) -> View
-// func inAppPurchaseOptions(((Product) -> Set<Product.PurchaseOption>)?) -> View
-// func subscriptionStoreControlIcon(icon: (Product, Product.SubscriptionInfo) -> some View) -> View
-// func subscriptionStorePickerItemBackground(some ShapeStyle) -> View
-// policy & terms of use

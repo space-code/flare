@@ -10,6 +10,8 @@ import SwiftUI
 struct StoreButtonView: View, IViewWrapper {
     // MARK: Properties
 
+    @Environment(\.storeButtonViewFontWeight) private var storeButtonViewFontWeight
+
     private let viewModel: StoreButtonViewModel
     @State private var error: Error?
 
@@ -42,6 +44,7 @@ struct StoreButtonView: View, IViewWrapper {
             }
         }, label: {
             Text(viewModel.state.title)
+                .fontWeight(storeButtonViewFontWeight)
         })
     }
 }
