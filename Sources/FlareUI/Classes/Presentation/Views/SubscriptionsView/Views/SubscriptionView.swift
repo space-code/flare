@@ -10,7 +10,9 @@ import SwiftUI
 struct SubscriptionView: View {
     // MARK: Properties
 
-    @Environment(\.subscriptionControlStyle) var subscriptionControlStyle
+    @Environment(\.subscriptionControlStyle) private var subscriptionControlStyle
+    @Environment(\.subscriptionPickerItemBackground) private var subscriptionPickerItemBackground
+    @Environment(\.subscriptionViewTint) private var subscriptionViewTint
 
     @Binding private var isSelected: Bool
 
@@ -38,7 +40,7 @@ struct SubscriptionView: View {
             descriptionView
         }
         .padding()
-        .background(Palette.systemGray5)
+        .background(subscriptionPickerItemBackground)
         .mask(rectangleBackground)
         .overlay(overlayView)
         .onTapGesture {
@@ -67,7 +69,7 @@ struct SubscriptionView: View {
     private var checkmarkView: some View {
         Image(systemName: isSelected ? .checkmark : .circle)
             .resizable()
-            .foregroundColor(isSelected ? .blue : Palette.systemGray2)
+            .foregroundColor(isSelected ? subscriptionViewTint : Palette.systemGray2.opacity(0.7))
             .frame(
                 width: CGSize.iconSize.width,
                 height: CGSize.iconSize.height
@@ -89,7 +91,7 @@ struct SubscriptionView: View {
 
     private var overlayView: some View {
         rectangleBackground
-            .strokeBorder(.blue, lineWidth: 2)
+            .strokeBorder(subscriptionViewTint, lineWidth: 2)
             .opacity((isSelected && subscriptionControlStyle == .prominentPicker) ? 1.0 : .zero)
     }
 }
@@ -143,6 +145,7 @@ private extension CGFloat {
                 action: {}
             )
             .environment(\.subscriptionControlStyle, .prominentPicker)
+            .environment(\.subscriptionViewTint, .green)
         }
     }
 #endif

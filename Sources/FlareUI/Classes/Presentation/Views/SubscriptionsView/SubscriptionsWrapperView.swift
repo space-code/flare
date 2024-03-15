@@ -8,11 +8,12 @@ import SwiftUI
 struct SubscriptionsWrapperView: View, IViewWrapper {
     // MARK: Propertirs
 
-    @Environment(\.storeButtonAssembly) var storeButtonAssembly
-    @Environment(\.storeButton) var storeButton
-    @Environment(\.purchaseCompletion) var purchaseCompletion
-    @Environment(\.purchaseOptions) var purchaseOptions
+    @Environment(\.storeButtonAssembly) private var storeButtonAssembly
+    @Environment(\.storeButton) private var storeButton
+    @Environment(\.purchaseCompletion) private var purchaseCompletion
+    @Environment(\.purchaseOptions) private var purchaseOptions
     @Environment(\.subscriptionStoreButtonLabel) private var subscriptionStoreButtonLabel
+    @Environment(\.subscriptionViewTint) private var subscriptionViewTint
 
     @State private var selectedProduct: SubscriptionView.ViewModel?
     @State private var error: Error?
@@ -112,6 +113,7 @@ struct SubscriptionsWrapperView: View, IViewWrapper {
                 }
             }
         }
+        .tintColor(subscriptionViewTint)
     }
 
     private var purchaseButtonContainerView: some View {
@@ -152,6 +154,7 @@ struct SubscriptionsWrapperView: View, IViewWrapper {
         ForEach(storeButton, id: \.self) { type in
             storeButtonAssembly.map { $0.assemble(storeButtonType: type) }
         }
+        .foregroundColor(subscriptionViewTint)
     }
 }
 

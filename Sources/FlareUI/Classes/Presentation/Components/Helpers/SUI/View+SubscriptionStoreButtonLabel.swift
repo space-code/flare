@@ -6,7 +6,7 @@
 import SwiftUI
 
 public extension View {
-    func subscriptionButtonLabel(_ style: SubscriptionStoreButtonLabel) -> some View {
-        environment(\.subscriptionStoreButtonLabel, style)
+    func subscriptionPickerItemBackground(_ backgroundStyle: Color) -> some View {
+        environment(\.subscriptionPickerItemBackground, backgroundStyle)
     }
 }
