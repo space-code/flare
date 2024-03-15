@@ -14,6 +14,7 @@ struct SubscriptionsWrapperView: View, IViewWrapper {
     @Environment(\.purchaseOptions) private var purchaseOptions
     @Environment(\.subscriptionStoreButtonLabel) private var subscriptionStoreButtonLabel
     @Environment(\.subscriptionViewTint) private var subscriptionViewTint
+    @Environment(\.subscriptionMarketingContent) private var subscriptionMarketingContent
 
     @State private var selectedProduct: SubscriptionView.ViewModel?
     @State private var error: Error?
@@ -44,6 +45,7 @@ struct SubscriptionsWrapperView: View, IViewWrapper {
         case let .products(products):
             productsView(products: products)
                 .onAppear { selectedProduct = products.first(where: { $0.id == viewModel.selectedProductID }) }
+                .padding(.bottom)
             bottomToolbar { purchaseButtonContainerView }
         case .error:
             StoreUnavaliableView(productType: .subscription)
@@ -70,6 +72,7 @@ struct SubscriptionsWrapperView: View, IViewWrapper {
     private func productsView(products: [SubscriptionView.ViewModel]) -> some View {
         VStack(alignment: .center) {
             ScrollView {
+                subscriptionMarketingContent.map { $0.frame(minHeight: 250.0) }
                 ForEach(products) { viewModel in
                     SubscriptionView(
                         viewModel: viewModel,

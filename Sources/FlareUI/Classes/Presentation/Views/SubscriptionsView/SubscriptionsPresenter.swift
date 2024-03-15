@@ -5,6 +5,7 @@
 
 import Flare
 import Foundation
+import StoreKit
 
 // MARK: - ISubscriptionsPresenter
 
