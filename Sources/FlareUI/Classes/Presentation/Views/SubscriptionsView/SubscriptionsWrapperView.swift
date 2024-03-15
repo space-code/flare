@@ -116,28 +116,35 @@ struct SubscriptionsWrapperView: View, IViewWrapper {
 
     private var purchaseButtonContainerView: some View {
         VStack(spacing: 24.0) {
-            VStack(spacing: 6.0) {
-                purchaseButton
-
-                if subscriptionStoreButtonLabel == .action {
-                    subscriptionsDetailsView
-                }
-            }
+            subscriptionsDetailsView { purchaseButton }
             storeButtonView
         }
     }
 
-    private var subscriptionsDetailsView: some View {
-        selectedProduct.map {
-            Text(L10n.Subscriptions.Renewable.subscriptionDescription($0.price))
-                .font(.subheadline)
-//                .foregroundColor(Palette.systemGray)
+    private func subscriptionsDetailsView(@ViewBuilder content: () -> some View) -> some View {
+        VStack(spacing: 6.0) {
+            if viewModel.numberOfProducts > 1, subscriptionStoreButtonLabel == .action {
+                subscriptionsDetailsView
+                    .foregroundColor(Palette.systemGray)
+                    .font(.footnote)
+                content()
+            } else if viewModel.numberOfProducts == 1, subscriptionStoreButtonLabel == .action {
+                content()
+                subscriptionsDetailsView
+                    .font(.subheadline)
+            }
         }
     }
 
     private func bottomToolbar(@ViewBuilder content: () -> some View) -> some View {
         VStack {
             content()
+        }
+    }
+
+    private var subscriptionsDetailsView: some View {
+        selectedProduct.map {
+            Text(L10n.Subscriptions.Renewable.subscriptionDescription($0.price))
         }
     }
 

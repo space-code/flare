@@ -15,6 +15,13 @@ struct SubscriptionsViewModel: IModel {
         case error(IAPError)
     }
 
+    var numberOfProducts: Int {
+        if case let .products(array) = state {
+            return array.count
+        }
+        return .zero
+    }
+
     let state: State
     let selectedProductID: String?
     let presenter: ISubscriptionsPresenter
