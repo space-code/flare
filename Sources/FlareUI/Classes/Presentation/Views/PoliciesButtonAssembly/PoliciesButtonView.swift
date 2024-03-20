@@ -17,7 +17,6 @@ struct PoliciesButtonView: View {
 
     // MARK: Private
 
-//    @State private var isPresented = false
     @State private var link: LinkType?
     private var isPresented: Binding<Bool> {
         Binding { link != nil } set: { _ in link = nil }
@@ -72,7 +71,9 @@ struct PoliciesButtonView: View {
         if subscriptionPrivacyPolicyDestination != nil {
             subscriptionPrivacyPolicyDestination
         } else if let subscriptionPrivacyPolicyURL {
-            safariView(subscriptionPrivacyPolicyURL)
+            #if os(iOS)
+                safariView(subscriptionPrivacyPolicyURL)
+            #endif
         } else {
             PoliciesUnavailableView(type: .privacyPolicy)
         }
@@ -83,15 +84,23 @@ struct PoliciesButtonView: View {
         if subscriptionTermsOfServiceDestination != nil {
             subscriptionTermsOfServiceDestination
         } else if let subscriptionTermsOfServiceURL {
-            safariView(subscriptionTermsOfServiceURL)
+            #if os(iOS)
+                safariView(subscriptionTermsOfServiceURL)
+            #endif
         } else {
             PoliciesUnavailableView(type: .termsOfService)
         }
     }
 
-    private func safariView(_ url: URL) -> some View {
-        SafariWebView(url: url).edgesIgnoringSafeArea(.all)
-    }
+    #if os(iOS)
+        @available(iOS 13.0, *)
+        @available(macOS, unavailable)
+        @available(watchOS, unavailable)
+        @available(tvOS, unavailable)
+        private func safariView(_ url: URL) -> some View {
+            SafariWebView(url: url).edgesIgnoringSafeArea(.all)
+        }
+    #endif
 }
 
 // MARK: - Constants

@@ -27,15 +27,27 @@ enum Palette {
     }
 
     static var systemGray5: Color {
-        Color(UIColor.systemGray5)
+        #if os(iOS)
+            Color(UIColor.systemGray5)
+        #else
+            systemGray
+        #endif
     }
 
     static var systemGray2: Color {
-        Color(UIColor.systemGray2)
+        #if os(iOS)
+            Color(UIColor.systemGray2)
+        #else
+            systemGray
+        #endif
     }
 
     static var systemGray4: Color {
-        Color(UIColor.systemGray4)
+        #if os(iOS)
+            Color(UIColor.systemGray4)
+        #else
+            systemGray
+        #endif
     }
 
     static var systemGray: Color {

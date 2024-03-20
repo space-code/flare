@@ -8,7 +8,7 @@ import SwiftUI
 // swiftlint:disable identifier_name
 extension Color {
     func uiColor() -> UIColor {
-        if #available(iOS 14.0, *) {
+        if #available(iOS 14.0, tvOS 14.0, *) {
             return UIColor(self)
         }
 

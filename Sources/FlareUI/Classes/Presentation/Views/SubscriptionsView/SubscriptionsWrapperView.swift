@@ -17,6 +17,7 @@ struct SubscriptionsWrapperView: View, IViewWrapper {
     @Environment(\.subscriptionMarketingContent) private var subscriptionMarketingContent
     @Environment(\.subscriptionBackground) private var subscriptionBackground
     @Environment(\.subscriptionHeaderContentBackground) private var subscriptionHeaderContentBackground
+    @Environment(\.subscriptionControlStyle) private var subscriptionControlStyle
 
     @State private var selectedProduct: SubscriptionView.ViewModel?
     @State private var error: Error?
@@ -68,8 +69,12 @@ struct SubscriptionsWrapperView: View, IViewWrapper {
                 progressView
                     .scaleEffect(1.74)
             } else if #available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *) {
-                progressView
-                    .controlSize(.large)
+                #if os(tvOS)
+                    progressView
+                #else
+                    progressView
+                        .controlSize(.large)
+                #endif
             } else {
                 ActivityIndicatorView(isAnimating: .constant(true), style: .large)
             }

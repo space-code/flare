@@ -28,74 +28,33 @@ struct SubscriptionView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: .spacing10px) {
-            HStack {
-                titleView
-                Spacer()
-                checkmarkView
-            }
-
-            priceView
-            separatorView
-            descriptionView
-        }
-        .padding()
-        .background(subscriptionPickerItemBackground)
-        .mask(rectangleBackground)
-        .overlay(overlayView)
-        .onTapGesture {
-            action()
-        }
+        subscriptionControlStyle.makeBody(
+            configuration: .init(
+                label: .init(titleView),
+                description: .init(descriptionView),
+                price: .init(priceView),
+                isSelected: isSelected,
+                subscriptionPickerItemBackground: subscriptionPickerItemBackground,
+                subscriptionViewTint: subscriptionViewTint,
+                action: action
+            )
+        )
     }
-
-    // MARK: Private
 
     private var titleView: some View {
         Text(viewModel.title)
-            .font(.headline)
             .fontWeight(.bold)
-            .contrast(subscriptionPickerItemBackground)
-    }
-
-    private var priceView: some View {
-        Text(viewModel.price)
-            .font(.subheadline)
             .contrast(subscriptionPickerItemBackground)
     }
 
     private var descriptionView: some View {
         Text(viewModel.description)
-            .font(.subheadline)
             .contrast(subscriptionPickerItemBackground)
     }
 
-    private var checkmarkView: some View {
-        Image(systemName: isSelected ? .checkmark : .circle)
-            .resizable()
-            .foregroundColor(isSelected ? subscriptionViewTint : Palette.systemGray2.opacity(0.7))
-            .frame(
-                width: CGSize.iconSize.width,
-                height: CGSize.iconSize.height
-            )
-            .background(isSelected ? Color.white : .clear)
-            .mask(Circle())
-    }
-
-    private var separatorView: some View {
-        Rectangle()
-            .foregroundColor(Palette.systemGray4)
-            .frame(maxWidth: .infinity)
-            .frame(height: .separatorHeight)
-    }
-
-    private var rectangleBackground: RoundedRectangle {
-        RoundedRectangle(cornerSize: .cornerSize)
-    }
-
-    private var overlayView: some View {
-        rectangleBackground
-            .strokeBorder(subscriptionViewTint, lineWidth: 2)
-            .opacity((isSelected && subscriptionControlStyle == .prominentPicker) ? 1.0 : .zero)
+    private var priceView: some View {
+        Text(viewModel.price)
+            .contrast(subscriptionPickerItemBackground)
     }
 }
 
@@ -110,21 +69,7 @@ extension SubscriptionView {
     }
 }
 
-private extension String {
-    static let checkmark = "checkmark.circle.fill"
-    static let circle = "circle"
-}
-
-private extension CGSize {
-    static let cornerSize = CGSize(width: 18, height: 18)
-    static let iconSize = CGSize(width: 26, height: 26)
-}
-
-private extension CGFloat {
-    static let separatorHeight = 1.0
-}
-
-#if swift(>=5.9)
+#if swift(>=5.9) && os(iOS)
     #Preview {
         VStack {
             SubscriptionView(
@@ -147,8 +92,9 @@ private extension CGFloat {
                 isSelected: .constant(true),
                 action: {}
             )
-            .environment(\.subscriptionControlStyle, .prominentPicker)
-            .environment(\.subscriptionViewTint, .green)
+            .subscriptionControlStyle(.prominentPicker)
+            .subscriptionViewTint(.green)
+            .subscriptionPickerItemBackground(Palette.systemGray5)
         }
     }
 #endif

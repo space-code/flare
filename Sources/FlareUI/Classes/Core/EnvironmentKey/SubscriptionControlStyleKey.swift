@@ -8,11 +8,11 @@ import SwiftUI
 // MARK: - SubscriptionControlStyleKey
 
 private struct SubscriptionControlStyleKey: EnvironmentKey {
-    static var defaultValue: SubscriptionControlStyle = .picker
+    static var defaultValue: AnySubscriptionControlStyle = .init(style: .automatic)
 }
 
 extension EnvironmentValues {
-    var subscriptionControlStyle: SubscriptionControlStyle {
+    var subscriptionControlStyle: AnySubscriptionControlStyle {
         get { self[SubscriptionControlStyleKey.self] }
         set { self[SubscriptionControlStyleKey.self] = newValue }
     }

@@ -41,7 +41,7 @@ struct SubscribeButton: View {
                 labelView
             }
         )
-        .buttonStyle(PrimaryButtonStyle())
+//        .buttonStyle(.primary)
     }
 
     private var labelView: some View {
