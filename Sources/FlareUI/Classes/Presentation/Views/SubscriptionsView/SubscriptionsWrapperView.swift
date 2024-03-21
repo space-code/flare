@@ -8,16 +8,10 @@ import SwiftUI
 struct SubscriptionsWrapperView: View, IViewWrapper {
     // MARK: Propertirs
 
-    @Environment(\.storeButtonsAssembly) private var storeButtonsAssembly
-    @Environment(\.storeButton) private var storeButton
     @Environment(\.purchaseCompletion) private var purchaseCompletion
     @Environment(\.purchaseOptions) private var purchaseOptions
-    @Environment(\.subscriptionStoreButtonLabel) private var subscriptionStoreButtonLabel
-    @Environment(\.subscriptionViewTint) private var subscriptionViewTint
     @Environment(\.subscriptionMarketingContent) private var subscriptionMarketingContent
     @Environment(\.subscriptionBackground) private var subscriptionBackground
-    @Environment(\.subscriptionHeaderContentBackground) private var subscriptionHeaderContentBackground
-    @Environment(\.subscriptionControlStyle) private var subscriptionControlStyle
 
     @State private var selectedProduct: SubscriptionView.ViewModel?
     @State private var error: Error?
@@ -50,12 +44,9 @@ struct SubscriptionsWrapperView: View, IViewWrapper {
                 productsView(products: products)
                     .onAppear { selectedProduct = products.first(where: { $0.id == viewModel.selectedProductID }) }
 
-                bottomToolbar { purchaseButtonContainerView }
-                    .background(
-                        Color.clear
-                            .blurEffect()
-                            .edgesIgnoringSafeArea(.all)
-                    )
+                #if os(iOS)
+                    toolbarView
+                #endif
             }
             .background(subscriptionBackground.edgesIgnoringSafeArea(.all))
         case .error:
@@ -85,27 +76,14 @@ struct SubscriptionsWrapperView: View, IViewWrapper {
         }
     }
 
-    @ViewBuilder
-    private var headerBackground: some View {
-        if subscriptionMarketingContent != nil {
-            subscriptionHeaderContentBackground.edgesIgnoringSafeArea(.all)
-        }
-    }
-
     private func productsView(products: [SubscriptionView.ViewModel]) -> some View {
         VStack(alignment: .center, spacing: .zero) {
             GeometryReader { geo in
                 ScrollView {
-                    VStack {
-                        subscriptionMarketingContent.map { content in
-                            content.frame(maxWidth: .infinity, minHeight: 250.0)
-                                .padding(.top, geo.safeAreaInsets.top)
-                        }
-                        policiesButton
-                            .tintColor(subscriptionViewTint)
-                            .padding(.bottom)
-                    }
-                    .background(headerBackground)
+                    #if os(iOS)
+                        SubscriptionHeaderView(topInset: geo.safeAreaInsets.top)
+                    #endif
+
                     VStack {
                         ForEach(products) { viewModel in
                             SubscriptionView(
@@ -125,89 +103,37 @@ struct SubscriptionsWrapperView: View, IViewWrapper {
         }
     }
 
+    @available(iOS 13.0, *)
+    @available(macOS, unavailable)
+    @available(tvOS, unavailable)
+    @available(watchOS, unavailable)
+    @available(visionOS, unavailable)
+    private var toolbarView: some View {
+        selectedProduct.map { product in
+            SubscriptionToolbarView(
+                viewModel: .init(id: product.id, title: product.title, price: product.price, description: product.description),
+                action: {
+                    guard let product = viewModel.presenter.product(withID: product.id) else { return }
+
+                    Task {
+                        do {
+                            let transaction = try await self.viewModel.presenter.subscribe(optionsHandler: purchaseOptions)
+                            purchaseCompletion?(product, .success(transaction))
+                        } catch {
+                            if error.iap != .paymentCancelled {
+                                self.error = error.iap
+                                purchaseCompletion?(product, .failure(error))
+                            }
+                        }
+                    }
+                }
+            )
+        }
+    }
+
     @available(iOS 14.0, tvOS 14.0, macOS 11.0, watchOS 7.0, *)
     private var progressView: some View {
         ProgressView()
             .progressViewStyle(.circular)
-    }
-
-    private var purchaseButton: some View {
-        selectedProduct.map { product in
-            SubscribeButton(
-                viewModel: .init(
-                    displayName: product.title,
-                    price: L10n.Subscriptions.Renewable.subscriptionDescription(product.price)
-                )
-            ) {
-                guard let product = viewModel.presenter.product(withID: product.id) else { return }
-
-                Task {
-                    do {
-                        let transaction = try await self.viewModel.presenter.subscribe(optionsHandler: purchaseOptions)
-                        purchaseCompletion?(product, .success(transaction))
-                    } catch {
-                        if error.iap != .paymentCancelled {
-                            self.error = error.iap
-                            purchaseCompletion?(product, .failure(error))
-                        }
-                    }
-                }
-            }
-        }
-        .tintColor(subscriptionViewTint)
-    }
-
-    private var purchaseButtonContainerView: some View {
-        VStack(spacing: 24.0) {
-            subscriptionsDetailsView { purchaseButton }
-            storeButtonView
-        }
-    }
-
-    private func subscriptionsDetailsView(@ViewBuilder content: () -> some View) -> some View {
-        VStack(spacing: 6.0) {
-            if viewModel.numberOfProducts > 1, subscriptionStoreButtonLabel == .action {
-                subscriptionsDetailsView
-                    .contrast(subscriptionBackground, lightColor: Palette.systemGray, darkColor: Palette.systemGray)
-                    .font(.footnote)
-                content()
-            } else if viewModel.numberOfProducts == 1, subscriptionStoreButtonLabel == .action {
-                content()
-                subscriptionsDetailsView
-                    .contrast(subscriptionBackground)
-                    .font(.subheadline)
-            }
-        }
-    }
-
-    private func bottomToolbar(@ViewBuilder content: () -> some View) -> some View {
-        content()
-            .padding(.top)
-    }
-
-    private var subscriptionsDetailsView: some View {
-        selectedProduct.map {
-            Text(L10n.Subscriptions.Renewable.subscriptionDescription($0.price))
-        }
-    }
-
-    private var storeButtonView: some View {
-        Group {
-            if #available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *) {
-                if storeButton.contains(.restore) {
-                    storeButtonsAssembly?.assemble(storeButtonType: .restore)
-                        .storeButtonViewFontWeight(.bold)
-                        .foregroundColor(subscriptionViewTint)
-                }
-            }
-        }
-    }
-
-    private var policiesButton: some View {
-        Group {
-            if storeButton.contains(.policies) {
-                storeButtonsAssembly?.assemble(storeButtonType: .policies)
-            }
-        }
     }
 }

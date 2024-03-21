@@ -7,22 +7,6 @@ import SwiftUI
 
 // MARK: - ButtonSubscriptionStoreControlStyle
 
-// struct BorderedSubscriptionStoreControlStyleViewModifier: ViewModifier {
-//    @Environment(\.self) private var environment
-//
-//    private let configuration: ISubscriptionControlStyle.Configuration
-//
-//    init(configuration: ISubscriptionControlStyle.Configuration) {
-//        self.configuration = configuration
-//    }
-//
-//    func body(content _: Content) -> some View {
-//        BorderedSubscriptionStoreControlStyle(environment: environment)
-//            .makeBody(configuration: configuration)
-//    }
-// }
-//
-
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 7.0, *)
 public struct ButtonSubscriptionStoreControlStyle: ISubscriptionControlStyle {
     // MARK: Initialization
@@ -50,8 +34,6 @@ public struct ButtonSubscriptionStoreControlStyle: ISubscriptionControlStyle {
                 description: .init(Text("Name")),
                 price: .init(Text("Name")),
                 isSelected: true,
-                subscriptionPickerItemBackground: Palette.systemGray5,
-                subscriptionViewTint: .green,
                 action: {}
             )
         )

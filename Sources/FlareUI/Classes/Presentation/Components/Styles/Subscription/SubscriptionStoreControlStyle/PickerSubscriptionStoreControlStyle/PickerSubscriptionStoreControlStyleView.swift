@@ -5,21 +5,45 @@
 
 import SwiftUI
 
-// MARK: - PickerSubscriptionStoreControlStyle
+// MARK: - PickerSubscriptionStoreControlStyleView
 
 @available(iOS 13.0, macOS 10.15, watchOS 7.0, *)
 @available(tvOS, unavailable)
 @available(visionOS, unavailable)
-public struct PickerSubscriptionStoreControlStyle: ISubscriptionControlStyle {
-    public init() {}
+struct PickerSubscriptionStoreControlStyleView: View {
+    // MARK: Properties
 
-    public func makeBody(configuration: Configuration) -> some View {
+    @Environment(\.subscriptionPickerItemBackground) private var background
+    @Environment(\.subscriptionViewTint) private var tintColor
+
+    private let configuration: ISubscriptionControlStyle.Configuration
+
+    // MARK: Initialization
+
+    init(configuration: ISubscriptionControlStyle.Configuration) {
+        self.configuration = configuration
+    }
+
+    // MARK: View
+
+    var body: some View {
+        contentView
+        #if os(iOS) || os(macOS) || os(watchOS)
+        .onTapGesture {
+            configuration.trigger()
+        }
+        #endif
+    }
+
+    // MARK: Private
+
+    private var contentView: some View {
         VStack(alignment: .leading, spacing: .spacing10px) {
             HStack {
                 configuration.label
                     .font(.headline)
                 Spacer()
-                checkmarkView(confugration: configuration)
+                checkmarkView
             }
 
             configuration.price
@@ -29,24 +53,19 @@ public struct PickerSubscriptionStoreControlStyle: ISubscriptionControlStyle {
                 .font(.subheadline)
         }
         .padding()
-        .background(configuration.subscriptionPickerItemBackground)
+        .background(background)
         .mask(rectangleBackground)
-//        .onTapGesture {
-//            configuration.trigger()
-//        }
     }
 
-    // MARK: Private
-
-    private func checkmarkView(confugration: Configuration) -> some View {
-        Image(systemName: confugration.isSelected ? .checkmark : .circle)
+    private var checkmarkView: some View {
+        Image(systemName: configuration.isSelected ? .checkmark : .circle)
             .resizable()
-            .foregroundColor(confugration.isSelected ? confugration.subscriptionViewTint : Palette.systemGray2.opacity(0.7))
+            .foregroundColor(configuration.isSelected ? tintColor : Palette.systemGray2.opacity(0.7))
             .frame(
                 width: CGSize.iconSize.width,
                 height: CGSize.iconSize.height
             )
-            .background(confugration.isSelected ? Color.white : .clear)
+            .background(configuration.isSelected ? Color.white : .clear)
             .mask(Circle())
     }
 
@@ -77,19 +96,3 @@ private extension CGSize {
 private extension CGFloat {
     static let separatorHeight = 1.0
 }
-
-#if swift(>=5.9) && os(iOS)
-    #Preview {
-        PickerSubscriptionStoreControlStyle().makeBody(
-            configuration: .init(
-                label: .init(Text("Name").eraseToAnyView()),
-                description: .init(Text("Name").eraseToAnyView()),
-                price: .init(Text("Name").eraseToAnyView()),
-                isSelected: true,
-                subscriptionPickerItemBackground: Palette.systemGray5,
-                subscriptionViewTint: .green,
-                action: {}
-            )
-        )
-    }
-#endif

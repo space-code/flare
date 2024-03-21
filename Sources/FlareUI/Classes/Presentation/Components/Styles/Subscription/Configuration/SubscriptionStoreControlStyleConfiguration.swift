@@ -35,8 +35,10 @@ public struct SubscriptionStoreControlStyleConfiguration {
     let description: Description
     let price: Price
     let isSelected: Bool
-    let subscriptionPickerItemBackground: Color
-    let subscriptionViewTint: Color
+
+//    let background: Color
+//    let tintColor: Color
+
     let action: () -> Void
 
     func trigger() {

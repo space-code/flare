@@ -69,8 +69,6 @@ import SwiftUI
                 description: .init(Text("Name")),
                 price: .init(Text("Name")),
                 isSelected: true,
-                subscriptionPickerItemBackground: Palette.systemGray5,
-                subscriptionViewTint: .green,
                 action: {}
             )
         )

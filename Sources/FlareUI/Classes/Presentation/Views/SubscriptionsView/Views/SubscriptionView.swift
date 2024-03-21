@@ -11,8 +11,6 @@ struct SubscriptionView: View {
     // MARK: Properties
 
     @Environment(\.subscriptionControlStyle) private var subscriptionControlStyle
-    @Environment(\.subscriptionPickerItemBackground) private var subscriptionPickerItemBackground
-    @Environment(\.subscriptionViewTint) private var subscriptionViewTint
 
     @Binding private var isSelected: Bool
 
@@ -21,7 +19,11 @@ struct SubscriptionView: View {
 
     // MARK: Initialization
 
-    init(viewModel: ViewModel, isSelected: Binding<Bool>, action: @escaping () -> Void) {
+    init(
+        viewModel: ViewModel,
+        isSelected: Binding<Bool>,
+        action: @escaping () -> Void
+    ) {
         self.viewModel = viewModel
         self._isSelected = isSelected
         self.action = action
@@ -34,8 +36,6 @@ struct SubscriptionView: View {
                 description: .init(descriptionView),
                 price: .init(priceView),
                 isSelected: isSelected,
-                subscriptionPickerItemBackground: subscriptionPickerItemBackground,
-                subscriptionViewTint: subscriptionViewTint,
                 action: action
             )
         )
@@ -43,18 +43,14 @@ struct SubscriptionView: View {
 
     private var titleView: some View {
         Text(viewModel.title)
-            .fontWeight(.bold)
-            .contrast(subscriptionPickerItemBackground)
     }
 
     private var descriptionView: some View {
         Text(viewModel.description)
-            .contrast(subscriptionPickerItemBackground)
     }
 
     private var priceView: some View {
         Text(viewModel.price)
-            .contrast(subscriptionPickerItemBackground)
     }
 }
 
