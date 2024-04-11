@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-extension View {
+public extension View {
     func tintColor(_ color: Color) -> some View {
         environment(\.tintColor, color)
     }

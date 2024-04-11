@@ -7,6 +7,8 @@ import SwiftUI
 
 // swiftlint:disable:next type_name
 public struct SubscriptionStoreControlStyleConfiguration {
+    // MARK: Types
+
     struct Label: View {
         var body: AnyView
 
@@ -31,13 +33,12 @@ public struct SubscriptionStoreControlStyleConfiguration {
         }
     }
 
+    // MARK: Properties
+
     let label: Label
     let description: Description
     let price: Price
     let isSelected: Bool
-
-//    let background: Color
-//    let tintColor: Color
 
     let action: () -> Void
 

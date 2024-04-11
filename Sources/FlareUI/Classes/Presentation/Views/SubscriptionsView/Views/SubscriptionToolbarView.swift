@@ -84,6 +84,8 @@ struct SubscriptionToolbarView: View {
 
     private var subscriptionsDetailsView: some View {
         Text(L10n.Subscriptions.Renewable.subscriptionDescription(viewModel.price))
+            .font(.footnote)
+            .contrast(subscriptionBackground)
     }
 
     private func subscriptionsDetailsView(@ViewBuilder content: () -> some View) -> some View {

@@ -54,7 +54,11 @@ final class SubscriptionPriceViewModelFactory: ISubscriptionPriceViewModelFactor
                 return product.localizedPriceString ?? ""
             case .full:
                 let unit = makeUnit(from: period.unit)
-                dateFormatter.allowedUnits = [unit]
+                if unit == .day, period.value == 7 {
+                    dateFormatter.allowedUnits = [.weekOfMonth]
+                } else {
+                    dateFormatter.allowedUnits = [unit]
+                }
 
                 let dateComponents = subscriptionDateComponentsFactory.dateComponents(for: period)
                 let localizedPeriod = dateFormatter.string(from: dateComponents)

@@ -39,7 +39,9 @@ struct PoliciesButtonView: View {
                 Text(L10n.Common.termsOfService)
                     .foregroundColor(tintColor)
             })
-            Text(L10n.Common.Words.and)
+            #if os(iOS)
+                Text(L10n.Common.Words.and)
+            #endif
             Button(action: {
                 link = .privacyPolicy
             }, label: {

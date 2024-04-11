@@ -5,6 +5,9 @@
 
 import SwiftUI
 
+@available(iOS 13.0, tvOS 13.0, macOS 11.0, *)
+@available(watchOS, unavailable)
+@available(visionOS, unavailable)
 public struct SubscriptionsView: View {
     // MARK: Properties
 

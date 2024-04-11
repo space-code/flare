@@ -5,10 +5,8 @@
 
 import SwiftUI
 
-struct AnySubscriptionControlStyle: ISubscriptionControlStyle {
+struct AnySubscriptionsWrapperViewStyle: ISubscriptionsWrapperViewStyle {
     // MARK: Properties
-
-    let style: any ISubscriptionControlStyle
 
     /// A private property to hold the closure that creates the body of the view
     private var _makeBody: (Configuration) -> AnyView
@@ -18,8 +16,7 @@ struct AnySubscriptionControlStyle: ISubscriptionControlStyle {
     /// Initializes the `AnyProductStyle` with a specific style conforming to `IProductStyle`.
     ///
     /// - Parameter style: A product style.
-    init<S: ISubscriptionControlStyle>(style: S) {
-        self.style = style
+    init<S: ISubscriptionsWrapperViewStyle>(style: S) {
         _makeBody = { configuration in
             AnyView(style.makeBody(configuration: configuration))
         }

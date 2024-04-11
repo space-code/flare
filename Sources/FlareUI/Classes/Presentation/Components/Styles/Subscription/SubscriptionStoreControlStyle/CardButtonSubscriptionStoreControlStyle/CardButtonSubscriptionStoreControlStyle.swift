@@ -30,33 +30,11 @@ import SwiftUI
                 action: {
                     configuration.trigger()
                 }, label: {
-                    VStack(alignment: .leading) {
-                        configuration.label
-                            .font(.headline)
-                        configuration.price
-                            .font(.footnote)
-
-                        Spacer()
-                            .frame(maxWidth: .infinity)
-
-                        configuration.description
-                            .font(.footnote)
-                    }
-                    .padding()
+                    CardButtonSubscriptionStoreControlView(configuration: configuration)
                 }
             )
-            .frame(minWidth: .minWidth, minHeight: .minHeight)
-            .fixedSize(horizontal: true, vertical: true)
         }
     }
-
-    // MARK: - Constants
-
-    private extension CGFloat {
-        static let minWidth = 528.0
-        static let minHeight = 172.0
-    }
-
 #endif
 
 // MARK: - Preview

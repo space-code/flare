@@ -14,13 +14,19 @@ protocol IStoreButtonsAssembly {
 // MARK: - StoreButtonsAssembly
 
 final class StoreButtonsAssembly: IStoreButtonsAssembly {
+    // MARK: Properties
+
     private let storeButtonAssembly: IStoreButtonAssembly
     private let policiesButtonAssembly: IPoliciesButtonAssembly
+
+    // MARK: Initialization
 
     init(storeButtonAssembly: IStoreButtonAssembly, policiesButtonAssembly: IPoliciesButtonAssembly) {
         self.storeButtonAssembly = storeButtonAssembly
         self.policiesButtonAssembly = policiesButtonAssembly
     }
+
+    // MARK: IStoreButtonsAssembly
 
     func assemble(storeButtonType: StoreButtonType) -> AnyView {
         switch storeButtonType {

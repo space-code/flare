@@ -1,0 +1,58 @@
+//
+// Flare
+// Copyright © 2024 Space Code. All rights reserved.
+//
+
+import SwiftUI
+
+// MARK: - CardButtonSubscriptionStoreControlView
+
+struct CardButtonSubscriptionStoreControlView: View {
+    // MARK: Properties
+
+//    @Environment(\.isFocused) private var isFocused: Bool
+    @Environment(\.tintColor) private var tintColor
+
+    private let configuration: SubscriptionStoreControlStyleConfiguration
+
+    // MARK: Initialization
+
+    init(configuration: SubscriptionStoreControlStyleConfiguration) {
+        self.configuration = configuration
+    }
+
+    // MARK: View
+
+    var body: some View {
+        ZStack {
+            Rectangle()
+                .fill(tintColor) // isFocused ? tintColor.opacity(0.85) : tintColor)
+
+            VStack(alignment: .leading) {
+                configuration.label
+                    .contrast(tintColor)
+                    .font(.headline)
+                configuration.price
+                    .contrast(tintColor)
+                    .font(.footnote)
+
+                Spacer()
+                    .frame(maxWidth: .infinity)
+
+                configuration.description
+                    .contrast(tintColor)
+                    .font(.footnote)
+            }
+            .padding()
+        }
+        .frame(minWidth: .minWidth, minHeight: .minHeight)
+        .fixedSize(horizontal: true, vertical: true)
+    }
+}
+
+// MARK: - Constants
+
+private extension CGFloat {
+    static let minWidth = 528.0
+    static let minHeight = 204.0
+}
