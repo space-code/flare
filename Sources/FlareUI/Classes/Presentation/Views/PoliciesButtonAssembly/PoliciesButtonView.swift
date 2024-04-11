@@ -28,31 +28,37 @@ struct PoliciesButtonView: View {
     @Environment(\.subscriptionPrivacyPolicyDestination) private var subscriptionPrivacyPolicyDestination
 
     @Environment(\.tintColor) private var tintColor
+    @Environment(\.policiesButtonStyle) private var policiesButtonStyle
 
     // MARK: View
 
     var body: some View {
-        HStack(spacing: .spacing) {
-            Button(action: {
-                link = .termsOfService
-            }, label: {
-                Text(L10n.Common.termsOfService)
-                    .foregroundColor(tintColor)
-            })
-            #if os(iOS)
-                Text(L10n.Common.Words.and)
-            #endif
-            Button(action: {
-                link = .privacyPolicy
-            }, label: {
-                Text(L10n.Common.privacyPolicy)
-                    .foregroundColor(tintColor)
-            })
-        }
+        policiesButtonStyle.makeBody(
+            configuration: .init(
+                termsOfUseView: .init(termsOfServiceButton),
+                privacyPolicyView: .init(privacyPolicyButton)
+            )
+        )
         .font(.footnote)
         .sheet(isPresented: isPresented) {
             contentView
         }
+    }
+
+    private var termsOfServiceButton: some View {
+        Button(action: {
+            link = .termsOfService
+        }, label: {
+            Text(L10n.Common.termsOfService)
+        })
+    }
+
+    private var privacyPolicyButton: some View {
+        Button(action: {
+            link = .privacyPolicy
+        }, label: {
+            Text(L10n.Common.privacyPolicy)
+        })
     }
 
     private var contentView: some View {
@@ -103,12 +109,6 @@ struct PoliciesButtonView: View {
             SafariWebView(url: url).edgesIgnoringSafeArea(.all)
         }
     #endif
-}
-
-// MARK: - Constants
-
-private extension CGFloat {
-    static let spacing = 3.0
 }
 
 #if swift(>=5.9)
