@@ -7,6 +7,11 @@ import SwiftUI
 
 // MARK: - CardButtonSubscriptionStoreControlView
 
+@available(tvOS 13.0, *)
+@available(iOS, unavailable)
+@available(macOS, unavailable)
+@available(watchOS, unavailable)
+@available(visionOS, unavailable)
 struct CardButtonSubscriptionStoreControlView: View {
     // MARK: Properties
 
@@ -34,9 +39,10 @@ struct CardButtonSubscriptionStoreControlView: View {
                     .font(.headline)
                 configuration.price
                     .contrast(tintColor)
-                    .font(.footnote)
+                    .font(.caption.weight(.medium))
+                    .layoutPriority(1)
 
-                Spacer()
+                Spacer(minLength: .zero)
                     .frame(maxWidth: .infinity)
 
                 configuration.description

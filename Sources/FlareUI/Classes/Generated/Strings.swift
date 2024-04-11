@@ -82,6 +82,11 @@ internal enum L10n {
       internal static func subscriptionDescription(_ p1: Any) -> String {
         return L10n.tr("Localizable", "subscriptions.renewable.subscription_description", String(describing: p1), fallback: "Plan auto-renews for %@ until cancelled.")
       }
+      /// Plan auto-renews for %@
+      /// until cancelled.
+      internal static func subscriptionDescriptionSeparated(_ p1: Any) -> String {
+        return L10n.tr("Localizable", "subscriptions.renewable.subscription_description_separated", String(describing: p1), fallback: "Plan auto-renews for %@\nuntil cancelled.")
+      }
     }
   }
 }

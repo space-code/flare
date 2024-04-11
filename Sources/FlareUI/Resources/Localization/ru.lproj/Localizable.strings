@@ -5,7 +5,8 @@
 "error.default.title" = "Произошла ошибка";
 "product.subscription.price" = "%@/%@";
 "product.price_description" = "Каждый %@";
-"subscriptions.renewable.subscription_description" = "Plan auto-renews for %@ until cancelled.";
+"subscriptions.renewable.subscription_description" = "План автоматически продлевается за %@ до отмены.";
+"subscriptions.renewable.subscription_description_separated" = "План автоматически продлевается за %@\nдо отмены.";
 "subscription.loading.message" = "Загрузка подписок...";
 "common.terms_of_service" = "Условия использования";
 "common.privacy_policy" = "Политика конфиденциальности";

@@ -6,6 +6,7 @@
 "product.subscription.price" = "%@/%@";
 "product.price_description" = "Every %@";
 "subscriptions.renewable.subscription_description" = "Plan auto-renews for %@ until cancelled.";
+"subscriptions.renewable.subscription_description_separated" = "Plan auto-renews for %@\nuntil cancelled.";
 "subscription.loading.message" = "Loading Subscriptions...";
 "common.terms_of_service" = "Terms of Service";
 "common.privacy_policy" = "Privacy Policy";

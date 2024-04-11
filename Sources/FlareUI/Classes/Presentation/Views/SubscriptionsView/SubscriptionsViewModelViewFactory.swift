@@ -32,9 +32,19 @@ final class SubscriptionsViewModelViewFactory: ISubscriptionsViewModelViewFactor
             SubscriptionView.ViewModel(
                 id: $0.productIdentifier,
                 title: $0.localizedTitle,
-                price: subscriptionPriceViewModelFactory.make($0, format: .full),
+                price: makePrice(string: subscriptionPriceViewModelFactory.make($0, format: .full)),
                 description: $0.localizedDescription
             )
         }
+    }
+
+    // MARK: Private
+
+    private func makePrice(string: String) -> String {
+        #if os(tvOS)
+            return L10n.Subscriptions.Renewable.subscriptionDescriptionSeparated(string)
+        #else
+            return string
+        #endif
     }
 }
