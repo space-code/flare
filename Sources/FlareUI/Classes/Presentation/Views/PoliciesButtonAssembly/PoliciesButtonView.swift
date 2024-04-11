@@ -27,7 +27,6 @@ struct PoliciesButtonView: View {
     @Environment(\.subscriptionTermsOfServiceDestination) private var subscriptionTermsOfServiceDestination
     @Environment(\.subscriptionPrivacyPolicyDestination) private var subscriptionPrivacyPolicyDestination
 
-    @Environment(\.tintColor) private var tintColor
     @Environment(\.policiesButtonStyle) private var policiesButtonStyle
 
     // MARK: View
@@ -44,6 +43,8 @@ struct PoliciesButtonView: View {
             contentView
         }
     }
+
+    // MARK: Private
 
     private var termsOfServiceButton: some View {
         Button(action: {
