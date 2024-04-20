@@ -40,8 +40,13 @@ struct PickerSubscriptionStoreControlStyleView: View {
     private var contentView: some View {
         VStack(alignment: .leading, spacing: .spacing10px) {
             HStack {
-                configuration.label
-                    .font(.headline)
+                VStack(alignment: .leading, spacing: 8.0) {
+                    if configuration.isActive {
+                        planView
+                    }
+                    configuration.label
+                        .font(.headline)
+                }
                 Spacer()
                 checkmarkView
             }
@@ -79,18 +84,52 @@ struct PickerSubscriptionStoreControlStyleView: View {
     private var rectangleBackground: RoundedRectangle {
         RoundedRectangle(cornerSize: .cornerSize)
     }
+
+    private var planView: some View {
+        HStack(spacing: 4.0) {
+            Image(systemName: .star)
+                .resizable()
+                .frame(
+                    width: CGSize.planImageSize.width,
+                    height: CGSize.planImageSize.height
+                )
+                .foregroundColor(tintColor)
+            Text(L10n.Common.Subscription.Status.yourPlan.uppercased())
+                .font(.caption.weight(.bold))
+                .foregroundColor(Palette.systemGray)
+        }
+    }
 }
+
+// MARK: - Preview
+
+#if swift(>=5.9) && os(iOS)
+    #Preview {
+        PickerSubscriptionStoreControlStyleView(
+            configuration: .init(
+                label: .init(Text("Name").eraseToAnyView()),
+                description: .init(Text("Name").eraseToAnyView()),
+                price: .init(Text("Name").eraseToAnyView()),
+                isSelected: true,
+                isActive: true,
+                action: {}
+            )
+        )
+    }
+#endif
 
 // MARK: - Constants
 
 private extension String {
     static let checkmark = "checkmark.circle.fill"
     static let circle = "circle"
+    static let star = "star"
 }
 
 private extension CGSize {
     static let cornerSize = CGSize(width: 18, height: 18)
     static let iconSize = CGSize(width: 26, height: 26)
+    static let planImageSize = CGSize(width: 14, height: 14)
 }
 
 private extension CGFloat {

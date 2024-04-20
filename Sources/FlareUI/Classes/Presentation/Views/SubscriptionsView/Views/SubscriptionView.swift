@@ -36,6 +36,7 @@ struct SubscriptionView: View {
                 description: .init(descriptionView),
                 price: .init(priceView),
                 isSelected: isSelected,
+                isActive: viewModel.isActive,
                 action: action
             )
         )
@@ -62,6 +63,7 @@ extension SubscriptionView {
         let title: String
         let price: String
         let description: String
+        let isActive: Bool
     }
 }
 
@@ -73,7 +75,8 @@ extension SubscriptionView {
                     id: "",
                     title: "Subscription",
                     price: "$0.99/month",
-                    description: "Description"
+                    description: "Description",
+                    isActive: true
                 ),
                 isSelected: .constant(true),
                 action: {}
@@ -83,7 +86,8 @@ extension SubscriptionView {
                     id: "",
                     title: "Subscription",
                     price: "$0.99/month",
-                    description: "Description"
+                    description: "Description",
+                    isActive: false
                 ),
                 isSelected: .constant(true),
                 action: {}

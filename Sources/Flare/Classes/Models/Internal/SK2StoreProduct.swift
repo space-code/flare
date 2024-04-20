@@ -85,4 +85,11 @@ extension SK2StoreProduct: ISKProduct {
     var subscriptionGroupIdentifier: String? {
         product.subscription?.subscriptionGroupID
     }
+
+    var subscription: SubscriptionInfo? {
+        guard let subscription = product.subscription else {
+            return nil
+        }
+        return SubscriptionInfo(subscriptionInfo: subscription)
+    }
 }

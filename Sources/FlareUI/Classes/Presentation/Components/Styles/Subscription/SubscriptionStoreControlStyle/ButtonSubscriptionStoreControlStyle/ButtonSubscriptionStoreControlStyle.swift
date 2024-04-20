@@ -34,6 +34,7 @@ public struct ButtonSubscriptionStoreControlStyle: ISubscriptionControlStyle {
                 description: .init(Text("Name")),
                 price: .init(Text("Name")),
                 isSelected: true,
+                isActive: true,
                 action: {}
             )
         )

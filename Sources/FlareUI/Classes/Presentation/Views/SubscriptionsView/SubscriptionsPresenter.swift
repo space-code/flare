@@ -36,12 +36,10 @@ final class SubscriptionsPresenter: IPresenter {
         self.ids = ids
         self.viewModelFactory = viewModelFactory
     }
-}
 
-// MARK: ISubscriptionsPresenter
+    // MARK: Private
 
-extension SubscriptionsPresenter: ISubscriptionsPresenter {
-    func viewDidLoad() {
+    private func loadProducts() {
         Task { @MainActor in
             do {
                 self.products = try await iap.fetch(productIDs: ids)
@@ -52,11 +50,21 @@ extension SubscriptionsPresenter: ISubscriptionsPresenter {
                     return
                 }
 
-                update(state: .products(viewModelFactory.make(products)))
+                let viewModel = try await viewModelFactory.make(products)
+
+                update(state: .products(viewModel))
             } catch {
                 update(state: .error(error.iap))
             }
         }
+    }
+}
+
+// MARK: ISubscriptionsPresenter
+
+extension SubscriptionsPresenter: ISubscriptionsPresenter {
+    func viewDidLoad() {
+        loadProducts()
     }
 
     func product(withID id: String) -> StoreProduct? {
@@ -81,6 +89,8 @@ extension SubscriptionsPresenter: ISubscriptionsPresenter {
         } else {
             transaction = try await iap.purchase(product: product)
         }
+
+        loadProducts()
 
         return transaction
     }

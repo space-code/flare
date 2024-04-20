@@ -5,6 +5,8 @@
 
 import SwiftUI
 
+// MARK: - BorderedSubscriptionStoreControlStyleView
+
 @available(iOS 13.0, *)
 @available(tvOS, unavailable)
 @available(macOS, unavailable)
@@ -49,8 +51,16 @@ struct BorderedSubscriptionStoreControlStyleView: View {
         case .multiline:
             VStack {
                 textView
-                configuration.price
-                    .font(.footnote.weight(.medium))
+
+                if configuration.isActive {
+                    Text(L10n.Common.Subscription.Status.yourCurrentPlan)
+                        .font(.footnote.weight(.medium))
+                        .contrast(tintColor)
+                } else {
+                    configuration.price
+                        .font(.footnote.weight(.medium))
+                        .contrast(tintColor)
+                }
             }
         case .price:
             configuration.price
@@ -59,9 +69,26 @@ struct BorderedSubscriptionStoreControlStyleView: View {
     }
 
     private var textView: some View {
-        Text("Subscribe")
-            .font(.body)
-            .fontWeight(.bold)
-            .contrast(tintColor)
+        VStack {
+            Text(L10n.Common.Subscription.Action.subscribe)
+                .font(.body)
+                .fontWeight(.bold)
+                .contrast(tintColor)
+        }
     }
 }
+
+#if swift(>=5.9) && os(iOS)
+    #Preview {
+        BorderedSubscriptionStoreControlStyleView(
+            configuration: .init(
+                label: .init(Text("Name")),
+                description: .init(Text("Name")),
+                price: .init(Text("Name")),
+                isSelected: true,
+                isActive: true,
+                action: {}
+            )
+        )
+    }
+#endif

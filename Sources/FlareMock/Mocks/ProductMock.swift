@@ -129,5 +129,10 @@ public final class ProductMock: ISKProduct {
         invokedSubscriptionGroupIdentifierGetterCount += 1
         return stubbedSubscriptionGroupIdentifier
     }
+
     // swiftlint:enable identifier_name
+
+    public var subscription: SubscriptionInfo? {
+        nil
+    }
 }

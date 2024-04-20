@@ -32,6 +32,7 @@ public struct PickerSubscriptionStoreControlStyle: ISubscriptionControlStyle {
                 description: .init(Text("Name").eraseToAnyView()),
                 price: .init(Text("Name").eraseToAnyView()),
                 isSelected: true,
+                isActive: true,
                 action: {}
             )
         )

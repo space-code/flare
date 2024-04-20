@@ -34,6 +34,7 @@ public struct ProminentPickerSubscriptionStoreControlStyle: ISubscriptionControl
                 description: .init(Text("Name").eraseToAnyView()),
                 price: .init(Text("Name").eraseToAnyView()),
                 isSelected: true,
+                isActive: true,
                 action: {}
             )
         )

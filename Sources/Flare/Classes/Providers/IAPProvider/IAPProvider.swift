@@ -178,7 +178,7 @@ final class IAPProvider: IIAPProvider {
         }
     }
 
-    func addTransactionObserver(fallbackHandler: Closure<Result<PaymentTransaction, IAPError>>?) {
+    func addTransactionObserver(fallbackHandler: Closure<Result<StoreTransaction, IAPError>>?) {
         purchaseProvider.addTransactionObserver(fallbackHandler: fallbackHandler)
     }
 

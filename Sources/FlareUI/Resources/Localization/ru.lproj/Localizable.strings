@@ -15,3 +15,6 @@
 "policies.unavailable.privacy_policy.title" = "Политика конфиденциальности недоступна";
 "policies.unavailable.terms_of_service.message" = "Что-то пошло не так. Попробуйте снова.";
 "policies.unavailable.privacy_policy.message" = "Что-то пошло не так. Попробуйте снова.";
+"common.subscription.status.your_plan" = "Ваш план";
+"common.subscription.status.your_current_plan" = "Ваш текущий план";
+"common.subscription.action.subscribe" = "Подписаться";

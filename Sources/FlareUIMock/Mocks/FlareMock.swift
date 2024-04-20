@@ -201,10 +201,10 @@ public final class FlareMock: IFlare {
 
     public var invokedAddTransactionObserver = false
     public var invokedAddTransactionObserverCount = 0
-    public var invokedAddTransactionObserverParameters: (fallbackHandler: Closure<Result<PaymentTransaction, IAPError>>?, Void)?
-    public var invokedAddTransactionObserverParametersList = [(fallbackHandler: Closure<Result<PaymentTransaction, IAPError>>?, Void)]()
+    public var invokedAddTransactionObserverParameters: (fallbackHandler: Closure<Result<StoreTransaction, IAPError>>?, Void)?
+    public var invokedAddTransactionObserverParametersList = [(fallbackHandler: Closure<Result<StoreTransaction, IAPError>>?, Void)]()
 
-    public func addTransactionObserver(fallbackHandler: Closure<Result<PaymentTransaction, IAPError>>?) {
+    public func addTransactionObserver(fallbackHandler: Closure<Result<StoreTransaction, IAPError>>?) {
         invokedAddTransactionObserver = true
         invokedAddTransactionObserverCount += 1
         invokedAddTransactionObserverParameters = (fallbackHandler, ())

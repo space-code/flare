@@ -39,6 +39,7 @@ public struct SubscriptionStoreControlStyleConfiguration {
     let description: Description
     let price: Price
     let isSelected: Bool
+    let isActive: Bool
 
     let action: () -> Void
 

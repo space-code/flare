@@ -20,6 +20,8 @@ struct SubscriptionsWrapperView: View, IViewWrapper {
     @State private var selectedProduct: SubscriptionView.ViewModel?
     @State private var error: Error?
 
+    @State private var isLoading = false
+
     private var isButtonsStyle: Bool {
         subscriptionControlStyle.style is ButtonSubscriptionStoreControlStyle
     }
@@ -46,7 +48,7 @@ struct SubscriptionsWrapperView: View, IViewWrapper {
     private var contentView: some View {
         switch viewModel.state {
         case .loading:
-            LoadingView()
+            loadingView
         case let .products(products):
             VStack(spacing: .zero) {
                 productsView(products: products)
@@ -63,6 +65,7 @@ struct SubscriptionsWrapperView: View, IViewWrapper {
                 #endif
             }
             .background(subscriptionBackground.edgesIgnoringSafeArea(.all))
+            .activityIndicator(isLoading: isLoading)
         case .error:
             StoreUnavaliableView(productType: .subscription)
         }
@@ -85,6 +88,10 @@ struct SubscriptionsWrapperView: View, IViewWrapper {
         )
     }
 
+    private var loadingView: some View {
+        LoadingView(message: L10n.Subscription.Loading.message)
+    }
+
     #if os(iOS)
         private var toolbarView: some View {
             selectedProduct.map { product in
@@ -93,7 +100,8 @@ struct SubscriptionsWrapperView: View, IViewWrapper {
                         id: product.id,
                         title: product.title,
                         price: product.price,
-                        description: product.description
+                        description: product.description,
+                        isActive: product.isActive
                     ),
                     action: { self.purchase(productID: product.id) }
                 )
@@ -104,6 +112,10 @@ struct SubscriptionsWrapperView: View, IViewWrapper {
     private func purchase(productID: String) {
         guard let product = viewModel.presenter.product(withID: productID) else { return }
 
+        withAnimation {
+            isLoading = true
+        }
+
         Task {
             do {
                 let transaction = try await self.viewModel.presenter.subscribe(optionsHandler: purchaseOptions)
@@ -113,6 +125,10 @@ struct SubscriptionsWrapperView: View, IViewWrapper {
                     self.error = error.iap
                     purchaseCompletion?(product, .failure(error))
                 }
+            }
+
+            withAnimation {
+                isLoading = false
             }
         }
     }

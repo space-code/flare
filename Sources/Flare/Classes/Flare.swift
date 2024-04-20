@@ -140,7 +140,7 @@ extension Flare: IFlare {
         await iapProvider.finish(transaction: transaction)
     }
 
-    public func addTransactionObserver(fallbackHandler: Closure<Result<PaymentTransaction, IAPError>>?) {
+    public func addTransactionObserver(fallbackHandler: Closure<Result<StoreTransaction, IAPError>>?) {
         iapProvider.addTransactionObserver(fallbackHandler: fallbackHandler)
     }
 

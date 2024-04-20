@@ -51,7 +51,8 @@ struct SubscriptionToolbarView: View {
                         id: viewModel.id,
                         title: viewModel.title,
                         price: viewModel.price,
-                        description: viewModel.description
+                        description: viewModel.description,
+                        isActive: viewModel.isActive
                     ),
                     isSelected: .constant(false),
                     action: action
@@ -111,6 +112,7 @@ extension SubscriptionToolbarView {
         let title: String
         let price: String
         let description: String
+        let isActive: Bool
     }
 }
 
@@ -122,7 +124,8 @@ extension SubscriptionToolbarView {
                     id: "",
                     title: "Subscription",
                     price: "$0.99/month",
-                    description: "Description"
+                    description: "Description",
+                    isActive: true
                 ),
                 action: {}
             )

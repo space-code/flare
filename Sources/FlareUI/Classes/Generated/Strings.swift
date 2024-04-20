@@ -15,6 +15,18 @@ internal enum L10n {
     internal static let privacyPolicy = L10n.tr("Localizable", "common.privacy_policy", fallback: "Privacy Policy")
     /// Terms of Service
     internal static let termsOfService = L10n.tr("Localizable", "common.terms_of_service", fallback: "Terms of Service")
+    internal enum Subscription {
+      internal enum Action {
+        /// Subscribe
+        internal static let subscribe = L10n.tr("Localizable", "common.subscription.action.subscribe", fallback: "Subscribe")
+      }
+      internal enum Status {
+        /// Your plan
+        internal static let yourCurrentPlan = L10n.tr("Localizable", "common.subscription.status.your_current_plan", fallback: "Your plan")
+        /// Your plan
+        internal static let yourPlan = L10n.tr("Localizable", "common.subscription.status.your_plan", fallback: "Your plan")
+      }
+    }
     internal enum Words {
       /// and
       internal static let and = L10n.tr("Localizable", "common.words.and", fallback: "and")

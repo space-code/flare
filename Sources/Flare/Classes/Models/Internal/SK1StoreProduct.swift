@@ -77,4 +77,8 @@ extension SK1StoreProduct: ISKProduct {
     var subscriptionGroupIdentifier: String? {
         product.subscriptionGroupIdentifier
     }
+
+    var subscription: SubscriptionInfo? {
+        nil
+    }
 }

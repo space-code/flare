@@ -97,4 +97,8 @@ extension StoreProduct: ISKProduct {
     public var subscriptionGroupIdentifier: String? {
         product.subscriptionGroupIdentifier
     }
+
+    public var subscription: SubscriptionInfo? {
+        product.subscription
+    }
 }

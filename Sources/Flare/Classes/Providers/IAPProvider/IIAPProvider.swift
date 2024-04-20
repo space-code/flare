@@ -134,7 +134,7 @@ public protocol IIAPProvider {
     /// The transactions array will only be synchronized with the server while the queue has observers.
     ///
     /// - Note: This may require that the user authenticate.
-    func addTransactionObserver(fallbackHandler: Closure<Result<PaymentTransaction, IAPError>>?)
+    func addTransactionObserver(fallbackHandler: Closure<Result<StoreTransaction, IAPError>>?)
 
     /// Removes transaction observer from the payment queue.
     /// The transactions array will only be synchronized with the server while the queue has observers.
