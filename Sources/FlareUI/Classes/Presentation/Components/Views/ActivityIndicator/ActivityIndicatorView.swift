@@ -4,28 +4,62 @@
 //
 
 import SwiftUI
-import UIKit
+#if canImport(UIKit)
+    import UIKit
+#elseif canImport(Cocoa)
+    import Cocoa
+#endif
 
-struct ActivityIndicatorView: UIViewRepresentable {
+#if os(iOS) || os(tvOS)
+    typealias ViewRepresentable = UIViewRepresentable
+#elseif os(macOS)
+    typealias ViewRepresentable = NSViewRepresentable
+#endif
+
+// MARK: - ActivityIndicatorView
+
+struct ActivityIndicatorView: ViewRepresentable {
     // MARK: Properties
 
     @Binding var isAnimating: Bool
-    let style: UIActivityIndicatorView.Style
+
+    #if os(iOS) || os(tvOS)
+        let style: UIActivityIndicatorView.Style
+    #endif
 
     // MARK: UIViewRepresentable
 
-    func makeUIView(context _: UIViewRepresentableContext<ActivityIndicatorView>) -> UIActivityIndicatorView {
-        UIActivityIndicatorView(style: style)
-    }
-
-    func updateUIView(
-        _ uiView: UIActivityIndicatorView,
-        context _: UIViewRepresentableContext<ActivityIndicatorView>
-    ) {
-        if isAnimating {
-            uiView.startAnimating()
-        } else {
-            uiView.stopAnimating()
+    #if os(macOS)
+        func makeNSView(context _: Context) -> NSProgressIndicator {
+            let progressIndicator = NSProgressIndicator()
+            progressIndicator.style = .spinning
+            progressIndicator.usesThreadedAnimation = true
+            return progressIndicator
         }
-    }
+
+        func updateNSView(_ nsView: NSViewType, context _: Context) {
+            if isAnimating {
+                nsView.startAnimation(nil)
+            } else {
+                nsView.stopAnimation(nil)
+            }
+        }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+        func makeUIView(context _: UIViewRepresentableContext<ActivityIndicatorView>) -> UIActivityIndicatorView {
+            UIActivityIndicatorView(style: style)
+        }
+
+        func updateUIView(
+            _ uiView: UIActivityIndicatorView,
+            context _: UIViewRepresentableContext<ActivityIndicatorView>
+        ) {
+            if isAnimating {
+                uiView.startAnimating()
+            } else {
+                uiView.stopAnimating()
+            }
+        }
+    #endif
 }

@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-@available(iOS 13.0, macOS 11.0, *)
+@available(iOS 13.0, macOS 10.15, *)
 @available(watchOS, unavailable)
 @available(tvOS, unavailable)
 struct DefaultPoliciesButtonStyle: IPoliciesButtonStyle {

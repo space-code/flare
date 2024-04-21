@@ -32,7 +32,7 @@ final class StoreButtonsAssembly: IStoreButtonsAssembly {
         switch storeButtonType {
         case .restore:
             Group {
-                if #available(iOS 15.0, tvOS 15.0, *) {
+                if #available(iOS 15.0, tvOS 15.0, macOS 12.0, *) {
                     storeButtonAssembly.assemble(storeButtonType: .restore)
                 }
             }.eraseToAnyView()

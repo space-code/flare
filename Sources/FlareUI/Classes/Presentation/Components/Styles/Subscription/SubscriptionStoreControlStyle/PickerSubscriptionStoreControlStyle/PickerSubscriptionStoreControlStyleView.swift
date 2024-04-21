@@ -63,15 +63,17 @@ struct PickerSubscriptionStoreControlStyleView: View {
     }
 
     private var checkmarkView: some View {
-        Image(systemName: configuration.isSelected ? .checkmark : .circle)
-            .resizable()
-            .foregroundColor(configuration.isSelected ? tintColor : Palette.systemGray2.opacity(0.7))
-            .frame(
-                width: CGSize.iconSize.width,
-                height: CGSize.iconSize.height
-            )
-            .background(configuration.isSelected ? Color.white : .clear)
-            .mask(Circle())
+        ImageView(
+            systemName: configuration.isSelected ? .checkmark : .circle,
+            defaultImage: configuration.isSelected ? Media.Media.checkmark.swiftUIImage : Media.Media.circle.swiftUIImage
+        )
+        .foregroundColor(configuration.isSelected ? tintColor : Palette.systemGray2.opacity(0.7))
+        .frame(
+            width: CGSize.iconSize.width,
+            height: CGSize.iconSize.height
+        )
+        .background(configuration.isSelected ? Color.white : .clear)
+        .mask(Circle())
     }
 
     private var separatorView: some View {
@@ -87,8 +89,7 @@ struct PickerSubscriptionStoreControlStyleView: View {
 
     private var planView: some View {
         HStack(spacing: 4.0) {
-            Image(systemName: .star)
-                .resizable()
+            ImageView(systemName: .star, defaultImage: Media.Media.star.swiftUIImage)
                 .frame(
                     width: CGSize.planImageSize.width,
                     height: CGSize.planImageSize.height

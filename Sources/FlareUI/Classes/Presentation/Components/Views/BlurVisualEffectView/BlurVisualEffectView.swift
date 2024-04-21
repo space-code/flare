@@ -7,19 +7,21 @@ import SwiftUI
 
 // MARK: - BlurVisualEffectView
 
-struct BlurVisualEffectView: UIViewRepresentable {
-    func makeUIView(context: Context) -> UIVisualEffectView {
-        UIVisualEffectView(effect: UIBlurEffect(style: context.environment.blurEffectStyle))
+#if os(iOS) || os(tvOS)
+    struct BlurVisualEffectView: UIViewRepresentable {
+        func makeUIView(context: Context) -> UIVisualEffectView {
+            UIVisualEffectView(effect: UIBlurEffect(style: context.environment.blurEffectStyle))
+        }
+
+        func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
+            uiView.effect = UIBlurEffect(style: context.environment.blurEffectStyle)
+        }
     }
 
-    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
-        uiView.effect = UIBlurEffect(style: context.environment.blurEffectStyle)
+    extension View {
+        /// Creates a blur effect.
+        func blurEffect() -> some View {
+            ModifiedContent(content: self, modifier: BlurEffectModifier())
+        }
     }
-}
-
-extension View {
-    /// Creates a blur effect.
-    func blurEffect() -> some View {
-        ModifiedContent(content: self, modifier: BlurEffectModifier())
-    }
-}
+#endif

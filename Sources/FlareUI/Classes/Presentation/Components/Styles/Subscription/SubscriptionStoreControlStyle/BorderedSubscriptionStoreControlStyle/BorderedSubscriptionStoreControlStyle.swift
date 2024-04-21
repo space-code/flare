@@ -7,9 +7,8 @@ import SwiftUI
 
 // MARK: - BorderedSubscriptionStoreControlStyle
 
-@available(iOS 13.0, *)
+@available(iOS 13.0, macOS 10.15, *)
 @available(tvOS, unavailable)
-@available(macOS, unavailable)
 @available(watchOS, unavailable)
 @available(visionOS, unavailable)
 struct BorderedSubscriptionStoreControlStyle: ISubscriptionControlStyle {

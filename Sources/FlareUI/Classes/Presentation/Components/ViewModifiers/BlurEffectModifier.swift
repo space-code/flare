@@ -5,11 +5,13 @@
 
 import SwiftUI
 
-struct BlurEffectModifier: ViewModifier {
-    init() {}
+#if os(iOS) || os(tvOS)
+    struct BlurEffectModifier: ViewModifier {
+        init() {}
 
-    func body(content: Content) -> some View {
-        content
-            .overlay(BlurVisualEffectView())
+        func body(content: Content) -> some View {
+            content
+                .overlay(BlurVisualEffectView())
+        }
     }
-}
+#endif

@@ -36,8 +36,10 @@ struct SubscriptionToolbarView: View {
         bottomToolbar { purchaseContainer }
             .background(
                 Color.clear
+                #if os(iOS) || os(tvOS)
                     .blurEffect()
                     .edgesIgnoringSafeArea(.all)
+                #endif
             )
     }
 

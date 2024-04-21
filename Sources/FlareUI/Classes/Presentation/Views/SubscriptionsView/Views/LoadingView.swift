@@ -56,7 +56,11 @@ struct LoadingView: View {
                 progressView
                     .scaleEffect(1.74)
             } else {
-                ActivityIndicatorView(isAnimating: .constant(true), style: .large)
+                #if os(macOS)
+                    ActivityIndicatorView(isAnimating: .constant(true))
+                #else
+                    ActivityIndicatorView(isAnimating: .constant(true), style: .large)
+                #endif
             }
 
             Text(message)

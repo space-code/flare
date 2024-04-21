@@ -37,7 +37,7 @@ struct FullSubscriptionsWrapperView: View {
         VStack(alignment: .center, spacing: .zero) {
             GeometryReader { geo in
                 ScrollView(.vertical) {
-                    #if os(iOS)
+                    #if os(iOS) || os(macOS)
                         SubscriptionHeaderView(topInset: geo.safeAreaInsets.top)
                     #endif
 

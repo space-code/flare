@@ -5,10 +5,16 @@
 
 import SwiftUI
 
+#if os(iOS) || os(tvOS)
+    typealias UIColor = UIKit.UIColor
+#elseif os(macOS)
+    typealias UIColor = NSColor
+#endif
+
 // swiftlint:disable identifier_name
 extension Color {
     func uiColor() -> UIColor {
-        if #available(iOS 14.0, tvOS 14.0, *) {
+        if #available(iOS 14.0, tvOS 14.0, macOS 11.0, *) {
             return UIColor(self)
         }
 

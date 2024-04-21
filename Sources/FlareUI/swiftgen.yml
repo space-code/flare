@@ -1,12 +1,19 @@
 input_dir: Resources
 output_dir: Classes/Generated
 xcassets:
-    inputs: Assets/Assets.xcassets
-    outputs:
+    - inputs: Assets/Assets.xcassets
+      outputs:
         templateName: swift5
         output: Colors.swift
         params:
             publicAccess: false
+    - inputs: Assets/Media.xcassets
+      outputs:
+        templateName: swift5
+        output: Media.swift
+        params:
+            publicAccess: false
+            enumName: Media
 strings:
     inputs:
         - Localization/en.lproj/Localizable.strings
