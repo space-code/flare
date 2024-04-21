@@ -18,11 +18,16 @@ final class SubscriptionsViewModelViewFactory: ISubscriptionsViewModelViewFactor
     // MARK: Properties
 
     private let subscriptionPriceViewModelFactory: ISubscriptionPriceViewModelFactory
+    private let subscriptionStatusVerifier: ISubscriptionStatusVerifier?
 
     // MARK: Initialization
 
-    init(subscriptionPriceViewModelFactory: ISubscriptionPriceViewModelFactory = SubscriptionPriceViewModelFactory()) {
+    init(
+        subscriptionPriceViewModelFactory: ISubscriptionPriceViewModelFactory = SubscriptionPriceViewModelFactory(),
+        subscriptionStatusVerifier: ISubscriptionStatusVerifier? = nil
+    ) {
         self.subscriptionPriceViewModelFactory = subscriptionPriceViewModelFactory
+        self.subscriptionStatusVerifier = subscriptionStatusVerifier
     }
 
     // MARK: ISubscriptionsViewModelViewFactory
@@ -48,21 +53,8 @@ final class SubscriptionsViewModelViewFactory: ISubscriptionsViewModelViewFactor
     // MARK: Private
 
     private func validationSubscriptionStatus(_ product: StoreProduct) async throws -> Bool {
-        guard let subscription = product.subscription else { return false }
-
-        let statuses = try await subscription.subscriptionStatus
-
-        for status in statuses {
-            if case let .verified(subscription) = status.subscriptionRenewalInfo,
-               subscription.currentProductID == product.productIdentifier
-            {
-                if status.renewalState == .subscribed {
-                    return true
-                }
-            }
-        }
-
-        return false
+        guard let subscriptionStatusVerifier = subscriptionStatusVerifier else { return false }
+        return try await subscriptionStatusVerifier.validate(product)
     }
 
     private func makePrice(string: String) -> String {

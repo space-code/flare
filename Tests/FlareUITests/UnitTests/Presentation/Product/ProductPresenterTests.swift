@@ -14,7 +14,7 @@ final class ProductPresenterTests: XCTestCase {
 
     private var purchaseServiceMock: ProductPurchaseServiceMock!
     private var productFetcherMock: ProductFetcherMock!
-    private var viewModelMock: ViewModel<ProductViewModel>!
+    private var viewModelMock: WrapperViewModel<ProductViewModel>!
 
     private var sut: ProductPresenter!
 
@@ -28,7 +28,7 @@ final class ProductPresenterTests: XCTestCase {
             productFetcher: productFetcherMock,
             purchaseService: purchaseServiceMock
         )
-        viewModelMock = ViewModel(model: ProductViewModel(state: .loading, presenter: sut))
+        viewModelMock = WrapperViewModel(model: ProductViewModel(state: .loading, presenter: sut))
         sut.viewModel = viewModelMock
     }
 

@@ -20,7 +20,7 @@ final class StoreButtonPresenter: IPresenter {
 
     private let iap: IFlare
 
-    weak var viewModel: ViewModel<StoreButtonViewModel>?
+    weak var viewModel: WrapperViewModel<StoreButtonViewModel>?
 
     // MARK: Initialization
 

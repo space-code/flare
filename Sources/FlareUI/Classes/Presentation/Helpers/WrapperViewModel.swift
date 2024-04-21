@@ -6,7 +6,7 @@
 import Foundation
 
 /// An observable view model.
-final class ViewModel<T>: ObservableObject {
+final class WrapperViewModel<T>: ObservableObject {
     // MARK: Properties
 
     /// The model object.

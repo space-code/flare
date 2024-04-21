@@ -22,7 +22,7 @@ final class ProductPresenter: IPresenter {
     private let productFetcher: IProductFetcherStrategy
     private let purchaseService: IProductPurchaseService
 
-    weak var viewModel: ViewModel<ProductViewModel>?
+    weak var viewModel: WrapperViewModel<ProductViewModel>?
 
     // MARK: Initialization
 

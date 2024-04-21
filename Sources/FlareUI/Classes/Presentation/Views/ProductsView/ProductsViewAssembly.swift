@@ -36,7 +36,7 @@ final class ProductsViewAssembly: IProductsViewAssembly {
             ids: ids,
             iap: iap
         )
-        let viewModel = ViewModel<ProductsViewModel>(
+        let viewModel = WrapperViewModel<ProductsViewModel>(
             model: ProductsViewModel(
                 state: .loading(ids.count),
                 presenter: presenter

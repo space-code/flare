@@ -29,7 +29,7 @@ final class StoreButtonAssembly: IStoreButtonAssembly {
 
     func assemble(storeButtonType: StoreButton) -> ViewWrapper<StoreButtonViewModel, StoreButtonView> {
         let presenter = StoreButtonPresenter(iap: iap)
-        let viewModel = ViewModel<StoreButtonViewModel>(
+        let viewModel = WrapperViewModel<StoreButtonViewModel>(
             model: StoreButtonViewModel(
                 state: map(storeButtonType: storeButtonType),
                 presenter: presenter

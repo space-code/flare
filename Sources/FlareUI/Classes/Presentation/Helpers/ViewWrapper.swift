@@ -22,11 +22,11 @@ protocol IViewWrapper: View {
 struct ViewWrapper<ViewModel, ViewWrapper: IViewWrapper>: View where ViewWrapper.ViewModel == ViewModel {
     // MARK: Properties
 
-    @ObservedObject private var viewModel: FlareUI.ViewModel<ViewModel>
+    @ObservedObject private var viewModel: WrapperViewModel<ViewModel>
 
     // MARK: Initialization
 
-    init(viewModel: FlareUI.ViewModel<ViewModel>) {
+    init(viewModel: WrapperViewModel<ViewModel>) {
         self.viewModel = viewModel
     }
 

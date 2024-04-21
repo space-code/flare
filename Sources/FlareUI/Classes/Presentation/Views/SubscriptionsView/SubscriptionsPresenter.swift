@@ -27,7 +27,7 @@ final class SubscriptionsPresenter: IPresenter {
 
     private var products: [StoreProduct] = []
 
-    weak var viewModel: ViewModel<SubscriptionsViewModel>?
+    weak var viewModel: WrapperViewModel<SubscriptionsViewModel>?
 
     // MARK: Initialization
 

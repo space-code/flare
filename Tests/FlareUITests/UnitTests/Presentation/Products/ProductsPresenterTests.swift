@@ -13,7 +13,7 @@ final class ProductsPresenterTests: XCTestCase {
     // MARK: Properties
 
     private var iapMock: FlareMock!
-    private var viewModelMock: ViewModel<ProductsViewModel>!
+    private var viewModelMock: WrapperViewModel<ProductsViewModel>!
 
     private var sut: ProductsPresenter!
 
@@ -26,7 +26,7 @@ final class ProductsPresenterTests: XCTestCase {
             ids: [],
             iap: iapMock
         )
-        viewModelMock = ViewModel(
+        viewModelMock = WrapperViewModel(
             model: ProductsViewModel(
                 state: .products([]),
                 presenter: sut

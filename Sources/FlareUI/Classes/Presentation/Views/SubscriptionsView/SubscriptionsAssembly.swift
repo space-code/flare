@@ -19,19 +19,28 @@ final class SubscriptionsAssembly: ISubscriptionsAssembly {
 
     private let iap: IFlare
     private let storeButtonsAssembly: IStoreButtonsAssembly
+    private let subscriptionStatusVerifierProvider: ISubscriptionStatusVerifierProvider
 
     // MARK: Initialization
 
-    init(iap: IFlare, storeButtonsAssembly: IStoreButtonsAssembly) {
+    init(
+        iap: IFlare,
+        storeButtonsAssembly: IStoreButtonsAssembly,
+        subscriptionStatusVerifierProvider: ISubscriptionStatusVerifierProvider
+    ) {
         self.iap = iap
         self.storeButtonsAssembly = storeButtonsAssembly
+        self.subscriptionStatusVerifierProvider = subscriptionStatusVerifierProvider
     }
 
     // MARK: ISubscriptionAssembly
 
     func assemble(ids: some Collection<String>) -> AnyView {
-        let presenter = SubscriptionsPresenter(iap: iap, ids: ids, viewModelFactory: SubscriptionsViewModelViewFactory())
-        let viewModel = ViewModel(
+        let viewModelFactory = SubscriptionsViewModelViewFactory(
+            subscriptionStatusVerifier: subscriptionStatusVerifierProvider.subscriptionStatusVerifier
+        )
+        let presenter = SubscriptionsPresenter(iap: iap, ids: ids, viewModelFactory: viewModelFactory)
+        let viewModel = WrapperViewModel(
             model: SubscriptionsViewModel(
                 state: .loading,
                 selectedProductID: ids.first,

@@ -9,4 +9,8 @@ import Flare
 protocol IFlareDependencies {
     /// An IAP manager.
     var iap: IFlare { get }
+
+    var configurationProvider: IConfigurationProvider { get }
+
+    var subscriptionStatusVerifierProvider: ISubscriptionStatusVerifierProvider { get }
 }

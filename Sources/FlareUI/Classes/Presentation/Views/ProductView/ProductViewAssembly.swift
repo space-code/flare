@@ -43,7 +43,7 @@ final class ProductViewAssembly: IProductViewAssembly {
             productFetcher: ProductStrategy(type: type, iap: iap),
             purchaseService: ProductPurchaseService(iap: iap)
         )
-        let viewModel = ViewModel<ProductViewModel>(
+        let viewModel = WrapperViewModel<ProductViewModel>(
             model: ProductViewModel(state: .loading, presenter: presenter)
         )
         presenter.viewModel = viewModel

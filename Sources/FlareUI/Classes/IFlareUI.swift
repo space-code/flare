@@ -4,3 +4,5 @@
 //
 
 import Foundation
+
+public protocol IFlareUI {}

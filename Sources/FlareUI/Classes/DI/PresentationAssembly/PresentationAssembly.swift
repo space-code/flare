@@ -33,7 +33,8 @@ final class PresentationAssembly: IPresentationAssembly {
     var subscritpionsViewAssembly: ISubscriptionsAssembly {
         SubscriptionsAssembly(
             iap: dependencies.iap,
-            storeButtonsAssembly: storeButtonsAssembly
+            storeButtonsAssembly: storeButtonsAssembly,
+            subscriptionStatusVerifierProvider: dependencies.subscriptionStatusVerifierProvider
         )
     }
 

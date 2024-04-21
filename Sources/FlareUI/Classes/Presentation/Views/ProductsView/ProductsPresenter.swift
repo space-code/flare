@@ -20,7 +20,7 @@ final class ProductsPresenter: IPresenter {
     private let ids: any Collection<String>
     private let iap: IFlare
 
-    weak var viewModel: ViewModel<ProductsViewModel>?
+    weak var viewModel: WrapperViewModel<ProductsViewModel>?
 
     // MARK: Initialization
 

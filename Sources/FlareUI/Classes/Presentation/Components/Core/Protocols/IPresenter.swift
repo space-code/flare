@@ -13,7 +13,7 @@ protocol IPresenter {
     associatedtype Model: IModel
 
     /// The view model associated with the presenter.
-    var viewModel: ViewModel<Model>? { get }
+    var viewModel: WrapperViewModel<Model>? { get }
 
     /// Updates the state of the presenter's model.
     ///
