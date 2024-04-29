@@ -88,6 +88,7 @@ struct SubscriptionToolbarView: View {
     private var subscriptionsDetailsView: some View {
         Text(L10n.Subscriptions.Renewable.subscriptionDescription(viewModel.price))
             .font(.footnote)
+            .multilineTextAlignment(.center)
             .contrast(subscriptionBackground)
     }
 

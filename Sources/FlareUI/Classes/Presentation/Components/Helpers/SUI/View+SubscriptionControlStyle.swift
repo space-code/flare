@@ -7,6 +7,10 @@ import SwiftUI
 
 public extension View {
     func subscriptionControlStyle(_ style: some ISubscriptionControlStyle) -> some View {
-        environment(\.subscriptionControlStyle, AnySubscriptionControlStyle(style: style))
+        if let style = style as? AnySubscriptionControlStyle {
+            environment(\.subscriptionControlStyle, style)
+        } else {
+            environment(\.subscriptionControlStyle, AnySubscriptionControlStyle(style: style))
+        }
     }
 }
