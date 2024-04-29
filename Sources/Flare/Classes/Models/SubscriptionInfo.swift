@@ -12,7 +12,7 @@ public struct SubscriptionInfo {
 
     let underlyingSubscriptionInfo: ISubscriptionInfo
 
-    // MARK: Initializaiton
+    // MARK: Initialization
 
     init(underlyingSubscriptionInfo: ISubscriptionInfo) {
         self.underlyingSubscriptionInfo = underlyingSubscriptionInfo

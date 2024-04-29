@@ -64,7 +64,7 @@ final class SortingProductsProviderDecoratorTests: XCTestCase {
     }
 }
 
-// MARK: - Constatns
+// MARK: - Constants
 
 private extension String {
     static let requestID = "requestID"
