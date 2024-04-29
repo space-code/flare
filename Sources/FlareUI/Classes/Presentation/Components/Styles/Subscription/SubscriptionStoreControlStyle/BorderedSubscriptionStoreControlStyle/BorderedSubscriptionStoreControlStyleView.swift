@@ -47,9 +47,12 @@ struct BorderedSubscriptionStoreControlStyleView: View {
         case .displayName:
             configuration.label
                 .font(.body.weight(.bold))
+                .contrast(tintColor)
         case .multiline:
             VStack {
-                textView
+                configuration.label
+                    .font(.body.weight(.bold))
+                    .contrast(tintColor)
 
                 if configuration.isActive {
                     Text(L10n.Common.Subscription.Status.yourCurrentPlan)

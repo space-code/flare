@@ -16,5 +16,5 @@
 "policies.unavailable.terms_of_service.message" = "Something went wrong. Try again.";
 "policies.unavailable.privacy_policy.message" = "Something went wrong. Try again.";
 "common.subscription.status.your_plan" = "Your plan";
-"common.subscription.status.your_current_plan" = "Your plan";
+"common.subscription.status.your_current_plan" = "Your current plan";
 "common.subscription.action.subscribe" = "Subscribe";

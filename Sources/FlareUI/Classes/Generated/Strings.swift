@@ -21,8 +21,8 @@ internal enum L10n {
         internal static let subscribe = L10n.tr("Localizable", "common.subscription.action.subscribe", fallback: "Subscribe")
       }
       internal enum Status {
-        /// Your plan
-        internal static let yourCurrentPlan = L10n.tr("Localizable", "common.subscription.status.your_current_plan", fallback: "Your plan")
+        /// Your current plan
+        internal static let yourCurrentPlan = L10n.tr("Localizable", "common.subscription.status.your_current_plan", fallback: "Your current plan")
         /// Your plan
         internal static let yourPlan = L10n.tr("Localizable", "common.subscription.status.your_plan", fallback: "Your plan")
       }
