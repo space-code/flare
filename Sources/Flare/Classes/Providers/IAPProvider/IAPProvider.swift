@@ -60,14 +60,18 @@ final class IAPProvider: IIAPProvider {
         paymentQueue.canMakePayments
     }
 
-    func fetch(productIDs: Set<String>, completion: @escaping Closure<Result<[StoreProduct], IAPError>>) {
+    func fetch(productIDs: some Collection<String>, completion: @escaping Closure<Result<[StoreProduct], IAPError>>) {
         if #available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *) {
             AsyncHandler.call(
                 strategy: .runOnMain,
                 completion: { (result: Result<[StoreProduct], Error>) in
                     switch result {
                     case let .success(products):
-                        completion(.success(products))
+                        if products.isEmpty {
+                            completion(.failure(.invalid(productIDs: Array(productIDs))))
+                        } else {
+                            completion(.success(products))
+                        }
                     case let .failure(error):
                         completion(.failure(.with(error: error)))
                     }
@@ -85,7 +89,7 @@ final class IAPProvider: IIAPProvider {
         }
     }
 
-    func fetch(productIDs: Set<String>) async throws -> [StoreProduct] {
+    func fetch(productIDs: some Collection<String>) async throws -> [StoreProduct] {
         try await withCheckedThrowingContinuation { continuation in
             self.fetch(productIDs: productIDs) { result in
                 continuation.resume(with: result)
@@ -174,7 +178,7 @@ final class IAPProvider: IIAPProvider {
         }
     }
 
-    func addTransactionObserver(fallbackHandler: Closure<Result<PaymentTransaction, IAPError>>?) {
+    func addTransactionObserver(fallbackHandler: Closure<Result<StoreTransaction, IAPError>>?) {
         purchaseProvider.addTransactionObserver(fallbackHandler: fallbackHandler)
     }
 
@@ -186,6 +190,11 @@ final class IAPProvider: IIAPProvider {
     func checkEligibility(productIDs: Set<String>) async throws -> [String: SubscriptionEligibility] {
         let products = try await fetch(productIDs: productIDs)
         return try await eligibilityProvider.checkEligibility(products: products)
+    }
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    func restore() async throws {
+        try await purchaseProvider.restore()
     }
 
     #if os(iOS) || VISION_OS

@@ -19,9 +19,12 @@ actor TransactionListener {
     private let updates: AsyncStream<TransactionResult>
     private var task: Task<Void, Never>?
 
+    private weak var delegate: TransactionListenerDelegate?
+
     // MARK: Initialization
 
-    init<S: AsyncSequence>(updates: S) where S.Element == TransactionResult {
+    init<S: AsyncSequence>(delegate: TransactionListenerDelegate? = nil, updates: S) where S.Element == TransactionResult {
+        self.delegate = delegate
         self.updates = updates.toAsyncStream()
     }
 
@@ -29,14 +32,20 @@ actor TransactionListener {
 
     private func handle(
         transactionResult: TransactionResult,
-        fromTransactionUpdate _: Bool
+        fromTransactionUpdate: Bool
     ) async throws -> StoreTransaction {
         switch transactionResult {
         case let .verified(transaction):
-            return StoreTransaction(
+            let transaction = StoreTransaction(
                 transaction: transaction,
                 jwtRepresentation: transactionResult.jwsRepresentation
             )
+
+            if fromTransactionUpdate {
+                delegate?.transactionListener(self, transactionDidUpdate: .success(transaction))
+            }
+
+            return transaction
         case let .unverified(transaction, verificationError):
             Logger.info(
                 message: L10n.Purchase.transactionUnverified(
@@ -45,9 +54,15 @@ actor TransactionListener {
                 )
             )
 
-            throw IAPError.verification(
-                error: .unverified(productID: transaction.productID, error: verificationError)
+            let error = IAPError.verification(
+                error: .init(verificationError)
             )
+
+            if fromTransactionUpdate {
+                delegate?.transactionListener(self, transactionDidUpdate: .failure(error))
+            }
+
+            throw error
         }
     }
 }
@@ -56,6 +71,10 @@ actor TransactionListener {
 
 @available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)
 extension TransactionListener: ITransactionListener {
+    func set(delegate: TransactionListenerDelegate) {
+        self.delegate = delegate
+    }
+
     func listenForTransaction() async {
         task?.cancel()
         task = Task(priority: .utility) { [weak self] in

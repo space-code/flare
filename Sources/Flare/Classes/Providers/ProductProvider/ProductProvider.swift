@@ -38,13 +38,13 @@ final class ProductProvider: NSObject, IProductProvider {
 
     // MARK: Internal
 
-    func fetch(productIDs ids: Set<String>, requestID: String, completion: @escaping ProductsHandler) {
+    func fetch(productIDs ids: some Collection<String>, requestID: String, completion: @escaping ProductsHandler) {
         let request = makeRequest(ids: ids, requestID: requestID)
         fetch(request: request, completion: completion)
     }
 
     @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
-    func fetch(productIDs ids: Set<String>) async throws -> [StoreProduct] {
+    func fetch(productIDs ids: some Collection<String>) async throws -> [StoreProduct] {
         try await StoreKit.Product.products(for: ids).map { StoreProduct(product: $0) }
     }
 
@@ -64,8 +64,8 @@ final class ProductProvider: NSObject, IProductProvider {
     ///   - ids: The set of product IDs to include in the request.
     ///   - requestID: The identifier for the request.
     /// - Returns: An instance of `SKProductsRequest`.
-    private func makeRequest(ids: Set<String>, requestID: String) -> SKProductsRequest {
-        let request = SKProductsRequest(productIdentifiers: ids)
+    private func makeRequest(ids: some Collection<String>, requestID: String) -> SKProductsRequest {
+        let request = SKProductsRequest(productIdentifiers: Set(ids))
         request.id = requestID
         request.delegate = self
         return request

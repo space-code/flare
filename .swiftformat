@@ -33,7 +33,6 @@
 --enable redundantPattern
 --enable redundantRawValues
 --enable redundantReturn
---enable redundantSelf
 --enable redundantVoidReturnType
 --enable semicolons
 --enable sortImports
@@ -56,6 +55,8 @@
 --enable void
 --enable markTypes
 --enable isEmpty
+
+--disable redundantSelf
 
 # format options
 

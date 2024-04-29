@@ -49,31 +49,31 @@ extension StoreTransaction {
 // MARK: IStoreTransaction
 
 extension StoreTransaction: IStoreTransaction {
-    var productIdentifier: String {
+    public var productIdentifier: String {
         storeTransaction.productIdentifier
     }
 
-    var purchaseDate: Date {
+    public var purchaseDate: Date {
         storeTransaction.purchaseDate
     }
 
-    var hasKnownPurchaseDate: Bool {
+    public var hasKnownPurchaseDate: Bool {
         storeTransaction.hasKnownPurchaseDate
     }
 
-    var transactionIdentifier: String {
+    public var transactionIdentifier: String {
         storeTransaction.transactionIdentifier
     }
 
-    var hasKnownTransactionIdentifier: Bool {
+    public var hasKnownTransactionIdentifier: Bool {
         storeTransaction.hasKnownTransactionIdentifier
     }
 
-    var quantity: Int {
+    public var quantity: Int {
         storeTransaction.quantity
     }
 
-    var jwsRepresentation: String? {
+    public var jwsRepresentation: String? {
         storeTransaction.jwsRepresentation
     }
 

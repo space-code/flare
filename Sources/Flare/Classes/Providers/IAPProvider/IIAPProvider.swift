@@ -17,7 +17,7 @@ public protocol IIAPProvider {
     /// - Parameters:
     ///   - productIDs: The list of product identifiers for which you wish to retrieve descriptions.
     ///   - completion: The completion containing the response of retrieving products.
-    func fetch(productIDs: Set<String>, completion: @escaping Closure<Result<[StoreProduct], IAPError>>)
+    func fetch(productIDs: some Collection<String>, completion: @escaping Closure<Result<[StoreProduct], IAPError>>)
 
     /// Retrieves localized information from the App Store about a specified list of products.
     ///
@@ -26,7 +26,7 @@ public protocol IIAPProvider {
     /// - Throws: `IAPError(error:)` if the request did fail with error.
     ///
     /// - Returns: An array of products.
-    func fetch(productIDs: Set<String>) async throws -> [StoreProduct]
+    func fetch(productIDs: some Collection<String>) async throws -> [StoreProduct]
 
     /// Performs a purchase of a product.
     ///
@@ -134,7 +134,7 @@ public protocol IIAPProvider {
     /// The transactions array will only be synchronized with the server while the queue has observers.
     ///
     /// - Note: This may require that the user authenticate.
-    func addTransactionObserver(fallbackHandler: Closure<Result<PaymentTransaction, IAPError>>?)
+    func addTransactionObserver(fallbackHandler: Closure<Result<StoreTransaction, IAPError>>?)
 
     /// Removes transaction observer from the payment queue.
     /// The transactions array will only be synchronized with the server while the queue has observers.
@@ -149,6 +149,9 @@ public protocol IIAPProvider {
     /// - Returns: An array that contains information about the eligibility of products.
     @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
     func checkEligibility(productIDs: Set<String>) async throws -> [String: SubscriptionEligibility]
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    func restore() async throws
 
     #if os(iOS) || VISION_OS
         /// Present the refund request sheet for the specified transaction in a window scene.
