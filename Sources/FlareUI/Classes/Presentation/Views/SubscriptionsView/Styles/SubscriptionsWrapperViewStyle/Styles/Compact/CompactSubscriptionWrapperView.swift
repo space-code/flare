@@ -13,6 +13,8 @@ import SwiftUI
 struct CompactSubscriptionWrapperView: View {
     // MARK: Properties
 
+    @Environment(\.subscriptionMarketingContent) private var subscriptionMarketingContent
+
     private let configuration: SubscriptionsWrapperViewStyleConfiguration
 
     // MARK: Initialization
@@ -24,14 +26,20 @@ struct CompactSubscriptionWrapperView: View {
     // MARK: View
 
     var body: some View {
-        ScrollView(.horizontal) {
-            HStack {
-                ForEach(configuration.items) { item in
-                    SubscriptionView(viewModel: item, isSelected: .constant(false)) {
-                        configuration.action(item)
+        VStack {
+            subscriptionMarketingContent.map { content in
+                content.frame(maxWidth: .infinity, minHeight: 150.0)
+            }
+
+            ScrollView(.horizontal) {
+                HStack {
+                    ForEach(configuration.items) { item in
+                        SubscriptionView(viewModel: item, isSelected: .constant(false)) {
+                            configuration.action(item)
+                        }
                     }
+                    .frame(maxHeight: .infinity)
                 }
-                .frame(maxHeight: .infinity)
             }
         }
     }
