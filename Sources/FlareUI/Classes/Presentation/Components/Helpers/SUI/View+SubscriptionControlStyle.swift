@@ -7,10 +7,16 @@ import SwiftUI
 
 public extension View {
     func subscriptionControlStyle(_ style: some ISubscriptionControlStyle) -> some View {
+        environment(\.subscriptionControlStyle, prepareStyle(style))
+    }
+
+    // MARK: Private
+
+    private func prepareStyle(_ style: some ISubscriptionControlStyle) -> AnySubscriptionControlStyle {
         if let style = style as? AnySubscriptionControlStyle {
-            environment(\.subscriptionControlStyle, style)
+            return style
         } else {
-            environment(\.subscriptionControlStyle, AnySubscriptionControlStyle(style: style))
+            return AnySubscriptionControlStyle(style: style)
         }
     }
 }

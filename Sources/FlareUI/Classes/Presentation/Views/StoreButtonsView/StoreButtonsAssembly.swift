@@ -31,13 +31,13 @@ final class StoreButtonsAssembly: IStoreButtonsAssembly {
     func assemble(storeButtonType: StoreButtonType) -> AnyView {
         switch storeButtonType {
         case .restore:
-            Group {
+            return Group {
                 if #available(iOS 15.0, tvOS 15.0, macOS 12.0, *) {
                     storeButtonAssembly.assemble(storeButtonType: .restore)
                 }
             }.eraseToAnyView()
         case .policies:
-            policiesButtonAssembly.assemble().eraseToAnyView()
+            return policiesButtonAssembly.assemble().eraseToAnyView()
         }
     }
 }

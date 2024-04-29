@@ -17,18 +17,18 @@ struct PoliciesUnavailableView: View {
         var title: String {
             switch self {
             case .privacyPolicy:
-                L10n.Policies.Unavailable.PrivacyPolicy.title
+                return L10n.Policies.Unavailable.PrivacyPolicy.title
             case .termsOfService:
-                L10n.Policies.Unavailable.TermsOfService.title
+                return L10n.Policies.Unavailable.TermsOfService.title
             }
         }
 
         var message: String {
             switch self {
             case .privacyPolicy:
-                L10n.Policies.Unavailable.PrivacyPolicy.message
+                return L10n.Policies.Unavailable.PrivacyPolicy.message
             case .termsOfService:
-                L10n.Policies.Unavailable.TermsOfService.message
+                return L10n.Policies.Unavailable.TermsOfService.message
             }
         }
     }
