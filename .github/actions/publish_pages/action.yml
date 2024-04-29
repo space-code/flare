@@ -1,0 +1,32 @@
+name: Publish Page Action
+
+inputs:
+  target:
+    required: true
+    type: string
+  base_path:
+    required: true
+    type: string
+
+runs:
+  steps:
+    - name: Build DocC
+      shell: bash
+      run: |
+        swift build;
+        swift package \
+          --allow-writing-to-directory ./docs \
+          generate-documentation \
+          --target ${{ inputs.target }} \
+          --output-path ./docs \
+          --transform-for-static-hosting \
+          --hosting-base-path ${{ inputs.base_path }};
+    - name: Upload artifact
+      shell: bash
+      uses: actions/upload-pages-artifact@v1
+        with:
+        path: 'docs'
+    - name: Deploy to GitHub Pages
+      shell: bash
+      id: deployment
+      uses: actions/deploy-pages@v1
