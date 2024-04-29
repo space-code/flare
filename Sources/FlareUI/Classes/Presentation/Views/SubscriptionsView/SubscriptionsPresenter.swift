@@ -18,6 +18,7 @@ protocol ISubscriptionsPresenter {
 
 // MARK: - SubscriptionsPresenter
 
+@available(watchOS, unavailable)
 final class SubscriptionsPresenter: IPresenter {
     // MARK: Properties
 
@@ -62,6 +63,7 @@ final class SubscriptionsPresenter: IPresenter {
 
 // MARK: ISubscriptionsPresenter
 
+@available(watchOS, unavailable)
 extension SubscriptionsPresenter: ISubscriptionsPresenter {
     func viewDidLoad() {
         loadProducts()

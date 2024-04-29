@@ -15,4 +15,6 @@ import SwiftUI
     public typealias ViewController = UIViewController
 #elseif os(macOS)
     public typealias ViewController = NSViewController
+#elseif os(watchOS)
+    public typealias ViewController = WKInterfaceController
 #endif

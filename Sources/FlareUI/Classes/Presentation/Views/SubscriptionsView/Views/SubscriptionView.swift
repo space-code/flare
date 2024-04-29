@@ -7,6 +7,7 @@ import SwiftUI
 
 // MARK: - SubscriptionView
 
+@available(watchOS, unavailable)
 struct SubscriptionView: View {
     // MARK: Properties
 
@@ -57,6 +58,7 @@ struct SubscriptionView: View {
 
 // MARK: SubscriptionView.ViewModel
 
+@available(watchOS, unavailable)
 extension SubscriptionView {
     struct ViewModel: Identifiable, Equatable, Hashable {
         let id: String

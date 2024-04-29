@@ -7,10 +7,12 @@ import SwiftUI
 
 // MARK: - PoliciesButtonStyleKey
 
+@available(watchOS, unavailable)
 private struct PoliciesButtonStyleKey: EnvironmentKey {
     static var defaultValue: AnyPoliciesButtonStyle = .init(style: AutomaticPoliciesButtonStyle())
 }
 
+@available(watchOS, unavailable)
 extension EnvironmentValues {
     var policiesButtonStyle: AnyPoliciesButtonStyle {
         get { self[PoliciesButtonStyleKey.self] }

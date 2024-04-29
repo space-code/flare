@@ -13,6 +13,7 @@ protocol IStoreButtonsAssembly {
 
 // MARK: - StoreButtonsAssembly
 
+@available(watchOS, unavailable)
 final class StoreButtonsAssembly: IStoreButtonsAssembly {
     // MARK: Properties
 
@@ -32,7 +33,7 @@ final class StoreButtonsAssembly: IStoreButtonsAssembly {
         switch storeButtonType {
         case .restore:
             return Group {
-                if #available(iOS 15.0, tvOS 15.0, macOS 12.0, *) {
+                if #available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *) {
                     storeButtonAssembly.assemble(storeButtonType: .restore)
                 }
             }.eraseToAnyView()

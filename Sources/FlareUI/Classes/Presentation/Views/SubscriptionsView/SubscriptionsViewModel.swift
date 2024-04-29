@@ -8,6 +8,7 @@ import Foundation
 
 // MARK: - SubscriptionsViewModel
 
+@available(watchOS, unavailable)
 struct SubscriptionsViewModel: IModel {
     enum State: Equatable {
         case loading
@@ -27,6 +28,7 @@ struct SubscriptionsViewModel: IModel {
     let presenter: ISubscriptionsPresenter
 }
 
+@available(watchOS, unavailable)
 extension SubscriptionsViewModel {
     func setState(_ state: State) -> SubscriptionsViewModel {
         SubscriptionsViewModel(

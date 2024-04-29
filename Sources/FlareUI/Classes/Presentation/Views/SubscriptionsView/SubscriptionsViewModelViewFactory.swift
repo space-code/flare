@@ -8,12 +8,14 @@ import Foundation
 
 // MARK: - ISubscriptionsViewModelViewFactory
 
+@available(watchOS, unavailable)
 protocol ISubscriptionsViewModelViewFactory {
     func make(_ products: [StoreProduct]) async throws -> [SubscriptionView.ViewModel]
 }
 
 // MARK: - SubscriptionsViewModelViewFactory
 
+@available(watchOS, unavailable)
 final class SubscriptionsViewModelViewFactory: ISubscriptionsViewModelViewFactory {
     // MARK: Properties
 

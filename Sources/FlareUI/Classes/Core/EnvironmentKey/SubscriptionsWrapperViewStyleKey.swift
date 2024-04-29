@@ -7,10 +7,12 @@ import SwiftUI
 
 // MARK: - SubscriptionsWrapperViewStyleKey
 
+@available(watchOS, unavailable)
 private struct SubscriptionsWrapperViewStyleKey: EnvironmentKey {
     static var defaultValue = AnySubscriptionsWrapperViewStyle(style: AutomaticSubscriptionsWrapperViewStyle())
 }
 
+@available(watchOS, unavailable)
 extension EnvironmentValues {
     var subscriptionsWrapperViewStyle: AnySubscriptionsWrapperViewStyle {
         get { self[SubscriptionsWrapperViewStyleKey.self] }

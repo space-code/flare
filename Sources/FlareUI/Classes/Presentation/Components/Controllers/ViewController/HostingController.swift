@@ -15,4 +15,6 @@ import SwiftUI
     typealias HostingController = UIHostingController
 #elseif os(macOS)
     typealias HostingController = NSHostingController
+#elseif os(watchOS)
+    typealias HostingController = WKHostingController
 #endif

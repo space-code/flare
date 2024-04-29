@@ -14,6 +14,7 @@ protocol ISubscriptionsAssembly {
 
 // MARK: - SubscriptionsAssembly
 
+@available(watchOS, unavailable)
 final class SubscriptionsAssembly: ISubscriptionsAssembly {
     // MARK: Properties
 

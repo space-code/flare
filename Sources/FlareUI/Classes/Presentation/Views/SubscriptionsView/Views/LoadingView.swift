@@ -45,7 +45,7 @@ struct LoadingView: View {
 
     private var loadingView: some View {
         VStack(alignment: .center, spacing: 52) {
-            if #available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *) {
+            if #available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 9.0, *) {
                 #if os(tvOS)
                     progressView
                 #else
@@ -58,6 +58,8 @@ struct LoadingView: View {
             } else {
                 #if os(macOS)
                     ActivityIndicatorView(isAnimating: .constant(true))
+                #elseif os(watchOS)
+                    Text("Loading...")
                 #else
                     ActivityIndicatorView(isAnimating: .constant(true), style: .large)
                 #endif

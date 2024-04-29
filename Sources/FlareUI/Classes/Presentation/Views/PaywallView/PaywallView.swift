@@ -5,6 +5,7 @@
 
 import SwiftUI
 
+@available(watchOS, unavailable)
 struct PaywallView: View {
     // MARK: Properties
 

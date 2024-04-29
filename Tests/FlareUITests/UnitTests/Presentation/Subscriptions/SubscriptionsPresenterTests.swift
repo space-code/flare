@@ -10,6 +10,7 @@ import XCTest
 
 // MARK: - SubscriptionsPresenterTests
 
+@available(watchOS, unavailable)
 final class SubscriptionsPresenterTests: XCTestCase {
     // MARK: Properties
 

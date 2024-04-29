@@ -5,6 +5,7 @@
 
 import SwiftUI
 
+@available(watchOS, unavailable)
 // swiftlint:disable:next type_name
 struct SubscriptionsWrapperViewStyleConfiguration {
     // MARK: Types

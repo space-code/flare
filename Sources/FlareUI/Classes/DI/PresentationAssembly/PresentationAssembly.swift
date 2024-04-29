@@ -5,6 +5,7 @@
 
 import Foundation
 
+@available(watchOS, unavailable)
 final class PresentationAssembly: IPresentationAssembly {
     // MARK: Properties
 

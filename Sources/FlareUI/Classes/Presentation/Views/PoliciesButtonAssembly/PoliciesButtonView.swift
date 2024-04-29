@@ -7,6 +7,7 @@ import SwiftUI
 
 // MARK: - PoliciesButtonView
 
+@available(watchOS, unavailable)
 struct PoliciesButtonView: View {
     // MARK: Types
 
@@ -112,7 +113,7 @@ struct PoliciesButtonView: View {
     #endif
 }
 
-#if swift(>=5.9)
+#if swift(>=5.9) && os(iOS)
     #Preview {
         PoliciesButtonView()
     }

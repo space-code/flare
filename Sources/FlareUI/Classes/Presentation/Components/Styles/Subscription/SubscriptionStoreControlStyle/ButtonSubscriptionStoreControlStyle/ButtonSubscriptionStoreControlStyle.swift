@@ -7,7 +7,8 @@ import SwiftUI
 
 // MARK: - ButtonSubscriptionStoreControlStyle
 
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 7.0, *)
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, *)
+@available(watchOS, unavailable)
 public struct ButtonSubscriptionStoreControlStyle: ISubscriptionControlStyle {
     // MARK: Initialization
 
@@ -26,7 +27,7 @@ public struct ButtonSubscriptionStoreControlStyle: ISubscriptionControlStyle {
 
 // MARK: - Preview
 
-#if swift(>=5.9)
+#if swift(>=5.9) && os(iOS)
     #Preview {
         ButtonSubscriptionStoreControlStyle().makeBody(
             configuration: .init(

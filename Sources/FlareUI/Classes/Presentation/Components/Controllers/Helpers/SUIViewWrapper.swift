@@ -9,6 +9,8 @@ import SwiftUI
     public typealias ViewRepresentation = UIKit.UIView
 #elseif os(macOS)
     public typealias ViewRepresentation = NSView
+#elseif os(watchOS)
+    public typealias ViewRepresentation = WKInterfaceObject
 #endif
 
 // MARK: - SUIViewWrapper
@@ -20,6 +22,8 @@ struct SUIViewWrapper<CustomView: ViewRepresentation>: ViewRepresentable {
         typealias UIViewType = CustomView
     #elseif os(macOS)
         typealias NSViewType = CustomView
+    #elseif os(watchOS)
+        typealias WKInterfaceObjectType = CustomView
     #endif
 
     // MARK: Properties
@@ -48,5 +52,15 @@ struct SUIViewWrapper<CustomView: ViewRepresentation>: ViewRepresentable {
         }
 
         func updateUIView(_: UIViewType, context _: Context) {}
+    #endif
+
+    #if os(watchOS)
+        func makeWKInterfaceObject(context _: Context) -> CustomView {
+            view
+        }
+
+        func makeCoordinator() {}
+
+        func updateWKInterfaceObject(_: CustomView, context _: Context) {}
     #endif
 }

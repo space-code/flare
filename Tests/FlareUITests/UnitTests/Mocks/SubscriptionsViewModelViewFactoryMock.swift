@@ -6,6 +6,7 @@
 import Flare
 @testable import FlareUI
 
+@available(watchOS, unavailable)
 final class SubscriptionsViewModelViewFactoryMock: ISubscriptionsViewModelViewFactory {
     var invokedMake = false
     var invokedMakeCount = 0

@@ -6,6 +6,7 @@
 import SwiftUI
 
 public extension View {
+    @available(watchOS, unavailable)
     func subscriptionControlStyle(_ style: some ISubscriptionControlStyle) -> some View {
         environment(\.subscriptionControlStyle, prepareStyle(style))
     }

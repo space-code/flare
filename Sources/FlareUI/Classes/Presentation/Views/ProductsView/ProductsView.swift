@@ -5,6 +5,7 @@
 
 import SwiftUI
 
+@available(watchOS, unavailable)
 public struct ProductsView: View {
     // MARK: Properties
 

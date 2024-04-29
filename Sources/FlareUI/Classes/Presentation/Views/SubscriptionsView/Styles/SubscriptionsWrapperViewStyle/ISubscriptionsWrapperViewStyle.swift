@@ -5,6 +5,7 @@
 
 import SwiftUI
 
+@available(watchOS, unavailable)
 protocol ISubscriptionsWrapperViewStyle {
     /// A view that represents the body of an in-app subscription store control.
     associatedtype Body: View

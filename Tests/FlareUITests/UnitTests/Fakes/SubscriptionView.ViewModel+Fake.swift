@@ -6,6 +6,7 @@
 @testable import FlareUI
 import Foundation
 
+@available(watchOS, unavailable)
 extension SubscriptionView.ViewModel {
     static func fake(id: String? = nil) -> SubscriptionView.ViewModel {
         SubscriptionView.ViewModel(

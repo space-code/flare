@@ -5,6 +5,7 @@
 
 import SwiftUI
 
+@available(watchOS, unavailable)
 struct AutomaticPoliciesButtonStyle: IPoliciesButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         #if os(tvOS)

@@ -14,6 +14,7 @@ public extension View {
     ///   - paywallType: The type of paywall to display.
     ///
     /// - Returns: A modified view with the paywall added.
+    @available(watchOS, unavailable)
     func paywall(presented: Binding<Bool>, paywallType: PaywallType) -> some View {
         modifier(
             PaywallViewModifier(

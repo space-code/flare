@@ -7,6 +7,7 @@ import SwiftUI
 
 // MARK: - AutomaticSubscriptionControlStyle
 
+@available(watchOS, unavailable)
 struct AutomaticSubscriptionControlStyle: ISubscriptionControlStyle {
     // MARK: ISubscriptionControlStyle
 
@@ -21,6 +22,7 @@ struct AutomaticSubscriptionControlStyle: ISubscriptionControlStyle {
 
 // MARK: - Extensions
 
+@available(watchOS, unavailable)
 extension ISubscriptionControlStyle where Self == AutomaticSubscriptionControlStyle {
     static var automatic: AutomaticSubscriptionControlStyle {
         AutomaticSubscriptionControlStyle()

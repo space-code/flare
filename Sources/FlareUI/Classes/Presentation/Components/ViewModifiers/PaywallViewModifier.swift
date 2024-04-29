@@ -6,6 +6,7 @@
 import SwiftUI
 
 /// A view modifier provides a paywall functionality.
+@available(watchOS, unavailable)
 struct PaywallViewModifier: ViewModifier {
     // MARK: Properties
 
