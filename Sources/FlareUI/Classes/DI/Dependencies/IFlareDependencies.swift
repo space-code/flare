@@ -10,7 +10,9 @@ protocol IFlareDependencies {
     /// An IAP manager.
     var iap: IFlare { get }
 
+    /// The configuration provider for FlareUI.
     var configurationProvider: IConfigurationProvider { get }
 
+    /// The custom subscription verifier.
     var subscriptionStatusVerifierProvider: ISubscriptionStatusVerifierProvider { get }
 }

@@ -5,4 +5,5 @@
 
 import Foundation
 
+/// `IFlareUI` provides a way to configure the UI module.
 public protocol IFlareUI {}
