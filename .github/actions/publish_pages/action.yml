@@ -9,6 +9,8 @@ inputs:
     type: string
 
 runs:
+  using: "composite"
+
   steps:
     - name: Build DocC
       shell: bash
@@ -21,12 +23,12 @@ runs:
           --output-path ./docs \
           --transform-for-static-hosting \
           --hosting-base-path ${{ inputs.base_path }};
+
     - name: Upload artifact
-      shell: bash
-      uses: actions/upload-pages-artifact@v1
-        with:
-        path: 'docs'
+      uses: actions/upload-artifact@v4
+      with:
+        path: docs
+
     - name: Deploy to GitHub Pages
-      shell: bash
       id: deployment
       uses: actions/deploy-pages@v1

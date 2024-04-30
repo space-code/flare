@@ -31,7 +31,7 @@ jobs:
         include:
           - target: "Flare"
             base_path: "flare"
-          - destination: "FlareUI"
+          - target: "FlareUI"
             base_path: "flareui"
     steps:
       - name: Checkout 🛎️
