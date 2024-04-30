@@ -24,11 +24,11 @@ runs:
           --transform-for-static-hosting \
           --hosting-base-path ${{ inputs.base_path }};
 
+    - name: Setup Pages
+      id: pages
+      uses: actions/configure-pages@v3
+
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         path: docs
-
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v1
