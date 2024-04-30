@@ -27,8 +27,6 @@ runs:
     - name: Commit and push generated documentation
       shell: bash
       run: |
-        rm -r ./flare
-        mkdir ./${{ inputs.base_path }}
         cp -r ./docs/${{ inputs.base_path }} ./${{ inputs.base_path }}
 
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
