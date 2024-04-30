@@ -15,6 +15,7 @@ runs:
     - name: Build DocC
       shell: bash
       run: |
+        mkdir ./docs;
         swift build;
         swift package \
           --allow-writing-to-directory ./docs \
