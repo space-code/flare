@@ -20,15 +20,20 @@ runs:
           --allow-writing-to-directory ./docs \
           generate-documentation \
           --target ${{ inputs.target }} \
-          --output-path ./docs \
+          --output-path ./docs/${{ inputs.base_path }} \
           --transform-for-static-hosting \
-          --hosting-base-path ${{ inputs.base_path }};
+          --hosting-base-path flare/${{ inputs.base_path }};
 
-    - name: Setup Pages
-      id: pages
-      uses: actions/configure-pages@v3
+    - name: Commit and push generated documentation
+      shell: bash
+      run: |
+        rm -r ./flare
+        mkdir ./${{ inputs.base_path }}
+        cp -r ./docs/${{ inputs.base_path }} ./${{ inputs.base_path }}
 
-    - name: Upload artifact
-      uses: actions/upload-artifact@v4
-      with:
-        path: docs
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git switch gh-pages
+        git add ./${{ inputs.base_path }}
+        git commit -a -m "Generated ${{ inputs.target }} Swift DocC"
+        git push origin gh-pages
