@@ -10,11 +10,6 @@ on:
       - main
       - dev
 
-permissions:
-  contents: write
-  # pages: write
-  # id-token: write
-
 concurrency:
   group: "pages"
   cancel-in-progress: true
@@ -33,8 +28,33 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
-      - name: ${{ matrix.target }} DocC
-        uses: ./.github/actions/publish_pages
         with:
-          target: ${{ matrix.target }}
-          base_path: ${{ matrix.base_path }}
+          fetch-depth: 0
+      - name: Build DocC
+        shell: bash
+        run: |
+          mkdir ./docs;
+          swift build;
+          swift package \
+            --allow-writing-to-directory ./docs \
+            generate-documentation \
+            --target ${{ matrix.target }} \
+            --output-path ./docs/${{ matrix.base_path }} \
+            --transform-for-static-hosting \
+            --hosting-base-path flare/${{ matrix.base_path }};
+      - name: Commit and push generated documentation
+        run: |
+          git fetch
+          git worktree add --checkout gh-pages origin/gh-pages
+
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git switch gh-pages
+
+          rm -r ./${{ matrix.base_path }}
+          cp -r ./docs/${{ matrix.base_path }} ./${{ matrix.base_path }}
+          rm -r ./docs
+
+          git add ./${{ matrix.base_path }}
+          git commit -a -m "Generated ${{ matrix.target }} Swift DocC"
+          git push origin gh-pages
