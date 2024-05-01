@@ -5,15 +5,15 @@ on:
     branches:
       - main
       - dev
-  # pull_request:
-  #   paths:
-  #     - '.swiftlint.yml'
-  #     - ".github/workflows/**"
-  #     - "Package@swift-5.7.swift"
-  #     - "Package@swift-5.8.swift"
-  #     - "Package.swift"
-  #     - "Source/Flare/**"
-  #     - "Tests/**"
+  pull_request:
+    paths:
+      - '.swiftlint.yml'
+      - ".github/workflows/**"
+      - "Package@swift-5.7.swift"
+      - "Package@swift-5.8.swift"
+      - "Package.swift"
+      - "Source/Flare/**"
+      - "Tests/**"
 
 jobs:
   macOS:
