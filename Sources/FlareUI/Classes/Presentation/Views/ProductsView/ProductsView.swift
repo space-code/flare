@@ -50,6 +50,5 @@ public struct ProductsView: View {
 
     public var body: some View {
         presentationAssembly.productsViewAssembly.assemble(ids: ids)
-            .productViewStyle(.large)
     }
 }

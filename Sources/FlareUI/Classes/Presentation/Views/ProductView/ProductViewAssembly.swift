@@ -8,13 +8,24 @@ import SwiftUI
 
 // MARK: - IProductViewAssembly
 
+/// A protocol for assembling product views.
 protocol IProductViewAssembly {
+    /// Assembles a product view for the given product ID.
+    ///
+    /// - Parameter id: The ID of the product.
+    /// - Returns: A `ViewWrapper` containing the product view model and the product wrapper view.
     func assemble(id: String) -> ViewWrapper<ProductViewModel, ProductWrapperView>
+
+    /// Assembles a product view for the given store product.
+    ///
+    /// - Parameter storeProduct: The store product.
+    /// - Returns: A `ViewWrapper` containing the product view model and the product wrapper view.
     func assemble(storeProduct: StoreProduct) -> ViewWrapper<ProductViewModel, ProductWrapperView>
 }
 
 // MARK: - ProductViewAssembly
 
+/// An assembly class for creating product views.
 final class ProductViewAssembly: IProductViewAssembly {
     // MARK: Properties
 
@@ -22,6 +33,9 @@ final class ProductViewAssembly: IProductViewAssembly {
 
     // MARK: Initialization
 
+    /// Initializes the assembly with the given in-app purchase service.
+    ///
+    /// - Parameter iap: The in-app purchase service.
     init(iap: IFlare) {
         self.iap = iap
     }
