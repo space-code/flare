@@ -34,7 +34,7 @@ jobs:
             --transform-for-static-hosting \
             --hosting-base-path flare;
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
           path: 'docs'
       - name: Deploy to GitHub Pages
