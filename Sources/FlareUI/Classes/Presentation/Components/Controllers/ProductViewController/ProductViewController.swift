@@ -9,7 +9,7 @@ import SwiftUI
 
 // MARK: - ProductViewController
 
-#if os(iOS)
+#if os(iOS) || os(macOS)
     /// A view controller for displaying a product.
     ///
     /// A `ProductViewController` shows information about an in-app purchase product, including its localized name, description,
@@ -91,6 +91,9 @@ import SwiftUI
 
     // MARK: - Environments
 
+    @available(iOS 13.0, macOS 11.0, *)
+    @available(watchOS, unavailable)
+    @available(tvOS, unavailable)
     public extension ProductViewController {
         /// Configures the in-app purchase options.
         ///

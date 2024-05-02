@@ -9,7 +9,7 @@ import SwiftUI
 
 // MARK: - SubscriptionsViewController
 
-#if os(iOS)
+#if os(iOS) || os(macOS)
     /// A view for displaying subscriptions.
     ///
     /// A `SubscriptionsViewController` displays localized information about auto-renewable subscriptions,

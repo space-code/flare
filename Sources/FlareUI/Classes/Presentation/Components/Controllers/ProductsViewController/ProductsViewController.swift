@@ -14,7 +14,7 @@ import SwiftUI
 
 // MARK: - ProductsViewController
 
-#if os(iOS)
+#if os(iOS) || os(macOS)
     /// A view for displaying multiple products.
     ///
     /// A `ProductsViewController` display a collection of in-app purchase products, iincluding their localized names,
@@ -102,6 +102,9 @@ import SwiftUI
 
     // MARK: - Environments
 
+    @available(iOS 13.0, macOS 11.0, *)
+    @available(watchOS, unavailable)
+    @available(tvOS, unavailable)
     public extension ProductsViewController {
         /// Configures the visibility of store buttons.
         ///
