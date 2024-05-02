@@ -10,7 +10,23 @@ import SwiftUI
 // MARK: - ProductViewController
 
 #if os(iOS)
+    /// A view controller for displaying a product.
+    ///
+    /// A `ProductViewController` shows information about an in-app purchase product, including its localized name, description,
+    /// and price, and displays a purchase button.
+    ///
+    /// You create a product view controller by providing a product identifier to load from the App Store. If you provide a product
+    /// identifier,
+    /// the view controller loads the product’s information from the App Store automatically, and updates the view when the product is
+    /// available.
+    ///
+    /// You can customize the product view’s appearance using the standard styles, including the ``LargeProductStyle`` and
+    /// ``CompactProductStyle`` styles. Apply the style using the ``ProductViewController/productStyle``.
+    ///
+    /// You can also create your own custom styles by creating styles that conform to the ``IProductStyle`` protocol.
+    @available(iOS 13.0, macOS 11.0, *)
     @available(watchOS, unavailable)
+    @available(tvOS, unavailable)
     public final class ProductViewController: ViewController {
         // MARK: - Properties
 
@@ -27,12 +43,14 @@ import SwiftUI
 
         private let id: String
 
+        /// A completion handler for in-app purchase events.
         public var onInAppPurchaseCompletion: PurchaseCompletionHandler? {
             didSet {
                 viewModel.onInAppPurchaseCompletion = onInAppPurchaseCompletion
             }
         }
 
+        /// The product style.
         public var productStyle: any IProductStyle = CompactProductStyle() {
             didSet {
                 viewModel.productStyle = AnyProductStyle(style: productStyle)
@@ -41,6 +59,9 @@ import SwiftUI
 
         // MARK: Initialization
 
+        /// Initialize a `ProductViewController` for the given id.
+        ///
+        /// - Parameter id: The product id.
         public init(id: String) {
             self.id = id
             super.init(nibName: nil, bundle: nil)
@@ -71,6 +92,9 @@ import SwiftUI
     // MARK: - Environments
 
     public extension ProductViewController {
+        /// Configures the in-app purchase options.
+        ///
+        /// - Parameter options: A closure that returns the purchase options for a given store product.
         @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
         func inAppPurchaseOptions(_ options: ((StoreProduct) -> Set<Product.PurchaseOption>?)?) {
             viewModel.inAppPurchaseOptions = { PurchaseOptions(options: options?($0) ?? []) }
