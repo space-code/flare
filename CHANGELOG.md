@@ -9,6 +9,10 @@ All notable changes to this project will be documented in this file.
 - Implement asynchronous transaction completion
   - Added in Pull Request [#25](https://github.com/space-code/flare/pull/25).
 
+## Updated
+- Update the `dependabot.yml` configuration
+ - Updated in Pull Request [#34](https://github.com/space-code/flare/pull/34)
+
 ## Fixed
 - Fix handling of cancelling operations
   - Fixed in Pull Request [#26](https://github.com/space-code/flare/pull/26).
