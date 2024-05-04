@@ -25,5 +25,31 @@ struct CustomProductStyle: IProductStyle {
 }
 ```
 
-## Custom Subscription Style
+## Custom Subscription Control Style
 
+To create a custom subscription style create an object that conforms to ``ISubscriptionControlStyle``.
+
+```swift
+struct CustomSubscriptionStyle: ISubscriptionControlStyle {
+    func makeBody(configuration: SubscriptionStoreControlStyleConfiguration) -> some View {
+        VStack {
+            configuration.label
+                .font(.title)
+            configuration.description
+                .font(.body)
+            configuration.price
+                .font(.body)
+                .foregroundColor(.blue)
+            
+            // If you need to ttack a selected state
+            // configuration.isSelected
+
+            // If the subscription is active
+            // configuration.isActive
+            
+            // Triggers a purchase action
+            // configuration.trigger()
+        }
+    }
+}
+```
