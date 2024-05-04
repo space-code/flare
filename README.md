@@ -30,16 +30,23 @@ Flare is a framework written in Swift that makes it easy for you to work with in
 - [x] Support Consumable & Non-Consumable Purchases
 - [x] Support Subscription Purchase
 - [x] Support Promotional & Introductory Offers
+- [x] Support StoreKit and StoreKit 2
 - [x] iOS, tvOS, watchOS, macOS, and visionOS compatible
-- [x] Complete Unit & Integration Test Coverage
+- [x] Complete Unit, Integration & Snapshot Test Coverage
+- [x] Offer a UI for building in-app purchase stores in SwiftUI and UIKit
 
 ## Documentation
-Check out the [flare documentation](https://space-code.github.io/flare/documentation/flare/).
+Check out the [documentation](https://space-code.github.io/flare/).
+
+- [**Flare Docs**](https://space-code.github.io/flare/flare/documentation/flare/) describe how to integrate the main framework
+- [**FlareUI Docs**](https://space-code.github.io/flare/flareui/documentation/flareui/) contains information about integrating the UI framework, displaying products and subscriptions, and customizing them.
 
 ## Requirements
-- iOS 13.0+ / macOS 10.15+ / tvOS 13.0+ / watchOS 7.0+ / visionOS 1.0+
-- Xcode 15.0
-- Swift 5.7
+
+| Package       | Supported Platforms                                                   | XCode | Minimum Swift Version |
+| ------------- | --------------------------------------------------------------------- | ----- | --------------------- |
+| Flare         | iOS 13.0+ / macOS 10.15+ / tvOS 13.0+ / watchOS 7.0+ / visionOS 1.0+  | 14.2  | 5.7                   |
+| FlareUI       | iOS 13.0+ / macOS 10.15+ / tvOS 13.0+                                 | 14.2  | 5.7                   |
 
 ## Installation
 ### Swift Package Manager
