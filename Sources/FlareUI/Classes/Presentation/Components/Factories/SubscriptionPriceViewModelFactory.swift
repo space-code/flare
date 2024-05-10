@@ -6,14 +6,24 @@
 import Flare
 import Foundation
 
+/// A class for creating view models representing subscription prices.
 final class SubscriptionPriceViewModelFactory: ISubscriptionPriceViewModelFactory {
     // MARK: Properties
 
+    /// The date formatter used to format date components.
     private var dateFormatter: IDateComponentsFormatter
+
+    /// The factory for creating subscription date components.
     private let subscriptionDateComponentsFactory: ISubscriptionDateComponentsFactory
 
     // MARK: Initialization
 
+    /// Initializes the factory with the specified date formatter and subscription date components factory.
+    ///
+    /// - Parameters:
+    ///   - dateFormatter: The date formatter to use. Default is `DateComponentsFormatter.full`.
+    ///   - subscriptionDateComponentsFactory: The factory for creating subscription date components. Default is
+    /// `SubscriptionDateComponentsFactory()`.
     init(
         dateFormatter: IDateComponentsFormatter = DateComponentsFormatter.full,
         subscriptionDateComponentsFactory: ISubscriptionDateComponentsFactory = SubscriptionDateComponentsFactory()

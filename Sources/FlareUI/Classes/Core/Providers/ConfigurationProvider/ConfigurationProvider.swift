@@ -7,9 +7,11 @@ import Foundation
 
 // MARK: - ConfigurationProvider
 
+/// A class responsible for providing configuration settings.
 final class ConfigurationProvider {
     // MARK: Properties
 
+    /// The configuration for the UI module.
     private var configuration: UIConfiguration?
 }
 

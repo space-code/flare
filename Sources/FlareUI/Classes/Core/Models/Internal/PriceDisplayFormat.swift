@@ -5,9 +5,11 @@
 
 import Foundation
 
-// MARK: - PriceDisplayFormat
-
+/// Enum representing different formats for displaying prices.
 enum PriceDisplayFormat {
+    /// Short format for displaying prices.
     case short
+
+    /// Full format for displaying prices.
     case full
 }

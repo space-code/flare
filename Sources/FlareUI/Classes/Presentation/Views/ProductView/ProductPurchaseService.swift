@@ -7,12 +7,21 @@ import Flare
 
 // MARK: - IProductPurchaseService
 
+/// A protocol for handling product purchases.
 protocol IProductPurchaseService {
+    /// Purchases a product with optional purchase options asynchronously.
+    ///
+    /// - Parameters:
+    ///   - product: The product to purchase.
+    ///   - options: Optional purchase options.
+    ///
+    /// - Returns: A `StoreTransaction` representing the purchase transaction.
     func purchase(product: StoreProduct, options: PurchaseOptions?) async throws -> StoreTransaction
 }
 
 // MARK: - ProductPurchaseService
 
+/// An actor for handling product purchases.
 actor ProductPurchaseService: IProductPurchaseService {
     // MARK: Types
 
@@ -22,12 +31,17 @@ actor ProductPurchaseService: IProductPurchaseService {
 
     // MARK: Properties
 
+    /// The in-app purchase service.
     private var iap: IFlare
 
     private var isExecuted = false
 
     // MARK: Initialization
 
+    /// Initializes the purchase service with the given dependencies.
+    ///
+    /// - Parameters:
+    ///   - iap: The in-app purchase service.
     init(iap: IFlare) {
         self.iap = iap
     }

@@ -14,8 +14,9 @@ enum Logger {
     private static var defaultLogLevel: LogLevel {
         #if DEBUG
             return .debug
+        #else
+            return .info
         #endif
-        return .info
     }
 
     private static let `default`: Log.Logger = .init(

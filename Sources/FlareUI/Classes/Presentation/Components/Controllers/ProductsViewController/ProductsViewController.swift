@@ -14,8 +14,20 @@ import SwiftUI
 
 // MARK: - ProductsViewController
 
-#if os(iOS)
+#if os(iOS) || os(macOS)
+    /// A view for displaying multiple products.
+    ///
+    /// A `ProductsViewController` display a collection of in-app purchase products, iincluding their localized names,
+    /// descriptions, prices, and displays a purchase button.
+    ///
+    /// ## Customize the products view controller ##
+    ///
+    /// You can customize the controller by displaying additional buttons, and applying styles.
+    ///
+    /// You can change the product style using ``ProductsViewController/productStyle``.
+    @available(iOS 13.0, macOS 11.0, *)
     @available(watchOS, unavailable)
+    @available(tvOS, unavailable)
     public final class ProductsViewController: ViewController {
         // MARK: - Properties
 
@@ -34,12 +46,14 @@ import SwiftUI
 
         private let ids: any Collection<String>
 
+        /// A completion handler for in-app purchase events.
         public var onInAppPurchaseCompletion: PurchaseCompletionHandler? {
             didSet {
                 viewModel.onInAppPurchaseCompletion = onInAppPurchaseCompletion
             }
         }
 
+        /// The product style.
         public var productStyle: any IProductStyle = CompactProductStyle() {
             didSet {
                 viewModel.productStyle = AnyProductStyle(style: productStyle)
@@ -48,6 +62,9 @@ import SwiftUI
 
         // MARK: Initialization
 
+        /// Initialize a `ProductsViewController` for the given IDs.
+        ///
+        /// - Parameter ids: The products IDs.
         public init(ids: some Collection<String>) {
             self.ids = ids
             super.init(nibName: nil, bundle: nil)
@@ -85,7 +102,15 @@ import SwiftUI
 
     // MARK: - Environments
 
+    @available(iOS 13.0, macOS 11.0, *)
+    @available(watchOS, unavailable)
+    @available(tvOS, unavailable)
     public extension ProductsViewController {
+        /// Configures the visibility of store buttons.
+        ///
+        /// - Parameters:
+        ///   - visibility: The visibility of the store buttons.
+        ///   - types: The types of store buttons to configure.
         func storeButton(_ visibility: StoreButtonVisibility, types: [StoreButtonType]) {
             switch visibility {
             case .visible:
@@ -97,7 +122,10 @@ import SwiftUI
             }
         }
 
-        @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+        /// Configures the in-app purchase options.
+        ///
+        /// - Parameter options: A closure that returns the purchase options for a given store product.
+        @available(iOS 15.0, tvOS 15.0, macOS 12.0, *)
         func inAppPurchaseOptions(_ options: ((StoreProduct) -> Set<Product.PurchaseOption>?)?) {
             viewModel.inAppPurchaseOptions = { PurchaseOptions(options: options?($0) ?? []) }
         }

@@ -9,21 +9,41 @@ import StoreKit
 
 // MARK: - ISubscriptionsPresenter
 
+/// A protocol for presenting subscription information and handling subscriptions.
 protocol ISubscriptionsPresenter {
+    /// Called when the view has loaded.
     func viewDidLoad()
+
+    /// Selects a product with the specified ID.
+    ///
+    /// - Parameter id: The ID of the product to select.
     func selectProduct(with id: String)
+
+    /// Retrieves the product with the specified ID.
+    ///
+    /// - Parameter id: The ID of the product to retrieve.
+    /// - Returns: The store product corresponding to the ID, or `nil` if not found.
     func product(withID id: String) -> StoreProduct?
+
+    /// Initiates a subscription with optional purchase options asynchronously.
+    ///
+    /// - Parameter optionsHandler: The handler for purchase options.
+    /// - Returns: A `StoreTransaction` representing the subscription transaction.
     func subscribe(optionsHandler: PurchaseOptionHandler?) async throws -> StoreTransaction
 }
 
 // MARK: - SubscriptionsPresenter
 
+/// A presenter for managing subscriptions.
 @available(watchOS, unavailable)
 final class SubscriptionsPresenter: IPresenter {
     // MARK: Properties
 
+    /// The in-app purchase service.
     private let iap: IFlare
+    /// The collection of subscription IDs.
     private let ids: any Collection<String>
+    /// The factory for creating view models and views.
     private let viewModelFactory: ISubscriptionsViewModelViewFactory
 
     private var products: [StoreProduct] = []
@@ -32,6 +52,12 @@ final class SubscriptionsPresenter: IPresenter {
 
     // MARK: Initialization
 
+    /// Initializes the presenter with the given dependencies.
+    ///
+    /// - Parameters:
+    ///   - iap: The in-app purchase service.
+    ///   - ids: The collection of subscription IDs.
+    ///   - viewModelFactory: The factory for creating view models and views.
     init(iap: IFlare, ids: some Collection<String>, viewModelFactory: ISubscriptionsViewModelViewFactory) {
         self.iap = iap
         self.ids = ids

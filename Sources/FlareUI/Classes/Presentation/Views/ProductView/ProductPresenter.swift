@@ -9,23 +9,40 @@ import SwiftUI
 
 // MARK: - IProductPresenter
 
+/// A protocol for presenting product information and handling purchases.
 protocol IProductPresenter {
+    /// Called when the view has loaded.
     func viewDidLoad()
+
+    /// Initiates a purchase for the product with optional purchase options asynchronously.
+    ///
+    /// - Parameter options: Optional purchase options.
+    ///
+    /// - Returns: A `StoreTransaction` representing the purchase transaction.
     func purchase(options: PurchaseOptions?) async throws -> StoreTransaction
 }
 
 // MARK: - ProductPresenter
 
+/// The presenter for a product.
 final class ProductPresenter: IPresenter {
     // MARK: Properties
 
+    /// The strategy for fetching product information.
     private let productFetcher: IProductFetcherStrategy
+    /// The service for handling product purchases.
     private let purchaseService: IProductPurchaseService
 
+    /// The view model.
     weak var viewModel: WrapperViewModel<ProductViewModel>?
 
     // MARK: Initialization
 
+    /// Initializes the presenter with the given dependencies.
+    ///
+    /// - Parameters:
+    ///   - productFetcher: The strategy for fetching product information.
+    ///   - purchaseService: The service for handling product purchases.
     init(
         productFetcher: IProductFetcherStrategy,
         purchaseService: IProductPurchaseService

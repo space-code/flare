@@ -5,11 +5,14 @@
 
 import Foundation
 
+/// The class provides a way to configure the UI module.
 public final class FlareUI: IFlareUI {
     // MARK: Properties
 
+    /// The dependencies for FlareUI.
     private let dependencies: IFlareDependencies
 
+    /// The configuration provider for FlareUI.
     private let configurationProvider: IConfigurationProvider
 
     /// The singleton instance.
@@ -20,6 +23,9 @@ public final class FlareUI: IFlareUI {
 
     // MARK: Initialization
 
+    /// Initializes a new instance of FlareUI with the provided dependencies.
+    ///
+    /// - Parameter dependencies: The dependencies for FlareUI. Default is FlareDependencies().
     init(dependencies: IFlareDependencies = FlareDependencies()) {
         self.dependencies = dependencies
         self.configurationProvider = dependencies.configurationProvider

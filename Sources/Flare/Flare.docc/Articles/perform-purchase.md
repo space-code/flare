@@ -4,9 +4,9 @@ Learn how to perform a purchase.
 
 ## Setup Observers
 
-> tip: This step isn't required if the app uses system higher than iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0.
-
 The transactions array will only be synchronized with the server while the queue has observers. These methods may require that the user authenticate. It is important to set an observer on this queue as early as possible after your app launch. Observer is responsible for processing all events triggered by the queue.
+
+The closure emits a transaction when the system creates or updates transactions that occur outside of the app or on other devices.
 
 ```swift
 // Adds transaction observer to the payment queue and handles payment transactions.

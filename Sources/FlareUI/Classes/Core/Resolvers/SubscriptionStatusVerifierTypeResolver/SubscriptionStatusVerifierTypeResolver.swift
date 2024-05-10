@@ -5,6 +5,7 @@
 
 import Foundation
 
+/// A class responsible for resolving an object that can verify subscription status based on a given type.
 final class SubscriptionStatusVerifierTypeResolver: ISubscriptionStatusVerifierTypeResolver {
     // MARK: ISubscriptionStatusVerifierTypeResolver
 

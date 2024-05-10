@@ -9,24 +9,27 @@ import SwiftUI
 public struct SubscriptionStoreControlStyleConfiguration {
     // MARK: Types
 
-    struct Label: View {
-        var body: AnyView
+    /// A view for the label.
+    public struct Label: View {
+        public var body: AnyView
 
         init<Content: View>(_ view: Content) {
             body = view.eraseToAnyView()
         }
     }
 
-    struct Description: View {
-        var body: AnyView
+    /// A view for the description.
+    public struct Description: View {
+        public var body: AnyView
 
         init<Content: View>(_ view: Content) {
             body = view.eraseToAnyView()
         }
     }
 
-    struct Price: View {
-        var body: AnyView
+    /// A view for the price.
+    public struct Price: View {
+        public var body: AnyView
 
         init<Content: View>(_ view: Content) {
             body = view.eraseToAnyView()
@@ -35,15 +38,21 @@ public struct SubscriptionStoreControlStyleConfiguration {
 
     // MARK: Properties
 
-    let label: Label
-    let description: Description
-    let price: Price
-    let isSelected: Bool
-    let isActive: Bool
+    /// The label view.
+    public let label: Label
+    /// The description view.
+    public let description: Description
+    /// The price view.
+    public let price: Price
+    /// A Boolean value indicating whether the subscription is selected.
+    public let isSelected: Bool
+    /// A Boolean value indicating whether the subscription is active.
+    public let isActive: Bool
 
     let action: () -> Void
 
-    func trigger() {
+    /// Triggers the action associated with the subscription.
+    public func trigger() {
         action()
     }
 }
