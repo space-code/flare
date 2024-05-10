@@ -1,7 +1,17 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+#### 3.x Releases
+- `3.0.0` Release Candidates - [`3.0.0-rc.1`](#300-rc1) | [`3.0.0-rc.2`](#300-rc2)
+
+#### 2.x Releases
+- `2.0.x` Releases - [2.0.0](#200)
+
+#### 1.x Releases
+- `1.0.x` Releases - [1.0.0](#100)
+
+## [3.0.0-rc.2](https://github.com/space-code/flare/releases/tag/3.0.0-rc.2)
+Released on 2024-05-10.
 
 ## Added
 - Implement the `FlareUI` documentation
@@ -22,15 +32,6 @@ All notable changes to this project will be documented in this file.
   - Fixed in Pull Request [#24](https://github.com/space-code/flare/pull/24).
 - Update the documentation
   - Fixed in Pull Request [#23](https://github.com/space-code/flare/pull/23).
-
-#### 3.x Releases
-- `3.0.0` Release Candidates - [`3.0.0-rc.1`](#300-rc1)
-
-#### 2.x Releases
-- `2.0.x` Releases - [2.0.0](#200)
-
-#### 1.x Releases
-- `1.0.x` Releases - [1.0.0](#100)
 
 ## [3.0.0-rc.1](https://github.com/space-code/flare/releases/tag/3.0.0-rc.1)
 Released on 2024-02-12.
