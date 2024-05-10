@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ## Added
-- Implement the `FlareUI` documenetation
+- Implement the `FlareUI` documentation
   - Added in Pull Request [#33](https://github.com/space-code/flare/pull/33).
 - Implement the `FlareUI` package
   - Added in Pull Request [#28](https://github.com/space-code/flare/pull/28).
