@@ -10,9 +10,11 @@ The `FlareUI` provides a way to display subscriptions to a customer. To display 
 SubscriptionsView(ids: ["com.company.subscription_id_1", "com.company.subscription_id_2"])
 ```
 
+![SubscriprionsView](subscription_view.png)
+
 Once `SubscriptionsView` fetches these subscriptions from the App Store, it will display them to the user. If the subscriptions can't be fetched for any reason, the `SubscriptionsView` shows a message to the user that the App Store is not available.
 
-> important: By default, all Flare views use cached data if available; otherwise, they fetch the data. If you want to change this behavior, please read more about Flare configuration [here](link).
+> important: By default, all Flare views use cached data if available; otherwise, they fetch the data. If you want to change this behavior, please read more about Flare configuration [here](https://space-code.github.io/flare/flare/documentation/flare/caching).
 
 ## UIKit
 
@@ -92,6 +94,8 @@ subscriptionsVC.inAppPurchaseOptions { product in
 
 You can change the default style of subscription items using ``SwiftUI/View/subscriptionControlStyle(_:)`` or ``SubscriptionsViewController/subscriptionControlStyle``.
 
+![SubscriprionsView](button_styles.png)
+
 > note: If you want to create a custom style for subscription, you can read about this more [here](<doc:creating-custom-product-style>).
 
 ### Subscription Background Color
@@ -138,7 +142,7 @@ You can change the style of a button's label using ``SwiftUI/View/subscriptionBu
 
 ### Marketing Content
 
-To provide a custom header for a subscription view, use the ``SubscriptionsViewController/subscriptionHeaderView`` or ``SubscriptionsView/subscriptionMarketingContent(view:)`` property.
+To provide a custom header for a subscription view, use the ``SubscriptionsViewController/subscriptionMarketingContnentView`` or ``SubscriptionsView/subscriptionMarketingContent(view:)`` property.
 
 ```swift
 // SwiftUI

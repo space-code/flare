@@ -4,6 +4,7 @@ Learn how to display a set of products to a user.
 
 ## Overview
 
+
 The `FlareUI` provides an easy way to display different kinds of products with a single line of code. To display a set of products to the user, just pass a collection of identifiers to the ``ProductsView``.
 
 ```swift

@@ -22,9 +22,9 @@
             controller.view.translatesAutoresizingMaskIntoConstraints = false
 
             NSLayoutConstraint.activate([
-                controller.view.topAnchor.constraint(equalTo: self.view.topAnchor),
-                controller.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-                controller.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+                controller.view.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+                controller.view.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+                controller.view.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
                 controller.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             ])
         }
