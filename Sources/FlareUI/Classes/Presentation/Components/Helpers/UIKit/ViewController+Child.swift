@@ -22,11 +22,45 @@
             controller.view.translatesAutoresizingMaskIntoConstraints = false
 
             NSLayoutConstraint.activate([
-                controller.view.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-                controller.view.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-                controller.view.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+                controller.view.topAnchor.constraint(equalTo: self.safeTopAnchor),
+                controller.view.leadingAnchor.constraint(equalTo: self.safeLeadingAnchor),
+                controller.view.trailingAnchor.constraint(equalTo: self.safeTrailingAnchor),
                 controller.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             ])
+        }
+
+        // MARK: Private
+
+        private var safeTopAnchor: NSLayoutYAxisAnchor {
+            if #available(iOS 11.0, macOS 11.0, *) {
+                return view.safeAreaLayoutGuide.topAnchor
+            } else {
+                return view.bottomAnchor
+            }
+        }
+
+        private var safeBottomAnchor: NSLayoutYAxisAnchor {
+            if #available(iOS 11.0, macOS 11.0, *) {
+                return view.safeAreaLayoutGuide.bottomAnchor
+            } else {
+                return view.topAnchor
+            }
+        }
+
+        private var safeLeadingAnchor: NSLayoutXAxisAnchor {
+            if #available(iOS 11.0, macOS 11.0, *) {
+                return view.safeAreaLayoutGuide.leadingAnchor
+            } else {
+                return view.leadingAnchor
+            }
+        }
+
+        private var safeTrailingAnchor: NSLayoutXAxisAnchor {
+            if #available(iOS 11.0, macOS 11.0, *) {
+                return view.safeAreaLayoutGuide.trailingAnchor
+            } else {
+                return view.trailingAnchor
+            }
         }
     }
 #endif

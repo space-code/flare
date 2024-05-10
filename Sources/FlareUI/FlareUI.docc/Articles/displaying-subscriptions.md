@@ -116,7 +116,7 @@ let subscriptionsVC = SubscriptionsViewController(ids: ["com.company.subscriptio
 subscriptionsVC.subscriptionBackgroundColor = .blue
 ```
 
-> note: To change a header backgound use ``SwiftUI/View/subscriptionHeaderContentBackground(_:)`` or ``SubscriptionsViewController/subscriptionHeaderContentBackground``.
+> note: To change a header background use ``SwiftUI/View/subscriptionHeaderContentBackground(_:)`` or ``SubscriptionsViewController/subscriptionHeaderContentBackground``.
 
 ### Tint Color
 

@@ -13,7 +13,7 @@ import SwiftUI
     /// A view for displaying subscriptions.
     ///
     /// A `SubscriptionsViewController` displays localized information about auto-renewable subscriptions,
-    /// including their localized names, descriptios, prices, and a purchase button.
+    /// including their localized names, descriptions, prices, and a purchase button.
     ///
     /// ## Provide a background and a decorative icon ##
     ///

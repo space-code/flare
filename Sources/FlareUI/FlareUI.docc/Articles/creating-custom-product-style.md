@@ -53,3 +53,5 @@ struct CustomSubscriptionStyle: ISubscriptionControlStyle {
     }
 }
 ```
+
+Then, we use can apply the custom style to ``SubscriptionsView/subscriptionControlStyle(_:)`` or ``SubscriptionsViewController/subscriptionControlStyle``.
