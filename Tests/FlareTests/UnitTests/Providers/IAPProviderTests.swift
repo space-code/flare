@@ -4,6 +4,7 @@
 //
 
 @testable import Flare
+import FlareMock
 import StoreKit
 import XCTest
 
@@ -64,17 +65,17 @@ class IAPProviderTests: XCTestCase {
         try AvailabilityChecker.iOS15APINotAvailableOrSkipTest()
 
         // when
-        sut.fetch(productIDs: .productIDs, completion: { _ in })
+        sut.fetch(productIDs: Set.productIDs, completion: { _ in })
 
         // then
         let parameters = try XCTUnwrap(productProviderMock.invokedFetchParameters)
-        XCTAssertEqual(parameters.productIDs, .productIDs)
+        XCTAssertEqual(parameters.productIDs as? Set<String>, Set.productIDs)
         XCTAssertTrue(!parameters.requestID.isEmpty)
     }
 
     func test_thatIAPProviderPurchasesProduct() throws {
         // when
-        sut.purchase(product: .fake(skProduct: .fake(id: .productID)), completion: { _ in })
+        sut.purchase(product: .fake(productIdentifier: .productID), completion: { _ in })
 
         // then
         XCTAssertTrue(purchaseProvider.invokedPurchase)
@@ -94,6 +95,17 @@ class IAPProviderTests: XCTestCase {
 
         // when
         sut.finish(transaction: StoreTransaction(paymentTransaction: PaymentTransaction(transaction)), completion: nil)
+
+        // then
+        XCTAssertTrue(purchaseProvider.invokedFinish)
+    }
+
+    func test_thatIAPProviderFinishesAsyncTransaction() async {
+        // given
+        let transaction = PurchaseManagerTestHelper.makePaymentTransaction(state: .purchased)
+
+        // when
+        await sut.finish(transaction: StoreTransaction(paymentTransaction: PaymentTransaction(transaction)))
 
         // then
         XCTAssertTrue(purchaseProvider.invokedFinish)
@@ -120,11 +132,11 @@ class IAPProviderTests: XCTestCase {
         try AvailabilityChecker.iOS15APINotAvailableOrSkipTest()
 
         // given
-        let productsMock = [0 ... 2].map { _ in StoreProduct(SK1StoreProduct(ProductMock())) }
+        let productsMock = [0 ... 2].map { _ in StoreProduct(SK1StoreProduct(SKProductMock())) }
         productProviderMock.stubbedFetchResult = .success(productsMock)
 
         // when
-        let products = try await sut.fetch(productIDs: .productIDs)
+        let products = try await sut.fetch(productIDs: Set.productIDs)
 
         // then
         XCTAssertEqual(productsMock.count, products.count)
@@ -137,7 +149,7 @@ class IAPProviderTests: XCTestCase {
         productProviderMock.stubbedFetchResult = .failure(IAPError.unknown)
 
         // when
-        let errorResult: Error? = await error(for: { try await sut.fetch(productIDs: .productIDs) })
+        let errorResult: Error? = await error(for: { try await sut.fetch(productIDs: Set.productIDs) })
 
         // then
         XCTAssertEqual(errorResult as? NSError, IAPError.unknown as NSError)
@@ -145,12 +157,12 @@ class IAPProviderTests: XCTestCase {
 
     func test_thatIAPProviderReturnsError_whenAddingPaymentFailed() {
         // given
-        productProviderMock.stubbedFetchResult = .success([StoreProduct(SK1StoreProduct(ProductMock()))])
+        productProviderMock.stubbedFetchResult = .success([StoreProduct(SK1StoreProduct(SKProductMock()))])
         purchaseProvider.stubbedPurchaseCompletionResult = (.failure(.unknown), ())
 
         // when
         var error: Error?
-        sut.purchase(product: .fake(skProduct: .fake(id: .productID))) { error = $0.error }
+        sut.purchase(product: .fake(productIdentifier: .productID)) { error = $0.error }
 
         // then
         XCTAssertEqual(error as? NSError, IAPError.unknown as NSError)
@@ -162,7 +174,7 @@ class IAPProviderTests: XCTestCase {
 
         // when
         var error: Error?
-        sut.purchase(product: .fake(skProduct: .fake(id: .productID))) { error = $0.error }
+        sut.purchase(product: .fake(productIdentifier: .productID)) { error = $0.error }
 
         // then
         XCTAssertEqual(error as? NSError, IAPError.unknown as NSError)

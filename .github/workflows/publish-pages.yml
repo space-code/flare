@@ -5,38 +5,30 @@ on:
     branches: 
       - main
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 concurrency:
   group: "pages"
   cancel-in-progress: true
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build:
     runs-on: macos-12
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: "Flare"
+            base_path: "flare"
+          - target: "FlareUI"
+            base_path: "flareui"
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
-      - name: Build DocC
-        run: |
-          swift build;
-          swift package \
-            --allow-writing-to-directory ./docs \
-            generate-documentation \
-            --target Flare \
-            --output-path ./docs \
-            --transform-for-static-hosting \
-            --hosting-base-path flare;
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/checkout@v4
         with:
-          path: 'docs'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1
+          # Fetch all history for all branches and tags.
+          fetch-depth: 0
+      - name: Build and Push Generated Documentation
+        uses: space-code/oss-common-actions/.github/actions/publish_docc@main
+        with:
+          target: ${{ matrix.target }}
+          output_path: ${{ matrix.base_path }}
+          hosting_base_path: flare/${{ matrix.base_path }}

@@ -1,4 +1,4 @@
-# logging
+# Logging
 
 Learn how to log important events.
 

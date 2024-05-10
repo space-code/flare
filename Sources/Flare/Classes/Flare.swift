@@ -60,11 +60,11 @@ public final class Flare {
 // MARK: IFlare
 
 extension Flare: IFlare {
-    public func fetch(productIDs: Set<String>, completion: @escaping Closure<Result<[StoreProduct], IAPError>>) {
+    public func fetch(productIDs: some Collection<String>, completion: @escaping Closure<Result<[StoreProduct], IAPError>>) {
         iapProvider.fetch(productIDs: productIDs, completion: completion)
     }
 
-    public func fetch(productIDs: Set<String>) async throws -> [StoreProduct] {
+    public func fetch(productIDs: some Collection<String>) async throws -> [StoreProduct] {
         try await iapProvider.fetch(productIDs: productIDs)
     }
 
@@ -136,7 +136,11 @@ extension Flare: IFlare {
         iapProvider.finish(transaction: transaction, completion: completion)
     }
 
-    public func addTransactionObserver(fallbackHandler: Closure<Result<PaymentTransaction, IAPError>>?) {
+    public func finish(transaction: StoreTransaction) async {
+        await iapProvider.finish(transaction: transaction)
+    }
+
+    public func addTransactionObserver(fallbackHandler: Closure<Result<StoreTransaction, IAPError>>?) {
         iapProvider.addTransactionObserver(fallbackHandler: fallbackHandler)
     }
 
@@ -147,6 +151,11 @@ extension Flare: IFlare {
     @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
     public func checkEligibility(productIDs: Set<String>) async throws -> [String: SubscriptionEligibility] {
         try await iapProvider.checkEligibility(productIDs: productIDs)
+    }
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    public func restore() async throws {
+        try await iapProvider.restore()
     }
 
     #if os(iOS) || VISION_OS

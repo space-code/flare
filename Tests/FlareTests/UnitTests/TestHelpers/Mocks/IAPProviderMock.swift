@@ -19,10 +19,10 @@ final class IAPProviderMock: IIAPProvider {
 
     var invokedFetch = false
     var invokedFetchCount = 0
-    var invokedFetchParameters: (productIDs: Set<String>, completion: Closure<Result<[StoreProduct], IAPError>>)?
-    var invokedFetchParametersList = [(productIDs: Set<String>, completion: Closure<Result<[StoreProduct], IAPError>>)]()
+    var invokedFetchParameters: (productIDs: Any, completion: Closure<Result<[StoreProduct], IAPError>>)?
+    var invokedFetchParametersList = [(productIDs: Any, completion: Closure<Result<[StoreProduct], IAPError>>)]()
 
-    func fetch(productIDs: Set<String>, completion: @escaping Closure<Result<[StoreProduct], IAPError>>) {
+    func fetch(productIDs: some Collection<String>, completion: @escaping Closure<Result<[StoreProduct], IAPError>>) {
         invokedFetch = true
         invokedFetchCount += 1
         invokedFetchParameters = (productIDs, completion)
@@ -70,12 +70,24 @@ final class IAPProviderMock: IIAPProvider {
         invokedFinishTransactionParanetersList.append((transaction, ()))
     }
 
+    var invokedFinishAsyncTransaction = false
+    var invokedFinishAsyncTransactionCount = 0
+    var invokedFinishAsyncTransactionParameters: (StoreTransaction, Void)?
+    var invokedFinishAsyncTransactionParanetersList = [(StoreTransaction, Void)]()
+
+    func finish(transaction: StoreTransaction) async {
+        invokedFinishAsyncTransaction = true
+        invokedFinishAsyncTransactionCount += 1
+        invokedFinishAsyncTransactionParameters = (transaction, ())
+        invokedFinishAsyncTransactionParanetersList = [(transaction, ())]
+    }
+
     var invokedAddTransactionObserver = false
     var invokedAddTransactionObserverCount = 0
-    var invokedAddTransactionObserverParameters: (fallbackHandler: Closure<Result<PaymentTransaction, IAPError>>?, Void)?
-    var invokedAddTransactionObserverParametersList = [(fallbackHandler: Closure<Result<PaymentTransaction, IAPError>>?, Void)]()
+    var invokedAddTransactionObserverParameters: (fallbackHandler: Closure<Result<StoreTransaction, IAPError>>?, Void)?
+    var invokedAddTransactionObserverParametersList = [(fallbackHandler: Closure<Result<StoreTransaction, IAPError>>?, Void)]()
 
-    func addTransactionObserver(fallbackHandler: Closure<Result<PaymentTransaction, IAPError>>?) {
+    func addTransactionObserver(fallbackHandler: Closure<Result<StoreTransaction, IAPError>>?) {
         invokedAddTransactionObserver = true
         invokedAddTransactionObserverCount += 1
         invokedAddTransactionObserverParameters = (fallbackHandler, ())
@@ -92,11 +104,11 @@ final class IAPProviderMock: IIAPProvider {
 
     var invokedFetchAsync = false
     var invokedFetchAsyncCount = 0
-    var invokedFetchAsyncParameters: (productIDs: Set<String>, Void)?
-    var invokedFetchAsyncParametersList = [(productIDs: Set<String>, Void)]()
+    var invokedFetchAsyncParameters: (productIDs: Any, Void)?
+    var invokedFetchAsyncParametersList = [(productIDs: Any, Void)]()
     var fetchAsyncResult: [StoreProduct] = []
 
-    func fetch(productIDs: Set<String>) async throws -> [StoreProduct] {
+    func fetch(productIDs: some Collection<String>) async throws -> [StoreProduct] {
         invokedFetchAsync = true
         invokedFetchAsyncCount += 1
         invokedFetchAsyncParameters = (productIDs, ())
@@ -284,4 +296,7 @@ final class IAPProviderMock: IIAPProvider {
         invokedPresentOfferCodeRedeemSheet = true
         invokedPresentOfferCodeRedeemSheetCount += 1
     }
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    func restore() async throws {}
 }

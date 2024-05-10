@@ -10,7 +10,7 @@ protocol IConfigurationProvider {
     /// The application username.
     var applicationUsername: String? { get }
 
-    /// <#Description#>
+    /// The cache policy for fetching data.
     var fetchCachePolicy: FetchCachePolicy { get }
 
     /// Configures the provider with the specified configuration settings.

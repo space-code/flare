@@ -6,6 +6,8 @@
 import Foundation
 import StoreKit
 
+typealias FallbackHandler = Closure<Result<StoreTransaction, IAPError>>
+
 // MARK: - PurchaseProvider
 
 final class PurchaseProvider {
@@ -14,9 +16,11 @@ final class PurchaseProvider {
     /// The provider is responsible for making in-app payments.
     private let paymentProvider: IPaymentProvider
     /// The transaction listener.
-    private let transactionListener: ITransactionListener?
+    private var transactionListener: ITransactionListener?
     /// The configuration provider.
     private let configurationProvider: IConfigurationProvider
+    /// The fallback handler.
+    private var fallbackHandler: FallbackHandler?
 
     // MARK: Initialization
 
@@ -37,7 +41,7 @@ final class PurchaseProvider {
         if let transactionListener = transactionListener {
             self.transactionListener = transactionListener
         } else if #available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *) {
-            self.transactionListener = TransactionListener(updates: StoreKit.Transaction.updates)
+            self.configureTransactionListener()
         } else {
             self.transactionListener = nil
         }
@@ -78,12 +82,20 @@ final class PurchaseProvider {
             Task {
                 switch result {
                 case let .success(result):
-                    if let transaction = try await self.transactionListener?.handle(purchaseResult: result) {
-                        await completion(.success(transaction))
-                        Logger.info(message: L10n.Purchase.purchasedProduct(sk2StoreProduct.productIdentifier))
-                    } else {
-                        await completion(.failure(IAPError.unknown))
-                        self.log(error: IAPError.unknown, productID: sk2StoreProduct.productIdentifier)
+                    do {
+                        if let transaction = try await self.transactionListener?.handle(purchaseResult: result) {
+                            await completion(.success(transaction))
+                            Logger.info(message: L10n.Purchase.purchasedProduct(sk2StoreProduct.productIdentifier))
+                        } else {
+                            await completion(.failure(IAPError.unknown))
+                            self.log(error: IAPError.unknown, productID: sk2StoreProduct.productIdentifier)
+                        }
+                    } catch {
+                        if let error = error as? IAPError {
+                            await completion(.failure(error))
+                        } else {
+                            await completion(.failure(.with(error: error)))
+                        }
                     }
                 case let .failure(error):
                     await completion(.failure(IAPError(error: error)))
@@ -105,6 +117,15 @@ final class PurchaseProvider {
         if let applicationUsername = configurationProvider.applicationUsername, let uuid = UUID(uuidString: applicationUsername) {
             // If options contain an app account token, the next line of code doesn't affect it.
             options.insert(.appAccountToken(uuid))
+        }
+    }
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    private func configureTransactionListener() {
+        self.transactionListener = TransactionListener(delegate: self, updates: StoreKit.Transaction.updates)
+
+        Task {
+            await self.transactionListener?.listenForTransaction()
         }
     }
 
@@ -191,11 +212,13 @@ extension PurchaseProvider: IPurchaseProvider {
         }
     }
 
-    func addTransactionObserver(fallbackHandler: Closure<Result<PaymentTransaction, IAPError>>?) {
+    func addTransactionObserver(fallbackHandler: FallbackHandler?) {
+        self.fallbackHandler = fallbackHandler
+
         paymentProvider.set { _, result in
             switch result {
             case let .success(transaction):
-                fallbackHandler?(.success(PaymentTransaction(transaction)))
+                fallbackHandler?(.success(StoreTransaction(paymentTransaction: PaymentTransaction(transaction))))
             case let .failure(error):
                 fallbackHandler?(.failure(error))
             }
@@ -205,5 +228,23 @@ extension PurchaseProvider: IPurchaseProvider {
 
     func removeTransactionObserver() {
         paymentProvider.removeTransactionObserver()
+    }
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    func restore() async throws {
+        try await AppStore.sync()
+    }
+}
+
+// MARK: TransactionListenerDelegate
+
+extension PurchaseProvider: TransactionListenerDelegate {
+    func transactionListener(_: ITransactionListener, transactionDidUpdate result: Result<StoreTransaction, IAPError>) {
+        switch result {
+        case let .success(transaction):
+            self.fallbackHandler?(.success(transaction))
+        case let .failure(error):
+            self.fallbackHandler?(.failure(error))
+        }
     }
 }

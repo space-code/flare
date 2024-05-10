@@ -4,9 +4,9 @@ Learn how to perform a purchase.
 
 ## Setup Observers
 
-> tip: This step isn't required if the app uses system higher than iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0.
-
 The transactions array will only be synchronized with the server while the queue has observers. These methods may require that the user authenticate. It is important to set an observer on this queue as early as possible after your app launch. Observer is responsible for processing all events triggered by the queue.
+
+The closure emits a transaction when the system creates or updates transactions that occur outside of the app or on other devices.
 
 ```swift
 // Adds transaction observer to the payment queue and handles payment transactions.
@@ -29,7 +29,7 @@ Flare.shared.removeTransactionObserver()
 
 The fetch method sends a request to the App Store, which retrieves the products if they are available. The productIDs parameter takes the product ids, which should be given from the App Store.
 
-> important: Before attempting to add a payment always check if the user can actually make payments. The Flare does it under the hood, if a user cannot make payments, you will get an ``IAPError`` with the value ``IAPError/paymentNotAllowed``.
+> important: Before attempting to add a payment always check if the user can actually make payments. The Flare does it under the hood, if a user cannot make payments, you will get an ``IAPError/paymentNotAllowed``.
 
 ```swift
 Flare.shared.fetch(productIDs: ["product_id"]) { result in
@@ -42,7 +42,7 @@ Flare.shared.fetch(productIDs: ["product_id"]) { result in
 }
 ```
 
-Additionally, there are versions of both fetch that provide an `async` method, allowing the use of await.
+Additionally, there is an `await` version of the ``IFlare/fetch(productIDs:)`` method.
 
 ```swift
 do {
@@ -53,6 +53,14 @@ do {
 ```
 
 > note: Products are cached by default. If caching is not possible for specific usecases, set ``Configuration/fetchCachePolicy`` to ``FetchCachePolicy/fetch``.
+
+```swift
+import Flare
+
+let configuration = Configuration(fetchCachePolicy: .fetch)
+
+Flare.configure(with: configuration)
+```
 
 ## Purchasing Product
 
@@ -93,4 +101,3 @@ Flare.shared.finish(transaction: transaction, completion: nil)
 ```
 
 > important: Don’t call the ``IFlare/finish(transaction:completion:)`` method before the transaction is actually complete and attempt to use some other mechanism in your app to track the transaction as unfinished. StoreKit doesn’t function that way, and doing that prevents your app from downloading Apple-hosted content and can lead to other issues.
-

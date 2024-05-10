@@ -15,7 +15,7 @@ public final class StoreProduct: NSObject {
     /// Protocol representing a Store Kit product.
     let product: ISKProduct
 
-    /// <#Description#>
+    /// The store kit product.
     var underlyingProduct: ISKProduct { product }
 
     // MARK: Initialization
@@ -96,5 +96,9 @@ extension StoreProduct: ISKProduct {
 
     public var subscriptionGroupIdentifier: String? {
         product.subscriptionGroupIdentifier
+    }
+
+    public var subscription: SubscriptionInfo? {
+        product.subscription
     }
 }

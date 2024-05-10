@@ -42,4 +42,7 @@ protocol ISKProduct {
 
     /// The subscription group identifier.
     var subscriptionGroupIdentifier: String? { get }
+
+    /// The subscription info.
+    var subscription: SubscriptionInfo? { get }
 }

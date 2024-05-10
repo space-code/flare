@@ -12,19 +12,20 @@ final class PurchaseProviderMock: IPurchaseProvider {
     var invokedFinishParameters: (transaction: StoreTransaction, Void)?
     var invokedFinishParametersList = [(transaction: StoreTransaction, Void)]()
 
-    func finish(transaction: StoreTransaction, completion _: (@Sendable () -> Void)?) {
+    func finish(transaction: StoreTransaction, completion: (@Sendable () -> Void)?) {
         invokedFinish = true
         invokedFinishCount += 1
         invokedFinishParameters = (transaction, ())
         invokedFinishParametersList.append((transaction, ()))
+        completion?()
     }
 
     var invokedAddTransactionObserver = false
     var invokedAddTransactionObserverCount = 0
-    var invokedAddTransactionObserverParameters: (fallbackHandler: Closure<Result<PaymentTransaction, IAPError>>?, Void)?
-    var invokedAddTransactionObserverParametersList = [(fallbackHandler: Closure<Result<PaymentTransaction, IAPError>>?, Void)]()
+    var invokedAddTransactionObserverParameters: (fallbackHandler: Closure<Result<StoreTransaction, IAPError>>?, Void)?
+    var invokedAddTransactionObserverParametersList = [(fallbackHandler: Closure<Result<StoreTransaction, IAPError>>?, Void)]()
 
-    func addTransactionObserver(fallbackHandler: Closure<Result<PaymentTransaction, IAPError>>?) {
+    func addTransactionObserver(fallbackHandler: Closure<Result<StoreTransaction, IAPError>>?) {
         invokedAddTransactionObserver = true
         invokedAddTransactionObserverCount += 1
         invokedAddTransactionObserverParameters = (fallbackHandler, ())
@@ -79,4 +80,7 @@ final class PurchaseProviderMock: IPurchaseProvider {
             completion(result.0)
         }
     }
+
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    func restore() async throws {}
 }
