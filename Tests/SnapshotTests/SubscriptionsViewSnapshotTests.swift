@@ -28,12 +28,12 @@ final class SubscriptionsViewSnapshotTests: SnapshotTestCase {
             of: makeView()
                 .subscriptionMarketingContent(view: { Text("Header View") })
             #if os(iOS)
-                .subscriptionBackground(Color.gray)
+                .subscriptionBackground(Color.green)
                 .subscriptionHeaderContentBackground(Color.blue)
                 .subscriptionButtonLabel(.multiline)
             #endif
                 .storeButton(.visible, types: .policies)
-                .tintColor(.green)
+                .tintColor(.red)
                 .subscriptionControlStyle(.button),
 
             size: .size
