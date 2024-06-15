@@ -14,7 +14,15 @@ import SwiftUI
 struct PrimaryButtonStyle: ButtonStyle {
     // MARK: Properties
 
+    private let disabled: Bool
+
     @Environment(\.tintColor) private var tintColor
+
+    // MARK: Initialization
+
+    init(disabled: Bool) {
+        self.disabled = disabled
+    }
 
     // MARK: ButtonStyle
 
@@ -24,7 +32,7 @@ struct PrimaryButtonStyle: ButtonStyle {
             .frame(height: 50.0)
             .frame(maxWidth: .infinity)
             .padding(.horizontal)
-            .background(tintColor)
+            .background(disabled ? Palette.systemGray : tintColor)
             .clipShape(RoundedRectangle(cornerSize: .init(width: 14, height: 14)))
             .opacity(configuration.isPressed ? 0.5 : 1.0)
     }
@@ -38,6 +46,6 @@ struct PrimaryButtonStyle: ButtonStyle {
 @available(visionOS, unavailable)
 extension ButtonStyle where Self == PrimaryButtonStyle {
     static var primary: PrimaryButtonStyle {
-        PrimaryButtonStyle()
+        PrimaryButtonStyle(disabled: true)
     }
 }

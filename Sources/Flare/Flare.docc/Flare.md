@@ -37,7 +37,7 @@ Flare.shared.products(productIDs: ["product_identifier"]) { result in
 
 | Flare | Date       | Swift | Xcode   | Platforms                                                   |
 |-------|------------|-------|---------|-------------------------------------------------------------|
-| 3.0   | unreleased | 5.7   | 14.1    | iOS 13.0, watchOS 6.0, macOS 10.15, tvOS 13.0, visionOS 1.0 |
+| 3.0   | 15/06/2024 | 5.7   | 14.1    | iOS 13.0, watchOS 6.0, macOS 10.15, tvOS 13.0, visionOS 1.0 |
 | 2.0   | 14/09/2023 | 5.7   | 14.1    | iOS 13.0, watchOS 6.0, macOS 10.15, tvOS 13.0, visionOS 1.0 |
 | 1.0   | 21/01/2023 | 5.5   | 13.4.1  | iOS 13.0, watchOS 6.0, macOS 10.15, tvOS 13.0               |
 

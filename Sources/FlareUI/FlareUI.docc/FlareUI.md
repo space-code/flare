@@ -28,7 +28,7 @@ present(nav, animated: true)
 
 | FlareUI | Date       | Swift | Xcode   | Platforms                                                   |
 |---------|------------|-------|---------|-------------------------------------------------------------|
-| 3.0     | unreleased | 5.7   | 14.1    | iOS 13.0, macOS 10.15, tvOS 13.0 
+| 3.0     | 15/06/2024 | 5.7   | 14.1    | iOS 13.0, macOS 10.15, tvOS 13.0 
 
 ## License
 
