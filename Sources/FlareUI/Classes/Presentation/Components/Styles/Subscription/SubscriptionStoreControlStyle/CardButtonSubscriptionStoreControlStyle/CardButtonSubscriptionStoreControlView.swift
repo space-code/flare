@@ -15,7 +15,6 @@ import SwiftUI
 struct CardButtonSubscriptionStoreControlView: View {
     // MARK: Properties
 
-//    @Environment(\.isFocused) private var isFocused: Bool
     @Environment(\.tintColor) private var tintColor
 
     private let configuration: SubscriptionStoreControlStyleConfiguration
@@ -31,7 +30,7 @@ struct CardButtonSubscriptionStoreControlView: View {
     var body: some View {
         ZStack {
             Rectangle()
-                .fill(tintColor) // isFocused ? tintColor.opacity(0.85) : tintColor)
+                .fill(tintColor)
 
             VStack(alignment: .leading) {
                 VStack(alignment: .leading) {

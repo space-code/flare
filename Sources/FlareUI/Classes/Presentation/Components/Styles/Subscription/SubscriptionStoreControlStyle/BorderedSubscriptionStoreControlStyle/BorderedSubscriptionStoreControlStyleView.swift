@@ -34,7 +34,8 @@ struct BorderedSubscriptionStoreControlStyleView: View {
         }, label: {
             labelView(configuration)
         })
-        .buttonStyle(PrimaryButtonStyle())
+        .disabled(!configuration.isActive)
+        .buttonStyle(PrimaryButtonStyle(disabled: !configuration.isActive))
     }
 
     // MARK: Private
@@ -88,7 +89,7 @@ struct BorderedSubscriptionStoreControlStyleView: View {
                 description: .init(Text("Name")),
                 price: .init(Text("Name")),
                 isSelected: true,
-                isActive: true,
+                isActive: false,
                 action: {}
             )
         )
