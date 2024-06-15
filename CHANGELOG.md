@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+
+## Added
+- Implement disabling of the purchase button 
+  - Added in Pull Request [#44](https://github.com/space-code/flare/pull/44).
+
 #### 3.x Releases
 - `3.0.0` Release Candidates - [`3.0.0-rc.1`](#300-rc1) | [`3.0.0-rc.2`](#300-rc2)
 
