@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2024 Space Code. All rights reserved.
+// Copyright © 2023 Space Code. All rights reserved.
 //
 
 import StoreKit
@@ -150,8 +150,29 @@ public protocol IIAPProvider {
     @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
     func checkEligibility(productIDs: Set<String>) async throws -> [String: SubscriptionEligibility]
 
-    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
+    /// Restores completed transactions.
+    ///
+    /// This method initiates the process of restoring any previously completed transactions.
+    /// It is an asynchronous function that might throw an error if the restoration fails.
+    ///
+    /// - Throws: An error if the restoration process encounters an issue.
+    ///
+    /// - Note: This method should be called when you need to restore purchases made by the user on a different device or after
+    /// reinstallation.
     func restore() async throws
+
+    /// Restores completed transactions.
+    ///
+    /// This method initiates the process of restoring any previously completed transactions.
+    /// It uses a completion handler to provide the result of the restoration process.
+    ///
+    /// - Parameter completion: A closure that gets called with a `Result` indicating success or failure of the restoration.
+    ///   - On success, it returns `Result<Void, Error>.success(())`.
+    ///   - On failure, it returns `Result<Void, Error>.failure(Error)` with an error describing the issue.
+    ///
+    /// - Note: Use this method when you need to handle the restoration process asynchronously and provide feedback through the completion
+    /// handler.
+    func restore(_ completion: @escaping (Result<Void, Error>) -> Void)
 
     #if os(iOS) || VISION_OS
         /// Present the refund request sheet for the specified transaction in a window scene.

@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2024 Space Code. All rights reserved.
+// Copyright © 2023 Space Code. All rights reserved.
 //
 
 import StoreKit
@@ -192,9 +192,12 @@ final class IAPProvider: IIAPProvider {
         return try await eligibilityProvider.checkEligibility(products: products)
     }
 
-    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
     func restore() async throws {
         try await purchaseProvider.restore()
+    }
+
+    func restore(_ completion: @escaping (Result<Void, any Error>) -> Void) {
+        purchaseProvider.restore(completion)
     }
 
     #if os(iOS) || VISION_OS

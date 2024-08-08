@@ -250,11 +250,12 @@ public final class FlareMock: IFlare {
 
     public var invokedRestore = false
     public var invokedRestoreCount = 0
-    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
     public func restore() async throws {
         invokedRestore = true
         invokedRestoreCount += 1
     }
+
+    public func restore(_: @escaping (Result<Void, any Error>) -> Void) {}
 
     #if os(iOS) || VISION_OS
         public var invokedBeginRefundRequest = false
