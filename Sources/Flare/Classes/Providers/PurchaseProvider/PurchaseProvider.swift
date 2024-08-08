@@ -230,9 +230,26 @@ extension PurchaseProvider: IPurchaseProvider {
         paymentProvider.removeTransactionObserver()
     }
 
-    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
     func restore() async throws {
-        try await AppStore.sync()
+        if #available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *) {
+            try await AppStore.sync()
+        } else {
+            try await withCheckedThrowingContinuation { continuation in
+                restore { result in
+                    continuation.resume(with: result)
+                }
+            }
+        }
+    }
+
+    func restore(_ completion: @escaping (Result<Void, Error>) -> Void) {
+        paymentProvider.restoreCompletedTransactions { _, error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(()))
+            }
+        }
     }
 }
 

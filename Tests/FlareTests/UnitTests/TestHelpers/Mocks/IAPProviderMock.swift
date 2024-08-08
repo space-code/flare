@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2024 Space Code. All rights reserved.
+// Copyright © 2023 Space Code. All rights reserved.
 //
 
 @testable import Flare
@@ -297,6 +297,18 @@ final class IAPProviderMock: IIAPProvider {
         invokedPresentOfferCodeRedeemSheetCount += 1
     }
 
-    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
     func restore() async throws {}
+
+    func restore(_: @escaping (Result<Void, any Error>) -> Void) {}
+
+    var invokedRefreshReceiptUpdateTransaction = false
+    var invokedRefreshReceiptUpdateTransactionCount = 0
+    var stubbedInvokedRefreshReceiptUpdateTransaction: String = ""
+    func refreshReceipt(updateTransactions _: Bool) async throws -> String {
+        invokedRefreshReceiptUpdateTransaction = true
+        invokedRefreshReceiptUpdateTransactionCount += 1
+        return stubbedInvokedRefreshReceiptUpdateTransaction
+    }
+
+    func refreshReceipt(updateTransactions _: Bool, completion _: @escaping (Result<String, IAPError>) -> Void) {}
 }
