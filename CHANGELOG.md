@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## Added
+- Implement restoring transactions for StoreKit 1
+  - Added in Pull Request [#57](https://github.com/space-code/flare/pull/57).
+
 ## Updated
 - Update `codecov` version
   - Updated in Pull Request [#59](https://github.com/space-code/flare/pull/59)
