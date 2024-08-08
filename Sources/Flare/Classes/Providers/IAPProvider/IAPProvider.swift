@@ -143,19 +143,46 @@ final class IAPProvider: IIAPProvider {
         }
     }
 
-    func refreshReceipt(completion: @escaping Closure<Result<String, IAPError>>) {
-        receiptRefreshProvider.refresh(requestID: UUID().uuidString) { [weak self] result in
-            switch result {
-            case .success:
-                if let receipt = self?.receiptRefreshProvider.receipt {
-                    completion(.success(receipt))
-                } else {
-                    completion(.failure(.receiptNotFound))
-                }
-            case let .failure(error):
-                completion(.failure(error))
+    func refreshReceipt(updateTransactions: Bool) async throws -> String {
+        try await withCheckedThrowingContinuation { continuation in
+            refreshReceipt(updateTransactions: updateTransactions) { result in
+                continuation.resume(with: result)
             }
         }
+    }
+
+    func refreshReceipt(updateTransactions: Bool, completion: @escaping (Result<String, IAPError>) -> Void) {
+        let refresh = { [weak self] in
+            self?.receiptRefreshProvider.refresh(requestID: UUID().uuidString) { [weak self] result in
+                switch result {
+                case .success:
+                    if let receipt = self?.receiptRefreshProvider.receipt {
+                        completion(.success(receipt))
+                    } else {
+                        completion(.failure(.receiptNotFound))
+                    }
+                case let .failure(error):
+                    completion(.failure(error))
+                }
+            }
+        }
+
+        if updateTransactions {
+            restore { result in
+                switch result {
+                case .success:
+                    refresh()
+                case let .failure(error):
+                    completion(.failure(IAPError.with(error: error)))
+                }
+            }
+        } else {
+            refresh()
+        }
+    }
+
+    func refreshReceipt(completion: @escaping Closure<Result<String, IAPError>>) {
+        refreshReceipt(updateTransactions: false, completion: completion)
     }
 
     func refreshReceipt() async throws -> String {

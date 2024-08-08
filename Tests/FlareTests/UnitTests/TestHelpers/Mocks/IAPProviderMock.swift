@@ -300,4 +300,15 @@ final class IAPProviderMock: IIAPProvider {
     func restore() async throws {}
 
     func restore(_: @escaping (Result<Void, any Error>) -> Void) {}
+
+    var invokedRefreshReceiptUpdateTransaction = false
+    var invokedRefreshReceiptUpdateTransactionCount = 0
+    var stubbedInvokedRefreshReceiptUpdateTransaction: String = ""
+    func refreshReceipt(updateTransactions _: Bool) async throws -> String {
+        invokedRefreshReceiptUpdateTransaction = true
+        invokedRefreshReceiptUpdateTransactionCount += 1
+        return stubbedInvokedRefreshReceiptUpdateTransaction
+    }
+
+    func refreshReceipt(updateTransactions _: Bool, completion _: @escaping (Result<String, IAPError>) -> Void) {}
 }

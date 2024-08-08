@@ -161,6 +161,14 @@ extension Flare: IFlare {
         iapProvider.restore(completion)
     }
 
+    public func receipt(updateTransactions: Bool) async throws -> String {
+        try await iapProvider.refreshReceipt(updateTransactions: updateTransactions)
+    }
+
+    public func receipt(updateTransactions: Bool, completion: @escaping (Result<String, IAPError>) -> Void) {
+        iapProvider.refreshReceipt(updateTransactions: updateTransactions, completion: completion)
+    }
+
     #if os(iOS) || VISION_OS
         @available(iOS 15.0, *)
         @available(macOS, unavailable)

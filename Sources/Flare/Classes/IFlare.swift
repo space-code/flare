@@ -105,17 +105,31 @@ public protocol IFlare {
         promotionalOffer: PromotionalOffer?
     ) async throws -> StoreTransaction
 
-    /// Refreshes the receipt, representing the user's transactions with your app.
+    /// Refreshes the receipt and optionally updates transactions.
     ///
-    /// - Parameter completion: The closure to be executed when the refresh operation ends.
-    func receipt(completion: @escaping Closure<Result<String, IAPError>>)
+    /// - Parameters:
+    ///   - updateTransactions: A boolean indicating whether to update transactions.
+    ///     - If `true`, the method will refresh completed transactions.
+    ///     - If `false`, only the receipt will be refreshed.
+    ///   - completion: A closure that gets called with the result of the refresh operation.
+    ///     - On success, it returns a `Result<String, IAPError>` containing the updated receipt information as a `String`.
+    ///     - On failure, it returns a `Result<String, IAPError>` with an `IAPError` describing the issue.
+    ///
+    /// - Note: Use this method to handle asynchronous receipt refreshing and transaction updates with completion handler feedback.
+    func receipt(updateTransactions: Bool, completion: @escaping (Result<String, IAPError>) -> Void)
 
-    /// Refreshes the receipt, representing the user's transactions with your app.
+    /// Refreshes the receipt and optionally updates transactions.
     ///
-    /// `IAPError(error:)` if the request did fail with error.
+    /// - Parameter updateTransactions: A boolean indicating whether to update transactions.
+    ///   - If `true`, the method will refresh completed transactions.
+    ///   - If `false`, only the receipt will be refreshed.
     ///
-    /// - Returns: A receipt.
-    func receipt() async throws -> String
+    /// - Returns: A `String` containing the updated receipt information.
+    ///
+    /// - Throws: An `IAPError` if the refresh process encounters an issue.
+    ///
+    /// - Note: Use this method for an asynchronous refresh operation with error handling and receipt data retrieval.
+    func receipt(updateTransactions: Bool) async throws -> String
 
     /// Removes a finished (i.e. failed or completed) transaction from the queue.
     /// Attempting to finish a purchasing transaction will throw an exception.
@@ -279,5 +293,21 @@ public extension IFlare {
         options: Set<StoreKit.Product.PurchaseOption>
     ) async throws -> StoreTransaction {
         try await purchase(product: product, options: options, promotionalOffer: nil)
+    }
+
+    /// Refreshes the receipt, representing the user's transactions with your app.
+    ///
+    /// - Parameter completion: The closure to be executed when the refresh operation ends.
+    func receipt(completion: @escaping Closure<Result<String, IAPError>>) {
+        receipt(updateTransactions: false, completion: completion)
+    }
+
+    /// Refreshes the receipt, representing the user's transactions with your app.
+    ///
+    /// `IAPError(error:)` if the request did fail with error.
+    ///
+    /// - Returns: A receipt.
+    func receipt() async throws -> String {
+        try await receipt(updateTransactions: false)
     }
 }
