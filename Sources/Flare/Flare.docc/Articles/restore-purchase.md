@@ -34,3 +34,5 @@ There is an ``IFlare/receipt()`` method for obtaining a receipt using async/awai
 ```swift
 let receipt = try await Flare.shared.receipt()
 ```
+
+The ``IFlare/receipt(updateTransactions:completion:)`` method has a parameter, `updateTransactions`, which controls whether transactions are updated first.

@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2024 Space Code. All rights reserved.
+// Copyright © 2023 Space Code. All rights reserved.
 //
 
 import struct Log.LogLevel
@@ -153,9 +153,20 @@ extension Flare: IFlare {
         try await iapProvider.checkEligibility(productIDs: productIDs)
     }
 
-    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
     public func restore() async throws {
         try await iapProvider.restore()
+    }
+
+    public func restore(_ completion: @escaping (Result<Void, any Error>) -> Void) {
+        iapProvider.restore(completion)
+    }
+
+    public func receipt(updateTransactions: Bool) async throws -> String {
+        try await iapProvider.refreshReceipt(updateTransactions: updateTransactions)
+    }
+
+    public func receipt(updateTransactions: Bool, completion: @escaping (Result<String, IAPError>) -> Void) {
+        iapProvider.refreshReceipt(updateTransactions: updateTransactions, completion: completion)
     }
 
     #if os(iOS) || VISION_OS
