@@ -10,6 +10,8 @@ All notable changes to this project will be documented in this file.
 ## Updated
 - Update `codecov` version
   - Updated in Pull Request [#59](https://github.com/space-code/flare/pull/59)
+- Update mocks
+  - Updated in Pull Request [#60](https://github.com/space-code/flare/pull/60)
 
 #### 3.x Releases
 - `3.0.x` Releases - [`3.0.0`](#300)
