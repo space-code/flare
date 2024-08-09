@@ -257,6 +257,17 @@ public final class FlareMock: IFlare {
 
     public func restore(_: @escaping (Result<Void, any Error>) -> Void) {}
 
+    public var invokedReceiptUpdateTransactions = false
+    public var invokedReceiptUpdateTransactionsCount = 0
+    public var stubbedReceiptUpdateTransactions = ""
+    public func receipt(updateTransactions _: Bool) async throws -> String {
+        invokedReceiptUpdateTransactions = true
+        invokedReceiptUpdateTransactionsCount += 1
+        return stubbedReceiptUpdateTransactions
+    }
+
+    public func receipt(updateTransactions _: Bool, completion _: @escaping (Result<String, IAPError>) -> Void) {}
+
     #if os(iOS) || VISION_OS
         public var invokedBeginRefundRequest = false
         public var invokedBeginRefundRequestCount = 0
