@@ -20,6 +20,9 @@ struct SK1StoreProductDiscount: IStoreProductDiscount {
 
     /// The discounted price in the specified currency.
     let price: Decimal
+    
+    /// A localized string representing the price of the product.
+    let localizedPriceString: String?
 
     /// The payment mode associated with the discount (e.g., freeTrial, payUpFront, payAsYouGo).
     let paymentMode: PaymentMode
@@ -56,5 +59,9 @@ struct SK1StoreProductDiscount: IStoreProductDiscount {
         self.subscriptionPeriod = subscriptionPeriod
         numberOfPeriods = productDiscount.numberOfPeriods
         type = discountType
+        
+        /// The price formatter.
+        let numberFormatter: NumberFormatter = .numberFormatter(with: self.productDiscount.priceLocale)
+        localizedPriceString = numberFormatter.string(from: self.productDiscount.price)
     }
 }

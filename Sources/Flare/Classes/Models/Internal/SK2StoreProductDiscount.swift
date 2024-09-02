@@ -21,6 +21,9 @@ struct SK2StoreProductDiscount: IStoreProductDiscount, Sendable {
 
     /// The discounted price in the specified currency.
     let price: Decimal
+    
+    /// A localized string representing the price of the product.
+    let localizedPriceString: String?
 
     /// The payment mode associated with the discount (e.g., freeTrial, payUpFront, payAsYouGo).
     let paymentMode: PaymentMode
@@ -58,5 +61,6 @@ struct SK2StoreProductDiscount: IStoreProductDiscount, Sendable {
         self.subscriptionPeriod = subscriptionPeriod
         numberOfPeriods = subscriptionOffer.periodCount
         type = discountType
+        localizedPriceString = subscriptionOffer.displayPrice
     }
 }
