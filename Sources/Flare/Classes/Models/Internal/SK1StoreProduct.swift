@@ -38,6 +38,10 @@ extension SK1StoreProduct: ISKProduct {
     var currencyCode: String? {
         product.priceLocale.currencyCodeID
     }
+    
+    var currencySymbol: String? {
+        numberFormatter.currencySymbol
+    }
 
     var price: Decimal {
         product.price as Decimal

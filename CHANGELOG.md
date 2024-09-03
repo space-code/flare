@@ -11,6 +11,11 @@ All notable changes to this project will be documented in this file.
 #### 1.x Releases
 - `1.0.x` Releases - [1.0.0](#100)
 
+## Added
+- Implement localizedPriceString for StoreProductDiscount
+- Implement currencySymbol for StoreProduct
+  - Added in Pull Request [#66](https://github.com/space-code/flare/pull/66).
+
 ## [3.0.1](https://github.com/space-code/flare/releases/tag/3.0.1)
 Released on 2024-08-09.
 
