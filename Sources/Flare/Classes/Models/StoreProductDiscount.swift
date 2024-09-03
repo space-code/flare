@@ -63,7 +63,7 @@ extension StoreProductDiscount: IStoreProductDiscount {
     public var price: Decimal {
         discount.price
     }
-    
+
     public var localizedPriceString: String? {
         discount.localizedPriceString
     }

@@ -38,7 +38,7 @@ extension SK1StoreProduct: ISKProduct {
     var currencyCode: String? {
         product.priceLocale.currencyCodeID
     }
-    
+
     var currencySymbol: String? {
         numberFormatter.currencySymbol
     }
