@@ -12,12 +12,18 @@
 <a href="https://github.com/apple/swift-package-manager" alt="Flare on Swift Package Manager" title="Flare on Swift Package Manager"><img src="https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg" /></a>
 <a href="https://codecov.io/gh/space-code/flare"><img alt="GitHub release; latest by date" src="https://img.shields.io/github/v/release/space-code/flare"></a>
 <a href="https://codecov.io/gh/space-code/flare"><img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/m/space-code/flare"></a>
+<a href="https://github.com/space-code/flare"><img alt="Number of GitHub contributors" src="https://img.shields.io/github/issues/space-code/flare"></a>
+<a href="https://github.com/space-code/flare"><img alt="Number of GitHub closed issues" src="https://img.shields.io/github/issues-closed/space-code/flare"></a>
+<a href="https://github.com/space-code/flare"><img alt="Number of GitHub stars" src="https://img.shields.io/github/contributors/space-code/flare"></a>
+<a href="https://github.com/space-code/flare"><img alt="Number of GitHub pull requests that are open" src="https://img.shields.io/github/issues-pr-raw/space-code/flare"></a>
+<a href="https://github.com/space-code/flare"><img alt="Number of GitHub issues that are open" src="https://img.shields.io/github/stars/space-code/flare"></a>
 </p>
 
 ## Description
 Flare is a framework written in Swift that makes it easy for you to work with in-app purchases and subscriptions.
 
 - [Features](#features)
+- [Usage](#usage)
 - [Documentation](#documentation)
 - [Requirements](#requirements)
 - [Installation](#installation)
@@ -35,6 +41,22 @@ Flare is a framework written in Swift that makes it easy for you to work with in
 - [x] iOS, tvOS, watchOS, macOS, and visionOS compatible
 - [x] Complete Unit, Integration & Snapshot Test Coverage
 - [x] Offer a UI for building in-app purchase stores in SwiftUI and UIKit
+
+## Usage
+
+### Quick Start
+```swift
+import Flare
+
+/// Fetch a product with the given id
+guard let product = try await Flare.shared.products(productIDs: ["product_identifier"]) else { return }
+
+/// Purchase a product
+let transaction = try await Flare.shared.purchase(product: product)
+
+/// Finish a transaction
+Flare.shared.finish(transaction: transaction, completion: nil)
+```
 
 ## Documentation
 Check out the [documentation](https://space-code.github.io/flare/).
@@ -58,7 +80,7 @@ Once you have your Swift package set up, adding `flare` as a dependency is as ea
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/space-code/flare.git", .upToNextMajor(from: "2.0.0"))
+    .package(url: "https://github.com/space-code/flare.git", .upToNextMajor(from: "3.0.2"))
 ]
 ```
 
