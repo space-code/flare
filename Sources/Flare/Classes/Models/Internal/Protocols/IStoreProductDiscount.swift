@@ -18,6 +18,9 @@ protocol IStoreProductDiscount: Sendable {
     /// The discounted price in the specified currency.
     var price: Decimal { get }
 
+    /// A localized string representing the price of the product.
+    var localizedPriceString: String? { get }
+
     /// The payment mode associated with the discount (e.g., freeTrial, payUpFront, payAsYouGo).
     var paymentMode: PaymentMode { get }
 

@@ -39,6 +39,16 @@ public final class ProductMock: ISKProduct {
         return stubbedCurrencyCode
     }
 
+    public var invokedCurrencySymbolGetter = false
+    public var invokedCurrencySymbolGetterCount = 0
+    public var stubbedCurrencySymbol: String!
+
+    public var currencySymbol: String? {
+        invokedCurrencySymbolGetter = true
+        invokedCurrencySymbolGetterCount += 1
+        return stubbedCurrencySymbol
+    }
+
     public var invokedPriceGetter = false
     public var invokedPriceGetterCount = 0
     public var stubbedPrice: Decimal!

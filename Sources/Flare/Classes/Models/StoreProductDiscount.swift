@@ -64,6 +64,10 @@ extension StoreProductDiscount: IStoreProductDiscount {
         discount.price
     }
 
+    public var localizedPriceString: String? {
+        discount.localizedPriceString
+    }
+
     public var paymentMode: PaymentMode {
         discount.paymentMode
     }

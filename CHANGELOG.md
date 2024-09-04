@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 #### 3.x Releases
-- `3.0.x` Releases - [`3.0.0`](#300) | [`3.0.1`](#301)
+- `3.0.x` Releases - [`3.0.0`](#300) | [`3.0.1`](#301) | [`3.0.2`](#302)
 - `3.0.0` Release Candidates - [`3.0.0-rc.1`](#300-rc1) | [`3.0.0-rc.2`](#300-rc2)
 
 #### 2.x Releases
@@ -10,6 +10,17 @@ All notable changes to this project will be documented in this file.
 
 #### 1.x Releases
 - `1.0.x` Releases - [1.0.0](#100)
+
+## [3.0.2](https://github.com/space-code/flare/releases/tag/3.0.2)
+Released on 2024-09-04.
+
+## Added
+- Implement localizedPriceString for StoreProductDiscount & currencySymbol for StoreProduct
+  - Added in Pull Request [#66](https://github.com/space-code/flare/pull/66).
+
+## Fixed
+- Fix the code formatting
+  - Fixed in Pull Request [#67](https://github.com/space-code/flare/pull/67)
 
 ## [3.0.1](https://github.com/space-code/flare/releases/tag/3.0.1)
 Released on 2024-08-09.

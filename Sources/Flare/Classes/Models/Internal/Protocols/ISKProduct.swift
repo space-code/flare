@@ -16,6 +16,9 @@ protocol ISKProduct {
     /// The currency code for the product's price.
     var currencyCode: String? { get }
 
+    /// The currency Symbol for the product's price.
+    var currencySymbol: String? { get }
+
     /// The price of the product in decimal format.
     var price: Decimal { get }
 
