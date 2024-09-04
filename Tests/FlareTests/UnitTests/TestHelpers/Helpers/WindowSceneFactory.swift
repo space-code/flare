@@ -1,12 +1,12 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 #if os(iOS) || VISION_OS
     import UIKit
 
-    final class WindowSceneFactory {
+    enum WindowSceneFactory {
         static func makeWindowScene() -> UIWindowScene {
             UIApplication.shared.connectedScenes.first as! UIWindowScene
         }

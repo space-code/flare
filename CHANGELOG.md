@@ -16,6 +16,10 @@ All notable changes to this project will be documented in this file.
 - Implement currencySymbol for StoreProduct
   - Added in Pull Request [#66](https://github.com/space-code/flare/pull/66).
 
+## Fixed
+- Fix the code formatting
+  - Fixed in Pull Request [#67](https://github.com/space-code/flare/pull/67)
+
 ## [3.0.1](https://github.com/space-code/flare/releases/tag/3.0.1)
 Released on 2024-08-09.
 

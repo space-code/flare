@@ -128,5 +128,5 @@ final class SubscriptionsPresenterTests: XCTestCase {
 // MARK: - Extensions
 
 private extension Array where Element == String {
-    static let ids: [String] = ["subscription"]
+    static let ids = ["subscription"]
 }

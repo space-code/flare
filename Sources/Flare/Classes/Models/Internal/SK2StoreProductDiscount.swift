@@ -21,7 +21,7 @@ struct SK2StoreProductDiscount: IStoreProductDiscount, Sendable {
 
     /// The discounted price in the specified currency.
     let price: Decimal
-    
+
     /// A localized string representing the price of the product.
     let localizedPriceString: String?
 

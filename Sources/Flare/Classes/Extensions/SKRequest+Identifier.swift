@@ -7,7 +7,7 @@ import StoreKit
 
 private var requestIdKey: UInt = 0
 
-internal extension SKRequest {
+extension SKRequest {
     var id: String {
         get {
             objc_getAssociatedObject(self, &requestIdKey) as? String ?? ""
