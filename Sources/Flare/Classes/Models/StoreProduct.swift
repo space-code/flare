@@ -66,7 +66,7 @@ extension StoreProduct: ISKProduct {
         product.currencySymbol
     }
     
-    var locale: Locale {
+    public var locale: Locale {
         self.product.locale
     }
 
