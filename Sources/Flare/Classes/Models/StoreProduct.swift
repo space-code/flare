@@ -65,6 +65,10 @@ extension StoreProduct: ISKProduct {
     public var currencySymbol: String? {
         product.currencySymbol
     }
+    
+    var locale: Locale {
+        self.product.locale
+    }
 
     public var price: Decimal {
         product.price

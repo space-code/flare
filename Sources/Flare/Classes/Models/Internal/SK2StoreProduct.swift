@@ -49,6 +49,10 @@ extension SK2StoreProduct: ISKProduct {
     var currencySymbol: String? {
         numberFormatter.currencySymbol
     }
+    
+    var locale: Locale {
+        self.currencyFormat.locale
+    }
 
     var price: Decimal {
         product.price
