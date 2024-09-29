@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## Fixed
+- sk1 purchase failed, but return success
+  - Fixed in Pull Request [#83](https://github.com/space-code/flare/pull/83)
+
 ## Updated
 - Update `CHANGELOG.md`
   - Updated in Pull Request [#74](https://github.com/space-code/flare/pull/74).
