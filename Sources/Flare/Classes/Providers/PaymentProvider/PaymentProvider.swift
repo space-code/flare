@@ -125,12 +125,20 @@ extension PaymentProvider: SKPaymentTransactionObserver {
                     forKey: transaction.payment.productIdentifier
                 ), !handlers.isEmpty {
                     self.dispatchQueueFactory.main().async {
-                        handlers.forEach { $0(queue, .success(transaction)) }
+                        if let error = transaction.error {
+                            handlers.forEach { $0(queue, .failure(IAPError(error: error))) }
+                        } else {
+                            handlers.forEach { $0(queue, .success(transaction)) }
+                        }
                     }
                 } else {
                     let handler = self.fallbackHandler
                     self.dispatchQueueFactory.main().async {
-                        handler?(queue, .success(transaction))
+                        if let error = transaction.error {
+                            handler?(queue, .failure(IAPError(error: error)))
+                        } else {
+                            handler?(queue, .success(transaction))
+                        }
                     }
                 }
             }
