@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## Added
+- Implement locale for StoreProduct
+  - Added in Pull Request [#66](https://github.com/space-code/flare/pull/66).
+
 ## Updated
 - Update `CHANGELOG.md`
   - Updated in Pull Request [#74](https://github.com/space-code/flare/pull/74).
