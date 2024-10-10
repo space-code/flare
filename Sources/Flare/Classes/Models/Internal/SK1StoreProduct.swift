@@ -44,7 +44,7 @@ extension SK1StoreProduct: ISKProduct {
     }
     
     var locale: Locale {
-        self.product.priceLocale
+        product.priceLocale
     }
 
     var price: Decimal {

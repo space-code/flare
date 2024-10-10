@@ -67,7 +67,7 @@ extension StoreProduct: ISKProduct {
     }
     
     public var locale: Locale {
-        self.product.locale
+        product.locale
     }
 
     public var price: Decimal {

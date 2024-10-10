@@ -51,7 +51,7 @@ extension SK2StoreProduct: ISKProduct {
     }
     
     var locale: Locale {
-        self.currencyFormat.locale
+        currencyFormat.locale
     }
 
     var price: Decimal {
