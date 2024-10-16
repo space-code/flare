@@ -34,14 +34,3 @@ protocol IStoreTransaction {
     /// - Note: This is only available for StoreKit 2 transactions.
     var environment: StoreEnvironment? { get }
 }
-
-/// Default implementation of the currency property for backward compatibility.
-extension IStoreTransaction {
-    var currency: String? {
-        if #available(iOS 16.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *) {
-            return Locale.current.currency?.identifier
-        } else {
-            return Locale.current.currencyCode
-        }
-    }
-}

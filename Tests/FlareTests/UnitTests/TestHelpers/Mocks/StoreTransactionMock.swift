@@ -101,7 +101,7 @@ final class StoreTransactionMock: IStoreTransaction {
     var invokedCurrencyGetterCount = 0
     var stubbedCurrency: String!
     
-    var currency: String {
+    var currency: String? {
         invokedCurrencyGetter = true
         invokedCurrencyGetterCount += 1
         return stubbedCurrency
