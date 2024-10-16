@@ -52,3 +52,8 @@ public protocol IRenewalInfo {
 }
 
 /// Default implementation of the currency property for backward compatibility.
+extension IRenewalInfo {
+    var currency: String? {
+        return Locale.current.currencyCodeID
+    }
+}
