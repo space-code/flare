@@ -66,7 +66,9 @@ Released on 2024-05-10.
 ## Updated
 - Update the `dependabot.yml` configuration
  - Updated in Pull Request [#34](https://github.com/space-code/flare/pull/34)
-
+- Update Transaction Model with price and currency
+ - Updated in Pull Request [#84](https://github.com/space-code/flare/pull/84)
+ 
 ## Fixed
 - Fix handling of cancelling operations
   - Fixed in Pull Request [#26](https://github.com/space-code/flare/pull/26).
