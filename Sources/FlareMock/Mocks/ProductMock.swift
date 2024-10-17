@@ -38,11 +38,11 @@ public final class ProductMock: ISKProduct {
         invokedCurrencyCodeGetterCount += 1
         return stubbedCurrencyCode
     }
-    
+
     public var invokedLocaleGetter = false
     public var invokedLocaleGetterCount = 0
     public var stubbedLocale: Locale!
-    
+
     public var locale: Locale {
         invokedLocaleGetter = true
         invokedLocaleGetterCount += 1

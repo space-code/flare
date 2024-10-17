@@ -5,6 +5,8 @@
 
 import Foundation
 
+// MARK: - IStoreTransaction
+
 /// A type that represents a store transaction.
 protocol IStoreTransaction {
     /// The unique identifier for the product.
@@ -23,7 +25,7 @@ protocol IStoreTransaction {
     var price: Decimal? { get }
     /// The currency of the price of the product.
     var currency: String? { get }
-    
+
     /// The raw JWS representation of the transaction.
     ///
     /// - Note: This is only available for StoreKit 2 transactions.
@@ -38,6 +40,6 @@ protocol IStoreTransaction {
 /// Default implementation of the currency property for backward compatibility.
 extension IStoreTransaction {
     var currency: String? {
-        return Locale.current.currencyCodeID
+        Locale.current.currencyCodeID
     }
 }

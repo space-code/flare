@@ -18,7 +18,7 @@ protocol ISKProduct {
 
     /// The currency Symbol for the product's price.
     var currencySymbol: String? { get }
-    
+
     /// The  locale for the product's currency.
     var locale: Locale { get }
 
