@@ -6,6 +6,8 @@
 import Foundation
 import StoreKit
 
+// MARK: - IRenewalInfo
+
 public protocol IRenewalInfo {
     /// The JSON representation of the renewal information.
     var jsonRepresentation: Data { get }
@@ -31,6 +33,12 @@ public protocol IRenewalInfo {
     /// The status of a price increase for the user.
     var priceIncreaseStatus: PriceIncreaseStatus { get }
 
+    /// The renewal price of the auto-renewable subscription that renews at the next billing period.
+    var renewalPrice: Decimal? { get }
+
+    /// The currency of the subscription's renewal price.
+    var currency: String? { get }
+
     /// Whether the subscription is in a billing retry period.
     var isInBillingRetry: Bool { get }
 
@@ -43,4 +51,11 @@ public protocol IRenewalInfo {
     /// `code`, this will be the offer code reference name. This will be `nil` for `introductory`
     /// offers and if there will be no offer applied for the next billing period.
     var offerID: String? { get }
+}
+
+/// Default implementation of the currency property for backward compatibility.
+extension IRenewalInfo {
+    var currency: String? {
+        Locale.current.currencyCodeID
+    }
 }

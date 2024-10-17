@@ -86,22 +86,22 @@ final class StoreTransactionMock: IStoreTransaction {
         invokedEnvironmentGetterCount += 1
         return stubbedEnvironment
     }
-    
+
     var invokedPriceGetter = false
     var invokedPriceGetterCount = 0
     var stubbedPrice: Decimal!
-    
+
     var price: Decimal? {
         invokedPriceGetter = true
         invokedPriceGetterCount += 1
         return stubbedPrice
     }
-    
+
     var invokedCurrencyGetter = false
     var invokedCurrencyGetterCount = 0
     var stubbedCurrency: String!
-    
-    var currency: String {
+
+    var currency: String? {
         invokedCurrencyGetter = true
         invokedCurrencyGetterCount += 1
         return stubbedCurrency

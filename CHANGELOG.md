@@ -10,6 +10,10 @@ All notable changes to this project will be documented in this file.
   - Updated in Pull Request [#74](https://github.com/space-code/flare/pull/74).
 - Update `README.md`
   - Updated in Pull Request [#70](https://github.com/space-code/flare/pull/70).
+- Update Transaction Model with price and currency
+ - Updated in Pull Request [#84](https://github.com/space-code/flare/pull/84)
+- Update RenewalInfo Model with renewalPrice and currency
+ - Updated in Pull Request [#85](https://github.com/space-code/flare/pull/85)
 
 #### 3.x Releases
 - `3.0.x` Releases - [`3.0.0`](#300) | [`3.0.1`](#301) | [`3.0.2`](#302)
@@ -66,8 +70,6 @@ Released on 2024-05-10.
 ## Updated
 - Update the `dependabot.yml` configuration
  - Updated in Pull Request [#34](https://github.com/space-code/flare/pull/34)
-- Update Transaction Model with price and currency
- - Updated in Pull Request [#84](https://github.com/space-code/flare/pull/84)
  
 ## Fixed
 - Fix handling of cancelling operations

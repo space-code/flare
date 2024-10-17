@@ -54,15 +54,15 @@ final class StoreTransactionStub: IStoreTransaction {
     var environment: StoreEnvironment? {
         stubbedEnvironment
     }
-    
+
     var stubbedPrice: Decimal!
-    
+
     var price: Decimal? {
         stubbedPrice
     }
-    
+
     var stubbedCurrency: String!
-    
+
     var currency: String? {
         stubbedCurrency
     }

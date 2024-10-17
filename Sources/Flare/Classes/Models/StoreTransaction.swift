@@ -80,10 +80,11 @@ extension StoreTransaction: IStoreTransaction {
     var environment: StoreEnvironment? {
         storeTransaction.environment
     }
+
     var price: Decimal? {
         storeTransaction.price
     }
-    
+
     var currency: String? {
         storeTransaction.currency
     }
