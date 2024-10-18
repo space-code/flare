@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2024 Space Code. All rights reserved.
+// Copyright © 2023 Space Code. All rights reserved.
 //
 
 import struct Log.LogLevel
@@ -23,7 +23,7 @@ public final class Flare {
     private let configurationProvider: IConfigurationProvider
 
     /// The singleton instance.
-    private static let flare: Flare = .init()
+    private nonisolated(unsafe) static let flare: Flare = .init()
 
     /// Returns a shared `Flare` object.
     public static var shared: IFlare { flare }

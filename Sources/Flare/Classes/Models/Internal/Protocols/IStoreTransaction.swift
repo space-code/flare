@@ -8,7 +8,7 @@ import Foundation
 // MARK: - IStoreTransaction
 
 /// A type that represents a store transaction.
-protocol IStoreTransaction {
+protocol IStoreTransaction: Sendable {
     /// The unique identifier for the product.
     var productIdentifier: String { get }
     /// The date when the transaction occurred.

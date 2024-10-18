@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2024 Space Code. All rights reserved.
+// Copyright © 2023 Space Code. All rights reserved.
 //
 
 #if canImport(UIKit)
@@ -10,7 +10,7 @@
 // MARK: - IScenesHolder
 
 /// A type that holds all connected scenes.
-protocol IScenesHolder {
+protocol IScenesHolder: Sendable {
     #if os(iOS) || VISION_OS
         /// The scenes that are connected to the app.
         var connectedScenes: Set<UIScene> { get }

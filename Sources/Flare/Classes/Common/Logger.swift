@@ -4,7 +4,7 @@
 //
 
 import Foundation
-import Log
+@preconcurrency import Log
 
 // MARK: - Logger
 

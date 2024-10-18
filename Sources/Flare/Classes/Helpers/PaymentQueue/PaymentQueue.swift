@@ -1,12 +1,12 @@
 //
 // Flare
-// Copyright © 2024 Space Code. All rights reserved.
+// Copyright © 2023 Space Code. All rights reserved.
 //
 
 import StoreKit
 
 /// `PaymentQueue` interacts with the server-side payment queue
-public protocol PaymentQueue: AnyObject {
+public protocol PaymentQueue: AnyObject, Sendable {
     /// `False` if this device is not able or allowed to make payments
     var canMakePayments: Bool { get }
 

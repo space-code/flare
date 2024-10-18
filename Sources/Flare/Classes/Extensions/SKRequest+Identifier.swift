@@ -1,11 +1,11 @@
 //
 // Flare
-// Copyright © 2024 Space Code. All rights reserved.
+// Copyright © 2023 Space Code. All rights reserved.
 //
 
 import StoreKit
 
-private var requestIdKey: UInt = 0
+private nonisolated(unsafe) var requestIdKey: UInt = 0
 
 extension SKRequest {
     var id: String {

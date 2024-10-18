@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2024 Space Code. All rights reserved.
+// Copyright © 2023 Space Code. All rights reserved.
 //
 
 #if canImport(UIKit)
@@ -13,13 +13,20 @@ final class SystemInfoProvider {
     // MARK: Properties
 
     #if os(iOS) || VISION_OS
-        private let scenesHolder: IScenesHolder
+        private let scenesHolder: @Sendable () async -> IScenesHolder
 
         // MARK: Initialization
 
-        init(scenesHolder: IScenesHolder = UIApplication.shared) {
-            self.scenesHolder = scenesHolder
+        init(scenesHolder: IScenesHolder? = nil) {
+            if let scenesHolder {
+                self.scenesHolder = { scenesHolder }
+            } else {
+                self.scenesHolder = {
+                    await MainActor.run { UIApplication.shared }
+                }
+            }
         }
+
     #endif
 }
 
@@ -33,13 +40,14 @@ extension SystemInfoProvider: ISystemInfoProvider {
         @available(tvOS, unavailable)
         @MainActor
         var currentScene: UIWindowScene {
-            get throws {
-                var scenes = scenesHolder.connectedScenes
+            get async throws {
+                let holder = await scenesHolder()
+                var scenes = holder.connectedScenes
                     .filter { $0.activationState == .foregroundActive }
 
                 #if DEBUG && targetEnvironment(simulator)
                     if scenes.isEmpty, ProcessInfo.isRunningUnitTests {
-                        scenes = scenesHolder.connectedScenes
+                        scenes = holder.connectedScenes
                     }
                 #endif
 

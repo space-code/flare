@@ -5,7 +5,7 @@
 
 import Foundation
 
-extension AsyncSequence {
+extension AsyncSequence where Element: Sendable {
     func toAsyncStream() -> AsyncStream<Element> {
         var asyncIterator = makeAsyncIterator()
         return AsyncStream<Element> {
