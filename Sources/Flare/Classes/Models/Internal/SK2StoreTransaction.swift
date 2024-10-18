@@ -68,14 +68,22 @@ extension SK2StoreTransaction: IStoreTransaction {
     }
 
     var price: Decimal? {
-        transaction.price
+        #if swift(>=6.0)
+            underlyingRenewalInfo.price
+        #else
+            nil
+        #endif
     }
 
     var currency: String? {
-        if #available(iOS 16.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *) {
-            transaction.currency?.identifier
-        } else {
-            transaction.currencyCode
-        }
+        #if swift(>=6.0)
+            if #available(iOS 16.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *) {
+                transaction.currency?.identifier
+            } else {
+                transaction.currencyCode
+            }
+        #else
+            nil
+        #endif
     }
 }
