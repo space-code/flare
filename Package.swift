@@ -44,7 +44,8 @@ let package = Package(
         .target(
             name: "FlareUI",
             dependencies: ["Flare"],
-            resources: [.process("Resources")]
+            resources: [.process("Resources")],
+            swiftSettings: [.swiftLanguageMode(.v5)]
         ),
         .target(name: "FlareMock", dependencies: ["Flare"]),
         .target(name: "FlareUIMock", dependencies: ["FlareMock", "FlareUI"]),
@@ -72,6 +73,6 @@ let package = Package(
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
             ]
         ),
-    ],
-    swiftLanguageModes: [.v5]
+    ] // ,
+//    swiftLanguageModes: [.v5]
 )
