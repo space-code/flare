@@ -2,6 +2,8 @@
 All notable changes to this project will be documented in this file.
 
 ## Added
+- Add full Swift concurrency support with Sendable requirements.
+  - Added in Pull Request [#92](https://github.com/space-code/flare/pull/92).
 - Implement locale for StoreProduct
   - Added in Pull Request [#82](https://github.com/space-code/flare/pull/82).
 
