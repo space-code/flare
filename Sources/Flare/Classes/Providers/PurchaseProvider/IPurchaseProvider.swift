@@ -23,7 +23,7 @@ protocol IPurchaseProvider {
     /// The transactions array will only be synchronized with the server while the queue has observers.
     ///
     /// - Note: This may require that the user authenticate.
-    func addTransactionObserver(fallbackHandler: Closure<Result<StoreTransaction, IAPError>>?)
+    func addTransactionObserver(fallbackHandler: SendableClosure<Result<StoreTransaction, IAPError>>?)
 
     /// Removes transaction observer from the payment queue.
     /// The transactions array will only be synchronized with the server while the queue has observers.
@@ -80,7 +80,7 @@ protocol IPurchaseProvider {
     ///
     /// - Note: Use this method when you need to handle the restoration process asynchronously and provide feedback through the completion
     /// handler.
-    func restore(_ completion: @escaping (Result<Void, Error>) -> Void)
+    func restore(_ completion: @escaping @Sendable (Result<Void, Error>) -> Void)
 }
 
 extension IPurchaseProvider {

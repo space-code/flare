@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2024 Space Code. All rights reserved.
+// Copyright © 2023 Space Code. All rights reserved.
 //
 
 import Foundation
@@ -19,7 +19,7 @@ public protocol IFlare {
     /// - Parameters:
     ///   - productIDs: The list of product identifiers for which you wish to retrieve descriptions.
     ///   - completion: The completion containing the response of retrieving products.
-    func fetch(productIDs: some Collection<String>, completion: @escaping Closure<Result<[StoreProduct], IAPError>>)
+    func fetch(productIDs: some Collection<String>, completion: @escaping SendableClosure<Result<[StoreProduct], IAPError>>)
 
     /// Retrieves localized information from the App Store about a specified list of products.
     ///
@@ -43,7 +43,7 @@ public protocol IFlare {
     func purchase(
         product: StoreProduct,
         promotionalOffer: PromotionalOffer?,
-        completion: @escaping Closure<Result<StoreTransaction, IAPError>>
+        completion: @escaping SendableClosure<Result<StoreTransaction, IAPError>>
     )
 
     /// Purchases a product.
@@ -116,7 +116,7 @@ public protocol IFlare {
     ///     - On failure, it returns a `Result<String, IAPError>` with an `IAPError` describing the issue.
     ///
     /// - Note: Use this method to handle asynchronous receipt refreshing and transaction updates with completion handler feedback.
-    func receipt(updateTransactions: Bool, completion: @escaping (Result<String, IAPError>) -> Void)
+    func receipt(updateTransactions: Bool, completion: @escaping @Sendable (Result<String, IAPError>) -> Void)
 
     /// Refreshes the receipt and optionally updates transactions.
     ///
@@ -149,7 +149,7 @@ public protocol IFlare {
     /// The transactions array will only be synchronized with the server while the queue has observers.
     ///
     /// - Note: This may require that the user authenticate.
-    func addTransactionObserver(fallbackHandler: Closure<Result<StoreTransaction, IAPError>>?)
+    func addTransactionObserver(fallbackHandler: SendableClosure<Result<StoreTransaction, IAPError>>?)
 
     /// Removes transaction observer from the payment queue.
     /// The transactions array will only be synchronized with the server while the queue has observers.
@@ -187,7 +187,7 @@ public protocol IFlare {
     ///
     /// - Note: Use this method when you need to handle the restoration process asynchronously and provide feedback through the completion
     /// handler.
-    func restore(_ completion: @escaping (Result<Void, Error>) -> Void)
+    func restore(_ completion: @escaping @Sendable (Result<Void, Error>) -> Void)
 
     #if os(iOS) || VISION_OS
         /// Present the refund request sheet for the specified transaction in a window scene.
@@ -231,7 +231,7 @@ public extension IFlare {
     ///   - completion: The closure to be executed once the purchase is complete.
     func purchase(
         product: StoreProduct,
-        completion: @escaping Closure<Result<StoreTransaction, IAPError>>
+        completion: @escaping SendableClosure<Result<StoreTransaction, IAPError>>
     ) {
         purchase(product: product, promotionalOffer: nil, completion: completion)
     }
@@ -298,7 +298,7 @@ public extension IFlare {
     /// Refreshes the receipt, representing the user's transactions with your app.
     ///
     /// - Parameter completion: The closure to be executed when the refresh operation ends.
-    func receipt(completion: @escaping Closure<Result<String, IAPError>>) {
+    func receipt(completion: @escaping SendableClosure<Result<String, IAPError>>) {
         receipt(updateTransactions: false, completion: completion)
     }
 

@@ -1,11 +1,11 @@
 //
 // Flare
-// Copyright © 2024 Space Code. All rights reserved.
+// Copyright © 2023 Space Code. All rights reserved.
 //
 
 import StoreKit
 
-final class ProductResponseMock: SKProductsResponse {
+final class ProductResponseMock: SKProductsResponse, @unchecked Sendable {
     var invokedInvalidProductsIdentifiers = false
     var invokedInvalidProductsIdentifiersCount = 0
     var stubbedInvokedInvalidProductsIdentifiers: [String] = []

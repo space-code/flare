@@ -6,11 +6,11 @@
 import Foundation
 import StoreKit
 
-typealias FallbackHandler = Closure<Result<StoreTransaction, IAPError>>
+typealias FallbackHandler = SendableClosure<Result<StoreTransaction, IAPError>>
 
 // MARK: - PurchaseProvider
 
-final class PurchaseProvider {
+final class PurchaseProvider: @unchecked Sendable {
     // MARK: Properties
 
     /// The provider is responsible for making in-app payments.
@@ -242,7 +242,7 @@ extension PurchaseProvider: IPurchaseProvider {
         }
     }
 
-    func restore(_ completion: @escaping (Result<Void, Error>) -> Void) {
+    func restore(_ completion: @escaping @Sendable (Result<Void, Error>) -> Void) {
         paymentProvider.restoreCompletedTransactions { _, error in
             if let error = error {
                 completion(.failure(error))

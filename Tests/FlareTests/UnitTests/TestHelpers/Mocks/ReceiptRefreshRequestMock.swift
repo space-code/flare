@@ -1,12 +1,12 @@
 //
 // Flare
-// Copyright © 2024 Space Code. All rights reserved.
+// Copyright © 2023 Space Code. All rights reserved.
 //
 
 @testable import Flare
 import Foundation
 
-final class ReceiptRefreshRequestMock: IReceiptRefreshRequest {
+final class ReceiptRefreshRequestMock: IReceiptRefreshRequest, @unchecked Sendable {
     var invokedIdSetter = false
     var invokedIdSetterCount = 0
     var invokedId: String?

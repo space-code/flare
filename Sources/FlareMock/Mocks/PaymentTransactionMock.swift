@@ -5,7 +5,7 @@
 
 import StoreKit
 
-public final class PaymentTransactionMock: SKPaymentTransaction {
+public final class PaymentTransactionMock: SKPaymentTransaction, @unchecked Sendable {
     override public init() {}
 
     public var invokedTransactionState = false

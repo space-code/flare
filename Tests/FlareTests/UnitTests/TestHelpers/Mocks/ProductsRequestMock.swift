@@ -1,11 +1,11 @@
 //
 // Flare
-// Copyright © 2024 Space Code. All rights reserved.
+// Copyright © 2023 Space Code. All rights reserved.
 //
 
 import StoreKit
 
-final class ProductsRequestMock: SKProductsRequest {
+final class ProductsRequestMock: SKProductsRequest, @unchecked Sendable {
     var invokedStart = false
     var invokedStartCount = 0
 

@@ -60,7 +60,7 @@ public final class Flare {
 // MARK: IFlare
 
 extension Flare: IFlare {
-    public func fetch(productIDs: some Collection<String>, completion: @escaping Closure<Result<[StoreProduct], IAPError>>) {
+    public func fetch(productIDs: some Collection<String>, completion: @escaping SendableClosure<Result<[StoreProduct], IAPError>>) {
         iapProvider.fetch(productIDs: productIDs, completion: completion)
     }
 
@@ -71,7 +71,7 @@ extension Flare: IFlare {
     public func purchase(
         product: StoreProduct,
         promotionalOffer: PromotionalOffer?,
-        completion: @escaping Closure<Result<StoreTransaction, IAPError>>
+        completion: @escaping SendableClosure<Result<StoreTransaction, IAPError>>
     ) {
         guard checkIfUserCanMakePayments() else {
             completion(.failure(.paymentNotAllowed))
@@ -117,7 +117,7 @@ extension Flare: IFlare {
         return try await iapProvider.purchase(product: product, options: options, promotionalOffer: promotionalOffer)
     }
 
-    public func receipt(completion: @escaping Closure<Result<String, IAPError>>) {
+    public func receipt(completion: @escaping SendableClosure<Result<String, IAPError>>) {
         iapProvider.refreshReceipt { result in
             switch result {
             case let .success(receipt):
@@ -140,7 +140,7 @@ extension Flare: IFlare {
         await iapProvider.finish(transaction: transaction)
     }
 
-    public func addTransactionObserver(fallbackHandler: Closure<Result<StoreTransaction, IAPError>>?) {
+    public func addTransactionObserver(fallbackHandler: SendableClosure<Result<StoreTransaction, IAPError>>?) {
         iapProvider.addTransactionObserver(fallbackHandler: fallbackHandler)
     }
 
@@ -157,7 +157,7 @@ extension Flare: IFlare {
         try await iapProvider.restore()
     }
 
-    public func restore(_ completion: @escaping (Result<Void, any Error>) -> Void) {
+    public func restore(_ completion: @escaping @Sendable (Result<Void, any Error>) -> Void) {
         iapProvider.restore(completion)
     }
 
@@ -165,7 +165,7 @@ extension Flare: IFlare {
         try await iapProvider.refreshReceipt(updateTransactions: updateTransactions)
     }
 
-    public func receipt(updateTransactions: Bool, completion: @escaping (Result<String, IAPError>) -> Void) {
+    public func receipt(updateTransactions: Bool, completion: @escaping @Sendable (Result<String, IAPError>) -> Void) {
         iapProvider.refreshReceipt(updateTransactions: updateTransactions, completion: completion)
     }
 

@@ -6,7 +6,7 @@
 @testable import Flare
 import Foundation
 
-final class StoreTransactionMock: IStoreTransaction {
+final class StoreTransactionMock: IStoreTransaction, @unchecked Sendable {
     var invokedProductIdentifierGetter = false
     var invokedProductIdentifierGetterCount = 0
     var stubbedProductIdentifier: String! = ""

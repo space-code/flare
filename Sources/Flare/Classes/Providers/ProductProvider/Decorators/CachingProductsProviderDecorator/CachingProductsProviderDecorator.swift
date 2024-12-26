@@ -59,7 +59,7 @@ final class CachingProductsProviderDecorator {
     ///   - completion: A closure to be called with the fetched products or an error.
     private func fetch(
         productIDs: some Collection<String>,
-        fetcher: (any Collection<String>, @escaping (Result<[StoreProduct], IAPError>) -> Void) -> Void,
+        fetcher: (any Collection<String>, @escaping @Sendable (Result<[StoreProduct], IAPError>) -> Void) -> Void,
         completion: @escaping ProductsHandler
     ) {
         let cachedProducts = cachedProducts(ids: productIDs)
@@ -90,7 +90,7 @@ final class CachingProductsProviderDecorator {
     private func fetch(
         fetchPolicy: FetchCachePolicy,
         productIDs: some Collection<String>,
-        fetcher: (any Collection<String>, @escaping (Result<[StoreProduct], IAPError>) -> Void) -> Void,
+        fetcher: (any Collection<String>, @escaping @Sendable (Result<[StoreProduct], IAPError>) -> Void) -> Void,
         completion: @escaping ProductsHandler
     ) {
         switch fetchPolicy {
@@ -107,7 +107,7 @@ final class CachingProductsProviderDecorator {
     ///   - productIDs: The set of product IDs to check the cache for.
     ///   - completion: A closure to be called with the fetched products or an error.
     @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
-    private func fetchSK2Products(productIDs: some Collection<String>, completion: @escaping ProductsHandler) {
+    private func fetchSK2Products(productIDs: [String], completion: @escaping ProductsHandler) {
         AsyncHandler.call(
             completion: { result in
                 switch result {
@@ -149,7 +149,7 @@ extension CachingProductsProviderDecorator: ICachingProductsProviderDecorator {
                 fetchPolicy: self.configurationProvider.fetchCachePolicy,
                 productIDs: productIDs,
                 fetcher: { [weak self] _, completion in
-                    self?.fetchSK2Products(productIDs: productIDs, completion: completion)
+                    self?.fetchSK2Products(productIDs: Array(productIDs), completion: completion)
                 },
                 completion: { result in
                     continuation.resume(with: result)
@@ -158,3 +158,7 @@ extension CachingProductsProviderDecorator: ICachingProductsProviderDecorator {
         }
     }
 }
+
+// MARK: Sendable
+
+extension CachingProductsProviderDecorator: @unchecked Sendable {}

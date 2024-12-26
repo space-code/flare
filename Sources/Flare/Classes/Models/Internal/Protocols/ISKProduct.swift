@@ -6,7 +6,7 @@
 import Foundation
 
 /// Protocol representing a Store Kit product.
-protocol ISKProduct {
+protocol ISKProduct: Sendable {
     /// A localized description of the product.
     var localizedDescription: String { get }
 
