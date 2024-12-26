@@ -7,6 +7,7 @@
     import UIKit
 
     enum WindowSceneFactory {
+        @MainActor
         static func makeWindowScene() -> UIWindowScene {
             UIApplication.shared.connectedScenes.first as! UIWindowScene
         }

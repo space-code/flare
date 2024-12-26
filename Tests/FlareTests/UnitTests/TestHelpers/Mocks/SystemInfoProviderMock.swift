@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2024 Space Code. All rights reserved.
+// Copyright © 2023 Space Code. All rights reserved.
 //
 
 @testable import Flare
@@ -10,7 +10,7 @@
 
 // MARK: - SystemInfoProviderMock
 
-final class SystemInfoProviderMock: ISystemInfoProvider {
+final class SystemInfoProviderMock: ISystemInfoProvider, @unchecked Sendable {
     #if os(iOS) || VISION_OS
         var invokedCurrentSceneGetter = false
         var invokedCurrentSceneGetterCount = 0

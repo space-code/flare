@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2024 Space Code. All rights reserved.
+// Copyright © 2023 Space Code. All rights reserved.
 //
 
 import Concurrency
@@ -37,18 +37,21 @@ final class ProductProviderTests: XCTestCase {
 
     // MARK: - Tests
 
-    func test_thatProductProviderReturnsInvalidProductIDs_whenRequestProductsAreFetchedWithInvalidIDs() {
+    func test_thatProductProviderReturnsInvalidProductIDs_whenRequestProductsAreFetchedWithInvalidIDs() async throws {
         // given
-        var fetchResult: Result<[StoreProduct], IAPError>?
-        let completionHandler: IProductProvider.ProductsHandler = { result in fetchResult = result }
         let request = PurchaseManagerTestHelper.makeRequest(with: .requestID)
         let response = ProductResponseMock()
 
         response.stubbedInvokedInvalidProductsIdentifiers = [.productID]
 
         // when
-        sut.fetch(productIDs: Set.productIDs, requestID: .requestID, completion: completionHandler)
-        sut.productsRequest(request, didReceive: response)
+        let fetchResult: Result<[StoreProduct], IAPError>? = try await withCheckedThrowingContinuation { continuation in
+            sut.fetch(productIDs: Set.productIDs, requestID: .requestID) { result in
+                continuation.resume(returning: result)
+            }
+
+            sut.productsRequest(request, didReceive: response)
+        }
 
         // then
         if case let .failure(error) = fetchResult, case let .invalid(products) = error {
@@ -58,34 +61,40 @@ final class ProductProviderTests: XCTestCase {
         }
     }
 
-    func test_thatProductProviderReturnsProducts_whenRequestProductsAreFetchedWithValidProductIDs() {
+    func test_thatProductProviderReturnsProducts_whenRequestProductsAreFetchedWithValidProductIDs() async throws {
         // given
-        var products: [StoreProduct]? = []
-        let completionHandler: IProductProvider.ProductsHandler = { products = $0.success }
         let request = PurchaseManagerTestHelper.makeRequest(with: .requestID)
         let response = ProductResponseMock()
 
         // when
-        sut.fetch(productIDs: Set.productIDs, requestID: .requestID, completion: completionHandler)
-        sut.productsRequest(request, didReceive: response)
+        let fetchResult: Result<[StoreProduct], IAPError>? = try await withCheckedThrowingContinuation { continuation in
+            sut.fetch(productIDs: Set.productIDs, requestID: .requestID) { result in
+                continuation.resume(returning: result)
+            }
+
+            sut.productsRequest(request, didReceive: response)
+        }
 
         // then
-        XCTAssertEqual(products?.compactMap { $0.product as? SK1StoreProduct }.map(\.product), response.products)
+        XCTAssertEqual(fetchResult?.success?.compactMap { $0.product as? SK1StoreProduct }.map(\.product), response.products)
     }
 
-    func test_thatProductProviderHandlesError_whenRequestDidFailWithError() {
+    func test_thatProductProviderHandlesError_whenRequestDidFailWithError() async throws {
         // given
-        var error: IAPError?
-        let completionHandler: IProductProvider.ProductsHandler = { error = $0.error }
         let request = PurchaseManagerTestHelper.makeRequest(with: .requestID)
         let errorStub = IAPError.unknown
 
         // when
-        sut.fetch(productIDs: Set.productIDs, requestID: .requestID, completion: completionHandler)
-        sut.request(request, didFailWithError: errorStub)
+        let fetchResult: Result<[StoreProduct], IAPError>? = try await withCheckedThrowingContinuation { continuation in
+            sut.fetch(productIDs: Set.productIDs, requestID: .requestID) { result in
+                continuation.resume(returning: result)
+            }
+
+            sut.request(request, didFailWithError: errorStub)
+        }
 
         // then
-        XCTAssertEqual(error?.plainError as? NSError, errorStub.plainError as NSError)
+        XCTAssertEqual(fetchResult?.error?.plainError as? NSError, errorStub.plainError as NSError)
     }
 }
 

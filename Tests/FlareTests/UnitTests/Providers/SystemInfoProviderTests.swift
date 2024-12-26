@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2024 Space Code. All rights reserved.
+// Copyright © 2023 Space Code. All rights reserved.
 //
 
 #if os(iOS) || VISION_OS
@@ -16,7 +16,7 @@
 
         // MARK: Initialization
 
-        override func setUp() {
+        @MainActor override func setUp() {
             super.setUp()
             scenesHolderMock = ScenesHolderMock()
             sut = SystemInfoProvider(scenesHolder: scenesHolderMock)

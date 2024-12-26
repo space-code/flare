@@ -4,7 +4,7 @@
 //
 
 import Foundation
-@preconcurrency import Log
+import Log
 
 // MARK: - Logger
 
@@ -19,13 +19,23 @@ enum Logger {
         #endif
     }
 
-    private static let `default`: Log.Logger = .init(
-        printers: [
-            ConsolePrinter(formatters: Self.formatters),
-            OSPrinter(subsystem: .subsystem, category: .category, formatters: Self.formatters),
-        ],
-        logLevel: Self.defaultLogLevel
-    )
+    #if swift(>=6.0)
+        private nonisolated(unsafe) static let `default`: Log.Logger = .init(
+            printers: [
+                ConsolePrinter(formatters: Self.formatters),
+                OSPrinter(subsystem: .subsystem, category: .category, formatters: Self.formatters),
+            ],
+            logLevel: Self.defaultLogLevel
+        )
+    #else
+        private static let `default`: Log.Logger = .init(
+            printers: [
+                ConsolePrinter(formatters: Self.formatters),
+                OSPrinter(subsystem: .subsystem, category: .category, formatters: Self.formatters),
+            ],
+            logLevel: Self.defaultLogLevel
+        )
+    #endif
 
     private static var formatters: [ILogFormatter] {
         [

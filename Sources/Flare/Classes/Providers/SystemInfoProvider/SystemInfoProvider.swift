@@ -9,20 +9,20 @@
 
 // MARK: - SystemInfoProvider
 
-final class SystemInfoProvider {
+final class SystemInfoProvider: @unchecked Sendable {
     // MARK: Properties
 
     #if os(iOS) || VISION_OS
-        private let scenesHolder: @Sendable () async -> IScenesHolder
+        private let scenesHolder: () async -> Set<UIScene>
 
         // MARK: Initialization
 
         init(scenesHolder: IScenesHolder? = nil) {
             if let scenesHolder {
-                self.scenesHolder = { scenesHolder }
+                self.scenesHolder = { await scenesHolder.connectedScenes }
             } else {
                 self.scenesHolder = {
-                    await MainActor.run { UIApplication.shared }
+                    await UIApplication.shared.connectedScenes
                 }
             }
         }
@@ -41,13 +41,12 @@ extension SystemInfoProvider: ISystemInfoProvider {
         @MainActor
         var currentScene: UIWindowScene {
             get async throws {
-                let holder = await scenesHolder()
-                var scenes = holder.connectedScenes
+                var scenes = await scenesHolder()
                     .filter { $0.activationState == .foregroundActive }
 
                 #if DEBUG && targetEnvironment(simulator)
                     if scenes.isEmpty, ProcessInfo.isRunningUnitTests {
-                        scenes = holder.connectedScenes
+                        scenes = await scenesHolder()
                     }
                 #endif
 

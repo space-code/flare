@@ -6,7 +6,7 @@
 import Foundation
 import StoreKit
 
-public typealias PurchaseCompletionHandler = @MainActor @Sendable (Result<StoreTransaction, IAPError>) -> Void
+public typealias PurchaseCompletionHandler = @Sendable (Result<StoreTransaction, IAPError>) -> Void
 
 // MARK: - IPurchaseProvider
 

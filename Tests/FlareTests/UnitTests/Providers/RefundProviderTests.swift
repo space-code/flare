@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2024 Space Code. All rights reserved.
+// Copyright © 2023 Space Code. All rights reserved.
 //
 
 #if os(iOS) || VISION_OS
@@ -34,16 +34,23 @@
 
         // MARK: - Tests
 
+        @MainActor
         func testThatRefundProviderThrowsAnError_whenVerificationDidFail() async throws {
             // given
             refundRequestProviderMock.stubbedVerifyTransaction = nil
             systemInfoProviderMock.stubbedCurrentScene = .failure(IAPError.unknown)
 
             // when
-            let error: Error? = await error(for: { try await sut.beginRefundRequest(productID: .productID) })
+            var result: Error? = nil
+
+            do {
+                _ = try await sut.beginRefundRequest(productID: .productID)
+            } catch {
+                result = error
+            }
 
             // then
-            XCTAssertEqual(error as? NSError, IAPError.unknown as NSError)
+            XCTAssertEqual(result as? NSError, IAPError.unknown as NSError)
         }
 
 //        func testThatRefundProviderThrowsAnErrorWhenRefundRequestDidFail() async throws {

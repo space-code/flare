@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2024 Space Code. All rights reserved.
+// Copyright © 2023 Space Code. All rights reserved.
 //
 
 @testable import Flare
@@ -50,18 +50,23 @@ class ReceiptRefreshProviderTests: XCTestCase {
 
     // MARK: - Tests
 
-    func test_thatReceiptRefreshProviderHandlesRequestError_whenErrorOccurred() {
+    func test_thatReceiptRefreshProviderHandlesRequestError_whenErrorOccurred() async throws {
         // given
-        receiptRefreshRequestFactoryMock.stubbedMakeResult = ReceiptRefreshRequestMock()
+        let stubbedRequest = ReceiptRefreshRequestMock()
+        stubbedRequest.stubbedId = .requestID
+        receiptRefreshRequestFactoryMock.stubbedMakeResult = stubbedRequest
 
-        var result: Result<Void, IAPError>?
         let request = PurchaseManagerTestHelper.makeRequest(with: .requestID)
-        let handler: ReceiptRefreshHandler = { result = $0 }
         let error = IAPError.paymentCancelled
 
         // when
-        sut.refresh(requestID: .requestID, handler: handler)
-        sut.request(request, didFailWithError: error)
+        let result: Result<Void, IAPError> = try await withCheckedThrowingContinuation { continuation in
+            sut.refresh(requestID: .requestID) { result in
+                continuation.resume(returning: result)
+            }
+
+            sut.request(request, didFailWithError: error)
+        }
 
         // then
         if case let .failure(resultError) = result {
@@ -69,20 +74,26 @@ class ReceiptRefreshProviderTests: XCTestCase {
         }
     }
 
-    func test_thatReceiptRefreshProviderFinishesRequest_whenRequestCompletedSuccessfully() {
+    func test_thatReceiptRefreshProviderFinishesRequest_whenRequestCompletedSuccessfully() async throws {
         // given
-        receiptRefreshRequestFactoryMock.stubbedMakeResult = ReceiptRefreshRequestMock()
+        let stubbedRequest = ReceiptRefreshRequestMock()
+        stubbedRequest.stubbedId = .requestID
+        receiptRefreshRequestFactoryMock.stubbedMakeResult = stubbedRequest
 
-        var result: Result<Void, IAPError>?
         let request = PurchaseManagerTestHelper.makeRequest(with: .requestID)
-        let handler: ReceiptRefreshHandler = { result = $0 }
 
         // when
-        sut.refresh(requestID: .requestID, handler: handler)
-        sut.requestDidFinish(request)
+        let result: Result<Void, IAPError>? = try await withCheckedThrowingContinuation { continuation in
+            sut.refresh(requestID: .requestID) { result in
+                continuation.resume(returning: result)
+            }
+
+            sut.requestDidFinish(request)
+        }
 
         // then
         if case .failure = result { XCTFail("The result must be `success`") }
+        XCTAssertEqual(stubbedRequest.invokedIdGetterCount, 1)
     }
 
     func test_thatReceiptRefreshProviderLoadsAppStoreReceipt_whenReceiptExists() {

@@ -16,16 +16,16 @@ actor TransactionListener {
 
     // MARK: Private
 
-    private let updates: AsyncStream<TransactionResult>
+    private let updates: StoreKit.Transaction.Transactions
     private var task: Task<Void, Never>?
 
     private weak var delegate: TransactionListenerDelegate?
 
     // MARK: Initialization
 
-    init<S: AsyncSequence>(delegate: TransactionListenerDelegate? = nil, updates: S) where S.Element == TransactionResult {
+    init(delegate: TransactionListenerDelegate? = nil, updates: StoreKit.Transaction.Transactions) {
         self.delegate = delegate
-        self.updates = updates.toAsyncStream()
+        self.updates = updates // .toAsyncStream()
     }
 
     // MARK: Private

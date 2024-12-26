@@ -32,35 +32,34 @@ final class SortingProductsProviderDecoratorTests: XCTestCase {
 
     // MARK: Tests
 
-    func test_ProductProviderSortsSetItems_whenFetchProducts() {
-        test_sort(collection: Set.productIDs)
+    func test_ProductProviderSortsSetItems_whenFetchProducts() async {
+        await test_sort(collection: Set.productIDs)
     }
 
-    func test_ProductProviderSortsArrayItems_whenFetchProducts() {
-        test_sort(collection: Array.productIDs)
+    func test_ProductProviderSortsArrayItems_whenFetchProducts() async {
+        await test_sort(collection: Array.productIDs)
     }
 
     // MARK: Private
 
-    private func test_sort(collection: some Collection<String>) {
+    private func test_sort(collection: some Collection<String>) async {
         // given
         let ids = collection
+        let arrayIDs = Array(ids)
         let products: [StoreProduct] = ids
             .map { .fake(productIdentifier: $0) }
             .shuffled()
         productProviderMock.stubbedFetchResult = .success(products)
 
         // when
-        var resultProducts: [StoreProduct] = []
         sut.fetch(productIDs: ids, requestID: .requestID) { result in
             if case let .success(products) = result {
-                resultProducts = products
+                XCTAssertEqual(arrayIDs.count, products.count)
+                XCTAssertEqual(arrayIDs, products.map(\.productIdentifier))
+            } else {
+                XCTFail("Fetch resulted in an unknown state.")
             }
         }
-
-        // then
-        XCTAssertEqual(ids.count, resultProducts.count)
-        XCTAssertEqual(Array(ids), resultProducts.map(\.productIdentifier))
     }
 }
 

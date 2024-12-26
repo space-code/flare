@@ -52,13 +52,7 @@ final class PurchaseProviderMock: IPurchaseProvider, @unchecked Sendable {
         invokedPurchaseParameters = (product, promotionalOffer)
         invokedPurchaseParametersList.append((product, promotionalOffer))
         if let result = stubbedPurchaseCompletionResult {
-            #if swift(>=6.0)
-                MainActor.assumeIsolated {
-                    completion(result.0)
-                }
-            #else
-                completion(result.0)
-            #endif
+            completion(result.0)
         }
     }
 
@@ -81,13 +75,7 @@ final class PurchaseProviderMock: IPurchaseProvider, @unchecked Sendable {
         invokedPurchaseWithOptionsParametersList.append((product, options, promotionalOffer))
 
         if let result = stubbedinvokedPurchaseWithOptionsCompletionResult {
-            #if swift(>=6.0)
-                MainActor.assumeIsolated {
-                    completion(result.0)
-                }
-            #else
-                completion(result.0)
-            #endif
+            completion(result.0)
         }
     }
 
