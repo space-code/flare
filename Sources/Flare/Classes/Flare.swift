@@ -23,7 +23,11 @@ public final class Flare {
     private let configurationProvider: IConfigurationProvider
 
     /// The singleton instance.
-    private nonisolated(unsafe) static let flare: Flare = .init()
+    #if swift(>=6.0)
+        private nonisolated(unsafe) static let flare: Flare = .init()
+    #else
+        private static let flare: Flare = .init()
+    #endif
 
     /// Returns a shared `Flare` object.
     public static var shared: IFlare { flare }
