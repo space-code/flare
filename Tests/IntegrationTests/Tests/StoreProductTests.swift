@@ -34,15 +34,17 @@ final class StoreProductTests: StoreSessionTestCase {
         let expectation = XCTestExpectation(description: "Purchase a product")
 
         // when
-        var products: [StoreProduct] = []
-        provider.fetch(productIDs: [String.productID], requestID: UUID().uuidString) { result in
-            switch result {
-            case let .success(skProducts):
-                products = skProducts.map { StoreProduct($0) }
-            case .failure:
-                break
+        let products: [StoreProduct] = try await withCheckedThrowingContinuation { continuation in {
+            provider.fetch(productIDs: [String.productID], requestID: UUID().uuidString) { result in
+                switch result {
+                case let .success(skProducts):
+                    let products = skProducts.map { StoreProduct($0) }
+                    completion.resume(returning: products)
+                case .failure:
+                    completion.resume(returning: [])
+                }
+                expectation.fulfill()
             }
-            expectation.fulfill()
         }
 
         #if swift(>=5.9)
