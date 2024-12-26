@@ -63,7 +63,8 @@ let package = Package(
                 "FlareUI",
                 "FlareMock",
                 "FlareUIMock",
-            ]
+            ],
+            swiftSettings: [.swiftLanguageMode(.v5)]
         ),
         .testTarget(
             name: "SnapshotTests",
