@@ -68,5 +68,6 @@ let package = Package(
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
             ]
         ),
-    ]
+    ],
+    swiftLanguageVersions: [.v5]
 )
