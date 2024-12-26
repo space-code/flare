@@ -34,14 +34,14 @@ final class StoreProductTests: StoreSessionTestCase {
         let expectation = XCTestExpectation(description: "Purchase a product")
 
         // when
-        let products: [StoreProduct] = try await withCheckedThrowingContinuation { _ in
+        let products: [StoreProduct] = try await withCheckedThrowingContinuation { continuation in
             provider.fetch(productIDs: [String.productID], requestID: UUID().uuidString) { result in
                 switch result {
                 case let .success(skProducts):
                     let products = skProducts.map { StoreProduct($0) }
-                    completion.resume(returning: products)
+                    continuation.resume(returning: products)
                 case .failure:
-                    completion.resume(returning: [])
+                    continuation.resume(returning: [])
                 }
                 expectation.fulfill()
             }
