@@ -25,7 +25,7 @@ protocol IProductPresenter {
 // MARK: - ProductPresenter
 
 /// The presenter for a product.
-final class ProductPresenter: IPresenter {
+final class ProductPresenter: IPresenter, @unchecked Sendable {
     // MARK: Properties
 
     /// The strategy for fetching product information.

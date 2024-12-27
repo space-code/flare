@@ -32,7 +32,7 @@ actor ProductPurchaseService: IProductPurchaseService {
     // MARK: Properties
 
     /// The in-app purchase service.
-    private var iap: IFlare
+    private nonisolated(unsafe) var iap: IFlare
 
     private var isExecuted = false
 

@@ -7,13 +7,13 @@ import SwiftUI
 
 @available(watchOS, unavailable)
 // swiftlint:disable:next type_name
-struct SubscriptionsWrapperViewStyleConfiguration {
+struct SubscriptionsWrapperViewStyleConfiguration: Sendable {
     // MARK: Types
 
     struct Toolbar: View {
         let body: AnyView
 
-        init<Content: View>(_ content: Content) {
+        init(_ content: some View) {
             self.body = content.eraseToAnyView()
         }
     }
@@ -22,5 +22,5 @@ struct SubscriptionsWrapperViewStyleConfiguration {
 
     let items: [SubscriptionView.ViewModel]
     let selectedID: String?
-    let action: (SubscriptionView.ViewModel) -> Void
+    let action: @Sendable (SubscriptionView.ViewModel) -> Void
 }

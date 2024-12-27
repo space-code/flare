@@ -9,7 +9,7 @@ import SwiftUI
 @available(macOS, unavailable)
 @available(watchOS, unavailable)
 @available(tvOS, unavailable)
-public struct LargeProductStyle: IProductStyle {
+public struct LargeProductStyle: @preconcurrency IProductStyle {
     // MARK: Properties
 
     private var viewModelFactory: IProductViewModelFactory
@@ -27,6 +27,7 @@ public struct LargeProductStyle: IProductStyle {
     // MARK: IProductStyle
 
     @ViewBuilder
+    @MainActor
     public func makeBody(configuration: ProductStyleConfiguration) -> some View {
         switch configuration.state {
         case .loading:

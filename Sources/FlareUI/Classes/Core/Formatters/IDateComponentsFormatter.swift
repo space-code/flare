@@ -8,7 +8,7 @@ import Foundation
 // MARK: - IDateComponentsFormatter
 
 /// A type that creates string representations of quantities of time.
-protocol IDateComponentsFormatter {
+protocol IDateComponentsFormatter: Sendable {
     /// The bitmask of calendrical units such as day and month to include in the output string.
     var allowedUnits: NSCalendar.Unit { get set }
 

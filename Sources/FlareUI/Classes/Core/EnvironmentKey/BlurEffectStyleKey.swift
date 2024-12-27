@@ -9,7 +9,7 @@ import SwiftUI
 
 #if os(iOS) || os(tvOS)
     private struct BlurEffectStyleKey: EnvironmentKey {
-        static var defaultValue: UIBlurEffect.Style = .light
+        static let defaultValue: UIBlurEffect.Style = .light
     }
 
     extension EnvironmentValues {

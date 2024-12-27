@@ -18,6 +18,7 @@ struct BorderedSubscriptionStoreControlStyle: ISubscriptionControlStyle {
 
     // MARK: ISubscriptionControlStyle
 
+    @MainActor
     func makeBody(configuration: Configuration) -> some View {
         BorderedSubscriptionStoreControlStyleView(configuration: configuration)
     }

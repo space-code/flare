@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-public struct CompactProductStyle: IProductStyle {
+public struct CompactProductStyle: @preconcurrency IProductStyle {
     // MARK: Properties
 
     private var viewModelFactory: IProductViewModelFactory
@@ -23,6 +23,7 @@ public struct CompactProductStyle: IProductStyle {
     // MARK: IProductStyle
 
     @ViewBuilder
+    @MainActor
     public func makeBody(configuration: ProductStyleConfiguration) -> some View {
         switch configuration.state {
         case .loading:

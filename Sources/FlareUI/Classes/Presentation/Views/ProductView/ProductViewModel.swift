@@ -9,7 +9,7 @@ import Foundation
 // MARK: - ProductViewModel
 
 /// A view model for managing a product.
-struct ProductViewModel: IModel {
+struct ProductViewModel: IModel, @unchecked Sendable {
     /// The state of the view model.
     enum State: Equatable {
         /// Loading state.

@@ -8,7 +8,7 @@ import SwiftUI
 // MARK: - SubscriptionPickerItemBackgroundKey
 
 private struct SubscriptionPickerItemBackgroundKey: EnvironmentKey {
-    static var defaultValue: Color = Palette.systemGray5
+    static let defaultValue: Color = Palette.systemGray5
 }
 
 extension EnvironmentValues {

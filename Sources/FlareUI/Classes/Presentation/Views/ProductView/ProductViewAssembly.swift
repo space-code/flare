@@ -9,24 +9,26 @@ import SwiftUI
 // MARK: - IProductViewAssembly
 
 /// A protocol for assembling product views.
-protocol IProductViewAssembly {
+protocol IProductViewAssembly: Sendable {
     /// Assembles a product view for the given product ID.
     ///
     /// - Parameter id: The ID of the product.
     /// - Returns: A `ViewWrapper` containing the product view model and the product wrapper view.
+    @MainActor
     func assemble(id: String) -> ViewWrapper<ProductViewModel, ProductWrapperView>
 
     /// Assembles a product view for the given store product.
     ///
     /// - Parameter storeProduct: The store product.
     /// - Returns: A `ViewWrapper` containing the product view model and the product wrapper view.
+    @MainActor
     func assemble(storeProduct: StoreProduct) -> ViewWrapper<ProductViewModel, ProductWrapperView>
 }
 
 // MARK: - ProductViewAssembly
 
 /// An assembly class for creating product views.
-final class ProductViewAssembly: IProductViewAssembly {
+final class ProductViewAssembly: IProductViewAssembly, @unchecked Sendable {
     // MARK: Properties
 
     private let iap: IFlare
@@ -42,16 +44,19 @@ final class ProductViewAssembly: IProductViewAssembly {
 
     // MARK: IProductViewAssembly
 
+    @MainActor
     func assemble(id: String) -> ViewWrapper<ProductViewModel, ProductWrapperView> {
         assemble(with: .productID(id))
     }
 
+    @MainActor
     func assemble(storeProduct: StoreProduct) -> ViewWrapper<ProductViewModel, ProductWrapperView> {
         assemble(with: .product(storeProduct))
     }
 
     // MARK: Private
 
+    @MainActor
     private func assemble(with type: ProductViewType) -> ViewWrapper<ProductViewModel, ProductWrapperView> {
         let presenter = ProductPresenter(
             productFetcher: ProductStrategy(type: type, iap: iap),

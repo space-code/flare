@@ -8,6 +8,7 @@ import SwiftUI
 // MARK: - IStoreButtonsAssembly
 
 protocol IStoreButtonsAssembly {
+    @MainActor
     func assemble(storeButtonType: StoreButtonType) -> AnyView
 }
 
@@ -29,6 +30,7 @@ final class StoreButtonsAssembly: IStoreButtonsAssembly {
 
     // MARK: IStoreButtonsAssembly
 
+    @MainActor
     func assemble(storeButtonType: StoreButtonType) -> AnyView {
         switch storeButtonType {
         case .restore:

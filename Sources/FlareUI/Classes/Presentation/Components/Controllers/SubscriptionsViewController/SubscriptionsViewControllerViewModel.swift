@@ -9,6 +9,7 @@ import SwiftUI
 @available(iOS 13.0, macOS 11.0, *)
 @available(watchOS, unavailable)
 @available(tvOS, unavailable)
+@MainActor
 final class SubscriptionsViewControllerViewModel: ObservableObject {
     @Published var onInAppPurchaseCompletion: PurchaseCompletionHandler?
     @Published var inAppPurchaseOptions: PurchaseOptionHandler?

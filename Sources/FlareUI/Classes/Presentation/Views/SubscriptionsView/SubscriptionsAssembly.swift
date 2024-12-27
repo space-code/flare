@@ -15,7 +15,7 @@ protocol ISubscriptionsAssembly {
 // MARK: - SubscriptionsAssembly
 
 @available(watchOS, unavailable)
-final class SubscriptionsAssembly: ISubscriptionsAssembly {
+final class SubscriptionsAssembly: @preconcurrency ISubscriptionsAssembly {
     // MARK: Properties
 
     private let iap: IFlare
@@ -36,6 +36,7 @@ final class SubscriptionsAssembly: ISubscriptionsAssembly {
 
     // MARK: ISubscriptionAssembly
 
+    @MainActor
     func assemble(ids: some Collection<String>) -> AnyView {
         let viewModelFactory = SubscriptionsViewModelViewFactory(
             subscriptionStatusVerifier: subscriptionStatusVerifierProvider.subscriptionStatusVerifier
