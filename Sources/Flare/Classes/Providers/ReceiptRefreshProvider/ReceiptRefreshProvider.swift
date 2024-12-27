@@ -80,9 +80,9 @@ final class ReceiptRefreshProvider: NSObject, @unchecked Sendable {
     ///   - request: The refresh request.
     ///   - handler: The closure to be executed once the refresh is complete.
     private func fetch(request: IReceiptRefreshRequest, handler: @escaping ReceiptRefreshHandler) {
-        self.handlers[request.id] = handler
-
         dispatchQueue.async {
+            self.handlers[request.id] = handler
+
             self.dispatchQueueFactory.main().async {
                 request.start()
             }
@@ -116,8 +116,8 @@ extension ReceiptRefreshProvider: SKRequestDelegate {
         Logger.error(message: L10n.Receipt.refreshingReceiptFailed(request.id, error.localizedDescription))
 
         dispatchQueue.async {
+            let handler = self.handlers.removeValue(forKey: request.id)
             self.dispatchQueueFactory.main().async {
-                let handler = self.handlers.removeValue(forKey: request.id)
                 handler?(.failure(IAPError(error: error)))
             }
         }
@@ -127,8 +127,8 @@ extension ReceiptRefreshProvider: SKRequestDelegate {
         Logger.info(message: L10n.Receipt.refreshedReceipt(request.id))
 
         dispatchQueue.async {
+            let handler = self.handlers.removeValue(forKey: request.id)
             self.dispatchQueueFactory.main().async {
-                let handler = self.handlers.removeValue(forKey: request.id)
                 handler?(.success(()))
             }
         }
