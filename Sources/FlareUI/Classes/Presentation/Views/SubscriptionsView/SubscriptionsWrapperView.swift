@@ -6,6 +6,7 @@
 import SwiftUI
 
 @available(watchOS, unavailable)
+@MainActor
 struct SubscriptionsWrapperView: View, IViewWrapper {
     // MARK: Propertirs
 

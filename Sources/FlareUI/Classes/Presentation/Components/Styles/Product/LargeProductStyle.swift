@@ -5,38 +5,80 @@
 
 import SwiftUI
 
-@available(iOS 13, *)
-@available(macOS, unavailable)
-@available(watchOS, unavailable)
-@available(tvOS, unavailable)
-public struct LargeProductStyle: @preconcurrency IProductStyle {
-    // MARK: Properties
+// swiftlint:disable file_types_order
 
-    private var viewModelFactory: IProductViewModelFactory
+#if swift(>=6.0)
+    @available(iOS 13, *)
+    @available(macOS, unavailable)
+    @available(watchOS, unavailable)
+    @available(tvOS, unavailable)
+    public struct LargeProductStyle: @preconcurrency IProductStyle {
+        // MARK: Properties
 
-    // MARK: Initialization
+        private var viewModelFactory: IProductViewModelFactory
 
-    public init() {
-        self.init(viewModelFactory: ProductViewModelFactory())
-    }
+        // MARK: Initialization
 
-    init(viewModelFactory: IProductViewModelFactory = ProductViewModelFactory()) {
-        self.viewModelFactory = viewModelFactory
-    }
+        public init() {
+            self.init(viewModelFactory: ProductViewModelFactory())
+        }
 
-    // MARK: IProductStyle
+        init(viewModelFactory: IProductViewModelFactory = ProductViewModelFactory()) {
+            self.viewModelFactory = viewModelFactory
+        }
 
-    @ViewBuilder
-    @MainActor
-    public func makeBody(configuration: ProductStyleConfiguration) -> some View {
-        switch configuration.state {
-        case .loading:
-            ProductPlaceholderView(isIconHidden: configuration.icon == nil, style: .large)
-        case let .product(product):
-            let viewModel = viewModelFactory.make(product, style: .large)
-            ProductInfoView(viewModel: viewModel, icon: configuration.icon, style: .large) { configuration.purchase() }
-        case .error:
-            ProductPlaceholderView(isIconHidden: configuration.icon == nil, style: .large)
+        // MARK: IProductStyle
+
+        @ViewBuilder
+        @MainActor
+        public func makeBody(configuration: ProductStyleConfiguration) -> some View {
+            switch configuration.state {
+            case .loading:
+                ProductPlaceholderView(isIconHidden: configuration.icon == nil, style: .large)
+            case let .product(product):
+                let viewModel = viewModelFactory.make(product, style: .large)
+                ProductInfoView(viewModel: viewModel, icon: configuration.icon, style: .large) { configuration.purchase() }
+            case .error:
+                ProductPlaceholderView(isIconHidden: configuration.icon == nil, style: .large)
+            }
         }
     }
-}
+#else
+    @available(iOS 13, *)
+    @available(macOS, unavailable)
+    @available(watchOS, unavailable)
+    @available(tvOS, unavailable)
+    public struct LargeProductStyle: IProductStyle {
+        // MARK: Properties
+
+        private var viewModelFactory: IProductViewModelFactory
+
+        // MARK: Initialization
+
+        public init() {
+            self.init(viewModelFactory: ProductViewModelFactory())
+        }
+
+        init(viewModelFactory: IProductViewModelFactory = ProductViewModelFactory()) {
+            self.viewModelFactory = viewModelFactory
+        }
+
+        // MARK: IProductStyle
+
+        @ViewBuilder
+        @MainActor
+        public func makeBody(configuration: ProductStyleConfiguration) -> some View {
+            switch configuration.state {
+            case .loading:
+                ProductPlaceholderView(isIconHidden: configuration.icon == nil, style: .large)
+            case let .product(product):
+                let viewModel = viewModelFactory.make(product, style: .large)
+                ProductInfoView(viewModel: viewModel, icon: configuration.icon, style: .large) { configuration.purchase() }
+            case .error:
+                ProductPlaceholderView(isIconHidden: configuration.icon == nil, style: .large)
+            }
+        }
+    }
+#endif
+
+// swiftlint:enable file_types_order

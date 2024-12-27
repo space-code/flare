@@ -8,7 +8,7 @@ import Foundation
 // MARK: - StoreButtonType
 
 /// Enum representing different types of buttons in a store.
-public enum StoreButtonType {
+public enum StoreButtonType: Sendable {
     /// Button for restoring purchases.
     @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
     case restore
