@@ -69,7 +69,7 @@ extension SK2StoreTransaction: IStoreTransaction {
 
     var price: Decimal? {
         #if swift(>=6.0)
-            underlyingRenewalInfo.price
+            transaction.price
         #else
             nil
         #endif

@@ -43,6 +43,8 @@ extension SortingProductsProviderDecorator: ISortingProductsProviderDecorator {
         requestID: String,
         completion: @escaping ProductsHandler
     ) {
+        let productIDs = Array(productIDs)
+
         productProvider.fetch(productIDs: productIDs, requestID: requestID) { [weak self] result in
             guard let self = self else { return }
 
@@ -70,3 +72,7 @@ private extension Array where Element: StoreProduct {
         first(where: { $0.productIdentifier == id })
     }
 }
+
+// MARK: - SortingProductsProviderDecorator + Sendable
+
+extension SortingProductsProviderDecorator: @unchecked Sendable {}

@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2024 Space Code. All rights reserved.
+// Copyright © 2023 Space Code. All rights reserved.
 //
 
 import Concurrency
@@ -10,7 +10,7 @@ import StoreKit
 // MARK: - ReceiptRefreshProvider
 
 /// A class that can refresh the bundle's App Store receipt.
-final class ReceiptRefreshProvider: NSObject {
+final class ReceiptRefreshProvider: NSObject, @unchecked Sendable {
     // MARK: Properties
 
     /// The dispatch queue factory.
@@ -82,6 +82,7 @@ final class ReceiptRefreshProvider: NSObject {
     private func fetch(request: IReceiptRefreshRequest, handler: @escaping ReceiptRefreshHandler) {
         dispatchQueue.async {
             self.handlers[request.id] = handler
+
             self.dispatchQueueFactory.main().async {
                 request.start()
             }

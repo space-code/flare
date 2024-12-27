@@ -1,12 +1,14 @@
 //
 // Flare
-// Copyright © 2024 Space Code. All rights reserved.
+// Copyright © 2023 Space Code. All rights reserved.
 //
 
 import StoreKit
 
+// MARK: - PaymentQueue
+
 /// `PaymentQueue` interacts with the server-side payment queue
-public protocol PaymentQueue: AnyObject {
+public protocol PaymentQueue: AnyObject, Sendable {
     /// `False` if this device is not able or allowed to make payments
     var canMakePayments: Bool { get }
 
@@ -41,4 +43,14 @@ public protocol PaymentQueue: AnyObject {
         @available(iOS 14.0, *)
         func presentCodeRedemptionSheet()
     #endif
+}
+
+extension PaymentQueue {
+    func add(_ payment: IStorePayment) {
+        if let payment = payment as? SK1StorePayment {
+            self.add(payment.underlyingProduct)
+        } else {
+            fatalError("Incompatible type: PaymentQueue works only with SK1StorePayment.")
+        }
+    }
 }

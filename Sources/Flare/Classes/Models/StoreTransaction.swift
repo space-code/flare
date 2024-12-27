@@ -9,7 +9,7 @@ import StoreKit
 // MARK: - StoreTransaction
 
 /// A class represent a StoreKit transaction.
-public final class StoreTransaction {
+public final class StoreTransaction: Sendable {
     // MARK: Properties
 
     /// The StoreKit transaction.

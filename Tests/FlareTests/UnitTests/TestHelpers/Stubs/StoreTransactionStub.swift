@@ -6,7 +6,7 @@
 @testable import Flare
 import Foundation
 
-final class StoreTransactionStub: IStoreTransaction {
+final class StoreTransactionStub: IStoreTransaction, @unchecked Sendable {
     var stubbedProductIdentifier: String! = UUID().uuidString
 
     var productIdentifier: String {

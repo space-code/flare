@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2024 Space Code. All rights reserved.
+// Copyright © 2023 Space Code. All rights reserved.
 //
 
 @testable import Flare
@@ -155,65 +155,80 @@ class IAPProviderTests: XCTestCase {
         XCTAssertEqual(errorResult as? NSError, IAPError.unknown as NSError)
     }
 
-    func test_thatIAPProviderReturnsError_whenAddingPaymentFailed() {
+    func test_thatIAPProviderReturnsError_whenAddingPaymentFailed() async throws {
         // given
         productProviderMock.stubbedFetchResult = .success([StoreProduct(SK1StoreProduct(SKProductMock()))])
         purchaseProvider.stubbedPurchaseCompletionResult = (.failure(.unknown), ())
 
         // when
-        var error: Error?
-        sut.purchase(product: .fake(productIdentifier: .productID)) { error = $0.error }
+        let error: Error? = try await withCheckedThrowingContinuation { continuation in
+            sut.purchase(product: .fake(productIdentifier: .productID)) {
+                continuation.resume(returning: $0.error)
+            }
+        }
 
         // then
         XCTAssertEqual(error as? NSError, IAPError.unknown as NSError)
     }
 
-    func test_thatIAPProviderReturnsError_whenFetchRequestFailed() {
+    func test_thatIAPProviderReturnsError_whenFetchRequestFailed() async throws {
         // given
         purchaseProvider.stubbedPurchaseCompletionResult = (.failure(IAPError.unknown), ())
 
         // when
-        var error: Error?
-        sut.purchase(product: .fake(productIdentifier: .productID)) { error = $0.error }
+        let error: Error? = try await withCheckedThrowingContinuation { continuation in
+            sut.purchase(product: .fake(productIdentifier: .productID)) {
+                continuation.resume(returning: $0.error)
+            }
+        }
 
         // then
         XCTAssertEqual(error as? NSError, IAPError.unknown as NSError)
     }
 
-    func test_thatIAPProviderRefreshesReceipt_whenReceiptExist() {
+    func test_thatIAPProviderRefreshesReceipt_whenReceiptExist() async throws {
         // given
         receiptRefreshProviderMock.stubbedReceipt = .receipt
         receiptRefreshProviderMock.stubbedRefreshResult = .success(())
 
         // when
-        var receipt: String?
-        sut.refreshReceipt { receipt = $0.success }
+        let receipt: String? = try await withCheckedThrowingContinuation { continuation in
+            sut.refreshReceipt {
+                continuation.resume(returning: $0.success)
+            }
+        }
 
         // then
         XCTAssertEqual(receipt, .receipt)
     }
 
-    func test_thatIAPProviderDoesNotRefreshReceipt_whenRequestFailed() {
+    func test_thatIAPProviderDoesNotRefreshReceipt_whenRequestFailed() async throws {
         // given
         receiptRefreshProviderMock.stubbedReceipt = nil
         receiptRefreshProviderMock.stubbedRefreshResult = .failure(.receiptNotFound)
 
         // when
-        var error: Error?
-        sut.refreshReceipt { error = $0.error }
+        let error: Error? = try await withCheckedThrowingContinuation { continuation in
+            sut.refreshReceipt {
+                continuation.resume(returning: $0.error)
+            }
+        }
 
         // then
         XCTAssertEqual(error as? NSError, IAPError.receiptNotFound as NSError)
     }
 
-    func test_thatIAPProviderReturnsReceiptNotFoundError_whenReceiptIsNil() {
+    func test_thatIAPProviderReturnsReceiptNotFoundError_whenReceiptIsNil() async throws {
         // given
         receiptRefreshProviderMock.stubbedReceipt = nil
         receiptRefreshProviderMock.stubbedRefreshResult = .success(())
 
         // when
-        var error: Error?
-        sut.refreshReceipt { error = $0.error }
+        let error: Error? = try await withCheckedThrowingContinuation { continuation in
+            sut.refreshReceipt {
+                continuation.resume(returning: $0.error)
+            }
+        }
 
         // then
         XCTAssertEqual(error as? NSError, IAPError.receiptNotFound as NSError)

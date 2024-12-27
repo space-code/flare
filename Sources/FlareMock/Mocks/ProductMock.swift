@@ -6,7 +6,7 @@
 @testable import Flare
 import StoreKit
 
-public final class ProductMock: ISKProduct {
+public final class ProductMock: ISKProduct, @unchecked Sendable {
     public init() {}
 
     public var invokedLocalizedDescriptionGetter = false

@@ -1,11 +1,11 @@
 //
 // Flare
-// Copyright © 2024 Space Code. All rights reserved.
+// Copyright © 2023 Space Code. All rights reserved.
 //
 
 import StoreKit
 
-public struct PaymentTransaction: Equatable {
+public struct PaymentTransaction: Equatable, Sendable {
     // MARK: Lifecycle
 
     init(_ skTransaction: SKPaymentTransaction) {
