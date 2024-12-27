@@ -6,18 +6,18 @@ All notable changes to this project will be documented in this file.
   - Added in Pull Request [#93](https://github.com/space-code/flare/pull/93).
 - Add full Swift concurrency support with Sendable requirements.
   - Added in Pull Request [#92](https://github.com/space-code/flare/pull/92).
-- Implement locale for StoreProduct
+- Implement locale for StoreProduct.
   - Added in Pull Request [#82](https://github.com/space-code/flare/pull/82).
 
 ## Updated
-- Update `CHANGELOG.md`
+- Update `CHANGELOG.md`.
   - Updated in Pull Request [#74](https://github.com/space-code/flare/pull/74).
-- Update `README.md`
+- Update `README.md`.
   - Updated in Pull Request [#70](https://github.com/space-code/flare/pull/70).
-- Update Transaction Model with price and currency
- - Updated in Pull Request [#84](https://github.com/space-code/flare/pull/84).
-- Update RenewalInfo Model with renewalPrice and currency
- - Updated in Pull Request [#85](https://github.com/space-code/flare/pull/85).
+- Update Transaction Model with price and currency.
+  - Updated in Pull Request [#84](https://github.com/space-code/flare/pull/84).
+- Update RenewalInfo Model with renewalPrice and currency.
+  - Updated in Pull Request [#85](https://github.com/space-code/flare/pull/85).
 
 ## Fixed
 - Fix the GitHub Actions Pipeline
