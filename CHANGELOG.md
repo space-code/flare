@@ -2,6 +2,8 @@
 All notable changes to this project will be documented in this file.
 
 ## Added
+- Update the FlareUI package to Swift 6.0.
+  - Added in Pull Request [#93](https://github.com/space-code/flare/pull/93).
 - Add full Swift concurrency support with Sendable requirements.
   - Added in Pull Request [#92](https://github.com/space-code/flare/pull/92).
 - Implement locale for StoreProduct
@@ -13,13 +15,13 @@ All notable changes to this project will be documented in this file.
 - Update `README.md`
   - Updated in Pull Request [#70](https://github.com/space-code/flare/pull/70).
 - Update Transaction Model with price and currency
- - Updated in Pull Request [#84](https://github.com/space-code/flare/pull/84)
+ - Updated in Pull Request [#84](https://github.com/space-code/flare/pull/84).
 - Update RenewalInfo Model with renewalPrice and currency
- - Updated in Pull Request [#85](https://github.com/space-code/flare/pull/85)
+ - Updated in Pull Request [#85](https://github.com/space-code/flare/pull/85).
 
 ## Fixed
 - Fix the GitHub Actions Pipeline
-  - Fixed in Pull Request [#88](https://github.com/space-code/flare/pull/88)
+  - Fixed in Pull Request [#88](https://github.com/space-code/flare/pull/88).
 
 #### 3.x Releases
 - `3.0.x` Releases - [`3.0.0`](#300) | [`3.0.1`](#301) | [`3.0.2`](#302)
