@@ -1,6 +1,20 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+#### 3.x Releases
+- `3.1.0` Release Candidates [`3.1.0-rc.1`](#310-rc1)
+- `3.0.x` Releases - [`3.0.0`](#300) | [`3.0.1`](#301) | [`3.0.2`](#302)
+- `3.0.0` Release Candidates - [`3.0.0-rc.1`](#300-rc1) | [`3.0.0-rc.2`](#300-rc2)
+
+#### 2.x Releases
+- `2.0.x` Releases - [2.0.0](#200)
+
+#### 1.x Releases
+- `1.0.x` Releases - [1.0.0](#100)
+
+## [3.1.0-rc.1](https://github.com/space-code/flare/releases/tag/3.1.0-rc.1)
+Released on 2024-12-27.
+
 ## Added
 - Update the FlareUI package to Swift 6.0.
   - Added in Pull Request [#93](https://github.com/space-code/flare/pull/93).
@@ -22,18 +36,8 @@ All notable changes to this project will be documented in this file.
   - Updated in Pull Request [#85](https://github.com/space-code/flare/pull/85).
 
 ## Fixed
-- Fix the GitHub Actions Pipeline
+- Fix the GitHub Actions Pipeline.
   - Fixed in Pull Request [#88](https://github.com/space-code/flare/pull/88).
-
-#### 3.x Releases
-- `3.0.x` Releases - [`3.0.0`](#300) | [`3.0.1`](#301) | [`3.0.2`](#302)
-- `3.0.0` Release Candidates - [`3.0.0-rc.1`](#300-rc1) | [`3.0.0-rc.2`](#300-rc2)
-
-#### 2.x Releases
-- `2.0.x` Releases - [2.0.0](#200)
-
-#### 1.x Releases
-- `1.0.x` Releases - [1.0.0](#100)
 
 ## [3.0.2](https://github.com/space-code/flare/releases/tag/3.0.2)
 Released on 2024-09-04.
