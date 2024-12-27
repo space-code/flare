@@ -39,4 +39,4 @@ runs:
       uses: actions/upload-artifact@v4
       with:
         name: ${{ inputs.filename }}
-        path: ${{ inputs.output_path }}
+        path: test_output
