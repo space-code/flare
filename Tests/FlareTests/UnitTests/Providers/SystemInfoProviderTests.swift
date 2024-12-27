@@ -31,25 +31,24 @@
         // MARK: Tests
 
 //        @MainActor
-//        func test_thatScenesHolderReturnsCurrentScene() throws {
+//        func test_thatScenesHolderReturnsCurrentScene() async throws {
 //            // given
 //            let windowScene = WindowSceneFactory.makeWindowScene()
 //            scenesHolderMock.stubbedConnectedScenes = Set(arrayLiteral: windowScene)
 //
 //            // when
-//            let scene = try sut.currentScene
+//            let scene = try await sut.currentScene
 //
 //            // then
 //            XCTAssertEqual(windowScene, scene)
 //        }
-//
-//        @MainActor
-//        func test_thatScenesHolderThrowsAnErrorWhenThereIsNoActiveWindowScene() async throws {
-//            // when
-//            let error: Error? = await self.error(for: { try sut.currentScene })
-//
-//            // then
-//            XCTAssertEqual(error as? NSError, IAPError.unknown as NSError)
-//        }
+
+        func test_thatScenesHolderThrowsAnErrorWhenThereIsNoActiveWindowScene() async throws {
+            // when
+            let error: Error? = await self.error(for: { try await sut.currentScene })
+
+            // then
+            XCTAssertEqual(error as? NSError, IAPError.unknown as NSError)
+        }
     }
 #endif

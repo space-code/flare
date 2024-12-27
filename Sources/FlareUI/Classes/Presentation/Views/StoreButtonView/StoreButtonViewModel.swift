@@ -7,7 +7,7 @@ import Foundation
 
 // MARK: - StoreButtonViewModel
 
-struct StoreButtonViewModel: IModel {
+struct StoreButtonViewModel: IModel, @unchecked Sendable {
     struct ViewModel: Equatable {
         let title: String
     }

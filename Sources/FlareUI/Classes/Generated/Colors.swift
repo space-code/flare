@@ -38,7 +38,7 @@ enum Asset {
 
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 
-final class ColorAsset {
+final class ColorAsset: @unchecked Sendable {
     fileprivate(set) var name: String
 
     #if os(macOS)

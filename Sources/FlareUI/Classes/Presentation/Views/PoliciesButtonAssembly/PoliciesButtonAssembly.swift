@@ -9,6 +9,7 @@ import SwiftUI
 
 @available(watchOS, unavailable)
 protocol IPoliciesButtonAssembly {
+    @MainActor
     func assemble() -> PoliciesButtonView
 }
 
@@ -16,6 +17,7 @@ protocol IPoliciesButtonAssembly {
 
 @available(watchOS, unavailable)
 final class PoliciesButtonAssembly: IPoliciesButtonAssembly {
+    @MainActor
     func assemble() -> PoliciesButtonView {
         PoliciesButtonView()
     }

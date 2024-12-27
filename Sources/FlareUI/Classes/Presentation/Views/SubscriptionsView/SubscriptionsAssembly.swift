@@ -12,45 +12,94 @@ protocol ISubscriptionsAssembly {
     func assemble(ids: some Collection<String>) -> AnyView
 }
 
+// swiftlint:disable file_types_order
+
 // MARK: - SubscriptionsAssembly
 
-@available(watchOS, unavailable)
-final class SubscriptionsAssembly: ISubscriptionsAssembly {
-    // MARK: Properties
+#if swift(>=6.0)
+    @available(watchOS, unavailable)
+    final class SubscriptionsAssembly: @preconcurrency ISubscriptionsAssembly {
+        // MARK: Properties
 
-    private let iap: IFlare
-    private let storeButtonsAssembly: IStoreButtonsAssembly
-    private let subscriptionStatusVerifierProvider: ISubscriptionStatusVerifierProvider
+        private let iap: IFlare
+        private let storeButtonsAssembly: IStoreButtonsAssembly
+        private let subscriptionStatusVerifierProvider: ISubscriptionStatusVerifierProvider
 
-    // MARK: Initialization
+        // MARK: Initialization
 
-    init(
-        iap: IFlare,
-        storeButtonsAssembly: IStoreButtonsAssembly,
-        subscriptionStatusVerifierProvider: ISubscriptionStatusVerifierProvider
-    ) {
-        self.iap = iap
-        self.storeButtonsAssembly = storeButtonsAssembly
-        self.subscriptionStatusVerifierProvider = subscriptionStatusVerifierProvider
-    }
+        init(
+            iap: IFlare,
+            storeButtonsAssembly: IStoreButtonsAssembly,
+            subscriptionStatusVerifierProvider: ISubscriptionStatusVerifierProvider
+        ) {
+            self.iap = iap
+            self.storeButtonsAssembly = storeButtonsAssembly
+            self.subscriptionStatusVerifierProvider = subscriptionStatusVerifierProvider
+        }
 
-    // MARK: ISubscriptionAssembly
+        // MARK: ISubscriptionAssembly
 
-    func assemble(ids: some Collection<String>) -> AnyView {
-        let viewModelFactory = SubscriptionsViewModelViewFactory(
-            subscriptionStatusVerifier: subscriptionStatusVerifierProvider.subscriptionStatusVerifier
-        )
-        let presenter = SubscriptionsPresenter(iap: iap, ids: ids, viewModelFactory: viewModelFactory)
-        let viewModel = WrapperViewModel(
-            model: SubscriptionsViewModel(
-                state: .loading,
-                selectedProductID: ids.first,
-                presenter: presenter
+        @MainActor
+        func assemble(ids: some Collection<String>) -> AnyView {
+            let viewModelFactory = SubscriptionsViewModelViewFactory(
+                subscriptionStatusVerifier: subscriptionStatusVerifierProvider.subscriptionStatusVerifier
             )
-        )
-        presenter.viewModel = viewModel
-        return ViewWrapper<SubscriptionsViewModel, SubscriptionsWrapperView>(viewModel: viewModel)
-            .environment(\.storeButtonsAssembly, storeButtonsAssembly)
-            .eraseToAnyView()
+            let presenter = SubscriptionsPresenter(iap: iap, ids: ids, viewModelFactory: viewModelFactory)
+            let viewModel = WrapperViewModel(
+                model: SubscriptionsViewModel(
+                    state: .loading,
+                    selectedProductID: ids.first,
+                    presenter: presenter
+                )
+            )
+            presenter.viewModel = viewModel
+            return ViewWrapper<SubscriptionsViewModel, SubscriptionsWrapperView>(viewModel: viewModel)
+                .environment(\.storeButtonsAssembly, storeButtonsAssembly)
+                .eraseToAnyView()
+        }
     }
-}
+#else
+    @available(watchOS, unavailable)
+    final class SubscriptionsAssembly: ISubscriptionsAssembly {
+        // MARK: Properties
+
+        private let iap: IFlare
+        private let storeButtonsAssembly: IStoreButtonsAssembly
+        private let subscriptionStatusVerifierProvider: ISubscriptionStatusVerifierProvider
+
+        // MARK: Initialization
+
+        init(
+            iap: IFlare,
+            storeButtonsAssembly: IStoreButtonsAssembly,
+            subscriptionStatusVerifierProvider: ISubscriptionStatusVerifierProvider
+        ) {
+            self.iap = iap
+            self.storeButtonsAssembly = storeButtonsAssembly
+            self.subscriptionStatusVerifierProvider = subscriptionStatusVerifierProvider
+        }
+
+        // MARK: ISubscriptionAssembly
+
+        @MainActor
+        func assemble(ids: some Collection<String>) -> AnyView {
+            let viewModelFactory = SubscriptionsViewModelViewFactory(
+                subscriptionStatusVerifier: subscriptionStatusVerifierProvider.subscriptionStatusVerifier
+            )
+            let presenter = SubscriptionsPresenter(iap: iap, ids: ids, viewModelFactory: viewModelFactory)
+            let viewModel = WrapperViewModel(
+                model: SubscriptionsViewModel(
+                    state: .loading,
+                    selectedProductID: ids.first,
+                    presenter: presenter
+                )
+            )
+            presenter.viewModel = viewModel
+            return ViewWrapper<SubscriptionsViewModel, SubscriptionsWrapperView>(viewModel: viewModel)
+                .environment(\.storeButtonsAssembly, storeButtonsAssembly)
+                .eraseToAnyView()
+        }
+    }
+#endif
+
+// swiftlint:enable file_types_order

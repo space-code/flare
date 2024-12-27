@@ -7,12 +7,12 @@ import Flare
 import StoreKit
 import SwiftUI
 
-typealias PurchaseOptionHandler = (StoreProduct) -> PurchaseOptions
+typealias PurchaseOptionHandler = @Sendable (StoreProduct) -> PurchaseOptions
 
 // MARK: - PurchaseOptionKey
 
 private struct PurchaseOptionKey: EnvironmentKey {
-    static var defaultValue: PurchaseOptionHandler?
+    static let defaultValue: PurchaseOptionHandler? = nil
 }
 
 extension EnvironmentValues {

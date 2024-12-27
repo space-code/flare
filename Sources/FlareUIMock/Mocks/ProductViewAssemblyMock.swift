@@ -7,7 +7,7 @@ import Flare
 @testable import FlareUI
 import Foundation
 
-public final class ProductViewAssemblyMock: IProductViewAssembly {
+public final class ProductViewAssemblyMock: IProductViewAssembly, @unchecked Sendable {
     public init() {}
 
     public var invokedAssembleId = false

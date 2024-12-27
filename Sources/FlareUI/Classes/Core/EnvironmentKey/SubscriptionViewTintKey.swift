@@ -8,7 +8,7 @@ import SwiftUI
 // MARK: - SubscriptionViewTintKey
 
 private struct SubscriptionViewTintKey: EnvironmentKey {
-    static var defaultValue: Color = .blue
+    static let defaultValue: Color = .blue
 }
 
 extension EnvironmentValues {

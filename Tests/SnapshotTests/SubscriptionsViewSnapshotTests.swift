@@ -16,6 +16,7 @@ final class SubscriptionsViewSnapshotTests: SnapshotTestCase {
 
     // MARK: Tests
 
+    @MainActor
     func test_subscriptionsView_defaultStyle() {
         assertSnapshots(
             of: makeView(),
@@ -23,6 +24,7 @@ final class SubscriptionsViewSnapshotTests: SnapshotTestCase {
         )
     }
 
+    @MainActor
     func test_subscriptionsView_customStyle() {
         assertSnapshots(
             of: makeView()
@@ -42,6 +44,7 @@ final class SubscriptionsViewSnapshotTests: SnapshotTestCase {
 
     // MARK: Private
 
+    @MainActor
     private func makeView() -> SubscriptionsWrapperView {
         SubscriptionsWrapperView(
             viewModel: SubscriptionsViewModel(

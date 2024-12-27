@@ -6,7 +6,7 @@
 @testable import FlareUI
 import Foundation
 
-final class DateComponentsFormatterMock: IDateComponentsFormatter {
+final class DateComponentsFormatterMock: IDateComponentsFormatter, @unchecked Sendable {
     var invokedAllowedUnitsSetter = false
     var invokedAllowedUnitsSetterCount = 0
     var invokedAllowedUnits: NSCalendar.Unit?

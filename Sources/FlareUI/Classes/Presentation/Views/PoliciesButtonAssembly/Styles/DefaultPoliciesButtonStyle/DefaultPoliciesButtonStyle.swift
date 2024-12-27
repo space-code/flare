@@ -9,6 +9,7 @@ import SwiftUI
 @available(watchOS, unavailable)
 @available(tvOS, unavailable)
 struct DefaultPoliciesButtonStyle: IPoliciesButtonStyle {
+    @MainActor
     func makeBody(configuration: Configuration) -> some View {
         DefaultPoliciesButtonStyleView(configuration: configuration)
     }

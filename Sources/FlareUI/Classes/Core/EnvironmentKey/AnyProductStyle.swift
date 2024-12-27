@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-struct AnyProductStyle: IProductStyle {
+struct AnyProductStyle: IProductStyle, @unchecked Sendable {
     // MARK: Properties
 
     /// A private property to hold the closure that creates the body of the view
@@ -16,7 +16,7 @@ struct AnyProductStyle: IProductStyle {
     /// Initializes the `AnyProductStyle` with a specific style conforming to `IProductStyle`.
     ///
     /// - Parameter style: A product style.
-    init<S: IProductStyle>(style: S) {
+    init(style: some IProductStyle) {
         _makeBody = { configuration in
             AnyView(style.makeBody(configuration: configuration))
         }

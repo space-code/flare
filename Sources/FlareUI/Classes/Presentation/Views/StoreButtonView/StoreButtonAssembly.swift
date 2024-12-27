@@ -9,6 +9,7 @@ import Foundation
 // MARK: - IStoreButtonAssembly
 
 protocol IStoreButtonAssembly {
+    @MainActor
     func assemble(storeButtonType: StoreButton) -> ViewWrapper<StoreButtonViewModel, StoreButtonView>
 }
 
@@ -27,6 +28,7 @@ final class StoreButtonAssembly: IStoreButtonAssembly {
 
     // MARK: IStoreButtonAssembly
 
+    @MainActor
     func assemble(storeButtonType: StoreButton) -> ViewWrapper<StoreButtonViewModel, StoreButtonView> {
         let presenter = StoreButtonPresenter(iap: iap)
         let viewModel = WrapperViewModel<StoreButtonViewModel>(

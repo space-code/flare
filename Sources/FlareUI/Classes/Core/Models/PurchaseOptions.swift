@@ -6,7 +6,7 @@
 import StoreKit
 
 /// Struct representing purchase options for a product.
-struct PurchaseOptions {
+struct PurchaseOptions: @unchecked Sendable {
     // MARK: Properties
 
     /// Internal storage for purchase options.

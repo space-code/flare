@@ -10,7 +10,7 @@ import StoreKit
 // MARK: - ISubscriptionsPresenter
 
 /// A protocol for presenting subscription information and handling subscriptions.
-protocol ISubscriptionsPresenter {
+protocol ISubscriptionsPresenter: Sendable {
     /// Called when the view has loaded.
     func viewDidLoad()
 
@@ -36,7 +36,7 @@ protocol ISubscriptionsPresenter {
 
 /// A presenter for managing subscriptions.
 @available(watchOS, unavailable)
-final class SubscriptionsPresenter: IPresenter {
+final class SubscriptionsPresenter: IPresenter, @unchecked Sendable {
     // MARK: Properties
 
     /// The in-app purchase service.

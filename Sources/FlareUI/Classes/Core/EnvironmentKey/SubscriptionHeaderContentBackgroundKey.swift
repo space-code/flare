@@ -8,7 +8,7 @@ import SwiftUI
 // MARK: - SubscriptionHeaderContentBackgroundKey
 
 private struct SubscriptionHeaderContentBackgroundKey: EnvironmentKey {
-    static var defaultValue: Color = .clear
+    static let defaultValue: Color = .clear
 }
 
 extension EnvironmentValues {
