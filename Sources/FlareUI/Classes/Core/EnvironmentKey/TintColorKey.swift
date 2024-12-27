@@ -8,7 +8,7 @@ import SwiftUI
 // MARK: - TintColorKey
 
 private struct TintColorKey: EnvironmentKey {
-    static var defaultValue: Color = .blue
+    static var defaultValue: Color { .blue }
 }
 
 extension EnvironmentValues {

@@ -10,25 +10,19 @@ struct AnyPoliciesButtonStyle: IPoliciesButtonStyle {
 
     let style: any IPoliciesButtonStyle
 
-    /// A private property to hold the closure that creates the body of the view
-    private var _makeBody: (Configuration) -> AnyView
-
     // MARK: Initialization
 
     /// Initializes the `AnyPoliciesButtonStyle` with a specific style conforming to `IPoliciesButtonStyle`.
     ///
     /// - Parameter style: A product style.
-    init<S: IPoliciesButtonStyle>(style: S) {
+    init(style: some IPoliciesButtonStyle) {
         self.style = style
-        _makeBody = { configuration in
-            AnyView(style.makeBody(configuration: configuration))
-        }
     }
 
     // MARK: IPoliciesButtonStyle
 
     /// Implements the makeBody method required by `IPoliciesButtonStyle`.
     func makeBody(configuration: Configuration) -> some View {
-        _makeBody(configuration)
+        AnyView(style.makeBody(configuration: configuration))
     }
 }

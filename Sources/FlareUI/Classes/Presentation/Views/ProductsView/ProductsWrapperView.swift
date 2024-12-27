@@ -34,6 +34,7 @@ struct ProductsWrapperView: View, IViewWrapper {
     // MARK: Private
 
     @ViewBuilder
+    @MainActor
     private var contentView: some View {
         switch viewModel.state {
         case let .loading(numberOfItems):
@@ -53,13 +54,15 @@ struct ProductsWrapperView: View, IViewWrapper {
         }
     }
 
+    @MainActor
     private var storeButtonView: some View {
         ForEach(storeButton, id: \.self) { type in
             storeButtonsAssembly.map { $0.assemble(storeButtonType: type) }
         }
     }
 
-    private func contentView<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+    @MainActor
+    private func contentView(@ViewBuilder content: () -> some View) -> some View {
         VStack(alignment: .center) {
             ScrollView {
                 content()

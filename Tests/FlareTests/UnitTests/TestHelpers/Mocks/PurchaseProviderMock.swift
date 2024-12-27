@@ -6,7 +6,7 @@
 @testable import Flare
 import StoreKit
 
-final class PurchaseProviderMock: IPurchaseProvider {
+final class PurchaseProviderMock: IPurchaseProvider, @unchecked Sendable {
     var invokedFinish = false
     var invokedFinishCount = 0
     var invokedFinishParameters: (transaction: StoreTransaction, Void)?
@@ -46,7 +46,6 @@ final class PurchaseProviderMock: IPurchaseProvider {
     var invokedPurchaseParametersList = [(product: StoreProduct, promotionalOffer: PromotionalOffer?)]()
     var stubbedPurchaseCompletionResult: (Result<StoreTransaction, IAPError>, Void)?
 
-    @MainActor
     func purchase(product: StoreProduct, promotionalOffer: PromotionalOffer?, completion: @escaping PurchaseCompletionHandler) {
         invokedPurchase = true
         invokedPurchaseCount += 1
@@ -64,7 +63,6 @@ final class PurchaseProviderMock: IPurchaseProvider {
     var stubbedinvokedPurchaseWithOptionsCompletionResult: (Result<StoreTransaction, IAPError>, Void)?
 
     @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
-    @MainActor
     func purchase(
         product: StoreProduct,
         options: Set<Product.PurchaseOption>,

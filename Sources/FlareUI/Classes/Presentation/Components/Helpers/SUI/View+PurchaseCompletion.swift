@@ -13,7 +13,7 @@ public extension View {
     /// - Parameter completion: The completion handler to execute when an in-app purchase transaction completes.
     ///
     /// - Returns: A modified view with the specified completion handler.
-    func onInAppPurchaseCompletion(completion: ((StoreProduct, Result<StoreTransaction, Error>) -> Void)?) -> some View {
+    func onInAppPurchaseCompletion(completion: (@Sendable (StoreProduct, Result<StoreTransaction, Error>) -> Void)?) -> some View {
         environment(\.purchaseCompletion, completion)
     }
 }

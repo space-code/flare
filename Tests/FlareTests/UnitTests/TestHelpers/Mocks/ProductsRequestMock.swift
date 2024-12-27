@@ -5,7 +5,7 @@
 
 import StoreKit
 
-final class ProductsRequestMock: SKProductsRequest {
+final class ProductsRequestMock: SKProductsRequest, @unchecked Sendable {
     var invokedStart = false
     var invokedStartCount = 0
 

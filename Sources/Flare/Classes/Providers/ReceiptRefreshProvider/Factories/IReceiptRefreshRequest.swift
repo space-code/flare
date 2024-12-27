@@ -6,7 +6,7 @@
 import Foundation
 
 /// A type that represents a receipt refresh request.
-protocol IReceiptRefreshRequest {
+protocol IReceiptRefreshRequest: Sendable {
     /// The request's identifier.
     var id: String { get set }
 

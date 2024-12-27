@@ -7,7 +7,7 @@ import Flare
 @testable import FlareUI
 import Foundation
 
-public final class SubscriptionsPresenterMock: ISubscriptionsPresenter {
+public final class SubscriptionsPresenterMock: ISubscriptionsPresenter, @unchecked Sendable {
     public init() {}
 
     public var invokedViewDidLoad = false

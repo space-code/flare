@@ -92,18 +92,21 @@ class PaymentProviderTests: XCTestCase {
         XCTAssertEqual(paymentQueueMock.invokedRestoreCompletedTransactionsCount, 1)
     }
 
-    func test_thatPaymentProviderAddsPaymentToQueueWithTransactions() {
+    func test_thatPaymentProviderAddsPaymentToQueueWithTransactions() async throws {
         // given
-        var handledPaymentQueue: PaymentQueue?
         let product = SKProduct()
         let payment = SKPayment(product: product)
         let paymentQueue = SKPaymentQueue()
-        let paymentHandler: PaymentHandler = { payment, _ in handledPaymentQueue = payment }
         let paymentTransactions = transactionsStates.map { PurchaseManagerTestHelper.makePaymentTransaction(state: $0) }
 
         // when
-        paymentProvider.add(payment: payment, handler: paymentHandler)
-        paymentProvider.paymentQueue(paymentQueue, updatedTransactions: paymentTransactions)
+        let handledPaymentQueue: PaymentQueue? = try await withCheckedThrowingContinuation { continuation in
+            paymentProvider.add(payment: payment) { payment, _ in
+                continuation.resume(returning: payment)
+            }
+
+            paymentProvider.paymentQueue(paymentQueue, updatedTransactions: paymentTransactions)
+        }
 
         // then
         XCTAssertTrue(paymentQueueMock.invokedAddPayment)
@@ -111,35 +114,20 @@ class PaymentProviderTests: XCTestCase {
         XCTAssertTrue(handledPaymentQueue === paymentQueue)
     }
 
-    func test_thatPaymentProviderAddsPaymentToQueueWithoutTransactions() {
+    func test_thatPaymentProviderAddsPaymentHandler() async throws {
         // given
-        var handledPaymentQueue: PaymentQueue?
-        let product = SKProduct()
-        let payment = SKPayment(product: product)
         let paymentQueue = SKPaymentQueue()
-        let paymentHandler: PaymentHandler = { payment, _ in handledPaymentQueue = payment }
-
-        // when
-        paymentProvider.add(payment: payment, handler: paymentHandler)
-        paymentProvider.paymentQueue(paymentQueue, updatedTransactions: [])
-
-        // then
-        XCTAssertTrue(paymentQueueMock.invokedAddPayment)
-        XCTAssertEqual(paymentQueueMock.invokedAddPaymentCount, 1)
-        XCTAssertNil(handledPaymentQueue)
-    }
-
-    func test_thatPaymentProviderAddsPaymentHandler() {
-        // given
-        var handledPaymentQueue: PaymentQueue?
-        let paymentQueue = SKPaymentQueue()
-        let paymentHandler: PaymentHandler = { payment, _ in handledPaymentQueue = payment }
         let paymentTransactions = transactionsStates
             .map { PurchaseManagerTestHelper.makePaymentTransaction(identifier: .productId, state: $0) }
 
         // when
-        paymentProvider.addPaymentHandler(productID: .productId, handler: paymentHandler)
-        paymentProvider.paymentQueue(paymentQueue, updatedTransactions: paymentTransactions)
+        let handledPaymentQueue: PaymentQueue? = try await withCheckedThrowingContinuation { continuation in
+            paymentProvider.addPaymentHandler(productID: .productId) { payment, _ in
+                continuation.resume(returning: payment)
+            }
+
+            paymentProvider.paymentQueue(paymentQueue, updatedTransactions: paymentTransactions)
+        }
 
         // then
         XCTAssertTrue(handledPaymentQueue === paymentQueue)
@@ -157,15 +145,18 @@ class PaymentProviderTests: XCTestCase {
         XCTAssertEqual(paymentQueueMock.invokedFinishTransactionCount, 2)
     }
 
-    func test_thatPaymentProviderCallsFallbackHandler_whenPaymentHandlersDoNotExist() {
+    func test_thatPaymentProviderCallsFallbackHandler_whenPaymentHandlersDoNotExist() async throws {
         // given
-        var handledPaymentQueue: PaymentQueue?
         let transaction = PurchaseManagerTestHelper.makePaymentTransaction(state: .purchased)
-        let fallbackHandler: PaymentHandler = { paymentQueue, _ in handledPaymentQueue = paymentQueue }
 
         // when
-        paymentProvider.set(fallbackHandler: fallbackHandler)
-        paymentProvider.paymentQueue(paymentQueueMock, updatedTransactions: [transaction])
+        let handledPaymentQueue: PaymentQueue? = try await withCheckedThrowingContinuation { continuation in
+            paymentProvider.set { payment, _ in
+                continuation.resume(returning: payment)
+            }
+
+            paymentProvider.paymentQueue(paymentQueueMock, updatedTransactions: [transaction])
+        }
 
         // then
         XCTAssertTrue(handledPaymentQueue === paymentQueueMock)
@@ -219,41 +210,41 @@ class PaymentProviderTests: XCTestCase {
         XCTAssertTrue(paymentQueueMock.invokedRestoreCompletedTransactions)
     }
 
-    func test_thatPaymentQueueRestoresCompletedTransactions_whenTransactionFinished() {
+    func test_thatPaymentQueueRestoresCompletedTransactions_whenTransactionFinished() async throws {
         // when
-        var queueResult: SKPaymentQueue?
-        var errorResult: Error?
-        let restoreHandler: RestoreHandler = { queue, error in
-            queueResult = queue
-            errorResult = error
+        let result: Result<SKPaymentQueue, Error>? = try await withCheckedThrowingContinuation { continuation in
+            paymentProvider.restoreCompletedTransactions { queue, error in
+                if let error = error {
+                    continuation.resume(returning: .failure(error))
+                } else {
+                    continuation.resume(returning: .success(queue))
+                }
+            }
+
+            paymentProvider.paymentQueueRestoreCompletedTransactionsFinished(paymentQueueMock)
         }
 
-        paymentProvider.restoreCompletedTransactions(handler: restoreHandler)
-        paymentProvider.paymentQueueRestoreCompletedTransactionsFinished(paymentQueueMock)
-
         // then
-        XCTAssertEqual(queueResult, paymentQueueMock)
-        XCTAssertNil(errorResult)
+        XCTAssertEqual(result?.success, paymentQueueMock)
+        XCTAssertNil(result?.error)
     }
 
-    func test_thatPaymentQueueDoesNotRestoreCompletedTransactions_whenRequestFailDueToTransactionError() {
+    func test_thatPaymentQueueDoesNotRestoreCompletedTransactions_whenRequestFailDueToTransactionError() async throws {
         // given
         let errorMock = IAPError.paymentNotAllowed
 
         // when
-        var queueResult: SKPaymentQueue?
-        var errorResult: Error?
-        let restoreHandler: RestoreHandler = { queue, error in
-            queueResult = queue
-            errorResult = error
+        let result: (SKPaymentQueue?, Error?) = try await withCheckedThrowingContinuation { continuation in
+            paymentProvider.restoreCompletedTransactions { queue, error in
+                continuation.resume(returning: (queue, error))
+            }
+
+            paymentProvider.paymentQueue(paymentQueueMock, restoreCompletedTransactionsFailedWithError: errorMock)
         }
 
-        paymentProvider.restoreCompletedTransactions(handler: restoreHandler)
-        paymentProvider.paymentQueue(paymentQueueMock, restoreCompletedTransactionsFailedWithError: errorMock)
-
         // then
-        XCTAssertEqual(queueResult, paymentQueueMock)
-        XCTAssertEqual(errorResult as? NSError, IAPError(error: errorMock) as NSError)
+        XCTAssertEqual(result.0, paymentQueueMock)
+        XCTAssertEqual(result.1 as? NSError, IAPError(error: errorMock) as NSError)
     }
 
     func test_thatPaymentQueueHandlesTransactions_whenPendingTransactionsExist() {

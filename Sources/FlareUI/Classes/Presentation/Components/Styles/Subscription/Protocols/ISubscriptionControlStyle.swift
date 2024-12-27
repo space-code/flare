@@ -16,5 +16,6 @@ public protocol ISubscriptionControlStyle {
     ///
     /// - Parameters:
     ///   - configuration: The properties of an in-app subscription store control.
+    @MainActor
     @ViewBuilder func makeBody(configuration: Self.Configuration) -> Self.Body
 }

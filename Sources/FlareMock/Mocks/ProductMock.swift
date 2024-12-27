@@ -6,7 +6,7 @@
 @testable import Flare
 import StoreKit
 
-public final class ProductMock: ISKProduct {
+public final class ProductMock: ISKProduct, @unchecked Sendable {
     public init() {}
 
     public var invokedLocalizedDescriptionGetter = false
@@ -37,6 +37,16 @@ public final class ProductMock: ISKProduct {
         invokedCurrencyCodeGetter = true
         invokedCurrencyCodeGetterCount += 1
         return stubbedCurrencyCode
+    }
+
+    public var invokedLocaleGetter = false
+    public var invokedLocaleGetterCount = 0
+    public var stubbedLocale: Locale!
+
+    public var locale: Locale {
+        invokedLocaleGetter = true
+        invokedLocaleGetterCount += 1
+        return stubbedLocale
     }
 
     public var invokedCurrencySymbolGetter = false

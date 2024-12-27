@@ -17,7 +17,7 @@ protocol IProductsPresenter {
 // MARK: - ProductsPresenter
 
 /// The presenter for products.
-final class ProductsPresenter: IPresenter {
+final class ProductsPresenter: IPresenter, @unchecked Sendable {
     // MARK: Properties
 
     /// The collection of product IDs.

@@ -70,4 +70,12 @@ extension RenewalInfo: IRenewalInfo {
     public var priceIncreaseStatus: PriceIncreaseStatus {
         underlyingRenewalInfo.priceIncreaseStatus
     }
+
+    public var renewalPrice: Decimal? {
+        underlyingRenewalInfo.renewalPrice
+    }
+
+    public var currency: String? {
+        underlyingRenewalInfo.currency
+    }
 }

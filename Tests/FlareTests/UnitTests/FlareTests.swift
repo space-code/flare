@@ -88,17 +88,19 @@ class FlareTests: XCTestCase {
         XCTAssertFalse(iapProviderMock.invokedPurchase)
     }
 
-    func test_thatFlarePurchasesAProduct_whenRequestCompleted() {
+    func test_thatFlarePurchasesAProduct_whenRequestCompleted() async throws {
         // given
         let paymentTransaction = StoreTransaction(storeTransaction: StoreTransactionStub())
         iapProviderMock.stubbedCanMakePayments = true
         iapProviderMock.stubbedPurchaseWithPromotionalOffer = .success(paymentTransaction)
 
         // when
-        var transaction: IStoreTransaction?
-        sut.purchase(product: .fake(productIdentifier: .productID), completion: { result in
-            transaction = result.success
-        })
+        let transaction: IStoreTransaction? = try await withCheckedThrowingContinuation { continuation in
+            sut.purchase(product: .fake(productIdentifier: .productID), completion: { result in
+                continuation.resume(returning: result.success)
+            })
+        }
+
         iapProviderMock.invokedPurchaseParameters?.completion(.success(paymentTransaction))
 
         // then
@@ -106,22 +108,24 @@ class FlareTests: XCTestCase {
         XCTAssertEqual(transaction?.productIdentifier, paymentTransaction.productIdentifier)
     }
 
-    func test_thatFlareDoesNotPurchaseAProduct_whenPurchaseReturnsUnkownError() {
+    func test_thatFlareDoesNotPurchaseAProduct_whenPurchaseReturnsUnkownError() async throws {
         // given
         let errorMock = IAPError.paymentNotAllowed
         iapProviderMock.stubbedCanMakePayments = true
         iapProviderMock.stubbedPurchaseWithPromotionalOffer = .failure(errorMock)
 
         // when
-        var error: IAPError?
-        sut.purchase(product: .fake(productIdentifier: .productID), completion: { result in
-            error = result.error
-        })
+        let result: Result<StoreTransaction, IAPError> = try await withCheckedThrowingContinuation { continuation in
+            sut.purchase(product: .fake(productIdentifier: .productID), completion: { result in
+                continuation.resume(returning: result)
+            })
+        }
+
         iapProviderMock.invokedPurchaseParameters?.completion(.failure(errorMock))
 
         // then
         XCTAssertTrue(iapProviderMock.invokedPurchaseWithPromotionalOffer)
-        XCTAssertEqual(error, errorMock)
+        XCTAssertEqual(result.error, errorMock)
     }
 
     func test_thatFlareDoesNotPurchaseAProduct_whenUserCannotMakePayments() async {
@@ -152,28 +156,34 @@ class FlareTests: XCTestCase {
         XCTAssertEqual(transaction?.productIdentifier, transactionMock.productIdentifier)
     }
 
-    func test_thatFlareFetchesReceipt_whenRequestCompleted() {
+    func test_thatFlareFetchesReceipt_whenRequestCompleted() async throws {
         // when
-        var receipt: String?
-        sut.receipt { receipt = $0.success }
+        let result: Result<String, IAPError> = try await withCheckedThrowingContinuation { continuation in
+            sut.receipt { result in
+                continuation.resume(returning: result)
+            }
 
-        iapProviderMock.invokedRefreshReceiptParameters?.completion(.success(.receipt))
+            iapProviderMock.invokedRefreshReceiptParameters?.completion(.success(.receipt))
+        }
 
         // then
         XCTAssertTrue(iapProviderMock.invokedRefreshReceipt)
-        XCTAssertEqual(receipt, .receipt)
+        XCTAssertEqual(result.success, .receipt)
     }
 
-    func test_thatFlareDoesNotFetchReceipt_whenRequestFailed() {
+    func test_thatFlareDoesNotFetchReceipt_whenRequestFailed() async throws {
         // when
-        var error: IAPError?
-        sut.receipt { error = $0.error }
+        let result = try await withCheckedThrowingContinuation { continuation in
+            sut.receipt { result in
+                continuation.resume(returning: result)
+            }
 
-        iapProviderMock.invokedRefreshReceiptParameters?.completion(.failure(.paymentNotAllowed))
+            iapProviderMock.invokedRefreshReceiptParameters?.completion(.failure(.paymentNotAllowed))
+        }
 
         // then
         XCTAssertTrue(iapProviderMock.invokedRefreshReceipt)
-        XCTAssertEqual(error, .paymentNotAllowed)
+        XCTAssertEqual(result.error, .paymentNotAllowed)
     }
 
     func test_thatFlareRemovesTransactionObserver() {
@@ -184,7 +194,7 @@ class FlareTests: XCTestCase {
         XCTAssertTrue(iapProviderMock.invokedRemoveTransactionObserver)
     }
 
-    func test_thatFlareFetchesReceipt_whenRequestCompleted() async throws {
+    func test_thatFlareFetchesReceiptAsync_whenRequestCompleted() async throws {
         // given
         iapProviderMock.stubbedRefreshReceiptAsyncResult = .success(.receipt)
 
@@ -195,7 +205,7 @@ class FlareTests: XCTestCase {
         XCTAssertEqual(receipt, .receipt)
     }
 
-    func test_thatFlareDoesNotFetchReceipt_whenRequestFailed() async throws {
+    func test_thatFlareDoesNotFetchReceiptAsync_whenRequestFailed() async throws {
         // given
         iapProviderMock.stubbedRefreshReceiptAsyncResult = .failure(.paymentNotAllowed)
 

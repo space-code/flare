@@ -10,7 +10,7 @@
 
 // MARK: - ScenesHolderMock
 
-final class ScenesHolderMock: IScenesHolder {
+final class ScenesHolderMock: IScenesHolder, @unchecked Sendable {
     #if os(iOS) || VISION_OS
         var invokedConnectedScenesGetter = false
         var invokedConnectedScenesGetterCount = 0

@@ -61,6 +61,9 @@ extension PaymentProvider: IPaymentProvider {
 
     func add(payment: SKPayment, handler: @escaping PaymentHandler) {
         addPaymentHandler(productID: payment.productIdentifier, handler: handler)
+
+        let payment = SK1StorePayment(underlyingProduct: payment)
+
         dispatchQueueFactory.main().async {
             self.paymentQueue.add(payment)
 
@@ -178,3 +181,7 @@ extension PaymentProvider: SKPaymentTransactionObserver {
         paymentQueue.transactions.map(PaymentTransaction.init(_:))
     }
 }
+
+// MARK: Sendable
+
+extension PaymentProvider: @unchecked Sendable {}

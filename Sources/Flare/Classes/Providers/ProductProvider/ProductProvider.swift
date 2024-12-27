@@ -136,6 +136,12 @@ extension ProductProvider: SKProductsRequestDelegate {
     }
 }
 
+// MARK: Sendable
+
+// @unchecked because:
+// - It has mutable state, but it's made thread-safe through `queue`.
+extension ProductProvider: @unchecked Sendable {}
+
 // MARK: - Helpers
 
 private extension SKRequest {
@@ -143,3 +149,10 @@ private extension SKRequest {
         ProductsRequest(self)
     }
 }
+
+#if swift(>=5.8)
+    #if hasFeature(RetroactiveAttribute)
+        extension SKRequest: @unchecked @retroactive Sendable {}
+        extension SKProductsRequest: @unchecked @retroactive Sendable {}
+    #endif
+#endif

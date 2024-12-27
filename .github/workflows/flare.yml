@@ -7,6 +7,7 @@ on:
       - dev
   pull_request:
     paths:
+      - ".github/**"
       - '.swiftlint.yml'
       - ".github/workflows/**"
       - "Package@swift-5.7.swift"
@@ -26,18 +27,18 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - xcode: "Xcode_16.0"
+            runsOn: macOS-14
+            name: "macOS 14, Xcode 16.0, Swift 6.0"
+          - xcode: "Xcode_15.4"
+            runsOn: macOS-14
+            name: "macOS 14, Xcode 15.4, Swift 5.10"
           - xcode: "Xcode_15.0"
             runsOn: macos-13
             name: "macOS 13, Xcode 15.0, Swift 5.9.0"
           - xcode: "Xcode_14.3.1"
             runsOn: macos-13
             name: "macOS 13, Xcode 14.3.1, Swift 5.8.0"
-          - xcode: "Xcode_14.2"
-            runsOn: macOS-12
-            name: "macOS 12, Xcode 14.2, Swift 5.7.2"
-          - xcode: "Xcode_14.1"
-            runsOn: macOS-12
-            name: "macOS 12, Xcode 14.1, Swift 5.7.1"
     steps:
       - uses: actions/checkout@v4
       - name: ${{ matrix.name }}
@@ -64,6 +65,18 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - destination: "OS=18.1,name=iPhone 16 Pro"
+            name: "iOS 18.1"
+            xcode: "Xcode_16.1"
+            runsOn: macOS-14
+          - destination: "OS=18.0,name=iPhone 16 Pro"
+            name: "iOS 18.0"
+            xcode: "Xcode_16.0"
+            runsOn: macOS-14
+          - destination: "OS=17.5,name=iPhone 15 Pro"
+            name: "iOS 17.5"
+            xcode: "Xcode_15.4"
+            runsOn: macOS-14
           - destination: "OS=17.0.1,name=iPhone 14 Pro"
             name: "iOS 17.0.1"
             xcode: "Xcode_15.0"
@@ -98,6 +111,18 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - destination: "OS=18.1,name=Apple TV"
+            name: "tvOS 18.1"
+            xcode: "Xcode_16.1"
+            runsOn: macOS-14
+          - destination: "OS=18.0,name=Apple TV"
+            name: "tvOS 18.0"
+            xcode: "Xcode_16.0"
+            runsOn: macOS-14
+          - destination: "OS=17.5,name=Apple TV"
+            name: "tvOS 17.5"
+            xcode: "Xcode_15.4"
+            runsOn: macOS-14
           - destination: "OS=17.0,name=Apple TV"
             name: "tvOS 17.0"
             xcode: "Xcode_15.0"
@@ -132,16 +157,24 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - destination: "OS=11.1,name=Apple Watch Series 10 (46mm)"
+            name: "watchOS 11.1"
+            xcode: "Xcode_16.1"
+            runsOn: macOS-14
+          - destination: "OS=11.0,name=Apple Watch Series 10 (46mm)"
+            name: "watchOS 11.0"
+            xcode: "Xcode_16.0"
+            runsOn: macOS-14
+          - destination: "OS=10.5,name=Apple Watch Series 9 (45mm)"
+            name: "watchOS 10.5"
+            xcode: "Xcode_15.4"
+            runsOn: macOS-14
           - destination: "OS=10.0,name=Apple Watch Series 9 (45mm)"
             name: "watchOS 10.0"
             xcode: "Xcode_15.0"
             runsOn: macos-13
           - destination: "OS=9.4,name=Apple Watch Series 8 (45mm)"
             name: "watchOS 9.4"
-            xcode: "Xcode_14.3.1"
-            runsOn: macos-13
-          - destination: "OS=8.5,name=Apple Watch Series 7 (45mm)"
-            name: "watchOS 8.5"
             xcode: "Xcode_14.3.1"
             runsOn: macos-13
     steps:
@@ -170,10 +203,16 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: "Xcode 15"
+          - name: "macOS 14, SPM 6.0.2 Test"
+            xcode: "Xcode_16.1"
+            runsOn: macOS-14
+          - name: "macOS 14, SPM 6.0.0 Test"
+            xcode: "Xcode_16.0"
+            runsOn: macOS-14
+          - name: "macOS 14, SPM 5.9.0 Test"
             xcode: "Xcode_15.0"
-            runsOn: macos-13
-          - name: "Xcode 14"
+            runsOn: macos-14
+          - name: "macOS 13, SPM 5.8.1 Test"
             xcode: "Xcode_14.3.1"
             runsOn: macos-13
     steps:
@@ -198,7 +237,7 @@ jobs:
 
   discover-typos:
     name: Discover Typos
-    runs-on: macOS-12
+    runs-on: macOS-13
     env:
       DEVELOPER_DIR: /Applications/Xcode_14.1.app/Contents/Developer
     steps:

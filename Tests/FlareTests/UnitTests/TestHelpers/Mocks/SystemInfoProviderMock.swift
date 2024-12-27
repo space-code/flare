@@ -10,7 +10,7 @@
 
 // MARK: - SystemInfoProviderMock
 
-final class SystemInfoProviderMock: ISystemInfoProvider {
+final class SystemInfoProviderMock: ISystemInfoProvider, @unchecked Sendable {
     #if os(iOS) || VISION_OS
         var invokedCurrentSceneGetter = false
         var invokedCurrentSceneGetterCount = 0

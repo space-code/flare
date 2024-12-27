@@ -5,7 +5,7 @@
 
 import StoreKit
 
-public struct PaymentTransaction: Equatable {
+public struct PaymentTransaction: Equatable, Sendable {
     // MARK: Lifecycle
 
     init(_ skTransaction: SKPaymentTransaction) {

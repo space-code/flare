@@ -5,7 +5,11 @@
 
 import StoreKit
 
-private var requestIdKey: UInt = 0
+#if swift(>=6.0)
+    private nonisolated(unsafe) var requestIdKey: UInt = 0
+#else
+    private var requestIdKey: UInt = 0
+#endif
 
 extension SKRequest {
     var id: String {

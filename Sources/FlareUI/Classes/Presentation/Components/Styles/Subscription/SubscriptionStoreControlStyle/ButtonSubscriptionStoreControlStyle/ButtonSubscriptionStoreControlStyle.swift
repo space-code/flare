@@ -16,6 +16,7 @@ public struct ButtonSubscriptionStoreControlStyle: ISubscriptionControlStyle {
 
     // MARK: ISubscriptionControlStyle
 
+    @MainActor
     public func makeBody(configuration: Configuration) -> some View {
         #if os(tvOS)
             return CardButtonSubscriptionStoreControlStyle().makeBody(configuration: configuration)

@@ -66,4 +66,24 @@ extension SK2StoreTransaction: IStoreTransaction {
     var environment: StoreEnvironment? {
         StoreEnvironment(transaction: transaction)
     }
+
+    var price: Decimal? {
+        #if swift(>=6.0)
+            transaction.price
+        #else
+            nil
+        #endif
+    }
+
+    var currency: String? {
+        #if swift(>=6.0)
+            if #available(iOS 16.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *) {
+                transaction.currency?.identifier
+            } else {
+                transaction.currencyCode
+            }
+        #else
+            nil
+        #endif
+    }
 }

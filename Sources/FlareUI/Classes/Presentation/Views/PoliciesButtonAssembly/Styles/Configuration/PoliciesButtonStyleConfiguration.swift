@@ -5,13 +5,13 @@
 
 import SwiftUI
 
-struct PoliciesButtonStyleConfiguration {
+struct PoliciesButtonStyleConfiguration: Sendable {
     // MARK: Types
 
     struct ButtonView: View {
         var body: AnyView
 
-        init<Content: View>(_ view: Content) {
+        init(_ view: some View) {
             body = view.eraseToAnyView()
         }
     }

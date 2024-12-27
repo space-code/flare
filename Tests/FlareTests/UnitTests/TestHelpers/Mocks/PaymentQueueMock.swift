@@ -7,7 +7,7 @@
 import Foundation
 import StoreKit
 
-final class PaymentQueueMock: SKPaymentQueue {
+final class PaymentQueueMock: SKPaymentQueue, @unchecked Sendable {
     var invokedCanMakePayments = false
     var invokedCanMakePaymentsCount = 0
     var stubbedCanMakePayments = false

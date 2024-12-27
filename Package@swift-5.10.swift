@@ -1,8 +1,10 @@
-// swift-tools-version: 5.8
+// swift-tools-version: 5.10
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 // swiftlint:disable all
 
 import PackageDescription
+
+let visionOSSetting: SwiftSetting = .define("VISION_OS", .when(platforms: [.visionOS]))
 
 let package = Package(
     name: "Flare",
@@ -12,6 +14,7 @@ let package = Package(
         .iOS(.v13),
         .watchOS(.v7),
         .tvOS(.v13),
+        .visionOS(.v1),
     ],
     products: [
         .library(name: "Flare", targets: ["Flare"]),
@@ -35,7 +38,8 @@ let package = Package(
                 .product(name: "Concurrency", package: "concurrency"),
                 .product(name: "Log", package: "log"),
             ],
-            resources: [.process("Resources")]
+            resources: [.process("Resources")],
+            swiftSettings: [visionOSSetting]
         ),
         .target(
             name: "FlareUI",

@@ -45,7 +45,7 @@ struct ProductWrapperView: View, IViewWrapper {
             productViewStyle.makeBody(
                 configuration: .init(
                     state: .product(item: storeProduct),
-                    purchase: purchase
+                    purchase: { Task { await self.purchase() } }
                 )
             )
         case let .error(error):
@@ -53,11 +53,12 @@ struct ProductWrapperView: View, IViewWrapper {
         }
     }
 
-    private func purchase() {
+    private func purchase() async {
         guard case let .product(storeProduct) = viewModel.state, !isExecuted else { return }
 
         isExecuted = true
 
+        // TODO: Here
         Task { @MainActor in
             defer { isExecuted = false }
 

@@ -62,4 +62,12 @@ extension SK1StoreTransaction: IStoreTransaction {
     var environment: StoreEnvironment? {
         nil
     }
+
+    var price: Decimal? {
+        nil
+    }
+
+    var currency: String? {
+        nil
+    }
 }

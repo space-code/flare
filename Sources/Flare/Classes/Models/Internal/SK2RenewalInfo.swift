@@ -66,4 +66,24 @@ extension SK2RenewalInfo: IRenewalInfo {
     var priceIncreaseStatus: PriceIncreaseStatus {
         PriceIncreaseStatus(underlyingRenewalInfo.priceIncreaseStatus)
     }
+
+    var renewalPrice: Decimal? {
+        #if swift(>=6.0)
+            underlyingRenewalInfo.renewalPrice
+        #else
+            nil
+        #endif
+    }
+
+    var currency: String? {
+        #if swift(>=6.0)
+            if #available(iOS 16.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *) {
+                underlyingRenewalInfo.currency?.identifier
+            } else {
+                underlyingRenewalInfo.currencyCode
+            }
+        #else
+            nil
+        #endif
+    }
 }

@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 // swiftlint:disable all
 
@@ -21,13 +21,13 @@ let package = Package(
         .library(name: "FlareUI", targets: ["FlareUI"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/space-code/concurrency.git", .upToNextMajor(from: "0.0.1")),
-        .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.3.0"),
-        .package(url: "https://github.com/space-code/log.git", .upToNextMajor(from: "1.1.0")),
-        .package(url: "https://github.com/space-code/atomic.git", .upToNextMajor(from: "1.0.0")),
+        .package(url: "https://github.com/space-code/concurrency.git", exact: "0.1.0"),
+        .package(url: "https://github.com/apple/swift-docc-plugin", exact: "1.3.0"),
+        .package(url: "https://github.com/space-code/log.git", exact: "1.2.0"),
+        .package(url: "https://github.com/space-code/atomic.git", exact: "1.1.0"),
         .package(
             url: "https://github.com/pointfreeco/swift-snapshot-testing",
-            from: "1.15.3"
+            exact: "1.15.3"
         ),
     ],
     targets: [

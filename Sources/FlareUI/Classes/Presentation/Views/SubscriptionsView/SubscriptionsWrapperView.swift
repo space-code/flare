@@ -6,6 +6,7 @@
 import SwiftUI
 
 @available(watchOS, unavailable)
+@MainActor
 struct SubscriptionsWrapperView: View, IViewWrapper {
     // MARK: Propertirs
 
@@ -77,11 +78,15 @@ struct SubscriptionsWrapperView: View, IViewWrapper {
             configuration: .init(
                 items: products,
                 selectedID: selectedProduct?.id,
-                action: { product in
+                action: { [isButtonsStyle] product in
                     if isButtonsStyle {
-                        self.purchase(productID: product.id)
+                        Task { @MainActor in
+                            self.purchase(productID: product.id)
+                        }
                     } else {
-                        self.selectedProduct = product
+                        Task { @MainActor in
+                            self.selectedProduct = product
+                        }
                         self.viewModel.presenter.selectProduct(with: product.id)
                     }
                 }

@@ -6,7 +6,7 @@
 import StoreKit
 
 /// A class that provides in-app purchase functionality.
-final class IAPProvider: IIAPProvider {
+final class IAPProvider: IIAPProvider, @unchecked Sendable {
     // MARK: Properties
 
     /// The queue of payment transactions to be processed by the App Store.
@@ -60,15 +60,17 @@ final class IAPProvider: IIAPProvider {
         paymentQueue.canMakePayments
     }
 
-    func fetch(productIDs: some Collection<String>, completion: @escaping Closure<Result<[StoreProduct], IAPError>>) {
+    func fetch(productIDs: some Collection<String>, completion: @escaping SendableClosure<Result<[StoreProduct], IAPError>>) {
         if #available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *) {
+            let productIDs = Array(productIDs)
+
             AsyncHandler.call(
                 strategy: .runOnMain,
                 completion: { (result: Result<[StoreProduct], Error>) in
                     switch result {
                     case let .success(products):
                         if products.isEmpty {
-                            completion(.failure(.invalid(productIDs: Array(productIDs))))
+                            completion(.failure(.invalid(productIDs: productIDs)))
                         } else {
                             completion(.success(products))
                         }
@@ -100,7 +102,7 @@ final class IAPProvider: IIAPProvider {
     func purchase(
         product: StoreProduct,
         promotionalOffer: PromotionalOffer?,
-        completion: @escaping Closure<Result<StoreTransaction, IAPError>>
+        completion: @escaping SendableClosure<Result<StoreTransaction, IAPError>>
     ) {
         purchaseProvider.purchase(product: product, promotionalOffer: promotionalOffer) { result in
             switch result {
@@ -151,8 +153,8 @@ final class IAPProvider: IIAPProvider {
         }
     }
 
-    func refreshReceipt(updateTransactions: Bool, completion: @escaping (Result<String, IAPError>) -> Void) {
-        let refresh = { [weak self] in
+    func refreshReceipt(updateTransactions: Bool, completion: @escaping SendableClosure<Result<String, IAPError>>) {
+        let refresh = { @Sendable [weak self] in
             self?.receiptRefreshProvider.refresh(requestID: UUID().uuidString) { [weak self] result in
                 switch result {
                 case .success:
@@ -181,7 +183,7 @@ final class IAPProvider: IIAPProvider {
         }
     }
 
-    func refreshReceipt(completion: @escaping Closure<Result<String, IAPError>>) {
+    func refreshReceipt(completion: @escaping SendableClosure<Result<String, IAPError>>) {
         refreshReceipt(updateTransactions: false, completion: completion)
     }
 
@@ -205,7 +207,7 @@ final class IAPProvider: IIAPProvider {
         }
     }
 
-    func addTransactionObserver(fallbackHandler: Closure<Result<StoreTransaction, IAPError>>?) {
+    func addTransactionObserver(fallbackHandler: SendableClosure<Result<StoreTransaction, IAPError>>?) {
         purchaseProvider.addTransactionObserver(fallbackHandler: fallbackHandler)
     }
 
@@ -223,7 +225,7 @@ final class IAPProvider: IIAPProvider {
         try await purchaseProvider.restore()
     }
 
-    func restore(_ completion: @escaping (Result<Void, any Error>) -> Void) {
+    func restore(_ completion: @escaping @Sendable (Result<Void, any Error>) -> Void) {
         purchaseProvider.restore(completion)
     }
 

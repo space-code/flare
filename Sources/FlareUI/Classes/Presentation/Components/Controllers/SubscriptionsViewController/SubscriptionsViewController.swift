@@ -255,7 +255,7 @@ import SwiftUI
         ///
         /// - Parameter options: A closure that returns the purchase options for a given store product.
         @available(iOS 15.0, tvOS 15.0, macOS 12.0, *)
-        func inAppPurchaseOptions(_ options: ((StoreProduct) -> Set<Product.PurchaseOption>?)?) {
+        func inAppPurchaseOptions(_ options: (@Sendable (StoreProduct) -> Set<Product.PurchaseOption>?)?) {
             viewModel.inAppPurchaseOptions = { PurchaseOptions(options: options?($0) ?? []) }
         }
     }

@@ -6,7 +6,7 @@
 @testable import Flare
 import Foundation
 
-final class ReceiptRefreshRequestMock: IReceiptRefreshRequest {
+final class ReceiptRefreshRequestMock: IReceiptRefreshRequest, @unchecked Sendable {
     var invokedIdSetter = false
     var invokedIdSetterCount = 0
     var invokedId: String?

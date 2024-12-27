@@ -13,6 +13,7 @@ public extension View {
     ///
     /// - Returns: A modified view with the specified style for subscription controls.
     @available(watchOS, unavailable)
+    @MainActor
     func subscriptionControlStyle(_ style: some ISubscriptionControlStyle) -> some View {
         environment(\.subscriptionControlStyle, prepareStyle(style))
     }
@@ -24,6 +25,7 @@ public extension View {
     /// - Parameter style: The style to prepare.
     ///
     /// - Returns: The prepared style as an `AnySubscriptionControlStyle`.
+    @MainActor
     private func prepareStyle(_ style: some ISubscriptionControlStyle) -> AnySubscriptionControlStyle {
         if let style = style as? AnySubscriptionControlStyle {
             return style

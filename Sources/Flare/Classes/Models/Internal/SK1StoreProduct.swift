@@ -15,12 +15,13 @@ final class SK1StoreProduct {
     let product: SKProduct
 
     /// The price formatter.
-    private lazy var numberFormatter: NumberFormatter = .numberFormatter(with: self.product.priceLocale)
+    private let numberFormatter: NumberFormatter
 
     // MARK: Initialization
 
     init(_ product: SKProduct) {
         self.product = product
+        self.numberFormatter = .numberFormatter(with: self.product.priceLocale)
     }
 }
 
@@ -41,6 +42,10 @@ extension SK1StoreProduct: ISKProduct {
 
     var currencySymbol: String? {
         numberFormatter.currencySymbol
+    }
+
+    var locale: Locale {
+        product.priceLocale
     }
 
     var price: Decimal {

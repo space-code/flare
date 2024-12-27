@@ -8,7 +8,7 @@ import SwiftUI
 // MARK: - SubscriptionPrivacyPolicyURLKey
 
 private struct SubscriptionPrivacyPolicyURLKey: EnvironmentKey {
-    static var defaultValue: URL?
+    static let defaultValue: URL? = nil
 }
 
 extension EnvironmentValues {

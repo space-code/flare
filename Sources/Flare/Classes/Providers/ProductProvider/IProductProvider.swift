@@ -5,16 +5,16 @@
 
 import StoreKit
 
-typealias PaymentHandler = (_ queue: PaymentQueue, _ result: Result<SKPaymentTransaction, IAPError>) -> Void
-typealias RestoreHandler = (_ queue: SKPaymentQueue, _ error: IAPError?) -> Void
+typealias PaymentHandler = @Sendable (_ queue: PaymentQueue, _ result: Result<SKPaymentTransaction, IAPError>) -> Void
+typealias RestoreHandler = @Sendable (_ queue: SKPaymentQueue, _ error: IAPError?) -> Void
 typealias ShouldAddStorePaymentHandler = (_ queue: SKPaymentQueue, _ payment: SKPayment, _ product: SKProduct) -> Bool
-typealias ReceiptRefreshHandler = (Result<Void, IAPError>) -> Void
+typealias ReceiptRefreshHandler = @Sendable (Result<Void, IAPError>) -> Void
 
 // MARK: - IProductProvider
 
 /// A type that is responsible for retrieving StoreKit products.
 protocol IProductProvider {
-    typealias ProductsHandler = Closure<Result<[StoreProduct], IAPError>>
+    typealias ProductsHandler = SendableClosure<Result<[StoreProduct], IAPError>>
 
     /// Retrieves localized information from the App Store about a specified list of products.
     ///

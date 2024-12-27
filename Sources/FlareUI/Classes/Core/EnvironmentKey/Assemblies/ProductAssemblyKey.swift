@@ -8,7 +8,7 @@ import SwiftUI
 // MARK: - ProductAssemblyKey
 
 private struct ProductAssemblyKey: EnvironmentKey {
-    static var defaultValue: IProductViewAssembly?
+    static let defaultValue: IProductViewAssembly? = nil
 }
 
 extension EnvironmentValues {

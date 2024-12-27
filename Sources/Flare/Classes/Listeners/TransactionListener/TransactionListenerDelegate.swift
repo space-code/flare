@@ -5,7 +5,7 @@
 
 import Foundation
 
-protocol TransactionListenerDelegate: AnyObject {
+protocol TransactionListenerDelegate: AnyObject, Sendable {
     func transactionListener(
         _ transactionListener: ITransactionListener,
         transactionDidUpdate result: Result<StoreTransaction, IAPError>

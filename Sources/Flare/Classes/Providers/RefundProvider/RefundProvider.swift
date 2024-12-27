@@ -77,7 +77,7 @@ extension RefundProvider: IRefundProvider {
         @available(tvOS, unavailable)
         @MainActor
         func beginRefundRequest(productID: String) async throws -> RefundRequestStatus {
-            let windowScene = try systemInfoProvider.currentScene
+            let windowScene = try await systemInfoProvider.currentScene
             let transactionID = try await refundRequestProvider.verifyTransaction(productID: productID)
             return try await initRefundRequest(transactionID: transactionID, windowScene: windowScene)
         }

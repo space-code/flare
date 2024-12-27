@@ -2,6 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 #### 3.x Releases
+- `3.1.0` Release Candidates [`3.1.0-rc.1`](#310-rc1)
 - `3.0.x` Releases - [`3.0.0`](#300) | [`3.0.1`](#301) | [`3.0.2`](#302)
 - `3.0.0` Release Candidates - [`3.0.0-rc.1`](#300-rc1) | [`3.0.0-rc.2`](#300-rc2)
 
@@ -10,6 +11,33 @@ All notable changes to this project will be documented in this file.
 
 #### 1.x Releases
 - `1.0.x` Releases - [1.0.0](#100)
+
+## [3.1.0-rc.1](https://github.com/space-code/flare/releases/tag/3.1.0-rc.1)
+Released on 2024-12-27.
+
+## Added
+- Update the FlareUI package to Swift 6.0.
+  - Added in Pull Request [#93](https://github.com/space-code/flare/pull/93).
+- Add full Swift concurrency support with Sendable requirements.
+  - Added in Pull Request [#92](https://github.com/space-code/flare/pull/92).
+- Implement locale for StoreProduct.
+  - Added in Pull Request [#82](https://github.com/space-code/flare/pull/82).
+
+## Updated
+- Update `upload_test_coverage_report`.
+  - Updated in Pull Request [#95](https://github.com/space-code/flare/pull/95).
+- Update `CHANGELOG.md`.
+  - Updated in Pull Request [#74](https://github.com/space-code/flare/pull/74).
+- Update `README.md`.
+  - Updated in Pull Request [#70](https://github.com/space-code/flare/pull/70).
+- Update Transaction Model with price and currency.
+  - Updated in Pull Request [#84](https://github.com/space-code/flare/pull/84).
+- Update RenewalInfo Model with renewalPrice and currency.
+  - Updated in Pull Request [#85](https://github.com/space-code/flare/pull/85).
+
+## Fixed
+- Fix the GitHub Actions Pipeline.
+  - Fixed in Pull Request [#88](https://github.com/space-code/flare/pull/88).
 
 ## [3.0.2](https://github.com/space-code/flare/releases/tag/3.0.2)
 Released on 2024-09-04.
@@ -56,7 +84,7 @@ Released on 2024-05-10.
 ## Updated
 - Update the `dependabot.yml` configuration
  - Updated in Pull Request [#34](https://github.com/space-code/flare/pull/34)
-
+ 
 ## Fixed
 - Fix handling of cancelling operations
   - Fixed in Pull Request [#26](https://github.com/space-code/flare/pull/26).

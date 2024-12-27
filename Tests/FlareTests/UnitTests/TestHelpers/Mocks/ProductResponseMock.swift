@@ -5,7 +5,7 @@
 
 import StoreKit
 
-final class ProductResponseMock: SKProductsResponse {
+final class ProductResponseMock: SKProductsResponse, @unchecked Sendable {
     var invokedInvalidProductsIdentifiers = false
     var invokedInvalidProductsIdentifiersCount = 0
     var stubbedInvokedInvalidProductsIdentifiers: [String] = []

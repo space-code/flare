@@ -6,7 +6,7 @@
 import Foundation
 
 /// Protocol representing a Store Kit product.
-protocol ISKProduct {
+protocol ISKProduct: Sendable {
     /// A localized description of the product.
     var localizedDescription: String { get }
 
@@ -18,6 +18,9 @@ protocol ISKProduct {
 
     /// The currency Symbol for the product's price.
     var currencySymbol: String? { get }
+
+    /// The  locale for the product's currency.
+    var locale: Locale { get }
 
     /// The price of the product in decimal format.
     var price: Decimal { get }

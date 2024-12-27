@@ -9,7 +9,7 @@ import StoreKit
 // MARK: - StoreTransaction
 
 /// A class represent a StoreKit transaction.
-public final class StoreTransaction {
+public final class StoreTransaction: Sendable {
     // MARK: Properties
 
     /// The StoreKit transaction.
@@ -79,6 +79,14 @@ extension StoreTransaction: IStoreTransaction {
 
     var environment: StoreEnvironment? {
         storeTransaction.environment
+    }
+
+    var price: Decimal? {
+        storeTransaction.price
+    }
+
+    var currency: String? {
+        storeTransaction.currency
     }
 }
 

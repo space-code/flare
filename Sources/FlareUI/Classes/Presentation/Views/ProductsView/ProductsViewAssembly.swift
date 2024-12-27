@@ -15,6 +15,7 @@ protocol IProductsViewAssembly {
     /// - Parameter ids: The collection of product IDs.
     ///
     /// - Returns: The assembled view as `AnyView`.
+    @MainActor
     func assemble(ids: some Collection<String>) -> AnyView
 }
 
@@ -47,6 +48,7 @@ final class ProductsViewAssembly: IProductsViewAssembly {
 
     // MARK: IProductsViewAssembly
 
+    @MainActor
     func assemble(ids: some Collection<String>) -> AnyView {
         let presenter = ProductsPresenter(
             ids: ids,

@@ -21,12 +21,13 @@ final class SK2StoreProduct {
     }
 
     /// The price formatter.
-    private lazy var numberFormatter: NumberFormatter = .numberFormatter(with: self.currencyFormat.locale)
+    private let numberFormatter: NumberFormatter
 
     // MARK: Initialization
 
     init(_ product: StoreKit.Product) {
         self.product = product
+        self.numberFormatter = .numberFormatter(with: product.priceFormatStyle.locale)
     }
 }
 
@@ -48,6 +49,10 @@ extension SK2StoreProduct: ISKProduct {
 
     var currencySymbol: String? {
         numberFormatter.currencySymbol
+    }
+
+    var locale: Locale {
+        currencyFormat.locale
     }
 
     var price: Decimal {

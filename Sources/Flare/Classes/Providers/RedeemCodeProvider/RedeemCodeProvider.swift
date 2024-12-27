@@ -36,7 +36,7 @@ extension RedeemCodeProvider: IRedeemCodeProvider {
         @available(tvOS, unavailable)
         @MainActor
         func presentOfferCodeRedeemSheet() async throws {
-            let windowScene = try systemInfoProvider.currentScene
+            let windowScene = try await systemInfoProvider.currentScene
             do {
                 Logger.debug(message: L10n.Redeem.presentingOfferCodeRedeemSheet)
                 try await AppStore.presentOfferCodeRedeemSheet(in: windowScene)

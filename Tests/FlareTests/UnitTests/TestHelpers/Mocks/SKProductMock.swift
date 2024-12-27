@@ -5,7 +5,7 @@
 
 import StoreKit
 
-final class SKProductMock: SKProduct {
+final class SKProductMock: SKProduct, @unchecked Sendable {
     var invokedProductIdentifier = false
     var invokedProductIdentifierCount = 0
     var stubbedProductIdentifier: String = "product_id"
@@ -16,7 +16,7 @@ final class SKProductMock: SKProduct {
         return stubbedProductIdentifier
     }
 
-    var stubbedPriceLocale: Locale!
+    var stubbedPriceLocale: Locale = .autoupdatingCurrent
 
     override var priceLocale: Locale {
         stubbedPriceLocale

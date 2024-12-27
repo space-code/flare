@@ -15,7 +15,7 @@ extension View {
     ///
     /// - Returns: A modified view with the specified in-app purchase options.
     @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
-    public func inAppPurchaseOptions(_ options: ((StoreProduct) -> Set<Product.PurchaseOption>)?) -> some View {
+    public func inAppPurchaseOptions(_ options: (@Sendable (StoreProduct) -> Set<Product.PurchaseOption>)?) -> some View {
         environment(\.purchaseOptions) { PurchaseOptions(options: options?($0) ?? []) }
     }
 
@@ -24,7 +24,7 @@ extension View {
     /// - Parameter options: A closure that returns the purchase options for a given store product.
     ///
     /// - Returns: A modified view with the specified in-app purchase options.
-    func inAppPurchaseOptions(_ options: ((StoreProduct) -> PurchaseOptions)?) -> some View {
+    func inAppPurchaseOptions(_ options: (@Sendable (StoreProduct) -> PurchaseOptions)?) -> some View {
         environment(\.purchaseOptions, options)
     }
 }

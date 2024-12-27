@@ -8,7 +8,7 @@ import SwiftUI
 // MARK: - StoreButtonViewFontWeightKey
 
 private struct StoreButtonViewFontWeightKey: EnvironmentKey {
-    static var defaultValue: Font.Weight = .regular
+    static let defaultValue: Font.Weight = .regular
 }
 
 extension EnvironmentValues {

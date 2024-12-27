@@ -9,10 +9,10 @@ import Foundation
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.2, *)
 enum AsyncHandler {
-    static func call<T>(
+    static func call<T: Sendable>(
         strategy: Strategy = .default,
-        completion: @escaping (Result<T, Error>) -> Void,
-        asyncMethod method: @escaping () async throws -> T
+        completion: @escaping @Sendable (Result<T, Error>) -> Void,
+        asyncMethod method: @escaping @Sendable () async throws -> T
     ) {
         Task {
             do {
@@ -26,7 +26,7 @@ enum AsyncHandler {
 
     // MARK: Private
 
-    private static func execute(strategy: Strategy, block: @escaping () -> Void) async {
+    private static func execute(strategy: Strategy, block: @escaping @Sendable () -> Void) async {
         switch strategy {
         case .runOnMain:
             await MainActor.run { block() }
