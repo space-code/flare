@@ -10,6 +10,8 @@ All notable changes to this project will be documented in this file.
   - Added in Pull Request [#82](https://github.com/space-code/flare/pull/82).
 
 ## Updated
+- Update `upload_test_coverage_report`.
+  - Updated in Pull Request [#95](https://github.com/space-code/flare/pull/95).
 - Update `CHANGELOG.md`.
   - Updated in Pull Request [#74](https://github.com/space-code/flare/pull/74).
 - Update `README.md`.

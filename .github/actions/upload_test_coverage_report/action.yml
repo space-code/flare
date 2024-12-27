@@ -15,14 +15,28 @@ runs:
   using: "composite"
 
   steps:
+    - name: Install dependencies
+      run: |
+        brew tap a7ex/homebrew-formulae
+        brew install xcresultparser
+      shell: bash
+
+    - name: Convert the test report
+      run: |
+        xcresultparser -o cobertura "test_output/${{ inputs.filename }}.xcresult" > cobertura.xml
+      shell: bash
+  
     - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v4.5.0
+      uses: codecov/codecov-action@v5.1.2
       with:
         token: ${{ inputs.token }}
-        xcode: true
         flags: ${{ inputs.scheme_name }}
-        xcode_archive_path: test_output/${{ inputs.filename }}.xcresult
-    - uses: actions/upload-artifact@v4
+        fail_ci_if_error: true
+        verbose: true
+        files: ./cobertura.xml
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
       with:
         name: ${{ inputs.filename }}
-        path: test_output
+        path: ${{ inputs.output_path }}
