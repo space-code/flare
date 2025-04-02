@@ -27,7 +27,7 @@ let package = Package(
         .package(url: "https://github.com/space-code/atomic.git", exact: "1.1.0"),
         .package(
             url: "https://github.com/pointfreeco/swift-snapshot-testing",
-            exact: "1.18.1"
+            exact: "1.18.3"
         ),
     ],
     targets: [
