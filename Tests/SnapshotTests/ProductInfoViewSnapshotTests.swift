@@ -9,6 +9,7 @@ import XCTest
 
 // MARK: - ProductInfoViewSnapshotTests
 
+@MainActor
 @available(watchOS, unavailable)
 final class ProductInfoViewSnapshotTests: SnapshotTestCase {
     func test_productInfoView_compactStyle_whenIconIsNil() {
