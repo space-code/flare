@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+
+#### Added
+- Mark all snapshot tests with @MainActor.
+  - Added in Pull Request [#111](https://github.com/space-code/flare/pull/111)
+
 #### 3.x Releases
 - `3.1.0` Release Candidates [`3.1.0-rc.1`](#310-rc1)
 - `3.0.x` Releases - [`3.0.0`](#300) | [`3.0.1`](#301) | [`3.0.2`](#302)
