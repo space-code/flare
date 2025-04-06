@@ -36,4 +36,10 @@ extension SubscriptionInfo: ISubscriptionInfo {
             try await self.underlyingSubscriptionInfo.subscriptionStatus
         }
     }
+
+    public var isEligibleForIntroOffer: SubscriptionEligibility {
+        get async {
+            await self.underlyingSubscriptionInfo.isEligibleForIntroOffer
+        }
+    }
 }

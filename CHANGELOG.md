@@ -2,6 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 #### 3.x Releases
+- `3.1.0` Releases - [`3.1.0`](#310)
 - `3.1.0` Release Candidates [`3.1.0-rc.1`](#310-rc1)
 - `3.0.x` Releases - [`3.0.0`](#300) | [`3.0.1`](#301) | [`3.0.2`](#302)
 - `3.0.0` Release Candidates - [`3.0.0-rc.1`](#300-rc1) | [`3.0.0-rc.2`](#300-rc2)
@@ -11,6 +12,14 @@ All notable changes to this project will be documented in this file.
 
 #### 1.x Releases
 - `1.0.x` Releases - [1.0.0](#100)
+
+## [3.1.0](https://github.com/space-code/flare/releases/tag/3.1.0)
+
+## Added
+- Mark all snapshot tests with @MainActor.
+  - Added in Pull Request [#111](https://github.com/space-code/flare/pull/111).
+- Implement the `isEligibleForIntroOffer` property.
+  - Added in Pull Request [#112](https://github.com/space-code/flare/pull/112).
 
 ## [3.1.0-rc.1](https://github.com/space-code/flare/releases/tag/3.1.0-rc.1)
 Released on 2024-12-27.

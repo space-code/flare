@@ -21,13 +21,13 @@ let package = Package(
         .library(name: "FlareUI", targets: ["FlareUI"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/space-code/concurrency.git", exact: "0.1.0"),
-        .package(url: "https://github.com/apple/swift-docc-plugin", exact: "1.3.0"),
+        .package(url: "https://github.com/space-code/concurrency.git", exact: "0.2.0"),
+        .package(url: "https://github.com/apple/swift-docc-plugin", exact: "1.4.3"),
         .package(url: "https://github.com/space-code/log.git", exact: "1.2.0"),
         .package(url: "https://github.com/space-code/atomic.git", exact: "1.1.0"),
         .package(
             url: "https://github.com/pointfreeco/swift-snapshot-testing",
-            exact: "1.15.3"
+            exact: "1.18.3"
         ),
     ],
     targets: [

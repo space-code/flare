@@ -8,6 +8,7 @@ import Foundation
 
 // MARK: - ProductPlaceholderViewSnapshotTests
 
+@MainActor
 @available(watchOS, unavailable)
 final class ProductPlaceholderViewSnapshotTests: SnapshotTestCase {
     func test_productPlaceholderView_compactStyle_whenIconIsHidden() {

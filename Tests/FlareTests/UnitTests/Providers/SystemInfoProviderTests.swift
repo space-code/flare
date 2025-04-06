@@ -16,11 +16,20 @@
 
         // MARK: Initialization
 
-        @MainActor override func setUp() {
-            super.setUp()
-            scenesHolderMock = ScenesHolderMock()
-            sut = SystemInfoProvider(scenesHolder: scenesHolderMock)
-        }
+        #if swift(>=6.0)
+            override func setUp() {
+                super.setUp()
+                scenesHolderMock = ScenesHolderMock()
+                sut = SystemInfoProvider(scenesHolder: scenesHolderMock)
+            }
+        #else
+            @MainActor
+            override func setUp() {
+                super.setUp()
+                scenesHolderMock = ScenesHolderMock()
+                sut = SystemInfoProvider(scenesHolder: scenesHolderMock)
+            }
+        #endif
 
         override func tearDown() {
             scenesHolderMock = nil

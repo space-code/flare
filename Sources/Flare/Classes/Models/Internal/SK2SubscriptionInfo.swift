@@ -29,4 +29,13 @@ extension SK2SubscriptionInfo: ISubscriptionInfo {
             try await self.underlyingInfo.status.map { SubscriptionInfoStatus(underlyingStatus: $0) }
         }
     }
+
+    var isEligibleForIntroOffer: SubscriptionEligibility {
+        get async {
+            guard self.underlyingInfo.introductoryOffer != nil else { return .noOffer }
+
+            let value = await self.underlyingInfo.isEligibleForIntroOffer
+            return value ? .eligible : .nonEligible
+        }
+    }
 }
