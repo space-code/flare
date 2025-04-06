@@ -5,7 +5,9 @@ All notable changes to this project will be documented in this file.
 
 #### Added
 - Mark all snapshot tests with @MainActor.
-  - Added in Pull Request [#111](https://github.com/space-code/flare/pull/111)
+  - Added in Pull Request [#111](https://github.com/space-code/flare/pull/111).
+- Implement the `isEligibleForIntroOffer` property.
+  - Added in Pull Request [#112](https://github.com/space-code/flare/pull/112).
 
 #### 3.x Releases
 - `3.1.0` Release Candidates [`3.1.0-rc.1`](#310-rc1)
