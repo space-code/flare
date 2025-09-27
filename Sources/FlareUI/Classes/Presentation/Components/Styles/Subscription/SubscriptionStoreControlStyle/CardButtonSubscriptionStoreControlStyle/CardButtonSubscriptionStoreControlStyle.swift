@@ -25,6 +25,7 @@ import SwiftUI
 
         // MARK: Private
 
+        @MainActor
         private func contentView(configuration: Configuration) -> some View {
             Button(
                 action: {
