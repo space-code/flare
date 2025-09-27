@@ -39,9 +39,6 @@ jobs:
           - xcode: "Xcode_15.2"
             runsOn: macos-14
             name: "macOS 14, Xcode 15.2, Swift 5.9.0"
-          - xcode: "Xcode_14.3.1"
-            runsOn: macos-13
-            name: "macOS 13, Xcode 14.3.1, Swift 5.8.0"
     steps:
       - uses: actions/checkout@v5
       - name: ${{ matrix.name }}
@@ -84,10 +81,6 @@ jobs:
             name: "iOS 17.2"
             xcode: "Xcode_15.2"
             runsOn: macos-14
-          - destination: "OS=16.4,name=iPhone 14 Pro"
-            name: "iOS 16.4"
-            xcode: "Xcode_14.3.1"
-            runsOn: macos-13
     steps:
       - uses: actions/checkout@v5
       - name: ${{ matrix.name }}
@@ -130,10 +123,6 @@ jobs:
             name: "tvOS 17.2"
             xcode: "Xcode_15.2"
             runsOn: macos-14
-          - destination: "OS=16.4,name=Apple TV"
-            name: "tvOS 16.4"
-            xcode: "Xcode_14.3.1"
-            runsOn: macos-13
     steps:
       - uses: actions/checkout@v5
       - name: ${{ matrix.name }}
@@ -176,10 +165,6 @@ jobs:
             name: "watchOS 10.2"
             xcode: "Xcode_15.2"
             runsOn: macos-14
-          - destination: "OS=9.4,name=Apple Watch Series 8 (45mm)"
-            name: "watchOS 9.4"
-            xcode: "Xcode_14.3.1"
-            runsOn: macos-13
     steps:
       - uses: actions/checkout@v5
       - name: ${{ matrix.name }}
@@ -218,9 +203,6 @@ jobs:
           - name: "macOS 14, SPM 5.9.0 Test"
             xcode: "Xcode_15.0"
             runsOn: macos-14
-          - name: "macOS 13, SPM 5.8.1 Test"
-            xcode: "Xcode_14.3.1"
-            runsOn: macos-13
     steps:
       - uses: actions/checkout@v5
       - name: ${{ matrix.name }}
