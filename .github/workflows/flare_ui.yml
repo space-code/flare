@@ -249,7 +249,7 @@ jobs:
           path: test_output
       - run: xcrun xcresulttool merge test_output/**/*.xcresult --output-path test_output/final/final.xcresult
       - name: Upload Merged Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: MergedResult
           path: test_output/final
