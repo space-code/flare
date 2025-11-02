@@ -4,7 +4,7 @@
 //
 
 @testable import Flare
-import StoreKit
+import Foundation
 
 public extension StoreProduct {
     static func fake(

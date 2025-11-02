@@ -38,23 +38,27 @@ class SnapshotTestCase: XCTestCase {
         of view: some View,
         size: CGSize,
         userInterfaceStyle: UserInterfaceStyle = .light,
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         testName: String = #function,
         line: UInt = #line
     ) {
         #if os(iOS) || os(tvOS)
-            SnapshotTesting.assertSnapshots(
-                of: view,
-                as: [
-                    .image(
-                        layout: .fixed(width: size.width, height: size.height),
-                        traits: UITraitCollection(userInterfaceStyle: userInterfaceStyle.userInterfaceStyle)
-                    ),
-                ],
-                file: file,
-                testName: testName + osName,
-                line: line
-            )
+            withSnapshotTesting(diffTool: .ksdiff) {
+                SnapshotTesting.assertSnapshots(
+                    of: view,
+                    as: [
+                        .image(
+                            precision: 0.98,
+                            perceptualPrecision: 0.98,
+                            layout: .fixed(width: size.width, height: size.height),
+                            traits: UITraitCollection(userInterfaceStyle: userInterfaceStyle.userInterfaceStyle)
+                        ),
+                    ],
+                    file: file,
+                    testName: testName + osName,
+                    line: line
+                )
+            }
         #elseif os(macOS)
             SnapshotTesting.assertSnapshots(
                 of: ThemableView(rootView: view, appearance: userInterfaceStyle.appearance),
