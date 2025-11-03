@@ -4,7 +4,8 @@
 //
 
 @testable import Flare
-import StoreKit
+import Foundation
+import struct StoreKit.Locale
 
 public final class ProductMock: ISKProduct, @unchecked Sendable {
     public init() {}

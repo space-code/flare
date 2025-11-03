@@ -1,4 +1,4 @@
-// swift-tools-version: 6.2
+// swift-tools-version: 6.1
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 // swiftlint:disable all
 
@@ -22,12 +22,12 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/space-code/concurrency.git", exact: "0.2.0"),
-        .package(url: "https://github.com/apple/swift-docc-plugin", exact: "1.4.5"),
+        .package(url: "https://github.com/apple/swift-docc-plugin", exact: "1.4.3"),
         .package(url: "https://github.com/space-code/log.git", exact: "1.2.0"),
         .package(url: "https://github.com/space-code/atomic.git", exact: "1.1.0"),
         .package(
             url: "https://github.com/pointfreeco/swift-snapshot-testing",
-            exact: "1.18.7"
+            exact: "1.18.4"
         ),
     ],
     targets: [

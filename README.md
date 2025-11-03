@@ -68,8 +68,8 @@ Check out the [documentation](https://space-code.github.io/flare/).
 
 | Package       | Supported Platforms                                                   | XCode | Minimum Swift Version |
 | ------------- | --------------------------------------------------------------------- | ----- | --------------------- |
-| Flare         | iOS 13.0+ / macOS 10.15+ / tvOS 13.0+ / watchOS 7.0+ / visionOS 1.0+  | 14.2  | 5.7                   |
-| FlareUI       | iOS 13.0+ / macOS 10.15+ / tvOS 13.0+                                 | 14.2  | 5.7                   |
+| Flare         | iOS 13.0+ / macOS 10.15+ / tvOS 13.0+ / watchOS 7.0+ / visionOS 1.0+  | 15.3  | 5.9                   |
+| FlareUI       | iOS 13.0+ / macOS 10.15+ / tvOS 13.0+                                 | 15.3  | 5.9                   |
 
 ## Installation
 ### Swift Package Manager

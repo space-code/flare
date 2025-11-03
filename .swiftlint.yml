@@ -5,6 +5,8 @@ excluded:
   - Package@swift-5.8.swift
   - Package@swift-5.9.swift
   - Package@swift-5.10.swift
+  - Package@swift-6.0.swift
+  - Package@swift-6.1.swift
   - Sources/Flare/Classes/Generated/Strings.swift
   - Sources/FlareUI/Classes/Generated/Strings.swift
   - Sources/FlareUI/Classes/Generated/Colors.swift
