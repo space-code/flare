@@ -1,13 +1,8 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
-
-## Added
-- Add support for Swift 6.2
-  - Added in Pull Request [#113](https://github.com/space-code/flare/pull/113).
-
 #### 3.x Releases
+- `3.2.0` Releases - [`3.2.0`](#320)
 - `3.1.0` Releases - [`3.1.0`](#310)
 - `3.1.0` Release Candidates [`3.1.0-rc.1`](#310-rc1)
 - `3.0.x` Releases - [`3.0.0`](#300) | [`3.0.1`](#301) | [`3.0.2`](#302)
@@ -18,6 +13,12 @@ All notable changes to this project will be documented in this file.
 
 #### 1.x Releases
 - `1.0.x` Releases - [1.0.0](#100)
+
+## [3.2.0](https://github.com/space-code/flare/releases/tag/3.2.0)
+
+## Added
+- Add support for Swift 6.2.
+  - Added in Pull Request [#123](https://github.com/space-code/flare/pull/123).
 
 ## [3.1.0](https://github.com/space-code/flare/releases/tag/3.1.0)
 
