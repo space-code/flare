@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+
+## Updated
+- Update `Mintfile`
+  - Updated in Pull Request [#128](https://github.com/space-code/flare/pull/128).
+
 #### 3.x Releases
 - `3.2.0` Releases - [`3.2.0`](#320)
 - `3.1.0` Releases - [`3.1.0`](#310)
