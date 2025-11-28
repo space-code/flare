@@ -110,12 +110,10 @@ extension SubscriptionsPresenter: ISubscriptionsPresenter {
         }
 
         let options = optionsHandler?(product)
-        let transaction: StoreTransaction
-
-        if #available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *), let options = options?.options {
-            transaction = try await iap.purchase(product: product, options: options)
+        let transaction: StoreTransaction = if #available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *), let options = options?.options {
+            try await iap.purchase(product: product, options: options)
         } else {
-            transaction = try await iap.purchase(product: product)
+            try await iap.purchase(product: product)
         }
 
         loadProducts()

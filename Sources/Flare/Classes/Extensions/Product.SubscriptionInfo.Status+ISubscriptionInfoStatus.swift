@@ -16,9 +16,9 @@ extension Product.SubscriptionInfo.Status: ISubscriptionInfoStatus {
     var subscriptionRenewalInfo: VerificationResult<RenewalInfo> {
         switch self.renewalInfo {
         case let .verified(renewalInfo):
-            return .verified(.init(renewalInfo: renewalInfo))
+            .verified(.init(renewalInfo: renewalInfo))
         case let .unverified(renewalInfo, error):
-            return .unverified(.init(renewalInfo: renewalInfo), error)
+            .unverified(.init(renewalInfo: renewalInfo), error)
         }
     }
 }

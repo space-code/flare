@@ -28,13 +28,13 @@ extension ProductType {
     var productCategory: ProductCategory {
         switch self {
         case .consumable:
-            return .nonSubscription
+            .nonSubscription
         case .nonConsumable:
-            return .nonSubscription
+            .nonSubscription
         case .nonRenewableSubscription:
-            return .subscription
+            .subscription
         case .autoRenewableSubscription:
-            return .subscription
+            .subscription
         }
     }
 }

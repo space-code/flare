@@ -78,9 +78,9 @@ class SnapshotTestCase: XCTestCase {
             var userInterfaceStyle: UIUserInterfaceStyle {
                 switch self {
                 case .light:
-                    return .light
+                    .light
                 case .dark:
-                    return .dark
+                    .dark
                 }
             }
 
@@ -88,9 +88,9 @@ class SnapshotTestCase: XCTestCase {
             var appearance: NSAppearance? {
                 switch self {
                 case .light:
-                    return .init(named: .vibrantLight)
+                    .init(named: .vibrantLight)
                 case .dark:
-                    return .init(named: .darkAqua)
+                    .init(named: .darkAqua)
                 }
             }
         #endif
@@ -98,9 +98,9 @@ class SnapshotTestCase: XCTestCase {
         var colorScheme: ColorScheme {
             switch self {
             case .light:
-                return .light
+                .light
             case .dark:
-                return .dark
+                .dark
             }
         }
     }

@@ -77,14 +77,12 @@ struct ProductInfoView: View {
     }
 
     private var textView: some View {
-        let alignment: HorizontalAlignment = {
-            switch style {
-            case .compact:
-                return .leading
-            case .large:
-                return .center
-            }
-        }()
+        let alignment: HorizontalAlignment = switch style {
+        case .compact:
+            .leading
+        case .large:
+            .center
+        }
 
         return VStack(alignment: alignment) {
             Text(viewModel.title)

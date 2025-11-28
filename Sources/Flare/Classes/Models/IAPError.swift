@@ -90,9 +90,9 @@ extension IAPError {
 extension IAPError {
     var plainError: Error {
         if case let IAPError.with(error) = self {
-            return error
+            error
         } else {
-            return self
+            self
         }
     }
 }
@@ -103,25 +103,25 @@ extension IAPError: Equatable {
     public static func == (lhs: IAPError, rhs: IAPError) -> Bool {
         switch (lhs, rhs) {
         case let (.invalid(lhs), .invalid(rhs)):
-            return lhs == rhs
+            lhs == rhs
         case (.paymentNotAllowed, .paymentNotAllowed):
-            return true
+            true
         case (.paymentCancelled, .paymentCancelled):
-            return true
+            true
         case (.storeProductNotAvailable, .storeProductNotAvailable):
-            return true
+            true
         case let (.with(lhs), .with(rhs)):
-            return (lhs as NSError) == (rhs as NSError)
+            (lhs as NSError) == (rhs as NSError)
         case (.receiptNotFound, .receiptNotFound):
-            return true
+            true
         case let (.refund(lhs), .refund(rhs)):
-            return lhs == rhs
+            lhs == rhs
         case (.unknown, .unknown):
-            return true
+            true
         case let (.failedToDecodeSignature(lhs), .failedToDecodeSignature(rhs)):
-            return lhs == rhs
+            lhs == rhs
         default:
-            return false
+            false
         }
     }
 }
@@ -132,49 +132,49 @@ extension IAPError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case let .invalid(productIDs):
-            return L10n.Error.InvalidProductIds.description(productIDs)
+            L10n.Error.InvalidProductIds.description(productIDs)
         case .paymentNotAllowed:
-            return L10n.Error.PaymentNotAllowed.description
+            L10n.Error.PaymentNotAllowed.description
         case .paymentCancelled:
-            return L10n.Error.PaymentCancelled.description
+            L10n.Error.PaymentCancelled.description
         case .storeProductNotAvailable:
-            return L10n.Error.StoreProductNotAvailable.description
+            L10n.Error.StoreProductNotAvailable.description
         case let .with(error):
-            return L10n.Error.With.description(error.localizedDescription)
+            L10n.Error.With.description(error.localizedDescription)
         case .receiptNotFound:
-            return L10n.Error.Receipt.description
+            L10n.Error.Receipt.description
         case let .transactionNotFound(productID):
-            return L10n.Error.TransactionNotFound.description(productID)
+            L10n.Error.TransactionNotFound.description(productID)
         case let .refund(error):
-            return L10n.Error.Refund.description(error.localizedDescription)
+            L10n.Error.Refund.description(error.localizedDescription)
         case let .verification(error):
-            return L10n.Error.Verification.description(error.localizedDescription)
+            L10n.Error.Verification.description(error.localizedDescription)
         case .paymentDefferred:
-            return L10n.Error.PaymentDefferred.description
+            L10n.Error.PaymentDefferred.description
         case let .failedToDecodeSignature(signature):
-            return L10n.Error.FailedToDecodeSignature.description(signature)
+            L10n.Error.FailedToDecodeSignature.description(signature)
         case .unknown:
-            return L10n.Error.Unknown.description
+            L10n.Error.Unknown.description
         }
     }
 
     public var failureReason: String? {
         switch self {
         case .paymentNotAllowed:
-            return L10n.Error.PaymentNotAllowed.failureReason
+            L10n.Error.PaymentNotAllowed.failureReason
         default:
-            return nil
+            nil
         }
     }
 
     public var recoverySuggestion: String? {
         switch self {
         case .paymentNotAllowed:
-            return L10n.Error.PaymentNotAllowed.recoverySuggestion
+            L10n.Error.PaymentNotAllowed.recoverySuggestion
         case .storeProductNotAvailable:
-            return L10n.Error.StoreProductNotAvailable.recoverySuggestion
+            L10n.Error.StoreProductNotAvailable.recoverySuggestion
         default:
-            return nil
+            nil
         }
     }
 }

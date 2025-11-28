@@ -28,9 +28,9 @@ public extension View {
     @MainActor
     private func prepareStyle(_ style: some ISubscriptionControlStyle) -> AnySubscriptionControlStyle {
         if let style = style as? AnySubscriptionControlStyle {
-            return style
+            style
         } else {
-            return AnySubscriptionControlStyle(style: style)
+            AnySubscriptionControlStyle(style: style)
         }
     }
 }

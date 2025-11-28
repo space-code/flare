@@ -43,11 +43,11 @@ extension DiscountType {
     static func from(discount: Product.SubscriptionOffer) -> Self? {
         switch discount.type {
         case Product.SubscriptionOffer.OfferType.introductory:
-            return .introductory
+            .introductory
         case Product.SubscriptionOffer.OfferType.promotional:
-            return .promotional
+            .promotional
         default:
-            return nil
+            nil
         }
     }
 }

@@ -49,9 +49,9 @@ extension StoreSessionTestCase {
             .compactMap { result in
                 switch result {
                 case let .verified(transaction):
-                    return transaction
+                    transaction
                 case .unverified:
-                    return nil
+                    nil
                 }
             }
             .filter { (transaction: Transaction) in

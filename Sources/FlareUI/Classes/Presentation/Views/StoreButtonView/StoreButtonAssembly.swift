@@ -49,7 +49,7 @@ final class StoreButtonAssembly: IStoreButtonAssembly {
     private func map(storeButtonType: StoreButton) -> StoreButtonViewModel.State {
         switch storeButtonType {
         case .restore:
-            return .restore(viewModel: .init(title: L10n.StoreButton.restorePurchases))
+            .restore(viewModel: .init(title: L10n.StoreButton.restorePurchases))
         }
     }
 }

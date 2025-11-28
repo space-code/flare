@@ -47,13 +47,13 @@ extension PaymentMode {
     static func from(discount: Product.SubscriptionOffer) -> Self? {
         switch discount.paymentMode {
         case Product.SubscriptionOffer.PaymentMode.freeTrial:
-            return .freeTrial
+            .freeTrial
         case Product.SubscriptionOffer.PaymentMode.payAsYouGo:
-            return .payAsYouGo
+            .payAsYouGo
         case Product.SubscriptionOffer.PaymentMode.payUpFront:
-            return .payUpFront
+            .payUpFront
         default:
-            return nil
+            nil
         }
     }
 }

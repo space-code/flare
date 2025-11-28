@@ -17,9 +17,9 @@ struct StoreUnavaliableView: View {
         var message: String {
             switch self {
             case .product:
-                return L10n.StoreUnavailable.Product.message
+                L10n.StoreUnavailable.Product.message
             case .subscription:
-                return L10n.StoreUnavailable.Subscription.message
+                L10n.StoreUnavailable.Subscription.message
             }
         }
     }
