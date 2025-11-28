@@ -1,6 +1,36 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
+    ":semanticCommits",
+    ":disableDependencyDashboard",
     "config:recommended"
-  ]
+  ],
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["major"],
+      "labels": ["major"],
+      "semanticCommitScope": "deps"
+    },
+    {
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true,
+      "automergeType": "pr",
+      "automergeStrategy": "auto",
+      "semanticCommitScope": "deps",
+      "labels": ["minor-patch"]
+    },
+    {
+      "matchManagers": ["swift"],
+      "semanticCommitScope": "spm",
+      "labels": ["swift", "spm"]
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "labels": ["github-actions", "ci"]
+    }
+  ],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true
+  }
 }
