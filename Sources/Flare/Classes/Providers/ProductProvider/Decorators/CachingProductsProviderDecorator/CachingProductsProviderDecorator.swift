@@ -140,7 +140,7 @@ extension CachingProductsProviderDecorator: ICachingProductsProviderDecorator {
     @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
     func fetch(productIDs: some Collection<String>) async throws -> [StoreProduct] {
         try await withCheckedThrowingContinuation { [weak self] continuation in
-            guard let self = self else {
+            guard let self else {
                 continuation.resume(throwing: IAPError.unknown)
                 return
             }
@@ -159,6 +159,6 @@ extension CachingProductsProviderDecorator: ICachingProductsProviderDecorator {
     }
 }
 
-// MARK: Sendable
+// MARK: @unchecked Sendable
 
 extension CachingProductsProviderDecorator: @unchecked Sendable {}

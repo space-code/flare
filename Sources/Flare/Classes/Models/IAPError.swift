@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2024 Space Code. All rights reserved.
+// Copyright © 2023 Space Code. All rights reserved.
 //
 
 import StoreKit
@@ -78,7 +78,7 @@ extension IAPError {
         case .unknown:
             self = .unknown
         default:
-            if let error = error {
+            if let error {
                 self = .with(error: error)
             } else {
                 self = .unknown

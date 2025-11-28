@@ -85,8 +85,8 @@ final class ProductProvider: NSObject, IProductProvider {
         }
     }
 
-    private func handleFetchResult<T: ISKProduct, E: Error>(
-        result: Result<[T], E>,
+    private func handleFetchResult(
+        result: Result<[some ISKProduct], some Error>,
         _ completion: @escaping (Result<[StoreProduct], IAPError>) -> Void
     ) {
         switch result {
@@ -136,7 +136,7 @@ extension ProductProvider: SKProductsRequestDelegate {
     }
 }
 
-// MARK: Sendable
+// MARK: @unchecked Sendable
 
 // @unchecked because:
 // - It has mutable state, but it's made thread-safe through `queue`.

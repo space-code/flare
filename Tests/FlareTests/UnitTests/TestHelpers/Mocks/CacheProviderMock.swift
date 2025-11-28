@@ -26,7 +26,7 @@ final class CacheProviderMock: ICacheProvider {
     var invokedWriteParameters: (key: String, value: Any)?
     var invokedWriteParametersList = [(key: String, value: Any)]()
 
-    func write<T: Codable>(key: String, value: T) {
+    func write(key: String, value: some Codable) {
         invokedWrite = true
         invokedWriteCount += 1
         invokedWriteParameters = (key, value)

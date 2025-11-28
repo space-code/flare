@@ -38,12 +38,12 @@ final class SubscriptionsViewModelViewFactory: ISubscriptionsViewModelViewFactor
         var viewModels: [SubscriptionView.ViewModel] = []
 
         for product in products {
-            let viewModel = try SubscriptionView.ViewModel(
+            let viewModel = try await SubscriptionView.ViewModel(
                 id: product.productIdentifier,
                 title: product.localizedTitle,
                 price: makePrice(string: subscriptionPriceViewModelFactory.make(product, format: .full)),
                 description: product.localizedDescription,
-                isActive: await validationSubscriptionStatus(product)
+                isActive: validationSubscriptionStatus(product)
             )
 
             viewModels.append(viewModel)
@@ -55,7 +55,7 @@ final class SubscriptionsViewModelViewFactory: ISubscriptionsViewModelViewFactor
     // MARK: Private
 
     private func validationSubscriptionStatus(_ product: StoreProduct) async throws -> Bool {
-        guard let subscriptionStatusVerifier = subscriptionStatusVerifier else { return false }
+        guard let subscriptionStatusVerifier else { return false }
         return try await subscriptionStatusVerifier.validate(product)
     }
 

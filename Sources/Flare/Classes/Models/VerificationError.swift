@@ -40,7 +40,7 @@ public enum VerificationError: Error {
 
 extension VerificationError {
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, visionOS 1.0, *)
-    init<SignedValue>(_ verificationError: StoreKit.VerificationResult<SignedValue>.VerificationError) {
+    init(_ verificationError: StoreKit.VerificationResult<some Any>.VerificationError) {
         switch verificationError {
         case .revokedCertificate:
             self = .revokedCertificate

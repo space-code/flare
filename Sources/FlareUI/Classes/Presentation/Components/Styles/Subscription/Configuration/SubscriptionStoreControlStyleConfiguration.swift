@@ -13,7 +13,7 @@ public struct SubscriptionStoreControlStyleConfiguration {
     public struct Label: View {
         public var body: AnyView
 
-        init<Content: View>(_ view: Content) {
+        init(_ view: some View) {
             body = view.eraseToAnyView()
         }
     }
@@ -22,7 +22,7 @@ public struct SubscriptionStoreControlStyleConfiguration {
     public struct Description: View {
         public var body: AnyView
 
-        init<Content: View>(_ view: Content) {
+        init(_ view: some View) {
             body = view.eraseToAnyView()
         }
     }
@@ -31,7 +31,7 @@ public struct SubscriptionStoreControlStyleConfiguration {
     public struct Price: View {
         public var body: AnyView
 
-        init<Content: View>(_ view: Content) {
+        init(_ view: some View) {
             body = view.eraseToAnyView()
         }
     }

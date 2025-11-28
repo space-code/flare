@@ -12,7 +12,7 @@ final class UserDefaultsMock: IUserDefaults {
     var invokedSetParameters: (key: String, codable: Any)?
     var invokedSetParametersList = [(key: String, codable: Any)]()
 
-    func set<T: Codable>(key: String, codable: T) {
+    func set(key: String, codable: some Codable) {
         invokedSet = true
         invokedSetCount += 1
         invokedSetParameters = (key, codable)

@@ -31,7 +31,7 @@ extension CacheProvider: ICacheProvider {
         userDefaults.get(key: key)
     }
 
-    func write<T: Codable>(key: String, value: T) {
+    func write(key: String, value: some Codable) {
         userDefaults.set(key: key, codable: value)
     }
 }

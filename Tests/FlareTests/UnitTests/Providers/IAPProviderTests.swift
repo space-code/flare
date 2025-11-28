@@ -267,6 +267,6 @@ private extension String {
     static let transactionID = "transaction_identifier"
 }
 
-private extension Set where Element == String {
+private extension Set<String> {
     static let productIDs: Set<Element> = .init(arrayLiteral: "1", "2", "3")
 }
