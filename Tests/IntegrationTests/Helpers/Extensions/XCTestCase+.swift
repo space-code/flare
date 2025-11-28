@@ -15,7 +15,7 @@ extension XCTestCase {
         }
     }
 
-    func error<U, T: Error>(for closure: () async throws -> U) async -> T? {
+    func error<T: Error>(for closure: () async throws -> some Any) async -> T? {
         do {
             _ = try await closure()
             return nil

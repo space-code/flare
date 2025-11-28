@@ -19,5 +19,5 @@ protocol ICacheProvider {
     /// - Parameters:
     ///   - key: The key to associate with the value in the cache.
     ///   - value: The Codable value to be stored in the cache.
-    func write<T: Codable>(key: String, value: T)
+    func write(key: String, value: some Codable)
 }

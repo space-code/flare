@@ -58,7 +58,7 @@ public final class FlareMock: IFlare {
         invokedFetchCount += 1
         invokedFetchParameters = (productIDs, ())
         invokedFetchParametersList.append((productIDs, ()))
-        if let stubbedFetchError = stubbedFetchError {
+        if let stubbedFetchError {
             throw stubbedFetchError
         }
         return stubbedInvokedFetch
@@ -100,7 +100,7 @@ public final class FlareMock: IFlare {
         invokedPurchaseCount += 1
         invokedPurchaseParameters = (product, promotionalOffer)
         invokedPurchaseParametersList.append((product, promotionalOffer))
-        if let stubbedPurchaseError = stubbedPurchaseError {
+        if let stubbedPurchaseError {
             throw stubbedPurchaseError
         }
         return stubbedPurchase

@@ -78,7 +78,7 @@ extension TransactionListener: ITransactionListener {
     func listenForTransaction() async {
         task?.cancel()
         task = Task(priority: .utility) { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
 
             for await update in self.updates {
                 Task.detached {

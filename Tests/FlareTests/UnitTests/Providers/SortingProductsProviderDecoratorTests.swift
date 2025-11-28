@@ -69,10 +69,10 @@ private extension String {
     static let requestID = "requestID"
 }
 
-private extension Array where Element == String {
+private extension [String] {
     static let productIDs: [Element] = ["1", "2", "3"]
 }
 
-private extension Set where Element == String {
+private extension Set<String> {
     static let productIDs: Set<Element> = .init(arrayLiteral: "1", "2", "3")
 }

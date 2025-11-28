@@ -41,6 +41,9 @@ jobs:
             name: "macOS 14, Xcode 15.2, Swift 5.9.2"
     steps:
       - uses: actions/checkout@v5
+      - uses: jdx/mise-action@v3
+        with:
+          experimental: true
       - name: ${{ matrix.name }}
         uses: ./.github/actions/build_and_test
         with:
@@ -79,6 +82,9 @@ jobs:
             runsOn: macos-14
     steps:
       - uses: actions/checkout@v5
+      - uses: jdx/mise-action@v3
+        with:
+          experimental: true
       - name: ${{ matrix.name }}
         uses: ./.github/actions/build_and_test
         with:
@@ -117,6 +123,9 @@ jobs:
             runsOn: macos-14
     steps:
       - uses: actions/checkout@v5
+      - uses: jdx/mise-action@v3
+        with:
+          experimental: true
       - name: ${{ matrix.name }}
         uses: ./.github/actions/build_and_test
         with:
@@ -159,6 +168,9 @@ jobs:
             runsOn: macos-14
     steps:
       - uses: actions/checkout@v5
+      - uses: jdx/mise-action@v3
+        with:
+          experimental: true
       - name: ${{ matrix.name }}
         uses: ./.github/actions/build_and_test
         with:
@@ -217,6 +229,9 @@ jobs:
             runsOn: macos-15
     steps:
       - uses: actions/checkout@v5
+      - uses: jdx/mise-action@v3
+        with:
+          experimental: true
       - name: ${{ matrix.name }}
         uses: ./.github/actions/build_and_test
         with:

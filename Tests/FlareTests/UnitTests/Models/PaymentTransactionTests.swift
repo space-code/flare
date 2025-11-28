@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2024 Space Code. All rights reserved.
+// Copyright © 2023 Space Code. All rights reserved.
 //
 
 @testable import Flare
@@ -106,7 +106,7 @@ final class PaymentTransactionTests: XCTestCase {
         let error = paymentTransaction.error as? IAPError
 
         // then
-        if let error = error, case let IAPError.with(error) = error {
+        if let error, case let IAPError.with(error) = error {
             XCTAssertEqual(error as? SKError, errorMock)
         } else {
             XCTFail("Errors must be equal.")
