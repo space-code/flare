@@ -38,7 +38,7 @@ final class PurchaseProvider: @unchecked Sendable {
         self.paymentProvider = paymentProvider
         self.configurationProvider = configurationProvider
 
-        if let transactionListener = transactionListener {
+        if let transactionListener {
             self.transactionListener = transactionListener
         } else if #available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *) {
             self.configureTransactionListener()
@@ -244,7 +244,7 @@ extension PurchaseProvider: IPurchaseProvider {
 
     func restore(_ completion: @escaping @Sendable (Result<Void, Error>) -> Void) {
         paymentProvider.restoreCompletedTransactions { _, error in
-            if let error = error {
+            if let error {
                 completion(.failure(error))
             } else {
                 completion(.success(()))

@@ -13,7 +13,7 @@ protocol IUserDefaults {
     ///   - key: The key to associate with the Codable value.
     ///
     ///   - codable: The Codable value to be stored.
-    func set<T: Codable>(key: String, codable: T)
+    func set(key: String, codable: some Codable)
 
     /// Retrieves a `Codable` value from `UserDefaults` for a given key.
     ///

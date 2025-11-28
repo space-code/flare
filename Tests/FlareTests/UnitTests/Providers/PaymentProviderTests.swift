@@ -214,7 +214,7 @@ class PaymentProviderTests: XCTestCase {
         // when
         let result: Result<SKPaymentQueue, Error>? = try await withCheckedThrowingContinuation { continuation in
             paymentProvider.restoreCompletedTransactions { queue, error in
-                if let error = error {
+                if let error {
                     continuation.resume(returning: .failure(error))
                 } else {
                     continuation.resume(returning: .success(queue))

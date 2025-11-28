@@ -16,7 +16,7 @@ final class ProductFetcherMock: IProductFetcherStrategy {
     func product() async throws -> StoreProduct {
         invokedProduct = true
         invokedProductCount += 1
-        if let stubbedThrowProduct = stubbedThrowProduct {
+        if let stubbedThrowProduct {
             throw stubbedThrowProduct
         }
         return stubbedProduct

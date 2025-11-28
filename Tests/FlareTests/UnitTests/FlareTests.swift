@@ -252,7 +252,7 @@ class FlareTests: XCTestCase {
         iapProviderMock.stubbedCheckEligibility = [.productID: .eligible]
 
         // when
-        let _ = try await sut.checkEligibility(productIDs: [.productID])
+        _ = try await sut.checkEligibility(productIDs: [.productID])
 
         // then
         XCTAssertEqual(iapProviderMock.invokedCheckEligibilityCount, 1)
@@ -262,7 +262,7 @@ class FlareTests: XCTestCase {
 
 // MARK: - Constants
 
-private extension Set where Element == String {
+private extension Set<String> {
     static let ids = Set(arrayLiteral: "1", "2", "3")
 }
 

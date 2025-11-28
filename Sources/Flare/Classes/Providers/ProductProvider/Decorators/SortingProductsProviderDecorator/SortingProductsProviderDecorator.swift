@@ -46,7 +46,7 @@ extension SortingProductsProviderDecorator: ISortingProductsProviderDecorator {
         let productIDs = Array(productIDs)
 
         productProvider.fetch(productIDs: productIDs, requestID: requestID) { [weak self] result in
-            guard let self = self else { return }
+            guard let self else { return }
 
             switch result {
             case let .success(products):
@@ -73,6 +73,6 @@ private extension Array where Element: StoreProduct {
     }
 }
 
-// MARK: - SortingProductsProviderDecorator + Sendable
+// MARK: - SortingProductsProviderDecorator + @unchecked Sendable
 
 extension SortingProductsProviderDecorator: @unchecked Sendable {}

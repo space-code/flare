@@ -30,7 +30,7 @@ extension IPresenter {
     ///   - state: The new state to update to.
     ///   - animation: The animation to use for the state update.
     func update(state: Model.State, animation: Animation? = .default) {
-        guard let viewModel = viewModel else { return }
+        guard let viewModel else { return }
 
         withAnimation(animation) {
             viewModel.model = viewModel.model.setState(state)
