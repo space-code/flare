@@ -1,4 +1,4 @@
-name: Danger
+name: danger
 
 on:
   pull_request:
@@ -8,6 +8,10 @@ env:
   LC_CTYPE: en_US.UTF-8
   LANG: en_US.UTF-8
 
+permissions:
+  contents: read
+  pull-requests: write
+  
 jobs:
   run-danger:
     runs-on: ubuntu-latest
@@ -15,10 +19,10 @@ jobs:
       - name: ruby setup
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.1.4
+          ruby-version: 3.4.7
           bundler-cache: true
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Setup gems
         run: |
           gem install bundler
