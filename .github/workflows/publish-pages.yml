@@ -22,7 +22,7 @@ jobs:
             base_path: "flareui"
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           # Fetch all history for all branches and tags.
           fetch-depth: 0

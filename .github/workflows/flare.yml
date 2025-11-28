@@ -40,7 +40,7 @@ jobs:
             runsOn: macos-14
             name: "macOS 14, Xcode 15.2, Swift 5.9.2"
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: ${{ matrix.name }}
         uses: ./.github/actions/build_and_test
         with:
@@ -78,7 +78,7 @@ jobs:
             xcode: "Xcode_15.2"
             runsOn: macos-14
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: ${{ matrix.name }}
         uses: ./.github/actions/build_and_test
         with:
@@ -116,7 +116,7 @@ jobs:
             xcode: "Xcode_15.2"
             runsOn: macos-14
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: ${{ matrix.name }}
         uses: ./.github/actions/build_and_test
         with:
@@ -158,7 +158,7 @@ jobs:
             xcode: "Xcode_15.2"
             runsOn: macos-14
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: ${{ matrix.name }}
         uses: ./.github/actions/build_and_test
         with:
@@ -196,7 +196,7 @@ jobs:
             xcode: "Xcode_15.3"
             runsOn: macos-14
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: ${{ matrix.name }}
         run: swift build -c release --target Flare
 
@@ -221,7 +221,7 @@ jobs:
     env:
       DEVELOPER_DIR: /Applications/Xcode_16.4.app/Contents/Developer
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Set up Python environment
         run: |
