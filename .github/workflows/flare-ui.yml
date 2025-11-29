@@ -72,9 +72,8 @@ jobs:
           name: ${{ matrix.name }}
           test_plan: ${{ matrix.testPlan }}
           generate_project: ${{ matrix.generateProject || 'true' }}
-
       - name: Upload test coverage to Codecov
-        uses: ./.github/actions/upload_test_coverage_report
+        uses: space-code/oss-common-actions/.github/actions/upload_test_coverage_report@main
         with:
           scheme_name: ${{ env.SCHEME_NAME }}
           filename: ${{ matrix.name }}
@@ -125,9 +124,8 @@ jobs:
           destination: ${{ matrix.destination }}
           name: ${{ matrix.name }}SnapshotTests
           test_plan: ${{ matrix.testPlan }}
-
       - name: Upload test coverage to Codecov
-        uses: ./.github/actions/upload_test_coverage_report
+        uses: space-code/oss-common-actions/.github/actions/upload_test_coverage_report@main
         with:
           scheme_name: ${{ env.SCHEME_NAME }}
           filename: ${{ matrix.name }}SnapshotTests
