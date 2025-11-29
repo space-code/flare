@@ -44,9 +44,9 @@ final class ProductViewModelFactory: IProductViewModelFactory {
     private func makePrice(from product: StoreProduct, style: ProductStyle) -> String {
         switch style {
         case .compact:
-            return subscriptionPriceViewModelFactory.make(product, format: .short)
+            subscriptionPriceViewModelFactory.make(product, format: .short)
         case .large:
-            return subscriptionPriceViewModelFactory.make(product, format: .full)
+            subscriptionPriceViewModelFactory.make(product, format: .full)
         }
     }
 

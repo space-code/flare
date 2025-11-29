@@ -18,7 +18,7 @@ struct StoreButtonViewModel: IModel, @unchecked Sendable {
         var title: String {
             switch self {
             case let .restore(viewModel):
-                return viewModel.title
+                viewModel.title
             }
         }
     }

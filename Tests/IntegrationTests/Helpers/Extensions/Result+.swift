@@ -9,18 +9,18 @@ extension Result {
     var error: Failure? {
         switch self {
         case let .failure(error):
-            return error
+            error
         default:
-            return nil
+            nil
         }
     }
 
     var success: Success? {
         switch self {
         case let .success(value):
-            return value
+            value
         default:
-            return nil
+            nil
         }
     }
 }

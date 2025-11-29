@@ -85,13 +85,13 @@ final class SubscriptionPriceViewModelFactory: ISubscriptionPriceViewModelFactor
     private func makeUnit(from unit: SubscriptionPeriod.Unit) -> NSCalendar.Unit {
         switch unit {
         case .day:
-            return .day
+            .day
         case .week:
-            return .weekOfMonth
+            .weekOfMonth
         case .month:
-            return .month
+            .month
         case .year:
-            return .year
+            .year
         }
     }
 

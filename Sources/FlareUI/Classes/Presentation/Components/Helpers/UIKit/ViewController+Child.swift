@@ -33,33 +33,33 @@
 
         private var safeTopAnchor: NSLayoutYAxisAnchor {
             if #available(iOS 11.0, macOS 11.0, *) {
-                return view.safeAreaLayoutGuide.topAnchor
+                view.safeAreaLayoutGuide.topAnchor
             } else {
-                return view.bottomAnchor
+                view.bottomAnchor
             }
         }
 
         private var safeBottomAnchor: NSLayoutYAxisAnchor {
             if #available(iOS 11.0, macOS 11.0, *) {
-                return view.safeAreaLayoutGuide.bottomAnchor
+                view.safeAreaLayoutGuide.bottomAnchor
             } else {
-                return view.topAnchor
+                view.topAnchor
             }
         }
 
         private var safeLeadingAnchor: NSLayoutXAxisAnchor {
             if #available(iOS 11.0, macOS 11.0, *) {
-                return view.safeAreaLayoutGuide.leadingAnchor
+                view.safeAreaLayoutGuide.leadingAnchor
             } else {
-                return view.leadingAnchor
+                view.leadingAnchor
             }
         }
 
         private var safeTrailingAnchor: NSLayoutXAxisAnchor {
             if #available(iOS 11.0, macOS 11.0, *) {
-                return view.safeAreaLayoutGuide.trailingAnchor
+                view.safeAreaLayoutGuide.trailingAnchor
             } else {
-                return view.trailingAnchor
+                view.trailingAnchor
             }
         }
     }

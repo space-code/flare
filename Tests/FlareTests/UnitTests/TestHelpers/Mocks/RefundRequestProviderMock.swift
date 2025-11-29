@@ -56,9 +56,9 @@
         private func mapToSkStatus(_ status: RefundRequestStatus) -> StoreKit.Transaction.RefundRequestStatus {
             switch status {
             case .success:
-                return .success
+                .success
             case .userCancelled:
-                return .userCancelled
+                .userCancelled
             default:
                 fatalError()
             }

@@ -65,9 +65,9 @@ actor ProductPurchaseService: IProductPurchaseService {
 
     private func _purchase(product: StoreProduct, options: PurchaseOptions?) async throws -> StoreTransaction {
         if #available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *), let options = options?.options {
-            return try await iap.purchase(product: product, options: options)
+            try await iap.purchase(product: product, options: options)
         } else {
-            return try await iap.purchase(product: product)
+            try await iap.purchase(product: product)
         }
     }
 }
