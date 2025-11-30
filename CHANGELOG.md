@@ -20,12 +20,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Features
+- Add release workflow for GitHub Actions
+  - Implemented by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#148](https://github.com/space-code/flare/pull/148).
 - Add conventional-pr.yml for PR validation
   - Implemented by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#130](https://github.com/space-code/flare/pull/130).
 - Switch from mint to mise
   - Implemented by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#140](https://github.com/space-code/flare/pull/140).
 
 ### Miscellaneous Tasks
+- Update the codecov action
+  - Contributed by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#149](https://github.com/space-code/flare/pull/149).
+- Add GitHub issue and PR templates
+  - Contributed by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#146](https://github.com/space-code/flare/pull/146).
+- Automate code formatting and linting with git hooks
+  - Contributed by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#145](https://github.com/space-code/flare/pull/145).
 - Update building and testing configurations
   - Contributed by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#137](https://github.com/space-code/flare/pull/137).
 - Update ruby version to `3.4.7`
