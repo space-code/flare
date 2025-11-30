@@ -1,0 +1,5 @@
+version: 1
+external_links:
+  documentation: "https://space-code.github.io/flare/"
+metadata:
+  authors: "Nikita Vasilev"
