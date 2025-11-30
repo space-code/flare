@@ -28,6 +28,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Implemented by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#140](https://github.com/space-code/flare/pull/140).
 
 ### Miscellaneous Tasks
+- Add `.spi.yml`
+  - Contributed by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#150](https://github.com/space-code/flare/pull/150).
 - Update the codecov action
   - Contributed by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#149](https://github.com/space-code/flare/pull/149).
 - Add GitHub issue and PR templates
@@ -46,7 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Contributed by [@renovate[bot]](https://github.com/renovate[bot]) in Pull Request [#131](https://github.com/space-code/flare/pull/131).
 
 ### New Contributors
-* @renovate[bot] made their first contribution in [#143](https://github.com/space-code/flare/pull/143)
+* @renovate[bot] made their first contribution in [#142](https://github.com/space-code/flare/pull/142)
 
 ## [3.2.0](https://github.com/space-code/flare/releases/tag/3.2.0)
 
