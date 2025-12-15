@@ -136,7 +136,7 @@ jobs:
     runs-on: macos-15
     steps:
       - name: Download artifacts
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           path: test_output
 
