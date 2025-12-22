@@ -90,3 +90,4 @@ iOSInjectionProject/
 *.xcodeproj
 Example/
 Package.resolved
+.swiftpm
