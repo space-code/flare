@@ -19,14 +19,16 @@ jobs:
       - name: ruby setup
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.4.7
+          ruby-version: 3.4.8
           bundler-cache: true
       - name: Checkout code
         uses: actions/checkout@v6
       - name: Setup gems
         run: |
           gem install bundler
-          bundle install --clean --path vendor/bundle
+          bundle config set clean true
+          bundle config set path 'vendor/bundle'
+          bundle install
       - name: danger
         env:
           DANGER_GITHUB_API_TOKEN: ${{ secrets.DANGER_GITHUB_API_TOKEN }}
