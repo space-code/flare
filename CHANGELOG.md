@@ -28,6 +28,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Implemented by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#140](https://github.com/space-code/flare/pull/140).
 
 ### Miscellaneous Tasks
+- Add codeowners
+  - Contributed by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#165](https://github.com/space-code/flare/pull/165).
 - Remove `.swiftpm`
   - Contributed by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#163](https://github.com/space-code/flare/pull/163).
 - Remove dependabot
