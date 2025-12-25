@@ -136,7 +136,7 @@ jobs:
     runs-on: macos-15
     steps:
       - name: Download artifacts
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           path: test_output
 
@@ -144,7 +144,7 @@ jobs:
         run: xcrun xcresulttool merge test_output/**/*.xcresult --output-path test_output/final/final.xcresult
 
       - name: Upload merged test results
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: MergedResult
           path: test_output/final
