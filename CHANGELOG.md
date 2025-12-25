@@ -28,6 +28,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Implemented by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#140](https://github.com/space-code/flare/pull/140).
 
 ### Miscellaneous Tasks
+- Add a test plan for the macOS action
+  - Contributed by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#167](https://github.com/space-code/flare/pull/167).
 - Add codeowners
   - Contributed by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#165](https://github.com/space-code/flare/pull/165).
 - Remove `.swiftpm`
