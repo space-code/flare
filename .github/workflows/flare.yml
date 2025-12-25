@@ -37,25 +37,25 @@ jobs:
       matrix:
         include:
           # macOS
-          - { platform: macOS, name: "macOS 26, Xcode 26.0, Swift 6.2.0", xcode: "Xcode_26.0.1", runsOn: macOS-26, destination: "platform=macOS", generateProject: false }
-          - { platform: macOS, name: "macOS 14, Xcode 16.1, Swift 6.0.2", xcode: "Xcode_16.1", runsOn: macOS-14, destination: "platform=macOS", generateProject: false }
-          - { platform: macOS, name: "macOS 14, Xcode 15.4, Swift 5.10", xcode: "Xcode_15.4", runsOn: macOS-14, destination: "platform=macOS", generateProject: false }
+          - { platform: macOS, name: "macOS 26, Xcode 26.0, Swift 6.2.0", xcode: "Xcode_26.0.1", runsOn: macOS-26, destination: "platform=macOS", testPlan: "UnitTests" }
+          - { platform: macOS, name: "macOS 14, Xcode 16.1, Swift 6.0.2", xcode: "Xcode_16.1", runsOn: macOS-14, destination: "platform=macOS", testPlan: "UnitTests" }
+          - { platform: macOS, name: "macOS 14, Xcode 15.4, Swift 5.10", xcode: "Xcode_15.4", runsOn: macOS-14, destination: "platform=macOS", testPlan: "UnitTests" }
 
           # iOS
-          - { platform: iOS, name: "iOS 26.0, Xcode 26.0, Swift 6.2.0", xcode: "Xcode_26.0.1", runsOn: macOS-26, destination: "OS=26.0.1,name=iPhone 17 Pro", testPlan: "AllTests", generateProject: true }
-          - { platform: iOS, name: "iOS 18.1", xcode: "Xcode_16.1", runsOn: macOS-14, destination: "OS=18.1,name=iPhone 16 Pro", testPlan: "AllTests", generateProject: true }
-          - { platform: iOS, name: "iOS 17.2", xcode: "Xcode_15.2", runsOn: macOS-14, destination: "OS=17.2,name=iPhone 15 Pro", testPlan: "AllTests", generateProject: true }
+          - { platform: iOS, name: "iOS 26.0, Xcode 26.0, Swift 6.2.0", xcode: "Xcode_26.0.1", runsOn: macOS-26, destination: "OS=26.0.1,name=iPhone 17 Pro", testPlan: "AllTests" }
+          - { platform: iOS, name: "iOS 18.1", xcode: "Xcode_16.1", runsOn: macOS-14, destination: "OS=18.1,name=iPhone 16 Pro", testPlan: "AllTests" }
+          - { platform: iOS, name: "iOS 17.2", xcode: "Xcode_15.2", runsOn: macOS-14, destination: "OS=17.2,name=iPhone 15 Pro", testPlan: "AllTests" }
 
           # tvOS
-          - { platform: tvOS, name: "tvOS 26.0", xcode: "Xcode_26.0.1", runsOn: macOS-26, destination: "OS=26.0,name=Apple TV", testPlan: "AllTests", generateProject: true }
-          - { platform: tvOS, name: "tvOS 18.1", xcode: "Xcode_16.1", runsOn: macOS-14, destination: "OS=18.1,name=Apple TV", testPlan: "AllTests", generateProject: true }
-          - { platform: tvOS, name: "tvOS 17.2", xcode: "Xcode_15.2", runsOn: macOS-14, destination: "OS=17.2,name=Apple TV", testPlan: "AllTests", generateProject: true }
+          - { platform: tvOS, name: "tvOS 26.0", xcode: "Xcode_26.0.1", runsOn: macOS-26, destination: "OS=26.0,name=Apple TV", testPlan: "AllTests" }
+          - { platform: tvOS, name: "tvOS 18.1", xcode: "Xcode_16.1", runsOn: macOS-14, destination: "OS=18.1,name=Apple TV", testPlan: "AllTests" }
+          - { platform: tvOS, name: "tvOS 17.2", xcode: "Xcode_15.2", runsOn: macOS-14, destination: "OS=17.2,name=Apple TV", testPlan: "AllTests" }
 
           # watchOS
-          - { platform: watchOS, name: "watchOS 26.0", xcode: "Xcode_26.0.1", runsOn: macOS-26, destination: "OS=26.0,name=Apple Watch Ultra 3 (49mm)", testPlan: "UnitTests", generateProject: true }
-          - { platform: watchOS, name: "watchOS 11.1", xcode: "Xcode_16.1", runsOn: macOS-14, destination: "OS=11.1,name=Apple Watch Series 10 (46mm)", testPlan: "UnitTests", generateProject: true }
-          - { platform: watchOS, name: "watchOS 10.5", xcode: "Xcode_15.3", runsOn: macOS-14, destination: "OS=10.5,name=Apple Watch Series 9 (45mm)", testPlan: "UnitTests", generateProject: true }
-          - { platform: watchOS, name: "watchOS 10.2", xcode: "Xcode_15.2", runsOn: macOS-14, destination: "OS=10.2,name=Apple Watch Series 9 (45mm)", testPlan: "UnitTests", generateProject: true }
+          - { platform: watchOS, name: "watchOS 26.0", xcode: "Xcode_26.0.1", runsOn: macOS-26, destination: "OS=26.0,name=Apple Watch Ultra 3 (49mm)", testPlan: "UnitTests" }
+          - { platform: watchOS, name: "watchOS 11.1", xcode: "Xcode_16.1", runsOn: macOS-14, destination: "OS=11.1,name=Apple Watch Series 10 (46mm)", testPlan: "UnitTests" }
+          - { platform: watchOS, name: "watchOS 10.5", xcode: "Xcode_15.3", runsOn: macOS-14, destination: "OS=10.5,name=Apple Watch Series 9 (45mm)", testPlan: "UnitTests" }
+          - { platform: watchOS, name: "watchOS 10.2", xcode: "Xcode_15.2", runsOn: macOS-14, destination: "OS=10.2,name=Apple Watch Series 9 (45mm)", testPlan: "UnitTests" }
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -69,7 +69,6 @@ jobs:
           destination: ${{ matrix.destination }}
           name: ${{ matrix.name }}
           test_plan: ${{ matrix.testPlan }}
-          generate_project: ${{ matrix.generateProject }}
 
       - name: Upload test coverage to Codecov
         uses: space-code/oss-common-actions/.github/actions/upload_test_coverage_report@main
