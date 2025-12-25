@@ -38,10 +38,10 @@ jobs:
       matrix:
         include:
           # macOS
-          - { platform: macOS, name: "macOS 26, Xcode 26.0, Swift 6.2.0", xcode: "Xcode_26.0", runsOn: macOS-26, destination: "platform=macOS", testPlan: "FlareUIUnitTests", generateProject: false }
-          - { platform: macOS, name: "macOS 14, Xcode 16.0, Swift 6.0.2", xcode: "Xcode_16.1", runsOn: macOS-14, destination: "platform=macOS", testPlan: "FlareUIUnitTests", generateProject: false }
-          - { platform: macOS, name: "macOS 14, Xcode 15.4, Swift 5.10", xcode: "Xcode_15.4", runsOn: macOS-14, destination: "platform=macOS", testPlan: "FlareUIUnitTests", generateProject: false }
-          - { platform: macOS, name: "macOS 14, Xcode 15.2, Swift 5.9.2", xcode: "Xcode_15.2", runsOn: macOS-14, destination: "platform=macOS", testPlan: "FlareUIUnitTests", generateProject: false }
+          - { platform: macOS, name: "macOS 26, Xcode 26.0, Swift 6.2.0", xcode: "Xcode_26.0", runsOn: macOS-26, destination: "platform=macOS", testPlan: "FlareUIUnitTests" }
+          - { platform: macOS, name: "macOS 14, Xcode 16.0, Swift 6.0.2", xcode: "Xcode_16.1", runsOn: macOS-14, destination: "platform=macOS", testPlan: "FlareUIUnitTests"}
+          - { platform: macOS, name: "macOS 14, Xcode 15.4, Swift 5.10", xcode: "Xcode_15.4", runsOn: macOS-14, destination: "platform=macOS", testPlan: "FlareUIUnitTests" }
+          - { platform: macOS, name: "macOS 14, Xcode 15.2, Swift 5.9.2", xcode: "Xcode_15.2", runsOn: macOS-14, destination: "platform=macOS", testPlan: "FlareUIUnitTests" }
 
           # iOS
           - { platform: iOS, name: "iOS 26.0", xcode: "Xcode_26.0.1", runsOn: macOS-26, destination: "OS=26.0.1,name=iPhone 17 Pro", testPlan: "FlareUIUnitTests" }
@@ -71,7 +71,7 @@ jobs:
           destination: ${{ matrix.destination }}
           name: ${{ matrix.name }}
           test_plan: ${{ matrix.testPlan }}
-          generate_project: ${{ matrix.generateProject || 'true' }}
+
       - name: Upload test coverage to Codecov
         uses: space-code/oss-common-actions/.github/actions/upload_test_coverage_report@main
         with:
