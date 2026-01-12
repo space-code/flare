@@ -64,7 +64,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Contributed by [@renovate[bot]](https://github.com/renovate[bot]) in Pull Request [#159](https://github.com/space-code/flare/pull/159).
 
 ### New Contributors
-* @renovate[bot] made their first contribution in [#172](https://github.com/space-code/flare/pull/172)
+* @renovate[bot] made their first contribution in [#173](https://github.com/space-code/flare/pull/173)
 
 ## [3.2.0](https://github.com/space-code/flare/releases/tag/3.2.0)
 
