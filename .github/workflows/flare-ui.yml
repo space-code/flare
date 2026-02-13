@@ -107,8 +107,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { platform: iOS, name: "iOS 18.4", xcode: "Xcode_16.3", runsOn: macOS-15, destination: "OS=18.4,name=iPhone 16", testPlan: "SnapshotTests" }
-          - { platform: tvOS, name: "tvOS 18.4", xcode: "Xcode_16.3", runsOn: macOS-15, destination: "OS=18.4,name=Apple TV", testPlan: "SnapshotTests" }
+          - { platform: iOS, name: "iOS 18.5", xcode: "Xcode_16.4", runsOn: macOS-15, destination: "OS=18.5,name=iPhone 16", testPlan: "SnapshotTests" }
+          - { platform: tvOS, name: "tvOS 18.5", xcode: "Xcode_16.4", runsOn: macOS-15, destination: "OS=18.5,name=Apple TV", testPlan: "SnapshotTests" }
     steps:
       - name: Checkout code
         uses: actions/checkout@v6

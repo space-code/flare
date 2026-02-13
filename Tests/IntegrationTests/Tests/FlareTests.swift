@@ -137,12 +137,13 @@ final class FlareTests: StoreSessionTestCase {
         expectedResult: Result<Void, IAPError>
     ) async throws {
         // given
-        let product = try await ProductProviderHelper.purchases.randomElement()
+        let randomElement = try await ProductProviderHelper.purchases.randomElement()
+        let product = try XCTUnwrap(randomElement, "ProductProviderHelper.purchases.randomElement() returned nil")
 
         // when
         let result: Result<StoreTransaction, IAPError> = await result(for: {
             try await sut.purchase(
-                product: StoreProduct(product: product!),
+                product: StoreProduct(product: product),
                 options: [.simulatesAskToBuyInSandbox(false)]
             )
         })
@@ -150,7 +151,7 @@ final class FlareTests: StoreSessionTestCase {
         // then
         switch expectedResult {
         case .success:
-            XCTAssertEqual(result.success?.productIdentifier, product?.id)
+            XCTAssertEqual(result.success?.productIdentifier, product.id)
         case let .failure(error):
             XCTAssertEqual(error, result.error)
         }
@@ -163,13 +164,14 @@ final class FlareTests: StoreSessionTestCase {
         // given
         let expectation = XCTestExpectation(description: "Purchase a product")
 
-        let product = try await ProductProviderHelper.purchases.randomElement()
+        let randomElement = try await ProductProviderHelper.purchases.randomElement()
+        let product = try XCTUnwrap(randomElement, "ProductProviderHelper.purchases.randomElement() returned nil")
 
         // when
         let handler: Closure<Result<StoreTransaction, IAPError>> = { result in
             switch expectedResult {
             case .success:
-                XCTAssertEqual(result.success?.productIdentifier, product?.id)
+                XCTAssertEqual(result.success?.productIdentifier, product.id)
             case let .failure(error):
                 XCTAssertEqual(error, result.error)
             }
@@ -177,10 +179,10 @@ final class FlareTests: StoreSessionTestCase {
         }
 
         if options.isEmpty {
-            sut.purchase(product: StoreProduct(product: product!)) { handler($0) }
+            sut.purchase(product: StoreProduct(product: product)) { handler($0) }
         } else {
             sut.purchase(
-                product: StoreProduct(product: product!),
+                product: StoreProduct(product: product),
                 options: options
             ) { [handler] result in
                 Task { handler(result) }
