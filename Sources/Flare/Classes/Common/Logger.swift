@@ -46,7 +46,7 @@ enum Logger {
 
     static var logLevel: LogLevel {
         get { Self.default.logLevel }
-        set { Self.default.logLevel = newValue }
+        set { Self.default.updateLogLevel { _ in newValue } }
     }
 
     // MARK: Static Public Methods

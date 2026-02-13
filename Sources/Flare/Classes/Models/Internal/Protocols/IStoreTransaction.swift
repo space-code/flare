@@ -35,6 +35,11 @@ protocol IStoreTransaction: Sendable {
     ///
     /// - Note: This is only available for StoreKit 2 transactions.
     var environment: StoreEnvironment? { get }
+
+    /// The original transaction identifier of a purchase.
+    ///
+    /// - Note: This is only available for StoreKit 2 transactions.
+    var originalID: UInt64? { get }
 }
 
 /// Default implementation of the currency property for backward compatibility.
