@@ -8,7 +8,9 @@ import SwiftUI
 // MARK: - StoreButtonsAssemblyKey
 
 private struct StoreButtonsAssemblyKey: EnvironmentKey {
-    static var defaultValue: IStoreButtonsAssembly? { nil }
+    static var defaultValue: IStoreButtonsAssembly? {
+        nil
+    }
 }
 
 extension EnvironmentValues {

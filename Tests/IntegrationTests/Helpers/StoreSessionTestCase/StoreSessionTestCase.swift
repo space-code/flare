@@ -17,10 +17,10 @@ class StoreSessionTestCase: XCTestCase {
 
     // MARK: XCTestCase
 
-    override func setUp() {
+    override func setUpWithError() throws {
         super.setUp()
 
-        session = try? SKTestSession(configurationFileNamed: "Flare")
+        session = try SKTestSession(configurationFileNamed: "Flare")
         session?.resetToDefaultState()
         session?.askToBuyEnabled = false
         session?.disableDialogs = true

@@ -16,7 +16,9 @@ public final class StoreProduct: NSObject {
     let product: ISKProduct
 
     /// The store kit product.
-    var underlyingProduct: ISKProduct { product }
+    var underlyingProduct: ISKProduct {
+        product
+    }
 
     // MARK: Initialization
 

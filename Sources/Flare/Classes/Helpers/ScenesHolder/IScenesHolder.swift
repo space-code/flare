@@ -14,6 +14,8 @@
 protocol IScenesHolder: Sendable {
     #if os(iOS) || VISION_OS
         /// The scenes that are connected to the app.
-        var connectedScenes: Set<UIScene> { get }
+        var connectedScenes: Set<UIScene> {
+            get
+        }
     #endif
 }

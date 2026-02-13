@@ -205,7 +205,7 @@ class FlareTests: XCTestCase {
         XCTAssertEqual(receipt, .receipt)
     }
 
-    func test_thatFlareDoesNotFetchReceiptAsync_whenRequestFailed() async throws {
+    func test_thatFlareDoesNotFetchReceiptAsync_whenRequestFailed() async {
         // given
         iapProviderMock.stubbedRefreshReceiptAsyncResult = .failure(.paymentNotAllowed)
 

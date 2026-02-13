@@ -47,8 +47,7 @@ final class CachingProductsProviderDecorator {
     ///
     /// - Returns: A dictionary containing cached products for the specified IDs.
     private func cachedProducts(ids: some Collection<String>) -> [String: StoreProduct] {
-        let cachedProducts = _cache.wrappedValue.filter { ids.contains($0.key) }
-        return cachedProducts
+        _cache.wrappedValue.filter { ids.contains($0.key) }
     }
 
     /// Checks the cache for specified product IDs and fetches missing products from the product provider.

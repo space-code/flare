@@ -85,7 +85,8 @@ final class FlareTests: StoreSessionTestCase {
     @available(iOS 15.2, tvOS 15.2, macOS 12.1, watchOS 8.3, *)
     func test_thatPurchaseIntorudctoryOffer() async throws {
         // 1. Fetch a product
-        let product = try await ProductProviderHelper.subscriptionsWithIntroductoryOffer.randomElement()!
+        let randomProduct = try await ProductProviderHelper.subscriptionsWithIntroductoryOffer.randomElement()
+        let product = try XCTUnwrap(randomProduct)
         let storeProduct = StoreProduct(product: product)
 
         // 2. Checking eligibility for a product
@@ -136,12 +137,13 @@ final class FlareTests: StoreSessionTestCase {
         expectedResult: Result<Void, IAPError>
     ) async throws {
         // given
-        let product = try await ProductProviderHelper.purchases.randomElement()
+        let randomElement = try await ProductProviderHelper.purchases.randomElement()
+        let product = try XCTUnwrap(randomElement, "ProductProviderHelper.purchases.randomElement() returned nil")
 
         // when
         let result: Result<StoreTransaction, IAPError> = await result(for: {
             try await sut.purchase(
-                product: StoreProduct(product: product!),
+                product: StoreProduct(product: product),
                 options: [.simulatesAskToBuyInSandbox(false)]
             )
         })
@@ -149,7 +151,7 @@ final class FlareTests: StoreSessionTestCase {
         // then
         switch expectedResult {
         case .success:
-            XCTAssertEqual(result.success?.productIdentifier, product?.id)
+            XCTAssertEqual(result.success?.productIdentifier, product.id)
         case let .failure(error):
             XCTAssertEqual(error, result.error)
         }
@@ -162,13 +164,14 @@ final class FlareTests: StoreSessionTestCase {
         // given
         let expectation = XCTestExpectation(description: "Purchase a product")
 
-        let product = try await ProductProviderHelper.purchases.randomElement()
+        let randomElement = try await ProductProviderHelper.purchases.randomElement()
+        let product = try XCTUnwrap(randomElement, "ProductProviderHelper.purchases.randomElement() returned nil")
 
         // when
         let handler: Closure<Result<StoreTransaction, IAPError>> = { result in
             switch expectedResult {
             case .success:
-                XCTAssertEqual(result.success?.productIdentifier, product?.id)
+                XCTAssertEqual(result.success?.productIdentifier, product.id)
             case let .failure(error):
                 XCTAssertEqual(error, result.error)
             }
@@ -176,10 +179,10 @@ final class FlareTests: StoreSessionTestCase {
         }
 
         if options.isEmpty {
-            sut.purchase(product: StoreProduct(product: product!)) { handler($0) }
+            sut.purchase(product: StoreProduct(product: product)) { handler($0) }
         } else {
             sut.purchase(
-                product: StoreProduct(product: product!),
+                product: StoreProduct(product: product),
                 options: options
             ) { [handler] result in
                 Task { handler(result) }

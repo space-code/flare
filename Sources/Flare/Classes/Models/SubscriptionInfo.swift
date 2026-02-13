@@ -11,12 +11,6 @@ public struct SubscriptionInfo {
     // MARK: Properties
 
     let underlyingSubscriptionInfo: ISubscriptionInfo
-
-    // MARK: Initialization
-
-    init(underlyingSubscriptionInfo: ISubscriptionInfo) {
-        self.underlyingSubscriptionInfo = underlyingSubscriptionInfo
-    }
 }
 
 // MARK: - Initializators

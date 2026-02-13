@@ -12,12 +12,6 @@ struct SK2RenewalInfo {
     // MARK: Properties
 
     let underlyingRenewalInfo: Product.SubscriptionInfo.RenewalInfo
-
-    // MARK: Initialization
-
-    init(underlyingRenewalInfo: Product.SubscriptionInfo.RenewalInfo) {
-        self.underlyingRenewalInfo = underlyingRenewalInfo
-    }
 }
 
 // MARK: IRenewalInfo

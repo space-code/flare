@@ -9,7 +9,9 @@ import SwiftUI
 
 @available(watchOS, unavailable)
 private struct PoliciesButtonStyleKey: EnvironmentKey {
-    static var defaultValue: AnyPoliciesButtonStyle { .init(style: AutomaticPoliciesButtonStyle()) }
+    static var defaultValue: AnyPoliciesButtonStyle {
+        .init(style: AutomaticPoliciesButtonStyle())
+    }
 }
 
 @available(watchOS, unavailable)

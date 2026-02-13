@@ -8,7 +8,9 @@ import SwiftUI
 // MARK: - SubscriptionTermsOfServiceDestinationKey
 
 private struct SubscriptionTermsOfServiceDestinationKey: EnvironmentKey {
-    static var defaultValue: AnyView? { nil }
+    static var defaultValue: AnyView? {
+        nil
+    }
 }
 
 extension EnvironmentValues {

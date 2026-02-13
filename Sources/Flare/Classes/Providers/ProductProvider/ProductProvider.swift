@@ -138,8 +138,8 @@ extension ProductProvider: SKProductsRequestDelegate {
 
 // MARK: @unchecked Sendable
 
-// @unchecked because:
-// - It has mutable state, but it's made thread-safe through `queue`.
+/// @unchecked because:
+/// - It has mutable state, but it's made thread-safe through `queue`.
 extension ProductProvider: @unchecked Sendable {}
 
 // MARK: - Helpers

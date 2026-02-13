@@ -57,8 +57,7 @@ final class ReceiptRefreshProvider: NSObject, @unchecked Sendable {
            fileManager.fileExists(atPath: appStoreReceiptURL.path)
         {
             let receiptData = try? Data(contentsOf: appStoreReceiptURL, options: .alwaysMapped)
-            let receiptString = receiptData?.base64EncodedString(options: [])
-            return receiptString
+            return receiptData?.base64EncodedString(options: [])
         }
         return nil
     }

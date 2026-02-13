@@ -181,7 +181,7 @@ extension PurchaseProvider: IPurchaseProvider {
             )
         } else {
             Task {
-                await completion(.failure(.unknown))
+                completion(.failure(.unknown))
                 self.log(error: IAPError.unknown, productID: product.productIdentifier)
             }
         }

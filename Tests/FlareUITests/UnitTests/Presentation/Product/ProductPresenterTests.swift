@@ -42,7 +42,7 @@ final class ProductPresenterTests: XCTestCase {
 
     // MARK: Tests
 
-    func test_thatPresenterFetchesProduct_whenViewDidLoad() async {
+    func test_thatPresenterFetchesProduct_whenViewDidLoad() {
         // given
         let productFake = StoreProduct.fake()
         productFetcherMock.stubbedProduct = productFake
@@ -54,7 +54,7 @@ final class ProductPresenterTests: XCTestCase {
         wait(self.viewModelMock.model.state == .product(productFake))
     }
 
-    func test_thatPresenterDisplaysAnError_whenViewDidLoad() async {
+    func test_thatPresenterDisplaysAnError_whenViewDidLoad() {
         // given
         productFetcherMock.stubbedThrowProduct = IAPError.unknown
 

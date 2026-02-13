@@ -12,12 +12,6 @@ struct SK2SubscriptionInfoStatus {
     // MARK: Properties
 
     let underlyingStatus: Product.SubscriptionInfo.Status
-
-    // MARK: Initialization
-
-    init(underlyingStatus: Product.SubscriptionInfo.Status) {
-        self.underlyingStatus = underlyingStatus
-    }
 }
 
 // MARK: ISubscriptionInfoStatus

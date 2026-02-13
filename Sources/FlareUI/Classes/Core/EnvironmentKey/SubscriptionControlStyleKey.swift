@@ -9,7 +9,9 @@ import SwiftUI
 
 @available(watchOS, unavailable)
 private struct SubscriptionControlStyleKey: EnvironmentKey {
-    static var defaultValue: AnySubscriptionControlStyle { .init(style: .automatic) }
+    static var defaultValue: AnySubscriptionControlStyle {
+        .init(style: .automatic)
+    }
 }
 
 @available(watchOS, unavailable)

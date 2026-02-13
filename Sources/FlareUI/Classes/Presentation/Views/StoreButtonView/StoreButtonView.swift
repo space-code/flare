@@ -30,7 +30,6 @@ struct StoreButtonView: View, IViewWrapper {
 
     // MARK: Private
 
-    @ViewBuilder
     private var contentView: some View {
         Button(action: {
             Task {

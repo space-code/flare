@@ -45,9 +45,7 @@ final class SubscriptionPriceViewModelFactory: ISubscriptionPriceViewModelFactor
         dateFormatter.allowedUnits = [unit]
 
         let dateComponents = subscriptionDateComponentsFactory.dateComponents(for: period)
-        let localizedPeriod = dateFormatter.string(from: dateComponents)
-
-        return localizedPeriod
+        return dateFormatter.string(from: dateComponents)
     }
 
     // MARK: Private
