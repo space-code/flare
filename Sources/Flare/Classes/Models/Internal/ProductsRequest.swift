@@ -14,7 +14,9 @@ final class ProductsRequest: ISKRequest {
     private let request: SKRequest
 
     /// The request’s identifier.
-    var id: String { request.id }
+    var id: String {
+        request.id
+    }
 
     // MARK: Initialization
 

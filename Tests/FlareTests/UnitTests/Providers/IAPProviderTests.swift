@@ -73,7 +73,7 @@ class IAPProviderTests: XCTestCase {
         XCTAssertTrue(!parameters.requestID.isEmpty)
     }
 
-    func test_thatIAPProviderPurchasesProduct() throws {
+    func test_thatIAPProviderPurchasesProduct() {
         // when
         sut.purchase(product: .fake(productIdentifier: .productID), completion: { _ in })
 
@@ -246,7 +246,7 @@ class IAPProviderTests: XCTestCase {
         XCTAssertEqual(receipt, .receipt)
     }
 
-    func test_thatIAPProviderDoesNotRefreshReceipt_whenReceiptIsNil() async throws {
+    func test_thatIAPProviderDoesNotRefreshReceipt_whenReceiptIsNil() async {
         // given
         receiptRefreshProviderMock.stubbedReceipt = nil
         receiptRefreshProviderMock.stubbedRefreshResult = .success(())

@@ -17,7 +17,7 @@
     import SwiftUI
 #endif
 
-// Deprecated typealiases
+/// Deprecated typealiases
 @available(*, deprecated, renamed: "ColorAsset.Color", message: "This typealias will be removed in SwiftGen 7.0")
 typealias AssetColorTypeAlias = ColorAsset.Color
 

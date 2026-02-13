@@ -39,7 +39,7 @@ public protocol PaymentQueue: AnyObject, Sendable {
     func finishTransaction(_ transaction: SKPaymentTransaction)
 
     #if os(iOS) || VISION_OS
-        // Call this method to have StoreKit present a sheet enabling the user to redeem codes provided by your app.
+        /// Call this method to have StoreKit present a sheet enabling the user to redeem codes provided by your app.
         @available(iOS 14.0, *)
         func presentCodeRedemptionSheet()
     #endif

@@ -14,6 +14,8 @@ protocol ISystemInfoProvider: Sendable {
     #if os(iOS) || VISION_OS
         /// The current window scene.
         @MainActor
-        var currentScene: UIWindowScene { get async throws }
+        var currentScene: UIWindowScene {
+            get async throws
+        }
     #endif
 }

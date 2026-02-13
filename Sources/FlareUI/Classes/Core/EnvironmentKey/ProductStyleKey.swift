@@ -8,7 +8,9 @@ import SwiftUI
 // MARK: - ProductStyleKey
 
 private struct ProductStyleKey: EnvironmentKey {
-    static var defaultValue: AnyProductStyle { AnyProductStyle(style: CompactProductStyle()) }
+    static var defaultValue: AnyProductStyle {
+        AnyProductStyle(style: CompactProductStyle())
+    }
 }
 
 extension EnvironmentValues {

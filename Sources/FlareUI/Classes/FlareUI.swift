@@ -15,14 +15,16 @@ public final class FlareUI: IFlareUI {
     /// The configuration provider for FlareUI.
     private let configurationProvider: IConfigurationProvider
 
-    /// The singleton instance.
+    // The singleton instance.
     #if swift(>=6.0)
         private nonisolated(unsafe) static let flareUI: FlareUI = .init()
     #else
         private static let flareUI: FlareUI = .init()
     #endif
     /// Returns a shared `Flare` object.
-    public static var shared: IFlareUI { flareUI }
+    public static var shared: IFlareUI {
+        flareUI
+    }
 
     // MARK: Initialization
 

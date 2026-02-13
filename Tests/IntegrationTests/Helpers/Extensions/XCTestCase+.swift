@@ -8,8 +8,7 @@ import XCTest
 extension XCTestCase {
     func value<U>(for closure: () async throws -> U) async -> U? {
         do {
-            let value = try await closure()
-            return value
+            return try await closure()
         } catch {
             return nil
         }

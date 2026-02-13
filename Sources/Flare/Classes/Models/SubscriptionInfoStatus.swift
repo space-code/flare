@@ -11,12 +11,6 @@ public struct SubscriptionInfoStatus {
     // MARK: Properties
 
     let underlyingStatus: ISubscriptionInfoStatus
-
-    // MARK: Initialization
-
-    init(underlyingStatus: ISubscriptionInfoStatus) {
-        self.underlyingStatus = underlyingStatus
-    }
 }
 
 // MARK: ISubscriptionInfoStatus

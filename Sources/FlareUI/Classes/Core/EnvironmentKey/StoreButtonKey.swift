@@ -8,7 +8,9 @@ import SwiftUI
 // MARK: - StoreButtonKey
 
 private struct StoreButtonKey: EnvironmentKey {
-    static var defaultValue: [StoreButtonType] { [] }
+    static var defaultValue: [StoreButtonType] {
+        []
+    }
 }
 
 extension EnvironmentValues {

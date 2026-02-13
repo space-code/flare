@@ -60,7 +60,7 @@ struct SK1StoreProductDiscount: IStoreProductDiscount {
         numberOfPeriods = productDiscount.numberOfPeriods
         type = discountType
 
-        /// The price formatter.
+        // The price formatter.
         let numberFormatter: NumberFormatter = .numberFormatter(with: self.productDiscount.priceLocale)
         localizedPriceString = numberFormatter.string(from: self.productDiscount.price)
     }

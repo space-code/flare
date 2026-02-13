@@ -52,7 +52,7 @@
 //            XCTAssertEqual(windowScene, scene)
 //        }
 
-        func test_thatScenesHolderThrowsAnErrorWhenThereIsNoActiveWindowScene() async throws {
+        func test_thatScenesHolderThrowsAnErrorWhenThereIsNoActiveWindowScene() async {
             // when
             let error: Error? = await self.error(for: { try await sut.currentScene })
 

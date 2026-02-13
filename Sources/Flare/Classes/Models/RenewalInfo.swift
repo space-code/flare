@@ -11,12 +11,6 @@ public struct RenewalInfo {
     // MARK: Properties
 
     let underlyingRenewalInfo: IRenewalInfo
-
-    // MARK: Initialization
-
-    init(underlyingRenewalInfo: IRenewalInfo) {
-        self.underlyingRenewalInfo = underlyingRenewalInfo
-    }
 }
 
 // MARK: - Initialization

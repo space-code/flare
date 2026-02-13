@@ -8,7 +8,9 @@ import SwiftUI
 // MARK: - SubscriptionStoreButtonLabelKey
 
 private struct SubscriptionStoreButtonLabelKey: EnvironmentKey {
-    static var defaultValue: SubscriptionStoreButtonLabel { .action }
+    static var defaultValue: SubscriptionStoreButtonLabel {
+        .action
+    }
 }
 
 extension EnvironmentValues {
