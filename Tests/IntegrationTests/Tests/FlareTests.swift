@@ -85,7 +85,7 @@ final class FlareTests: StoreSessionTestCase {
     @available(iOS 15.2, tvOS 15.2, macOS 12.1, watchOS 8.3, *)
     func test_thatPurchaseIntorudctoryOffer() async throws {
         // 1. Fetch a product
-        let product = try try await XCTUnwrap(ProductProviderHelper.subscriptionsWithIntroductoryOffer.randomElement())
+        let product = try await XCTUnwrap(ProductProviderHelper.subscriptionsWithIntroductoryOffer.randomElement())
         let storeProduct = StoreProduct(product: product)
 
         // 2. Checking eligibility for a product
