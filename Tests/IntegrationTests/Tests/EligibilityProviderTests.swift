@@ -28,7 +28,8 @@ final class EligibilityProviderTests: StoreSessionTestCase {
 
     func test_thatProviderReturnsNoOffer_whenProductDoesNotHaveIntroductoryOffer() async throws {
         // given
-        let product = try XCTUnwrap(ProductProviderHelper.subscriptionsWithoutOffers.randomElement())
+        let randomProduct = try await ProductProviderHelper.subscriptionsWithoutOffers.randomElement()
+        let product = try XCTUnwrap(randomProduct)
 
         // when
         let result = try await sut.checkEligibility(products: [StoreProduct(product: product)])
@@ -39,7 +40,8 @@ final class EligibilityProviderTests: StoreSessionTestCase {
 
     func test_thatProviderReturnsEligible_whenProductHasIntroductoryOffer() async throws {
         // given
-        let product = try XCTUnwrap(ProductProviderHelper.subscriptionsWithIntroductoryOffer.randomElement())
+        let randomProduct = try await ProductProviderHelper.subscriptionsWithIntroductoryOffer.randomElement()
+        let product = try XCTUnwrap(randomProduct)
 
         // when
         let result = try await sut.checkEligibility(products: [StoreProduct(product: product)])
