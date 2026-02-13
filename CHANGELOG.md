@@ -28,6 +28,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Implemented by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#140](https://github.com/space-code/flare/pull/140).
 
 ### Miscellaneous Tasks
+- Bumpd dependencies
+  - Contributed by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#185](https://github.com/space-code/flare/pull/185).
 - Add a test plan for the macOS action
   - Contributed by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#167](https://github.com/space-code/flare/pull/167).
 - Add codeowners
@@ -64,7 +66,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Contributed by [@renovate[bot]](https://github.com/renovate[bot]) in Pull Request [#159](https://github.com/space-code/flare/pull/159).
 
 ### New Contributors
-* @renovate[bot] made their first contribution in [#184](https://github.com/space-code/flare/pull/184)
+* @renovate[bot] made their first contribution in 
 
 ## [3.2.0](https://github.com/space-code/flare/releases/tag/3.2.0)
 
