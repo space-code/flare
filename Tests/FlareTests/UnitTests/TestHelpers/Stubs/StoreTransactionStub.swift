@@ -66,4 +66,9 @@ final class StoreTransactionStub: IStoreTransaction, @unchecked Sendable {
     var currency: String? {
         stubbedCurrency
     }
+
+    var stubbedOriginalID: UInt64?
+    var originalID: UInt64? {
+        stubbedOriginalID
+    }
 }
