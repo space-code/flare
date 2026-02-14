@@ -57,6 +57,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add a configuration for the renovate bot
   - Contributed by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#135](https://github.com/space-code/flare/pull/135).
 
+### Testing
+- Update mocks for unit testing
+  - Contributed by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#187](https://github.com/space-code/flare/pull/187).
+
 ### Uncategorized Changes
 - Add renovate.json
   - Contributed by [@renovate[bot]](https://github.com/renovate[bot]) in Pull Request [#131](https://github.com/space-code/flare/pull/131).
