@@ -106,4 +106,13 @@ final class StoreTransactionMock: IStoreTransaction, @unchecked Sendable {
         invokedCurrencyGetterCount += 1
         return stubbedCurrency
     }
+
+    var invokedOriginalID = false
+    var invokedOriginalIDCount = 0
+    var stubbedOriginalID: UInt64?
+    var originalID: UInt64? {
+        invokedOriginalID = true
+        invokedOriginalIDCount += 1
+        return stubbedOriginalID
+    }
 }
