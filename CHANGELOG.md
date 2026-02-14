@@ -60,13 +60,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Contributed by [@renovate[bot]](https://github.com/renovate[bot]) in Pull Request [#131](https://github.com/space-code/flare/pull/131).
 
 ### Chore
+- Update dependency apple/swift-docc-plugin to v1.4.6
+  - Contributed by [@renovate[bot]](https://github.com/renovate[bot]) in Pull Request [#183](https://github.com/space-code/flare/pull/183).
 - Update dependency space-code/concurrency to v0.3.1
   - Contributed by [@renovate[bot]](https://github.com/renovate[bot]) in Pull Request [#158](https://github.com/space-code/flare/pull/158).
 - Update dependency space-code/atomic to v1.1.1
   - Contributed by [@renovate[bot]](https://github.com/renovate[bot]) in Pull Request [#159](https://github.com/space-code/flare/pull/159).
 
 ### New Contributors
-* @renovate[bot] made their first contribution in [#174](https://github.com/space-code/flare/pull/174)
+* @renovate[bot] made their first contribution in [#183](https://github.com/space-code/flare/pull/183)
 
 ## [3.2.0](https://github.com/space-code/flare/releases/tag/3.2.0)
 
