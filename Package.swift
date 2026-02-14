@@ -22,7 +22,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/space-code/concurrency.git", exact: "0.3.1"),
-        .package(url: "https://github.com/apple/swift-docc-plugin", exact: "1.4.5"),
+        .package(url: "https://github.com/apple/swift-docc-plugin", exact: "1.4.6"),
         .package(url: "https://github.com/space-code/log.git", exact: "1.3.0"),
         .package(url: "https://github.com/space-code/atomic.git", exact: "1.1.1"),
         .package(
