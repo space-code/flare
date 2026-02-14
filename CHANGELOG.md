@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Features
+- Add the `originalID` property to `StoreTransaction`
+  - Implemented by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#186](https://github.com/space-code/flare/pull/186).
 - Add release workflow for GitHub Actions
   - Implemented by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#148](https://github.com/space-code/flare/pull/148).
 - Add conventional-pr.yml for PR validation
