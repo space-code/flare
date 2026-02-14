@@ -66,6 +66,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Contributed by [@renovate[bot]](https://github.com/renovate[bot]) in Pull Request [#131](https://github.com/space-code/flare/pull/131).
 
 ### Chore
+- Update dependency pointfreeco/swift-snapshot-testing to v1.18.9
+  - Contributed by [@renovate[bot]](https://github.com/renovate[bot]) in Pull Request [#180](https://github.com/space-code/flare/pull/180).
 - Update dependency apple/swift-docc-plugin to v1.4.6
   - Contributed by [@renovate[bot]](https://github.com/renovate[bot]) in Pull Request [#183](https://github.com/space-code/flare/pull/183).
 - Update dependency space-code/concurrency to v0.3.1
@@ -74,7 +76,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Contributed by [@renovate[bot]](https://github.com/renovate[bot]) in Pull Request [#159](https://github.com/space-code/flare/pull/159).
 
 ### New Contributors
-* @renovate[bot] made their first contribution in [#183](https://github.com/space-code/flare/pull/183)
+* @renovate[bot] made their first contribution in [#180](https://github.com/space-code/flare/pull/180)
 
 ## [3.2.0](https://github.com/space-code/flare/releases/tag/3.2.0)
 
