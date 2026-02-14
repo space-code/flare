@@ -35,6 +35,10 @@ struct SK2StoreTransaction {
 
 @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
 extension SK2StoreTransaction: IStoreTransaction {
+    var originalID: UInt64? {
+        transaction.originalID
+    }
+
     var productIdentifier: String {
         transaction.productID
     }

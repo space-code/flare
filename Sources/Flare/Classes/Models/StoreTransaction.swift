@@ -49,6 +49,10 @@ extension StoreTransaction {
 // MARK: IStoreTransaction
 
 extension StoreTransaction: IStoreTransaction {
+    public var originalID: UInt64? {
+        storeTransaction.originalID
+    }
+
     public var productIdentifier: String {
         storeTransaction.productIdentifier
     }

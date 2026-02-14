@@ -27,6 +27,10 @@ struct SK1StoreTransaction {
 // MARK: IStoreTransaction
 
 extension SK1StoreTransaction: IStoreTransaction {
+    var originalID: UInt64? {
+        nil
+    }
+
     var productIdentifier: String {
         transaction.productIdentifier
     }
