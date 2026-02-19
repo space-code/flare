@@ -331,6 +331,7 @@ We follow the [Swift API Design Guidelines](https://swift.org/documentation/api-
 **Key points:**
 
 1. **Naming**
+
    ```swift
    // ✅ Good
    func purchase(product: Product) async throws -> PurchaseResult
@@ -342,6 +343,7 @@ We follow the [Swift API Design Guidelines](https://swift.org/documentation/api-
    ```
 
 2. **Protocols**
+
    ```swift
    // ✅ Good - Use "I" prefix for protocols
    protocol IFlareProvider {
@@ -354,6 +356,7 @@ We follow the [Swift API Design Guidelines](https://swift.org/documentation/api-
    ```
 
 3. **Access Control**
+
    ```swift
    // ✅ Good - Explicit access control
    public final class Flare: IFlareProvider {
@@ -369,6 +372,7 @@ We follow the [Swift API Design Guidelines](https://swift.org/documentation/api-
    ```
 
 4. **Async/Await**
+
    ```swift
    // ✅ Good - Use async/await for asynchronous operations
    public func purchase(product: Product) async throws -> PurchaseResult {
@@ -383,6 +387,7 @@ We follow the [Swift API Design Guidelines](https://swift.org/documentation/api-
    ```
 
 5. **Documentation**
+
    ```swift
    /// Purchases a product from the App Store.
    ///

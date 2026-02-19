@@ -25,7 +25,6 @@ Flare is a modern, lightweight Swift framework that simplifies working with in-a
 - 🎨 **UI Components** - Pre-built SwiftUI and UIKit views for product displays
 - 📱 **Cross-Platform** - iOS, tvOS, watchOS, macOS, and visionOS compatible
 - 🧪 **Thoroughly Tested** - Complete unit, integration, and snapshot test coverage
-- 📦 **Zero Dependencies** - Lightweight with no external dependencies
 
 ## 📋 Table of Contents
 
@@ -79,6 +78,9 @@ The package contains two libraries:
 ```swift
 import Flare
 
+// Configure Flare
+Flare.configure(with: .init(applicationUsername: "UUID"))
+
 // Fetch products
 let products = try await Flare.shared.fetch(productIDs: ["premium_monthly"])
 
@@ -125,7 +127,7 @@ Handle purchases with simple async/await syntax:
 ```swift
 import Flare
 
- func purchasePremium() async throws {
+func purchasePremium() async throws {
     let productID = "com.app.premium"
 
     let products = try await Flare.shared.fetch(productIDs: [productID])
@@ -177,7 +179,7 @@ Manage transaction lifecycle:
 import Flare
 
 // Finish a transaction after delivering content
-func completeTransaction(_ transaction: Transaction) {
+func completeTransaction(_ transaction: StoreTransaction) {
     Flare.shared.finish(transaction: transaction) {
         print("✅ Transaction completed successfully")
     }
@@ -301,7 +303,7 @@ Flare is released under the MIT license. See [LICENSE](LICENSE) for details.
 
 <div align="center">
 
-**[⬆ back to top](#validator)**
+**[⬆ back to top](#description)**
 
 Made with ❤️ by [space-code](https://github.com/space-code)
 
