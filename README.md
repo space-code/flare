@@ -48,8 +48,8 @@ Flare is a modern, lightweight Swift framework that simplifies working with in-a
 
 | Package | Supported Platforms | Xcode | Minimum Swift Version |
 |---------|-------------------|-------|----------------------|
-| **Flare** | iOS 13.0+ / macOS 10.15+ / tvOS 13.0+ / watchOS 7.0+ / visionOS 1.0+ | 15.3+ | 5.10 |
-| **FlareUI** | iOS 13.0+ / macOS 10.15+ / tvOS 13.0+ | 15.3+ | 5.10 |
+| **Flare** | iOS 13.0+ / macOS 10.15+ / tvOS 13.0+ / watchOS 7.0+ / visionOS 1.0+ | 15.4+ | 5.10 |
+| **FlareUI** | iOS 13.0+ / macOS 10.15+ / tvOS 13.0+ | 15.4+ | 5.10 |
 
 ## 🚀 Installation
 
@@ -59,7 +59,7 @@ Add the following dependency to your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/space-code/flare.git", .upToNextMajor(from: "3.1.0"))
+    .package(url: "https://github.com/space-code/flare.git", from: "3.3.0")
 ]
 ```
 
