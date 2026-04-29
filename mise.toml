@@ -2,7 +2,7 @@
 git-cliff = "2.13.1"
 swiftlint = "0.63.2"
 swiftformat = "0.61.1"
-xcodegen = "2.43.0"
+xcodegen = "2.45.4"
 
 [settings]
 experimental = true
