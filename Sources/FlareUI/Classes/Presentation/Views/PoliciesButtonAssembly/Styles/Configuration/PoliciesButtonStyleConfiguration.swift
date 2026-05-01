@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-struct PoliciesButtonStyleConfiguration: Sendable {
+struct PoliciesButtonStyleConfiguration {
     // MARK: Types
 
     struct ButtonView: View {
