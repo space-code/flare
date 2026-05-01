@@ -7,7 +7,7 @@ import SwiftUI
 
 @available(watchOS, unavailable)
 // swiftlint:disable:next type_name
-struct SubscriptionsWrapperViewStyleConfiguration: Sendable {
+struct SubscriptionsWrapperViewStyleConfiguration {
     // MARK: Types
 
     struct Toolbar: View {
