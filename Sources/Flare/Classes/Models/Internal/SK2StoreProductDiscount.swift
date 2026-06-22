@@ -8,7 +8,7 @@ import StoreKit
 
 /// The details of an introductory offer or a promotional offer for an auto-renewable subscription.
 @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
-struct SK2StoreProductDiscount: IStoreProductDiscount, Sendable {
+struct SK2StoreProductDiscount: IStoreProductDiscount {
     // MARK: Properties
 
     private let subscriptionOffer: StoreKit.Product.SubscriptionOffer
