@@ -27,6 +27,10 @@
     {
       "matchManagers": ["github-actions"],
       "labels": ["github-actions", "ci"]
+    },
+    {
+      "matchPackageNames": ["xcodegen"],
+      "enabled": false
     }
   ],
   "lockFileMaintenance": {
