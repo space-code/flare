@@ -53,12 +53,11 @@ struct SubscriptionHeaderView: View {
         }
     }
 
+    @ViewBuilder
     @MainActor
     private var policiesButton: some View {
-        Group {
-            if storeButton.contains(.policies) {
-                storeButtonsAssembly?.assemble(storeButtonType: .policies)
-            }
+        if storeButton.contains(.policies) {
+            storeButtonsAssembly?.assemble(storeButtonType: .policies)
         }
     }
 }

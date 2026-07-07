@@ -21,14 +21,12 @@ struct ImageView: View {
     // MARK: View
 
     var body: some View {
-        Group {
-            if #available(macOS 11.0, iOS 14.0, tvOS 14.0, *) {
-                Image(systemName: systemName)
-                    .resizable()
-            } else {
-                defaultImage
-                    .resizable()
-            }
+        if #available(macOS 11.0, iOS 14.0, tvOS 14.0, *) {
+            Image(systemName: systemName)
+                .resizable()
+        } else {
+            defaultImage
+                .resizable()
         }
     }
 }
