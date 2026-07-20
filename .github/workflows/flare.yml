@@ -57,7 +57,7 @@ jobs:
           - { platform: watchOS, name: "watchOS 10.5", xcode: "Xcode_15.3", runsOn: macOS-14, destination: "OS=10.5,name=Apple Watch Series 9 (45mm)", testPlan: "UnitTests" }
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - uses: jdx/mise-action@v3
         with:
           experimental: true
@@ -92,7 +92,7 @@ jobs:
           - { name: "macOS 14, SPM 5.10.0", xcode: "Xcode_15.3", runsOn: macOS-14 }
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Build with Swift Package Manager - ${{ matrix.name }}
         run: swift build -c release --target Flare
