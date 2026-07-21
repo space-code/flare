@@ -10,7 +10,7 @@ import Foundation
 
 /// A view model for managing subscriptions.
 @available(watchOS, unavailable)
-struct SubscriptionsViewModel: IModel, Sendable {
+struct SubscriptionsViewModel: IModel {
     /// The state of the view model.
     enum State: Equatable {
         /// Loading state.
