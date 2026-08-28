@@ -137,19 +137,29 @@ final class FlareTests: StoreSessionTestCase {
         expectedResult: Result<Void, IAPError>
     ) async throws {
         // given
-        let randomElement = try await ProductProviderHelper.purchases.randomElement()
-        let product = try XCTUnwrap(randomElement, "ProductProviderHelper.purchases.randomElement() returned nil")
+        let product = try await resolveProduct(for: expectedResult)
 
         // when
-        let result: Result<StoreTransaction, IAPError> = await result(for: {
+        var purchaseResult: Result<StoreTransaction, IAPError> = await result(for: {
             try await sut.purchase(
                 product: StoreProduct(product: product),
                 options: [.simulatesAskToBuyInSandbox(false)]
             )
         })
 
+        var attempt = 1
+        while !matches(result: purchaseResult, expectedResult: expectedResult), attempt < Self.purchaseAttempts {
+            attempt += 1
+            purchaseResult = await result(for: {
+                try await sut.purchase(
+                    product: StoreProduct(product: product),
+                    options: [.simulatesAskToBuyInSandbox(false)]
+                )
+            })
+        }
+
         // then
-        try assertPurchase(result: result, expectedResult: expectedResult, productID: product.id)
+        try assertPurchase(result: purchaseResult, expectedResult: expectedResult, productID: product.id)
     }
 
     private func test_purchaseWithOptions(
@@ -157,13 +167,48 @@ final class FlareTests: StoreSessionTestCase {
         expectedResult: Result<Void, IAPError>
     ) async throws {
         // given
+        let product = try await resolveProduct(for: expectedResult)
+
+        // when
+        var result = try await performPurchase(product: product, options: options)
+
+        var attempt = 1
+        while !matches(result: result, expectedResult: expectedResult), attempt < Self.purchaseAttempts {
+            attempt += 1
+            result = try await performPurchase(product: product, options: options)
+        }
+
+        // then
+        try assertPurchase(result: result, expectedResult: expectedResult, productID: product.id)
+    }
+
+    /// Resolves the product to purchase for a given expected outcome.
+    ///
+    /// - Note: Success- and failure-expectation tests deliberately use different, dedicated non-consumables (see
+    /// `ProductProviderHelper.failingPurchases`) so a successful purchase in one test can never leave the product
+    /// "owned" for a later failure-expectation test — repurchasing an already-owned non-consumable always succeeds,
+    /// regardless of any configured `SKTestSession.failureError`.
+    private func resolveProduct(for expectedResult: Result<Void, IAPError>) async throws -> StoreKit.Product {
+        let products: [StoreKit.Product] = switch expectedResult {
+        case .success:
+            try await ProductProviderHelper.purchases
+        case .failure:
+            try await ProductProviderHelper.failingPurchases
+        }
+        return try XCTUnwrap(products.randomElement(), "No product available for the expected result")
+    }
+
+    /// Performs a single purchase attempt via the completion-handler API and awaits its result.
+    ///
+    /// - Note: Uses a fresh `XCTestExpectation` per call (expectations can only be fulfilled once), which is why
+    /// this is its own function — callers can invoke it repeatedly to retry a purchase attempt.
+    private func performPurchase(
+        product: StoreKit.Product,
+        options: Set<StoreKit.Product.PurchaseOption>
+    ) async throws -> Result<StoreTransaction, IAPError> {
         let expectation = XCTestExpectation(description: "Purchase a product")
         let box = ResultBox()
 
-        let randomElement = try await ProductProviderHelper.purchases.randomElement()
-        let product = try XCTUnwrap(randomElement, "ProductProviderHelper.purchases.randomElement() returned nil")
-
-        // when
         let handler: Closure<Result<StoreTransaction, IAPError>> = { result in
             box.result = result
             expectation.fulfill()
@@ -180,15 +225,22 @@ final class FlareTests: StoreSessionTestCase {
             }
         }
 
-        // then
         #if swift(>=5.9)
             await fulfillment(of: [expectation], timeout: .timeout)
         #else
             wait(for: [expectation], timeout: .second)
         #endif
 
-        let result = try XCTUnwrap(box.result, "The purchase completion handler was never called")
-        try assertPurchase(result: result, expectedResult: expectedResult, productID: product.id)
+        return try XCTUnwrap(box.result, "The purchase completion handler was never called")
+    }
+
+    private func matches(result: Result<StoreTransaction, IAPError>, expectedResult: Result<Void, IAPError>) -> Bool {
+        switch expectedResult {
+        case .success:
+            result.success != nil
+        case let .failure(expectedError):
+            result.error == expectedError
+        }
     }
 
     /// Asserts a purchase outcome against the expectation, skipping (rather than failing) when StoreKit's local
@@ -222,6 +274,13 @@ final class FlareTests: StoreSessionTestCase {
         else { return false }
         return (systemError as NSError).domain == "ASDErrorDomain"
     }
+
+    /// The number of times a purchase is attempted before asserting on the outcome.
+    ///
+    /// - Note: `SKTestSession`'s failure simulation (`failTransactionsEnabled`/`failureError`) is occasionally
+    /// nondeterministic in the local StoreKitTest sandbox — it can let a purchase through as a success even
+    /// though a failure was configured. Retrying gives it another chance to apply the configured failure.
+    private static let purchaseAttempts = 3
 }
 
 // MARK: - ResultBox
