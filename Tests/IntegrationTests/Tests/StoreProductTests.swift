@@ -48,7 +48,7 @@ final class StoreProductTests: StoreSessionTestCase {
         }
 
         #if swift(>=5.9)
-            await fulfillment(of: [expectation])
+            await fulfillment(of: [expectation], timeout: .seconds)
         #else
             wait(for: [expectation], timeout: .seconds)
         #endif

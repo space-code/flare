@@ -108,7 +108,7 @@ final class FlareTests: StoreSessionTestCase {
         sut.finish(transaction: purchaseTransaction) { expectation.fulfill() }
 
         #if swift(>=5.9)
-            await fulfillment(of: [expectation])
+            await fulfillment(of: [expectation], timeout: .timeout)
         #else
             wait(for: [expectation], timeout: .second)
         #endif
@@ -191,7 +191,7 @@ final class FlareTests: StoreSessionTestCase {
 
         // then
         #if swift(>=5.9)
-            await fulfillment(of: [expectation])
+            await fulfillment(of: [expectation], timeout: .timeout)
         #else
             wait(for: [expectation], timeout: .second)
         #endif
@@ -202,6 +202,7 @@ final class FlareTests: StoreSessionTestCase {
 
 private extension TimeInterval {
     static let second: CGFloat = 1.0
+    static let timeout: TimeInterval = 30.0
 }
 
 private extension String {
