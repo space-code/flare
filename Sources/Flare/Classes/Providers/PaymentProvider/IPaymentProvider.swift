@@ -10,7 +10,7 @@ protocol IPaymentProvider: AnyObject {
     /// False if this device is not able or allowed to make payments
     var canMakePayments: Bool { get }
 
-    /// The active payment transactinos.
+    /// The active payment transactions.
     var transactions: [PaymentTransaction] { get }
 
     /// Adds transaction observer to a payment queue.

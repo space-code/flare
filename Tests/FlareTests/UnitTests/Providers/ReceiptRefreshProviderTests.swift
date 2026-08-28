@@ -92,7 +92,9 @@ class ReceiptRefreshProviderTests: XCTestCase {
         }
 
         // then
-        if case .failure = result { XCTFail("The result must be `success`") }
+        if case .failure = result {
+            XCTFail("The result must be `success`")
+        }
         XCTAssertEqual(stubbedRequest.invokedIdGetterCount, 1)
     }
 

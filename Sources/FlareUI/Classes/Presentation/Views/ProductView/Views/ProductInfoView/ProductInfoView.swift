@@ -130,17 +130,16 @@ struct ProductInfoView: View {
         }
     }
 
+    @ViewBuilder
     private func stackView(spacing: CGFloat? = nil, @ViewBuilder content: () -> some View) -> some View {
-        Group {
-            switch style {
-            case .compact:
-                HStack(alignment: .center, spacing: spacing) {
-                    content()
-                }
-            case .large:
-                VStack(alignment: .center, spacing: spacing) {
-                    content()
-                }
+        switch style {
+        case .compact:
+            HStack(alignment: .center, spacing: spacing) {
+                content()
+            }
+        case .large:
+            VStack(alignment: .center, spacing: spacing) {
+                content()
             }
         }
     }
