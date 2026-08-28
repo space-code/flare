@@ -74,14 +74,13 @@ struct SubscriptionToolbarView: View {
             .padding(.top)
     }
 
+    @ViewBuilder
     private var storeButtonView: some View {
-        Group {
-            if #available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *) {
-                if storeButton.contains(.restore) {
-                    storeButtonsAssembly?.assemble(storeButtonType: .restore)
-                        .storeButtonViewFontWeight(.bold)
-                        .foregroundColor(subscriptionViewTint)
-                }
+        if #available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *) {
+            if storeButton.contains(.restore) {
+                storeButtonsAssembly?.assemble(storeButtonType: .restore)
+                    .storeButtonViewFontWeight(.bold)
+                    .foregroundColor(subscriptionViewTint)
             }
         }
     }
