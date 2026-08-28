@@ -29,6 +29,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Contributed by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#207](https://github.com/space-code/flare/pull/207).
 
 ### Chore
+- Update dependency pointfreeco/swift-snapshot-testing to v1.19.4
+  - Contributed by [@renovate[bot]](https://github.com/renovate[bot]) in Pull Request [#197](https://github.com/space-code/flare/pull/197).
 - Update dependency apple/swift-docc-plugin to v1.5.0
   - Contributed by [@renovate[bot]](https://github.com/renovate[bot]) in Pull Request [#204](https://github.com/space-code/flare/pull/204).
 
