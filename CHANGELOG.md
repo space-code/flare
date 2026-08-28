@@ -24,6 +24,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update `README.md`
   - Documented by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#188](https://github.com/space-code/flare/pull/188).
 
+### Miscellaneous Tasks
+- Update `ci.yml`
+  - Contributed by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#207](https://github.com/space-code/flare/pull/207).
+
 ## [3.3.0](https://github.com/space-code/flare/releases/tag/3.3.0)
 
 Released on 2026-02-19. All issues associated with this milestone can be found using this [filter](https://github.com/space-code/flare/milestones?state=closed&q=3.3.0).
