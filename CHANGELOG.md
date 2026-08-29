@@ -28,6 +28,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update `ci.yml`
   - Contributed by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#207](https://github.com/space-code/flare/pull/207).
 
+### Testing
+- Fix tests
+  - Contributed by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#235](https://github.com/space-code/flare/pull/235).
+
 ### Chore
 - Update dependency pointfreeco/swift-snapshot-testing to v1.19.4
   - Contributed by [@renovate[bot]](https://github.com/renovate[bot]) in Pull Request [#197](https://github.com/space-code/flare/pull/197).
