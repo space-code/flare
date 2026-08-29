@@ -18,6 +18,21 @@
       "productID" : "com.flare.test_non_consumable_purchase_1",
       "referenceName" : null,
       "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "1CBF43E7",
+      "localizations" : [
+        {
+          "description" : "com.flare.test_non_consumable_purchase_2",
+          "displayName" : "com.flare.test_non_consumable_",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.flare.test_non_consumable_purchase_2",
+      "referenceName" : null,
+      "type" : "NonConsumable"
     }
   ],
   "settings" : {
