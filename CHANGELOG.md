@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 #### 3.x Releases
-- `3.3.x` Releases - [3.3.0](#330)
+- `3.3.x` Releases - [3.3.1](#331) | [3.3.0](#330)
 - `3.2.x` Releases - [3.2.0](#320)
 - `3.1.x` Releases - [3.1.0](#310)
 - `3.0.x` Releases - [3.0.2](#302) | [3.0.1](#301) | [3.0.0](#300)
@@ -18,7 +18,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `1.0.x` Releases - [1.0.0](#100)
 
 ---
-## [Unreleased]
+
+
+## [3.3.1](https://github.com/space-code/flare/releases/tag/3.3.1)
+
+Released on 2026-08-30. All issues associated with this milestone can be found using this [filter](https://github.com/space-code/flare/milestones?state=closed&q=3.3.1).
 
 ### Documentation
 - Update `README.md`
@@ -350,7 +354,7 @@ Released on 2023-01-20. All issues associated with this milestone can be found u
 - Swift Concurrency Support [#1]
   - Contributed by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#1](https://github.com/space-code/flare/pull/1).
 
-[unreleased]: https://github.com/space-code/flare/compare/3.3.0..HEAD
+[3.3.1]: https://github.com/space-code/flare/compare/3.3.0..3.3.1
 [3.3.0]: https://github.com/space-code/flare/compare/3.2.0..3.3.0
 [3.2.0]: https://github.com/space-code/flare/compare/3.1.0..3.2.0
 [3.1.0]: https://github.com/space-code/flare/compare/3.0.2..3.1.0
