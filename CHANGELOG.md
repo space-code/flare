@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `1.0.x` Releases - [1.0.0](#100)
 
 ---
+<!-- git-cliff: end of header -->
 
 
 ## [3.3.1](https://github.com/space-code/flare/releases/tag/3.3.1)
@@ -300,14 +301,6 @@ Released on 2024-06-15. All issues associated with this milestone can be found u
   - Contributed by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#23](https://github.com/space-code/flare/pull/23).
 - Release Candidate `3.0.0`
   - Contributed by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#22](https://github.com/space-code/flare/pull/22).
-
-## [2.0.0](https://github.com/space-code/flare/releases/tag/2.0.0)
-
-Released on 2023-09-14. All issues associated with this milestone can be found using this [filter](https://github.com/space-code/flare/milestones?state=closed&q=2.0.0).
-
-### Uncategorized Changes
-- Release 2.0.0
-  - Contributed by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#4](https://github.com/space-code/flare/pull/4).
 - Fix Branch
   - Contributed by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#21](https://github.com/space-code/flare/pull/21).
 - Bump `atomic` from 1.0.0 to 1.0.1
@@ -340,19 +333,21 @@ Released on 2023-09-14. All issues associated with this milestone can be found u
   - Contributed by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#6](https://github.com/space-code/flare/pull/6).
 - Support `visionOS`
   - Contributed by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#5](https://github.com/space-code/flare/pull/5).
-
-### New Contributors
-* @dependabot[bot] made their first contribution in [#20](https://github.com/space-code/flare/pull/20)
-
-## [1.0.0](https://github.com/space-code/flare/releases/tag/1.0.0)
-
-Released on 2023-01-20. All issues associated with this milestone can be found using this [filter](https://github.com/space-code/flare/milestones?state=closed&q=1.0.0).
-
-### Uncategorized Changes
 - Update GitHub workflow
   - Contributed by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#3](https://github.com/space-code/flare/pull/3).
 - Swift Concurrency Support [#1]
   - Contributed by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#1](https://github.com/space-code/flare/pull/1).
+
+### New Contributors
+* @dependabot[bot] made their first contribution in [#43](https://github.com/space-code/flare/pull/43)
+
+## [2.0.0](https://github.com/space-code/flare/releases/tag/2.0.0)
+
+Released on 2023-09-14. All issues associated with this milestone can be found using this [filter](https://github.com/space-code/flare/milestones?state=closed&q=2.0.0).
+
+### Uncategorized Changes
+- Release 2.0.0
+  - Contributed by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#4](https://github.com/space-code/flare/pull/4).
 
 [3.3.1]: https://github.com/space-code/flare/compare/3.3.0..3.3.1
 [3.3.0]: https://github.com/space-code/flare/compare/3.2.0..3.3.0
