@@ -19,7 +19,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 <!-- git-cliff: end of header -->
+## [Unreleased]
 
+### Chore
+- Update dependency pointfreeco/swift-snapshot-testing to v1.19.5
+  - Contributed by [@renovate[bot]](https://github.com/renovate[bot]) in Pull Request [#242](https://github.com/space-code/flare/pull/242).
 
 ## [3.3.1](https://github.com/space-code/flare/releases/tag/3.3.1)
 
@@ -349,6 +353,7 @@ Released on 2023-09-14. All issues associated with this milestone can be found u
 - Release 2.0.0
   - Contributed by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#4](https://github.com/space-code/flare/pull/4).
 
+[unreleased]: https://github.com/space-code/flare/compare/3.3.1..HEAD
 [3.3.1]: https://github.com/space-code/flare/compare/3.3.0..3.3.1
 [3.3.0]: https://github.com/space-code/flare/compare/3.2.0..3.3.0
 [3.2.0]: https://github.com/space-code/flare/compare/3.1.0..3.2.0
