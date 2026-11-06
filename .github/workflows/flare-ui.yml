@@ -84,6 +84,7 @@ jobs:
       matrix:
         include:
           - { name: "macOS 26, SPM 6.2.0", xcode: "Xcode_26.5", runsOn: macOS-26 }
+          - { name: "macOS 15, SPM 6.0.2", xcode: "Xcode_16.1", runsOn: macOS-15 }
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
