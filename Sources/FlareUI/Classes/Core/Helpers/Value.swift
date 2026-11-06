@@ -7,14 +7,14 @@ import Foundation
 
 func value<T>(default: T, tvOS: T? = nil, macOS: T? = nil, iOS: T? = nil, watchOS: T? = nil) -> T {
     #if os(iOS)
-        return iOS ?? `default`
+        iOS ?? `default`
     #elseif os(macOS)
-        return macOS ?? `default`
+        macOS ?? `default`
     #elseif os(tvOS)
-        return tvOS ?? `default`
+        tvOS ?? `default`
     #elseif os(watchOS)
-        return watchOS ?? `default`
+        watchOS ?? `default`
     #else
-        return `default`
+        `default`
     #endif
 }

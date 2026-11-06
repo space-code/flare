@@ -14,8 +14,8 @@ public enum PriceIncreaseStatus {
     case agreed
 }
 
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, visionOS 1.0, *)
 extension PriceIncreaseStatus {
-    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, visionOS 1.0, *)
     init(_ status: Product.SubscriptionInfo.RenewalInfo.PriceIncreaseStatus) {
         switch status {
         case .noIncreasePending:

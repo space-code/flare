@@ -148,12 +148,12 @@ struct ProductInfoView: View {
         #if os(iOS)
             switch style {
             case .compact:
-                return compact
+                compact
             case .large:
-                return large ?? compact
+                large ?? compact
             }
         #else
-            return compact
+            compact
         #endif
     }
 }

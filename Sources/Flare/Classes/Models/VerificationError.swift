@@ -38,8 +38,8 @@ public enum VerificationError: Error {
 
 // MARK: - Initialization
 
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, visionOS 1.0, *)
 extension VerificationError {
-    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, visionOS 1.0, *)
     init(_ verificationError: StoreKit.VerificationResult<some Any>.VerificationError) {
         switch verificationError {
         case .revokedCertificate:

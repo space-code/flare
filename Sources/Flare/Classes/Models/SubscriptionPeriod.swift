@@ -87,15 +87,15 @@ private extension SubscriptionPeriod.Unit {
     static func from(unit: SKProduct.PeriodUnit) -> Self? {
         switch unit {
         case .day:
-            return .day
+            .day
         case .week:
-            return .week
+            .week
         case .month:
-            return .month
+            .month
         case .year:
-            return .year
+            .year
         @unknown default:
-            return nil
+            nil
         }
     }
 
@@ -108,15 +108,15 @@ private extension SubscriptionPeriod.Unit {
     static func from(unit: StoreKit.Product.SubscriptionPeriod.Unit) -> Self? {
         switch unit {
         case .day:
-            return .day
+            .day
         case .week:
-            return .week
+            .week
         case .month:
-            return .month
+            .month
         case .year:
-            return .year
+            .year
         @unknown default:
-            return nil
+            nil
         }
     }
 }

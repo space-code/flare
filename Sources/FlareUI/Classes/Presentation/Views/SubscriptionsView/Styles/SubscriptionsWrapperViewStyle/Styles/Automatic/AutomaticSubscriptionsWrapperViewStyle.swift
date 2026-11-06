@@ -9,9 +9,9 @@ import SwiftUI
 struct AutomaticSubscriptionsWrapperViewStyle: ISubscriptionsWrapperViewStyle {
     func makeBody(configuration: Configuration) -> some View {
         #if os(iOS) || os(macOS)
-            return FullSubscriptionsWrapperViewStyle().makeBody(configuration: configuration)
+            FullSubscriptionsWrapperViewStyle().makeBody(configuration: configuration)
         #else
-            return CompactSubscriptionWrapperViewStyle().makeBody(configuration: configuration)
+            CompactSubscriptionWrapperViewStyle().makeBody(configuration: configuration)
         #endif
     }
 }

@@ -28,13 +28,13 @@ extension PaymentMode {
     static func from(productDiscount: SKProductDiscount) -> Self? {
         switch productDiscount.paymentMode {
         case .payAsYouGo:
-            return .payAsYouGo
+            .payAsYouGo
         case .payUpFront:
-            return .payUpFront
+            .payUpFront
         case .freeTrial:
-            return .freeTrial
+            .freeTrial
         @unknown default:
-            return nil
+            nil
         }
     }
 

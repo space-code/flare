@@ -358,9 +358,9 @@ extension L10n {
 private final class BundleToken {
     static let bundle: Bundle = {
         #if SWIFT_PACKAGE
-            return Bundle.module
+            Bundle.module
         #else
-            return Bundle(for: BundleToken.self)
+            Bundle(for: BundleToken.self)
         #endif
     }()
 }

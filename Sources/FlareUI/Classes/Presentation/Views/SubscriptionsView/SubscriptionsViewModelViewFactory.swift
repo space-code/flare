@@ -61,9 +61,9 @@ final class SubscriptionsViewModelViewFactory: ISubscriptionsViewModelViewFactor
 
     private func makePrice(string: String) -> String {
         #if os(tvOS)
-            return L10n.Subscriptions.Renewable.subscriptionDescriptionSeparated(string)
+            L10n.Subscriptions.Renewable.subscriptionDescriptionSeparated(string)
         #else
-            return string
+            string
         #endif
     }
 }

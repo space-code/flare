@@ -13,9 +13,9 @@ enum Logger {
 
     private static var defaultLogLevel: LogLevel {
         #if DEBUG
-            return .debug
+            .debug
         #else
-            return .info
+            .info
         #endif
     }
 

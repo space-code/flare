@@ -15,8 +15,8 @@ public struct RenewalInfo {
 
 // MARK: - Initialization
 
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, visionOS 1.0, *)
 extension RenewalInfo {
-    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, visionOS 1.0, *)
     init(renewalInfo: Product.SubscriptionInfo.RenewalInfo) {
         self.init(underlyingRenewalInfo: SK2RenewalInfo(underlyingRenewalInfo: renewalInfo))
     }

@@ -13,9 +13,9 @@ struct AutomaticSubscriptionControlStyle: ISubscriptionControlStyle {
 
     func makeBody(configuration: Configuration) -> some View {
         #if os(iOS)
-            return ProminentPickerSubscriptionStoreControlStyle().makeBody(configuration: configuration)
+            ProminentPickerSubscriptionStoreControlStyle().makeBody(configuration: configuration)
         #else
-            return ButtonSubscriptionStoreControlStyle().makeBody(configuration: configuration)
+            ButtonSubscriptionStoreControlStyle().makeBody(configuration: configuration)
         #endif
     }
 }

@@ -95,7 +95,7 @@ extension TransactionListener: ITransactionListener {
     func handle(purchaseResult: Product.PurchaseResult) async throws -> StoreTransaction? {
         switch purchaseResult {
         case let .success(verificationResult):
-            return try await handle(transactionResult: verificationResult, fromTransactionUpdate: false)
+            try await handle(transactionResult: verificationResult, fromTransactionUpdate: false)
         case .userCancelled:
             throw IAPError.paymentCancelled
         case .pending:

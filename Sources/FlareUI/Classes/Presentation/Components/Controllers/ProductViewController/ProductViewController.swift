@@ -91,6 +91,7 @@ import SwiftUI
 
     // MARK: - Environments
 
+    @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
     @available(iOS 13.0, macOS 11.0, *)
     @available(watchOS, unavailable)
     @available(tvOS, unavailable)
@@ -98,7 +99,6 @@ import SwiftUI
         /// Configures the in-app purchase options.
         ///
         /// - Parameter options: A closure that returns the purchase options for a given store product.
-        @available(iOS 15.0, tvOS 15.0, watchOS 8.0, macOS 12.0, *)
         func inAppPurchaseOptions(_ options: (@Sendable (StoreProduct) -> Set<Product.PurchaseOption>?)?) {
             viewModel.inAppPurchaseOptions = { PurchaseOptions(options: options?($0) ?? []) }
         }

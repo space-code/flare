@@ -15,8 +15,8 @@ public struct SubscriptionInfo {
 
 // MARK: - Initializators
 
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, visionOS 1.0, *)
 extension SubscriptionInfo {
-    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, visionOS 1.0, *)
     init(subscriptionInfo: Product.SubscriptionInfo) {
         self.init(underlyingSubscriptionInfo: SK2SubscriptionInfo(underlyingInfo: subscriptionInfo))
     }
