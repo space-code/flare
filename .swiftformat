@@ -4,7 +4,7 @@
 
 # Use 'swiftformat --options' to list all of the possible options
 
---header "\nFlare\nCopyright © {created.year} Space Code. All rights reserved.\n//"
+--header "\nFlare\nCopyright © 2024 Space Code. All rights reserved.\n//"
 
 --enable blankLinesBetweenScopes
 --enable blankLinesAtStartOfScope
