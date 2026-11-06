@@ -29,9 +29,9 @@ struct PickerSubscriptionStoreControlStyleView: View {
     var body: some View {
         contentView
         #if os(iOS) || os(macOS) || os(watchOS)
-        .onTapGesture {
-            configuration.trigger()
-        }
+            .onTapGesture {
+                configuration.trigger()
+            }
         #endif
     }
 

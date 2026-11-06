@@ -9,9 +9,9 @@ import SwiftUI
 struct AutomaticPoliciesButtonStyle: IPoliciesButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         #if os(tvOS)
-            return TVPoliciesButtonStyle().makeBody(configuration: configuration)
+            TVPoliciesButtonStyle().makeBody(configuration: configuration)
         #else
-            return DefaultPoliciesButtonStyle().makeBody(configuration: configuration)
+            DefaultPoliciesButtonStyle().makeBody(configuration: configuration)
         #endif
     }
 }

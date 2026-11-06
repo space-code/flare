@@ -19,9 +19,9 @@ public struct ButtonSubscriptionStoreControlStyle: ISubscriptionControlStyle {
     @MainActor
     public func makeBody(configuration: Configuration) -> some View {
         #if os(tvOS)
-            return CardButtonSubscriptionStoreControlStyle().makeBody(configuration: configuration)
+            CardButtonSubscriptionStoreControlStyle().makeBody(configuration: configuration)
         #else
-            return BorderedSubscriptionStoreControlStyle().makeBody(configuration: configuration)
+            BorderedSubscriptionStoreControlStyle().makeBody(configuration: configuration)
         #endif
     }
 }

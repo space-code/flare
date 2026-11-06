@@ -68,9 +68,9 @@ extension StoreSessionTestCase {
             .flatMap { result -> Transaction? in
                 switch result {
                 case let .verified(transaction):
-                    return transaction
+                    transaction
                 case .unverified:
-                    return nil
+                    nil
                 }
             }
 

@@ -26,11 +26,11 @@ extension DiscountType {
     static func from(productDiscount: SKProductDiscount) -> Self? {
         switch productDiscount.type {
         case .introductory:
-            return .introductory
+            .introductory
         case .subscription:
-            return .promotional
+            .promotional
         @unknown default:
-            return nil
+            nil
         }
     }
 

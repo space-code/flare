@@ -110,12 +110,12 @@ struct ProductPlaceholderView: View {
         #if os(iOS)
             switch style {
             case .compact:
-                return compact
+                compact
             case .large:
-                return large ?? compact
+                large ?? compact
             }
         #else
-            return compact
+            compact
         #endif
     }
 
@@ -127,7 +127,6 @@ struct ProductPlaceholderView: View {
         #endif
     }
 
-    @ViewBuilder
     private func stackView(spacing: CGFloat = .zero, @ViewBuilder content: () -> some View) -> some View {
         #if os(iOS)
             Group {

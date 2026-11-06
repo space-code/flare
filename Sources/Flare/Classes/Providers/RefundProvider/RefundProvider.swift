@@ -1,6 +1,6 @@
 //
 // Flare
-// Copyright © 2023 Space Code. All rights reserved.
+// Copyright © 2024 Space Code. All rights reserved.
 //
 
 #if canImport(UIKit)
@@ -54,14 +54,14 @@ final class RefundProvider {
             case let .success(status):
                 switch status {
                 case .success:
-                    return .success
+                    .success
                 case .userCancelled:
-                    return .userCancelled
+                    .userCancelled
                 @unknown default:
-                    return .unknown
+                    .unknown
                 }
             case let .failure(error):
-                return .failed(error: error)
+                .failed(error: error)
             }
         }
     #endif

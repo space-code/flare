@@ -23,13 +23,13 @@ class SnapshotTestCase: XCTestCase {
 
     private var osName: String {
         #if os(iOS)
-            return "iOS"
+            "iOS"
         #elseif os(macOS)
-            return "macOS"
+            "macOS"
         #elseif os(tvOS)
-            return "tvOS"
+            "tvOS"
         #else
-            return "unknown"
+            "unknown"
         #endif
     }
 

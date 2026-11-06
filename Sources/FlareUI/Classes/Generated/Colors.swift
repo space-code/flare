@@ -76,8 +76,8 @@ final class ColorAsset: @unchecked Sendable {
     }
 }
 
+@available(iOS 11.0, tvOS 11.0, watchOS 4.0, macOS 10.13, *)
 extension ColorAsset.Color {
-    @available(iOS 11.0, tvOS 11.0, watchOS 4.0, macOS 10.13, *)
     convenience init?(asset: ColorAsset) {
         let bundle = BundleToken.bundle
         #if os(iOS) || os(tvOS)
@@ -106,9 +106,9 @@ extension ColorAsset.Color {
 private final class BundleToken {
     static let bundle: Bundle = {
         #if SWIFT_PACKAGE
-            return Bundle.module
+            Bundle.module
         #else
-            return Bundle(for: BundleToken.self)
+            Bundle(for: BundleToken.self)
         #endif
     }()
 }
