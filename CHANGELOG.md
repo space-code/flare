@@ -21,6 +21,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <!-- git-cliff: end of header -->
 ## [Unreleased]
 
+### Bug Fixes
+- Ci
+  - Fixed by [@ns-vasilev](https://github.com/ns-vasilev) in Pull Request [#261](https://github.com/space-code/flare/pull/261).
+
 ### Chore
 - Update dependency pointfreeco/swift-snapshot-testing to v1.19.7
   - Contributed by [@renovate[bot]](https://github.com/renovate[bot]) in Pull Request [#252](https://github.com/space-code/flare/pull/252).
